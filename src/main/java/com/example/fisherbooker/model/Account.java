@@ -1,8 +1,8 @@
 package com.example.fisherbooker.model;
 
+import javax.persistence.Entity;
 
-import java.util.*;
-
+@Entity
 public class Account {
    private String email;
    private String password;
