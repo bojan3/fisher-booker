@@ -1,8 +1,8 @@
 package com.example.fisherbooker.model;
 
-
 import java.util.*;
 
+/*Konflikt*/
 public class Account {
    private String email;
    private String password;
