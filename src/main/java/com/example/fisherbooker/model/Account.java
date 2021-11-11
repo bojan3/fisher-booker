@@ -2,7 +2,7 @@ package com.example.fisherbooker.model;
 
 import javax.persistence.Entity;
 
-@Entity /*konflikt bree*/
+/*@Entity*/
 public class Account {
    private String email;
    private String password;

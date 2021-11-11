@@ -14,7 +14,7 @@ public class CottageReservation {
    public Cottage cottage;
    
    
-   public Cottage getCottage() {
+   /*public Cottage getCottage() {
       return cottage;
    }
    
@@ -33,6 +33,6 @@ public class CottageReservation {
             this.cottage.addCottageReservation(this);
          }
       }
-   }
+   }*/
 
 }
