@@ -1,56 +1,69 @@
 package com.example.fisherbooker.model;
 
+import java.util.Date;
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class ShipReservation {
-   private int id;
-   private int startDate;
-   private int endDate;
-   
-   public java.util.Set<ShipOption> shipOption;
-   public Ship ship;
-   
-   
-   public java.util.Set<ShipOption> getShipOption() {
-      if (shipOption == null)
-         shipOption = new java.util.HashSet<ShipOption>();
-      return shipOption;
-   }
-   
-   public java.util.Iterator getIteratorShipOption() {
-      if (shipOption == null)
-         shipOption = new java.util.HashSet<ShipOption>();
-      return shipOption.iterator();
-   }
-   
-   
-   public void setShipOption(java.util.Set<ShipOption> newShipOption) {
-      removeAllShipOption();
-      for (java.util.Iterator iter = newShipOption.iterator(); iter.hasNext();)
-         addShipOption((ShipOption)iter.next());
-   }
-   
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	private Date startDate;
+	private Date endDate;
 
-   public void addShipOption(ShipOption newShipOption) {
-      if (newShipOption == null)
-         return;
-      if (this.shipOption == null)
-         this.shipOption = new java.util.HashSet<ShipOption>();
-      if (!this.shipOption.contains(newShipOption))
-         this.shipOption.add(newShipOption);
-   }
-   
-  
-   public void removeShipOption(ShipOption oldShipOption) {
-      if (oldShipOption == null)
-         return;
-      if (this.shipOption != null)
-         if (this.shipOption.contains(oldShipOption))
-            this.shipOption.remove(oldShipOption);
-   }
-   
+	@ManyToMany
+	public Set<ShipOption> shipOption;
+	
+	@ManyToOne
+	@JoinColumn(name="ship_id", nullable=false)
+	public Ship ship;
 
-   public void removeAllShipOption() {
-      if (shipOption != null)
-         shipOption.clear();
-   }
+	public int getId() {
+		return id;
+	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	public Set<ShipOption> getShipOption() {
+		return shipOption;
+	}
+
+	public void setShipOption(Set<ShipOption> shipOption) {
+		this.shipOption = shipOption;
+	}
+
+	public Ship getShip() {
+		return ship;
+	}
+
+	public void setShip(Ship ship) {
+		this.ship = ship;
+	}
+	
 }

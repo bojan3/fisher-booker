@@ -1,22 +1,20 @@
 package com.example.fisherbooker.model;
 
-import java.sql.Date;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class ShipSuperDeal {
-
+public class AdventureOption {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	private Date startDate;
-	private int discountedPrice;
-	private Date endDate;
-	private int duration;
-	private int capacity;
+	private Long id;
+	@Column(length=25)
+	private String name;
+	@Column(length=150)
+	private String description;
+	private int price;
 
 }
