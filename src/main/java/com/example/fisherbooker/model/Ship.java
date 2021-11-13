@@ -9,17 +9,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Ship {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String id;
+	private Long id;
 	@Column(length=20)
 	private String name;
 	private ShipType type;
 	private float length;
-	@Column(length=150)
+	@Column(length=350)
 	private String description;
 	private float averageMark;
 	private int rentPrice;
@@ -31,265 +32,186 @@ public class Ship {
 
 	@OneToMany
 	public Set<Rule> rule;
+	
 	@ManyToMany
 	public Set<NavigationEquipment> navigationEquipment;
+	
+	@ManyToMany
 	public Set<FishingEquipment> fishingEquipment;
+	
+	@OneToMany
 	public Set<ShipPicture> shipPicture;
-	public Set<ShipFastReservation> shipFastReservation;
+	
+	@OneToMany(mappedBy="ship")
+	public Set<ShipSuperDeal> shipSuperDeal;
+	
+	@OneToOne
 	public Address address;
-	public Set<ShipOption> shipOption;
+	
+	@ManyToMany
+	public Set<ShipOption> shipOptions;
 	
 	@OneToMany(mappedBy="ship")
 	public Set<ShipReservation> shipReservation;
 
-	public java.util.Set<Rule> getRule() {
-		if (rule == null)
-			rule = new java.util.HashSet<Rule>();
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public ShipType getType() {
+		return type;
+	}
+
+	public void setType(ShipType type) {
+		this.type = type;
+	}
+
+	public float getLength() {
+		return length;
+	}
+
+	public void setLength(float length) {
+		this.length = length;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public float getAverageMark() {
+		return averageMark;
+	}
+
+	public void setAverageMark(float averageMark) {
+		this.averageMark = averageMark;
+	}
+
+	public int getRentPrice() {
+		return rentPrice;
+	}
+
+	public void setRentPrice(int rentPrice) {
+		this.rentPrice = rentPrice;
+	}
+
+	public int getEngineNumber() {
+		return engineNumber;
+	}
+
+	public void setEngineNumber(int engineNumber) {
+		this.engineNumber = engineNumber;
+	}
+
+	public int getEnginePower() {
+		return enginePower;
+	}
+
+	public void setEnginePower(int enginePower) {
+		this.enginePower = enginePower;
+	}
+
+	public float getMaxSpeed() {
+		return maxSpeed;
+	}
+
+	public void setMaxSpeed(float maxSpeed) {
+		this.maxSpeed = maxSpeed;
+	}
+
+	public int getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
+
+	public float getCancelRate() {
+		return cancelRate;
+	}
+
+	public void setCancelRate(float cancelRate) {
+		this.cancelRate = cancelRate;
+	}
+
+	public Set<Rule> getRule() {
 		return rule;
 	}
 
-	public java.util.Iterator getIteratorRule() {
-		if (rule == null)
-			rule = new java.util.HashSet<Rule>();
-		return rule.iterator();
+	public void setRule(Set<Rule> rule) {
+		this.rule = rule;
 	}
 
-	public void setRule(java.util.Set<Rule> newRule) {
-		removeAllRule();
-		for (java.util.Iterator iter = newRule.iterator(); iter.hasNext();)
-			addRule((Rule) iter.next());
-	}
-
-	public void addRule(Rule newRule) {
-		if (newRule == null)
-			return;
-		if (this.rule == null)
-			this.rule = new java.util.HashSet<Rule>();
-		if (!this.rule.contains(newRule))
-			this.rule.add(newRule);
-	}
-
-	public void removeRule(Rule oldRule) {
-		if (oldRule == null)
-			return;
-		if (this.rule != null)
-			if (this.rule.contains(oldRule))
-				this.rule.remove(oldRule);
-	}
-
-	public void removeAllRule() {
-		if (rule != null)
-			rule.clear();
-	}
-
-	public java.util.Set<NavigationEquipment> getNavigationEquipment() {
-		if (navigationEquipment == null)
-			navigationEquipment = new java.util.HashSet<NavigationEquipment>();
+	public Set<NavigationEquipment> getNavigationEquipment() {
 		return navigationEquipment;
 	}
 
-	public java.util.Iterator getIteratorNavigationEquipment() {
-		if (navigationEquipment == null)
-			navigationEquipment = new java.util.HashSet<NavigationEquipment>();
-		return navigationEquipment.iterator();
+	public void setNavigationEquipment(Set<NavigationEquipment> navigationEquipment) {
+		this.navigationEquipment = navigationEquipment;
 	}
 
-	public void setNavigationEquipment(java.util.Set<NavigationEquipment> newNavigationEquipment) {
-		removeAllNavigationEquipment();
-		for (java.util.Iterator iter = newNavigationEquipment.iterator(); iter.hasNext();)
-			addNavigationEquipment((NavigationEquipment) iter.next());
-	}
-
-	public void addNavigationEquipment(NavigationEquipment newNavigationEquipment) {
-		if (newNavigationEquipment == null)
-			return;
-		if (this.navigationEquipment == null)
-			this.navigationEquipment = new java.util.HashSet<NavigationEquipment>();
-		if (!this.navigationEquipment.contains(newNavigationEquipment))
-			this.navigationEquipment.add(newNavigationEquipment);
-	}
-
-	public void removeNavigationEquipment(NavigationEquipment oldNavigationEquipment) {
-		if (oldNavigationEquipment == null)
-			return;
-		if (this.navigationEquipment != null)
-			if (this.navigationEquipment.contains(oldNavigationEquipment))
-				this.navigationEquipment.remove(oldNavigationEquipment);
-	}
-
-	public void removeAllNavigationEquipment() {
-		if (navigationEquipment != null)
-			navigationEquipment.clear();
-	}
-
-	public java.util.Set<FishingEquipment> getFishingEquipment() {
-		if (fishingEquipment == null)
-			fishingEquipment = new java.util.HashSet<FishingEquipment>();
+	public Set<FishingEquipment> getFishingEquipment() {
 		return fishingEquipment;
 	}
 
-	public java.util.Iterator getIteratorFishingEquipment() {
-		if (fishingEquipment == null)
-			fishingEquipment = new java.util.HashSet<FishingEquipment>();
-		return fishingEquipment.iterator();
+	public void setFishingEquipment(Set<FishingEquipment> fishingEquipment) {
+		this.fishingEquipment = fishingEquipment;
 	}
 
-	public void setFishingEquipment(java.util.Set<FishingEquipment> newFishingEquipment) {
-		removeAllFishingEquipment();
-		for (java.util.Iterator iter = newFishingEquipment.iterator(); iter.hasNext();)
-			addFishingEquipment((FishingEquipment) iter.next());
-	}
-
-	public void addFishingEquipment(FishingEquipment newFishingEquipment) {
-		if (newFishingEquipment == null)
-			return;
-		if (this.fishingEquipment == null)
-			this.fishingEquipment = new java.util.HashSet<FishingEquipment>();
-		if (!this.fishingEquipment.contains(newFishingEquipment))
-			this.fishingEquipment.add(newFishingEquipment);
-	}
-
-	public void removeFishingEquipment(FishingEquipment oldFishingEquipment) {
-		if (oldFishingEquipment == null)
-			return;
-		if (this.fishingEquipment != null)
-			if (this.fishingEquipment.contains(oldFishingEquipment))
-				this.fishingEquipment.remove(oldFishingEquipment);
-	}
-
-	public void removeAllFishingEquipment() {
-		if (fishingEquipment != null)
-			fishingEquipment.clear();
-	}
-
-	public java.util.Collection<ShipPicture> getShipPicture() {
-		if (shipPicture == null)
-			shipPicture = new java.util.HashSet<ShipPicture>();
+	public Set<ShipPicture> getShipPicture() {
 		return shipPicture;
 	}
 
-	public java.util.Iterator getIteratorShipPicture() {
-		if (shipPicture == null)
-			shipPicture = new java.util.HashSet<ShipPicture>();
-		return shipPicture.iterator();
+	public void setShipPicture(Set<ShipPicture> shipPicture) {
+		this.shipPicture = shipPicture;
 	}
 
-	public void setShipPicture(java.util.Collection<ShipPicture> newShipPicture) {
-		removeAllShipPicture();
-		for (java.util.Iterator iter = newShipPicture.iterator(); iter.hasNext();)
-			addShipPicture((ShipPicture) iter.next());
+	public Set<ShipSuperDeal> getShipSuperDeal() {
+		return shipSuperDeal;
 	}
 
-	public void addShipPicture(ShipPicture newShipPicture) {
-		if (newShipPicture == null)
-			return;
-		if (this.shipPicture == null)
-			this.shipPicture = new java.util.HashSet<ShipPicture>();
-		if (!this.shipPicture.contains(newShipPicture))
-			this.shipPicture.add(newShipPicture);
+	public void setShipSuperDeal(Set<ShipSuperDeal> shipSuperDeal) {
+		this.shipSuperDeal = shipSuperDeal;
 	}
 
-	public void removeShipPicture(ShipPicture oldShipPicture) {
-		if (oldShipPicture == null)
-			return;
-		if (this.shipPicture != null)
-			if (this.shipPicture.contains(oldShipPicture))
-				this.shipPicture.remove(oldShipPicture);
+	public Address getAddress() {
+		return address;
 	}
 
-	public void removeAllShipPicture() {
-		if (shipPicture != null)
-			shipPicture.clear();
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
-	public java.util.Collection<ShipFastReservation> getShipFastReservation() {
-		if (shipFastReservation == null)
-			shipFastReservation = new java.util.HashSet<ShipFastReservation>();
-		return shipFastReservation;
+	public Set<ShipOption> getShipOptions() {
+		return shipOptions;
 	}
 
-	public java.util.Iterator getIteratorShipFastReservation() {
-		if (shipFastReservation == null)
-			shipFastReservation = new java.util.HashSet<ShipFastReservation>();
-		return shipFastReservation.iterator();
+	public void setShipOptions(Set<ShipOption> shipOptions) {
+		this.shipOptions = shipOptions;
 	}
 
-	public void setShipFastReservation(java.util.Collection<ShipFastReservation> newShipFastReservation) {
-		removeAllShipFastReservation();
-		for (java.util.Iterator iter = newShipFastReservation.iterator(); iter.hasNext();)
-			addShipFastReservation((ShipFastReservation) iter.next());
+	public Set<ShipReservation> getShipReservation() {
+		return shipReservation;
 	}
 
-	public void addShipFastReservation(ShipFastReservation newShipFastReservation) {
-		if (newShipFastReservation == null)
-			return;
-		if (this.shipFastReservation == null)
-			this.shipFastReservation = new java.util.HashSet<ShipFastReservation>();
-		if (!this.shipFastReservation.contains(newShipFastReservation))
-			this.shipFastReservation.add(newShipFastReservation);
-	}
-
-	public void removeShipFastReservation(ShipFastReservation oldShipFastReservation) {
-		if (oldShipFastReservation == null)
-			return;
-		if (this.shipFastReservation != null)
-			if (this.shipFastReservation.contains(oldShipFastReservation))
-				this.shipFastReservation.remove(oldShipFastReservation);
-	}
-
-	public void removeAllShipFastReservation() {
-		if (shipFastReservation != null)
-			shipFastReservation.clear();
-	}
-
-	public java.util.Set<ShipOption> getShipOption() {
-		if (shipOption == null)
-			shipOption = new java.util.HashSet<ShipOption>();
-		return shipOption;
-	}
-
-	public java.util.Iterator getIteratorShipOption() {
-		if (shipOption == null)
-			shipOption = new java.util.HashSet<ShipOption>();
-		return shipOption.iterator();
-	}
-
-	public void setShipOption(java.util.Set<ShipOption> newShipOption) {
-		removeAllShipOption();
-		for (java.util.Iterator iter = newShipOption.iterator(); iter.hasNext();)
-			addShipOption((ShipOption) iter.next());
-	}
-
-	public void addShipOption(ShipOption newShipOption) {
-		if (newShipOption == null)
-			return;
-		if (this.shipOption == null)
-			this.shipOption = new java.util.HashSet<ShipOption>();
-		if (!this.shipOption.contains(newShipOption)) {
-			this.shipOption.add(newShipOption);
-			newShipOption.setShip(this);
-		}
-	}
-
-	public void removeShipOption(ShipOption oldShipOption) {
-		if (oldShipOption == null)
-			return;
-		if (this.shipOption != null)
-			if (this.shipOption.contains(oldShipOption)) {
-				this.shipOption.remove(oldShipOption);
-				oldShipOption.setShip((Ship) null);
-			}
-	}
-
-	public void removeAllShipOption() {
-		if (shipOption != null) {
-			ShipOption oldShipOption;
-			for (java.util.Iterator iter = getIteratorShipOption(); iter.hasNext();) {
-				oldShipOption = (ShipOption) iter.next();
-				iter.remove();
-				oldShipOption.setShip((Ship) null);
-			}
-		}
+	public void setShipReservation(Set<ShipReservation> shipReservation) {
+		this.shipReservation = shipReservation;
 	}
 
 }

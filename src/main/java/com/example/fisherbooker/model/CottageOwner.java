@@ -3,6 +3,8 @@ package com.example.fisherbooker.model;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -11,6 +13,9 @@ import javax.persistence.OneToOne;
 public class CottageOwner {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	@OneToOne
 	public Account account;
 
@@ -37,6 +42,11 @@ public class CottageOwner {
 
 	public void setAccount(Account account) {
 		this.account = account;
+	}
+
+	@Override
+	public String toString() {
+		return "CottageOwner [account=" + account + ", cottage=" + cottage + "]";
 	}
 	
 }

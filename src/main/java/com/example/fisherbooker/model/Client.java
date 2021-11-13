@@ -1,13 +1,32 @@
 package com.example.fisherbooker.model;
 
-import java.util.*;
+import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+@Entity
 public class Client {
-	public Account account;
-	public java.util.Set<ShipReservation> shipReservation;
-	public java.util.Collection<CottageReservation> cottageReservation;
+		
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-	public java.util.Set<AdventureReservation> adventureReservation;
+	@OneToOne
+	public Account account;
+	
+	@OneToMany
+	public Set<ShipReservation> shipReservation;
+	
+	@OneToMany
+	public Set<CottageReservation> cottageReservation;
+
+	@OneToMany
+	public Set<AdventureReservation> adventureReservation;
 
 	public java.util.Set<ShipReservation> getShipReservation() {
 		if (shipReservation == null)

@@ -13,7 +13,6 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Adventure {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -46,7 +45,7 @@ public class Adventure {
 	@ManyToOne
 	@JoinColumn(name="account", nullable=false)
 	public FishingInstructor fishingInstructor;
-
+	
 	public Long getId() {
 		return id;
 	}

@@ -11,17 +11,17 @@ public class ShipOption {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String id;
+	private Long id;
 	@Column(length=15)
 	private String name;
 	@Column(length=300)
 	private String description;
 	private int price;
 	
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getName() {

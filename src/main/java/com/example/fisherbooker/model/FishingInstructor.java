@@ -1,16 +1,24 @@
 package com.example.fisherbooker.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
 public class FishingInstructor {
-
+	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	@OneToOne
 	public Account account;
+
+	@Column(length=350)
 	private String biography;
 
 	@OneToMany(mappedBy = "fishingInstructor")

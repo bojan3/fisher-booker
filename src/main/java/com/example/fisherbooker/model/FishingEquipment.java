@@ -1,8 +1,10 @@
 package com.example.fisherbooker.model;
 
-import java.util.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+@Entity
 public class FishingEquipment {
-   private String name;
-
+	@Id
+	private String name;
 }
