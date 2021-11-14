@@ -9,6 +9,11 @@ public class NavigationEquipment {
 	@Id
 	private String name;
 
+	public NavigationEquipment() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getName() {
 		return name;
 	}

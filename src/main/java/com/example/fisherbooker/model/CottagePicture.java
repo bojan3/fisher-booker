@@ -14,6 +14,11 @@ public class CottagePicture {
 	@Column(length = 150)
 	private int path;
 
+	public CottagePicture() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getId() {
 		return id;
 	}

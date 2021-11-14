@@ -15,6 +15,10 @@ public class ShipPicture {
 	@Column(length=150)
 	private int path;
 	
+	public ShipPicture() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	public ShipPicture(int id, int path) {
 		super();
 		this.id = id;

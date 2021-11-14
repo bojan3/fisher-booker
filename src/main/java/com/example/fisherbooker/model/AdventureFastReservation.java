@@ -9,6 +9,10 @@ import javax.persistence.Id;
 
 @Entity
 public class AdventureFastReservation {
+	public AdventureFastReservation() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

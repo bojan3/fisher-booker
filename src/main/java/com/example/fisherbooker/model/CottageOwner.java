@@ -22,13 +22,18 @@ public class CottageOwner {
 	@OneToMany
 	public Set<Cottage> cottages;
 	
+	public CottageOwner() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public CottageOwner(Set<Cottage> cottages, Account account) {
 		super();
 		this.cottages = cottages;
 		this.account = account;
 	}
 
-	public Set<Cottage> getCottages() {
+	public Set<Cottage> getCottage() {
 		return cottages;
 	}
 

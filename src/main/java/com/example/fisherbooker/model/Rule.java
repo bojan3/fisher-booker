@@ -15,6 +15,10 @@ public class Rule {
 	@Column(length=350)
 	private String description;
 	
+	public Rule() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	public Long getId() {
 		return id;
 	}

@@ -13,6 +13,11 @@ public class Room {
 	private String label;
 	private int numOfBeds;
 	
+	public Room() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public Room(String label, int numOfBeds) {
 		super();
 		this.label = label;

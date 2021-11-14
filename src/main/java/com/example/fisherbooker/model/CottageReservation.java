@@ -26,6 +26,11 @@ public class CottageReservation {
 	@ManyToOne
 	public Cottage cottage;
 
+	public CottageReservation() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getId() {
 		return id;
 	}

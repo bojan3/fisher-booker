@@ -23,6 +23,11 @@ public class CottageSuperDeal {
 	@ManyToOne
 	@JoinColumn(name="cottage_id", nullable=false)
 	public Cottage cottage;
+
+	public CottageSuperDeal() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 	
 

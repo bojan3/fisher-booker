@@ -26,6 +26,11 @@ public class ShipReservation {
 	@JoinColumn(name="ship_id", nullable=false)
 	public Ship ship;
 
+	public ShipReservation() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getId() {
 		return id;
 	}

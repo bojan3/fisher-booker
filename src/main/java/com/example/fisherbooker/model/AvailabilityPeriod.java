@@ -15,6 +15,10 @@ public class AvailabilityPeriod {
 	private Date startDate;
 	private Date endDate;
 	
+	public AvailabilityPeriod() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	public int getId() {
 		return id;
 	}
