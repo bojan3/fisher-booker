@@ -51,6 +51,11 @@ public class Cottage {
 	@ManyToMany
 	public Set<CottageOption> cottageOptions;
 
+	public Cottage() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getId() {
 		return id;
 	}

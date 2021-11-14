@@ -8,6 +8,10 @@ import javax.persistence.Id;
 
 @Entity
 public class AdventureOption {
+	public AdventureOption() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

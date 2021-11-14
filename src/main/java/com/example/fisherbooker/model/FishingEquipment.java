@@ -7,4 +7,10 @@ import javax.persistence.Id;
 public class FishingEquipment {
 	@Id
 	private String name;
+
+	public FishingEquipment() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
 }

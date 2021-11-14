@@ -24,6 +24,11 @@ public class FishingInstructor {
 	@OneToMany(mappedBy = "fishingInstructor")
 	public java.util.Set<Adventure> adventure;
 
+	public FishingInstructor() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	/** @pdGenerated default getter */
 	public java.util.Set<Adventure> getAdventure() {
 		if (adventure == null)

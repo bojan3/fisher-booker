@@ -25,6 +25,10 @@ public class ShipSuperDeal {
 	@JoinColumn(name="ship_id", nullable=false)
 	public Ship ship;
 	
+	public ShipSuperDeal() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	public Long getId() {
 		return id;
 	}

@@ -11,6 +11,11 @@ import javax.persistence.ManyToMany;
 
 @Entity
 public class AdventureReservation {
+	public AdventureReservation() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

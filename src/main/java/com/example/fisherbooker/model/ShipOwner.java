@@ -22,6 +22,11 @@ public class ShipOwner {
 	@OneToMany
 	public Set<Ship> ships;
 	
+	public ShipOwner() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public ShipOwner(Account account, Set<Ship> ships) {
 		super();
 		this.account = account;

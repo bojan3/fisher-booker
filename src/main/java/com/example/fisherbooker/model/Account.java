@@ -8,6 +8,11 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Account {
+	public Account() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	@Id
 	private String email;
 	@Column(length=15, nullable=false)

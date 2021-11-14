@@ -28,6 +28,11 @@ public class Client {
 	@OneToMany
 	public Set<AdventureReservation> adventureReservation;
 
+	public Client() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public java.util.Set<ShipReservation> getShipReservation() {
 		if (shipReservation == null)
 			shipReservation = new java.util.HashSet<ShipReservation>();

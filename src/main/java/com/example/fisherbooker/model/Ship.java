@@ -54,6 +54,11 @@ public class Ship {
 	@OneToMany(mappedBy="ship")
 	public Set<ShipReservation> shipReservation;
 
+	public Ship() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getId() {
 		return id;
 	}

@@ -22,6 +22,11 @@ public class CottageOwner {
 	@OneToMany
 	public Set<Cottage> cottage;
 	
+	public CottageOwner() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public CottageOwner(Set<Cottage> cottage, Account account) {
 		super();
 		this.cottage = cottage;

@@ -17,6 +17,10 @@ public class CottageOption {
 	private String description;
 	private int price;
 	
+	public CottageOption() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	public Long getId() {
 		return id;
 	}
