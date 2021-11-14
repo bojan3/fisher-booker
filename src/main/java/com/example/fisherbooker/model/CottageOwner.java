@@ -20,20 +20,20 @@ public class CottageOwner {
 	public Account account;
 
 	@OneToMany
-	public Set<Cottage> cottage;
+	public Set<Cottage> cottages;
 	
-	public CottageOwner(Set<Cottage> cottage, Account account) {
+	public CottageOwner(Set<Cottage> cottages, Account account) {
 		super();
-		this.cottage = cottage;
+		this.cottages = cottages;
 		this.account = account;
 	}
 
-	public Set<Cottage> getCottage() {
-		return cottage;
+	public Set<Cottage> getCottages() {
+		return cottages;
 	}
 
-	public void setCottage(Set<Cottage> cottage) {
-		this.cottage = cottage;
+	public void setCottage(Set<Cottage> cottages) {
+		this.cottages = cottages;
 	}
 
 	public Account getAccount() {
@@ -46,7 +46,7 @@ public class CottageOwner {
 
 	@Override
 	public String toString() {
-		return "CottageOwner [account=" + account + ", cottage=" + cottage + "]";
+		return "CottageOwner [account=" + account + ", cottage=" + cottages + "]";
 	}
 	
 }
