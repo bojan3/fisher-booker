@@ -15,5 +15,16 @@ public class CottageOwnerService {
 		public CottageOwnerService(CottageOwnerRepository cottageownerRepository) {
 			this.cottageownerrepository = cottageownerRepository;
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
