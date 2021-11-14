@@ -3,6 +3,7 @@ package com.example.fisherbooker.model;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,7 +20,7 @@ public class CottageOwner {
 	@OneToOne
 	public Account account;
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	public Set<Cottage> cottages;
 	
 	public CottageOwner() {
@@ -33,11 +34,11 @@ public class CottageOwner {
 		this.account = account;
 	}
 
-	public Set<Cottage> getCottage() {
+	public Set<Cottage> getCottages() {
 		return cottages;
 	}
 
-	public void setCottage(Set<Cottage> cottages) {
+	public void setCottages(Set<Cottage> cottages) {
 		this.cottages = cottages;
 	}
 

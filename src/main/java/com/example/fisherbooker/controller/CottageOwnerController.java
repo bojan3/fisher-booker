@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.fisherbooker.model.Cottage;
+import com.example.fisherbooker.model.DTO.CottageDTO;
 import com.example.fisherbooker.service.CottageOwnerService;
 
 @RestController
@@ -26,8 +26,8 @@ public class CottageOwnerController {
 	}
 	
 	@GetMapping("/allCottagesByOwner/{id}")
-	public ResponseEntity<Set<Cottage>> getAllCottagesByOwner(@PathVariable Long id){
-		Set<Cottage> cottages = this.cottageOwnerService.getAllCottagesByOwner(id);
+	public ResponseEntity<Set<CottageDTO>> getAllCottagesByOwner(@PathVariable Long id){
+		Set<CottageDTO> cottages = this.cottageOwnerService.getAllCottagesByOwner(id);
 		return new ResponseEntity<>(cottages, HttpStatus.OK);
 	}
 	
