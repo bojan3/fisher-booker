@@ -17,6 +17,11 @@ public class Adventure {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	public Adventure(String name,String adress, String description,AdventurePicture pic,int capacity, AdventureFastReservation afr ,Rule rule, FishingEquipment fe, AdventureOption ao, float CancelRate)
+		{}
+	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
