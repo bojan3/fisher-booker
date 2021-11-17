@@ -14,7 +14,7 @@ import com.example.fisherbooker.model.DTO.CottageDTO;
 import com.example.fisherbooker.service.CottageOwnerService;
 
 @RestController
-@RequestMapping("/api/cottage")
+@RequestMapping("/api/cottageOwner")
 public class CottageOwnerController {
 	
 	private CottageOwnerService cottageOwnerService;

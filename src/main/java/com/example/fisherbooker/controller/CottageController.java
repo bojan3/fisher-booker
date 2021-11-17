@@ -17,9 +17,9 @@ public class CottageController {
 		this.cottageService = cottageService;
 	}
 	
-	/*@GeMapping("/all")
-	public ResponseEntity<List<Cottage>> getAllByOwner(){
+	@PostMapping("/add/{ownerId}")
+	public ResponseEntity<List<Cottage>> getAllByOwner(@RequestBody){
 		
-	}*/
+	}
 
 }
