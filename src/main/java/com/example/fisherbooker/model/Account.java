@@ -1,19 +1,40 @@
 package com.example.fisherbooker.model;
 
+import java.security.Timestamp;
+import java.util.Collection;
+import java.util.List;
+
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-public class Account {
+public class Account implements UserDetails {
 	public Account() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	@Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(length=15, nullable=false)
+    private String username;
+	@Column(length=15, nullable=false)
 	private String email;
 	@Column(length=15, nullable=false)
 	private String password;
@@ -24,22 +45,18 @@ public class Account {
 	@Column(length=15)
 	private String phoneNumber;
 	
-	private UserRoles role;
+	private boolean enabled;
+	private Timestamp lastPasswordResetDate;
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "user_role",
+    joinColumns = @JoinColumn(name = "account_id", referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	private List<Role> roles;
 
 	@ManyToOne
 	public Address address;
 
-	public Account(String email, String password, String name, String lastName, String phoneNumber, UserRoles role,
-			Address address) {
-		super();
-		this.email = email;
-		this.password = password;
-		this.name = name;
-		this.lastName = lastName;
-		this.phoneNumber = phoneNumber;
-		this.role = role;
-		this.address = address;
-	}
+	
 
 	public String getEmail() {
 		return email;
@@ -81,13 +98,6 @@ public class Account {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public UserRoles getRole() {
-		return role;
-	}
-
-	public void setRole(UserRoles role) {
-		this.role = role;
-	}
 
 	public Address getAddress() {
 		return address;
@@ -98,10 +108,51 @@ public class Account {
 	}
 
 	@Override
-	public String toString() {
-		return "Account [email=" + email + ", password=" + password + ", name=" + name + ", lastName=" + lastName
-				+ ", phoneNumber=" + phoneNumber + ", role=" + role + ", address=" + address + "]";
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.roles;
 	}
+	
+	public Timestamp getLastPasswordResetDate() {
+        return lastPasswordResetDate;
+    }
+
+    public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
+        this.lastPasswordResetDate = lastPasswordResetDate;
+    }
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+	
+	@JsonIgnore
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+	
+	@JsonIgnore
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@JsonIgnore
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return enabled;
+	}
+
 	
 
 }
