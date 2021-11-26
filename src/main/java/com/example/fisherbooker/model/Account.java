@@ -34,7 +34,7 @@ public class Account implements UserDetails {
 
     @Column(length=15, nullable=false)
     private String username;
-	@Column(length=15, nullable=false)
+	@Column(nullable=false)
 	private String email;
 	@Column(length=15, nullable=false)
 	private String password;
@@ -48,7 +48,7 @@ public class Account implements UserDetails {
 	private boolean enabled;
 	private Timestamp lastPasswordResetDate;
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "user_role",
+	@JoinTable(name = "account_role",
     joinColumns = @JoinColumn(name = "account_id", referencedColumnName = "id"),
     inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private List<Role> roles;
