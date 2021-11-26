@@ -15,6 +15,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import com.example.fisherbooker.security.auth.RestAuthenticationEntryPoint;
+import com.example.fisherbooker.security.auth.TokenAuthenticationFilter;
+import com.example.fisherbooker.service.impl.CustomAccountDetailsService;
+import com.example.fisherbooker.util.TokenUtils;
+
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -25,20 +30,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Autowired
-	private CustomUserDetailsService customUserDetailsService;
+	private CustomAccountDetailsService customAccountDetailsService;
 
-	// Handler za vracanje 401 kada klijent sa neodogovarajucim korisnickim imenom i lozinkom pokusa da pristupi resursu
+	
 	@Autowired
 	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
-	// Registrujemo authentication manager koji ce da uradi autentifikaciju korisnika za nas
 	@Bean
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
 
-	// Definisemo nacin utvrdjivanja korisnika pri autentifikaciji
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth
