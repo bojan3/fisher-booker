@@ -36,7 +36,7 @@ public class Account implements UserDetails {
     private String username;
 	@Column(nullable=false)
 	private String email;
-	@Column(length=15, nullable=false)
+	@Column(length=100, nullable=false)
 	private String password;
 	@Column(length=20, nullable=false)
 	private String name;
@@ -56,7 +56,25 @@ public class Account implements UserDetails {
 	@ManyToOne
 	public Address address;
 
-	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 	public String getEmail() {
 		return email;
