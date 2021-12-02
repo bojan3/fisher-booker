@@ -3,17 +3,20 @@ package com.example.fisherbooker.model;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import com.example.fisherbooker.model.DTO.CottageAddDTO;
 
 @Entity
 @Table(name = "cottage")
@@ -25,36 +28,39 @@ public class Cottage {
 	private String name;
 	@Column(length = 300)
 	private String description;
+	private int rentPrice;
 	@Transient
 	private float averageMark;
 
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	public Address address;
 	
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	public List<Room> room;
 	
-	@OneToMany
+	@OneToMany(cascade=CascadeType.PERSIST)
 	public Set<Rule> rule;
 	
 	@OneToMany(mappedBy="cottage")
 	public Set<CottageSuperDeal> cottageSuperDeal;
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	public AvailabilityPeriod availabilityPeriod;
 	
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	public Set<CottagePicture> cottagePicture;
 	
 	@OneToMany
 	public Set<CottageReservation> cottageReservation;
 	
-	@ManyToMany
+	@ManyToMany(cascade=CascadeType.PERSIST)
 	public Set<CottageOption> cottageOptions;
+	
+	@ManyToOne
+	private CottageOwner cottageOwner;
 
 	public Cottage() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Long getId() {
@@ -153,4 +159,28 @@ public class Cottage {
 		this.cottageOptions = cottageOptions;
 	}
 
+	public int getRentPrice() {
+		return rentPrice;
+	}
+
+	public void setRentPrice(int rentPrice) {
+		this.rentPrice = rentPrice;
+	}
+
+	public Set<CottageSuperDeal> getCottageSuperDeal() {
+		return cottageSuperDeal;
+	}
+
+	public void setCottageSuperDeal(Set<CottageSuperDeal> cottageSuperDeal) {
+		this.cottageSuperDeal = cottageSuperDeal;
+	}
+
+	public CottageOwner getCottageOwner() {
+		return cottageOwner;
+	}
+
+	public void setCottageOwner(CottageOwner cottageOwner) {
+		this.cottageOwner = cottageOwner;
+	}
+	
 }

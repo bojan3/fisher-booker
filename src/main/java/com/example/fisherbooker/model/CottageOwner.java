@@ -25,7 +25,6 @@ public class CottageOwner {
 	
 	public CottageOwner() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public CottageOwner(Set<Cottage> cottages, Account account) {
