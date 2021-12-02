@@ -13,5 +13,13 @@ public class ShipOwnerService {
 	@Autowired
 	public ShipOwnerService(ShipOwnerRepository shipownerRepository) {
 		this.shipownerrepository = shipownerRepository;
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 }
