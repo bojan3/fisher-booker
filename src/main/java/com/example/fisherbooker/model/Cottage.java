@@ -28,6 +28,7 @@ public class Cottage {
 	private String name;
 	@Column(length = 300)
 	private String description;
+	private int rentPrice;
 	@Transient
 	private float averageMark;
 
@@ -158,4 +159,28 @@ public class Cottage {
 		this.cottageOptions = cottageOptions;
 	}
 
+	public int getRentPrice() {
+		return rentPrice;
+	}
+
+	public void setRentPrice(int rentPrice) {
+		this.rentPrice = rentPrice;
+	}
+
+	public Set<CottageSuperDeal> getCottageSuperDeal() {
+		return cottageSuperDeal;
+	}
+
+	public void setCottageSuperDeal(Set<CottageSuperDeal> cottageSuperDeal) {
+		this.cottageSuperDeal = cottageSuperDeal;
+	}
+
+	public CottageOwner getCottageOwner() {
+		return cottageOwner;
+	}
+
+	public void setCottageOwner(CottageOwner cottageOwner) {
+		this.cottageOwner = cottageOwner;
+	}
+	
 }

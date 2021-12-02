@@ -29,5 +29,9 @@ public class CottageController {
 		this.cottageService.saveCottage(cottage);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
+	
+	
+	
+	
 
 }
