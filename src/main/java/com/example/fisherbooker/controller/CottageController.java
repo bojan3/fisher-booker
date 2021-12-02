@@ -1,5 +1,6 @@
 package com.example.fisherbooker.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fisherbooker.model.Cottage;
+import com.example.fisherbooker.model.DTO.CottageDTO;
 import com.example.fisherbooker.service.CottageService;
 
 @RestController
@@ -35,10 +37,14 @@ public class CottageController {
 	
 	
 	@GetMapping("/all")
-	//@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<List<Cottage>> getAll(){
+	public ResponseEntity<List<CottageDTO>> getAll(){
 		List<Cottage> cottages = this.cottageService.getAll();
-		return new ResponseEntity<>(cottages, HttpStatus.OK);
+		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
+		for(Cottage cottage : cottages) {
+			CottageDTO cottageDTO = new CottageDTO().createCottageDTO(cottage);
+			cottagesDTO.add(cottageDTO);
+		}
+		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
 	}
 	
 	

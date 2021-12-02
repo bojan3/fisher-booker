@@ -7,14 +7,14 @@ public class CottageDTO {
 	private Long id;
 	private String name;
 	private String description;
-	public Address address;
+	//public Address address;
 	
 	public CottageDTO(Long id, String name, String description, Address address) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.address = address;
+		//this.address = address;
 	}
 	
 	public static CottageDTO createCottageDTO(Cottage c) {
@@ -49,17 +49,17 @@ public class CottageDTO {
 		this.description = description;
 	}
 
-	public Address getAddress() {
-		return address;
-	}
+//	public Address getAddress() {
+//		return address;
+//	}
+//
+//	public void setAddress(Address address) {
+//		this.address = address;
+//	}
 
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
-	@Override
-	public String toString() {
-		return "CottageDTO [id=" + id + ", name=" + name + ", description=" + description + ", address=" + address
-				+ "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "CottageDTO [id=" + id + ", name=" + name + ", description=" + description + ", address=" + address
+//				+ "]";
+//	}
 }
