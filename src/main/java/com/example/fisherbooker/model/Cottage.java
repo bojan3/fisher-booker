@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,14 +29,13 @@ public class Cottage {
 	private String name;
 	@Column(length = 300)
 	private String description;
-	private int rentPrice;
 	@Transient
 	private float averageMark;
 
 	@OneToOne(cascade=CascadeType.ALL)
 	public Address address;
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	public List<Room> room;
 	
 	@OneToMany(cascade=CascadeType.PERSIST)
@@ -157,14 +157,6 @@ public class Cottage {
 
 	public void setCottageOptions(Set<CottageOption> cottageOptions) {
 		this.cottageOptions = cottageOptions;
-	}
-
-	public int getRentPrice() {
-		return rentPrice;
-	}
-
-	public void setRentPrice(int rentPrice) {
-		this.rentPrice = rentPrice;
 	}
 
 	public Set<CottageSuperDeal> getCottageSuperDeal() {
