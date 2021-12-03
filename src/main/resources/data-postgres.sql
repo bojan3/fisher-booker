@@ -36,10 +36,15 @@ insert into adventure (account,name,description,capacity,price,cancel_rate) valu
 
 insert into availability_period(start_date, end_date) values(null, null);
 
-insert into cottage (description, name, address_id, availability_period_id,price_per_day) values ('rezervisi bre', 'Najjaca vikendica', 2, 1,20);
-insert into cottage (description, name, address_id, availability_period_id,price_per_day) values ('Slike govore vise od reci', 'Villa Mirna', 3, 1,50);
-insert into cottage (description, name, address_id, availability_period_id,price_per_day) values ('Zlatiborske lepote, veoma lep pogled', 'Villa Anja', 4, 1,50);
-insert into cottage (description, name, address_id, availability_period_id,price_per_day) values ('Visoko u panini, zubori reka u blizini', 'Villa Smilja', 6, 1,70);
-insert into cottage (description, name, address_id, availability_period_id,price_per_day) values ('u kotlini, brza voda tece', 'Villa Tamara', 1, 1,40);
-insert into cottage (description, name, address_id, availability_period_id,price_per_day) values ('Vikendica skrivena u sumi', 'Villa Zagorka', 5, 1,30);
+insert into cottage (description, name, address_id, availability_period_id) values ('rezervisi bre', 'Najjaca vikendica', 2, 1);
+insert into cottage (description, name, address_id, availability_period_id) values ('Slike govore vise od reci', 'Villa Mirna', 3, 1);
+insert into cottage (description, name, address_id, availability_period_id) values ('Zlatiborske lepote, veoma lep pogled', 'Villa Anja', 4, 1);
+insert into cottage (description, name, address_id, availability_period_id) values ('Visoko u panini, zubori reka u blizini', 'Villa Smilja', 6, 1);
+insert into cottage (description, name, address_id, availability_period_id) values ('u kotlini, brza voda tece', 'Villa Tamara', 1, 1);
+insert into cottage (description, name, address_id, availability_period_id) values ('Vikendica skrivena u sumi', 'Villa Zagorka', 5, 1);
+
 insert into cottage_owner_cottages (cottage_owner_id, cottages_id) values (1, 1);
+
+insert into ship (name, type, length, description, average_mark,rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate) values ('Jahta Bosanka' , null, 3, 'Jahta za uzivanje', 5, 100, 10, 170, 150, 30, 0);
+insert into ship (name, type, length, description, average_mark,rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate) values ('Jahta Jovana' , null, 3, 'Jahta za uzivanje', 3, 150, 20, 200, 100, 40, 0);
+insert into ship (name, type, length, description, average_mark,rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate) values ('Jahta Katarina' , null, 3, 'Jahta za uzivanje', 7, 100, 30, 300, 150, 10, 0);
