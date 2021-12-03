@@ -4,6 +4,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,10 +20,12 @@ public class Ship {
 	private Long id;
 	@Column(length=20)
 	private String name;
+	@Enumerated(EnumType.ORDINAL)
 	private ShipType type;
 	private float length;
 	@Column(length=350)
 	private String description;
+	@Column(nullable = true)
 	private float averageMark;
 	private int rentPrice;
 	private int engineNumber;
@@ -56,7 +60,6 @@ public class Ship {
 
 	public Ship() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Long getId() {
