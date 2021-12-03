@@ -8,7 +8,7 @@ public class CottageDTO {
 	private String name;
 	private String description;
 	private int pricePerDay;
-	//public Address address;
+	public Address address;
 	
 	public CottageDTO(Long id, String name, String description, Address address,int price) {
 		super();
@@ -16,7 +16,7 @@ public class CottageDTO {
 		this.name = name;
 		this.description = description;
 		this.pricePerDay=price;
-		//this.address = address;
+		this.address = address;
 	}
 	
 	public static CottageDTO createCottageDTO(Cottage c) {

@@ -41,7 +41,7 @@ public class CottageController {
 		List<Cottage> cottages = this.cottageService.getAll();
 		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
 		for(Cottage cottage : cottages) {
-			CottageDTO cottageDTO = new CottageDTO().createCottageDTO(cottage);
+			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
 			System.out.println(cottageDTO.getPrice_per_day());
 			cottagesDTO.add(cottageDTO);
 		}
