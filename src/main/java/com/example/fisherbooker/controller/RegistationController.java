@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fisherbooker.model.Account;
 import com.example.fisherbooker.service.CottageOwnerService;
-import com.example.fisherbooker.service.InstructorService;
+import com.example.fisherbooker.service.FishingInstructorService;
 import com.example.fisherbooker.service.RegistrationRequestService;
 import com.example.fisherbooker.service.ShipOwnerService;
 import com.example.fisherbooker.service.impl.AccountServiceImpl;
@@ -20,7 +20,7 @@ import com.example.fisherbooker.service.impl.AccountServiceImpl;
 public class RegistationController {
 	private CottageOwnerService cottageOwnerService;
 	private ShipOwnerService shipOwnerService;
- 	private InstructorService instructorService;
+ 	private FishingInstructorService instructorService;
  	
  	@Autowired
  	private AccountServiceImpl accountService;
