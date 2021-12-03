@@ -42,6 +42,7 @@ public class CottageController {
 		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
 		for(Cottage cottage : cottages) {
 			CottageDTO cottageDTO = new CottageDTO().createCottageDTO(cottage);
+			System.out.println(cottageDTO.getPrice_per_day());
 			cottagesDTO.add(cottageDTO);
 		}
 		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);

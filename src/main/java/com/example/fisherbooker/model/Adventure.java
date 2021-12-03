@@ -10,8 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="adventure")
 public class Adventure {
 	public Adventure() {
 		super();
@@ -26,11 +28,14 @@ public class Adventure {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	@Column(length=30, nullable=false)
 	private String name;
 	@Column(length=350)
 	private String description;
+	
 	private int capacity;
+	@Column
 	private int price;
 	private float cancelRate;
 

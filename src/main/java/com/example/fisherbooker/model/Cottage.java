@@ -29,6 +29,9 @@ public class Cottage {
 	private String name;
 	@Column(length = 300)
 	private String description;
+	@Column
+	private int pricePerDay;
+	
 	@Transient
 	private float averageMark;
 
@@ -173,6 +176,10 @@ public class Cottage {
 
 	public void setCottageOwner(CottageOwner cottageOwner) {
 		this.cottageOwner = cottageOwner;
+	}
+
+	public int getPricePerDay() {
+		return this.pricePerDay;
 	}
 	
 }

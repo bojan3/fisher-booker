@@ -16,11 +16,12 @@ public class AdventureDTO {
 	private int price;
 	private float cancelRate;
 	
-	public AdventureDTO(Long id, String name, String description, Address address) {
+	public AdventureDTO(Long id, String name, String description,int price) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
+		this.price=price;
 		//this.address = address;
 	}
 	
