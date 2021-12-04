@@ -36,12 +36,12 @@ insert into adventure (account,name,description,capacity,price,cancel_rate) valu
 
 insert into availability_period(start_date, end_date) values(null, null);
 
-insert into cottage (description, name, address_id, availability_period_id) values ('rezervisi bre', 'Najjaca vikendica', 2, 1);
-insert into cottage (description, name, address_id, availability_period_id) values ('Slike govore vise od reci', 'Villa Mirna', 3, 1);
-insert into cottage (description, name, address_id, availability_period_id) values ('Zlatiborske lepote, veoma lep pogled', 'Villa Anja', 4, 1);
-insert into cottage (description, name, address_id, availability_period_id) values ('Visoko u panini, zubori reka u blizini', 'Villa Smilja', 6, 1);
-insert into cottage (description, name, address_id, availability_period_id) values ('u kotlini, brza voda tece', 'Villa Tamara', 1, 1);
-insert into cottage (description, name, address_id, availability_period_id) values ('Vikendica skrivena u sumi', 'Villa Zagorka', 5, 1);
+insert into cottage (description, name, address_id, availability_period_id, price_per_day) values ('rezervisi bre', 'Najjaca vikendica', 2, 1, 20);
+insert into cottage (description, name, address_id, availability_period_id, price_per_day) values ('Slike govore vise od reci', 'Villa Mirna', 3, 1, 100);
+insert into cottage (description, name, address_id, availability_period_id, price_per_day) values ('Zlatiborske lepote, veoma lep pogled', 'Villa Anja', 4, 1, 10);
+insert into cottage (description, name, address_id, availability_period_id, price_per_day) values ('Visoko u panini, zubori reka u blizini', 'Villa Smilja', 6, 1, 20);
+insert into cottage (description, name, address_id, availability_period_id, price_per_day) values ('u kotlini, brza voda tece', 'Villa Tamara', 1, 1, 50);
+insert into cottage (description, name, address_id, availability_period_id, price_per_day) values ('Vikendica skrivena u sumi', 'Villa Zagorka', 5, 1, 50);
 
 insert into cottage_owner_cottages (cottage_owner_id, cottages_id) values (1, 1);
 

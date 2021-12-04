@@ -17,7 +17,7 @@ import com.example.fisherbooker.service.impl.AccountServiceImpl;
 
 @RestController
 @RequestMapping(value = "/api/registration", produces = MediaType.APPLICATION_JSON_VALUE)
-public class RegistationRequestController {
+public class RegistationController {
 	private CottageOwnerService cottageOwnerService;
 	private ShipOwnerService shipOwnerService;
  	private InstructorService instructorService;
