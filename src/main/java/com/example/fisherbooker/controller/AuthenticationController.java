@@ -52,6 +52,7 @@ public class AuthenticationController {
 
 		// Kreiraj token za tog korisnika
 		Account account = (Account) authentication.getPrincipal();
+		System.out.println(account);
 		String jwt = tokenUtils.generateToken(account.getUsername());
 		int expiresIn = tokenUtils.getExpiredIn();
 
@@ -62,7 +63,7 @@ public class AuthenticationController {
 	// Endpoint za registraciju novog korisnika
 	@PostMapping("/signup")
 	public ResponseEntity<Account> addUser(@RequestBody AccountRequest accountRequest, UriComponentsBuilder ucBuilder) {
-
+		System.out.println(accountRequest.getRole());
 		Account existAccount = this.accountService.findByUsername(accountRequest.getUsername());
 
 		if (existAccount != null) {

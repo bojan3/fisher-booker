@@ -1,5 +1,7 @@
 package com.example.fisherbooker.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,6 +31,12 @@ public class RegistationController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public Account loadById(@PathVariable Long accountId) {
 		return this.accountService.findById(accountId);
+	}
+ 	
+	@GetMapping("/whoami")
+	@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
+	public Account account(Principal account) {
+		return this.accountService.findByUsername(account.getName());
 	}
 
 	

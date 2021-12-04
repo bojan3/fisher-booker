@@ -31,16 +31,13 @@ public class AccountServiceImpl {
 		
 		Account account = new Account();
 		account.setUsername(accountRequest.getUsername());
-		
 		account.setPassword(passwordEncoder.encode(accountRequest.getPassword()));
-		
 		account.setName(accountRequest.getFirstname());
 		account.setLastName(accountRequest.getLastname());
 		account.setPhoneNumber(accountRequest.getPhoneNumber());
-		
-		
 		account.setEnabled(true);
 		account.setEmail(accountRequest.getEmail());
+		account.setAddress(accountRequest.getAddress());
 
 		List<Role> roles = getRoles(accountRequest.getRole());
 		account.setRoles(roles);

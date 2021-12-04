@@ -35,6 +35,7 @@ public class TokenUtils {
 	private SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS512;
 
 	public String generateToken(String username) {
+		System.out.println(username);
 		return Jwts.builder().setIssuer(APP_NAME).setSubject(username).setAudience(generateAudience())
 				.setIssuedAt(new Date()).setExpiration(generateExpirationDate()).signWith(SIGNATURE_ALGORITHM, SECRET)
 				.compact();
@@ -53,9 +54,10 @@ public class TokenUtils {
 		String authHeader = getAuthHeaderFromHeader(request);
 
 		if (authHeader != null && authHeader.startsWith("Bearer ")) {
+			//System.out.println(authHeader.substring(7));
 			return authHeader.substring(7);
 		}
-
+		
 		return null;
 	}
 
