@@ -29,4 +29,8 @@ public class CottageService {
 		return this.cottageRepository.findAll();	
 	}
 	
+	public Cottage getById(Long id) {
+		return this.cottageRepository.findById(id).orElse(null);
+	}
+	
 }

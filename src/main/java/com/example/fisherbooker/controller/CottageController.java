@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +47,12 @@ public class CottageController {
 			cottagesDTO.add(cottageDTO);
 		}
 		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
+	}
+	
+	@GetMapping("/page/{id}")
+	public ResponseEntity<Cottage> getById(@PathVariable Long id){
+		Cottage cottage = this.cottageService.getById(id);
+		return new ResponseEntity<>(cottage, HttpStatus.OK);
 	}
 	
 	
