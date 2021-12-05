@@ -153,4 +153,12 @@ public class Client {
 			adventureReservation.clear();
 	}
 
+	public Account getAccount() {
+		// TODO Auto-generated method stub
+		return this.account;
+	}
+
+
+	
+
 }

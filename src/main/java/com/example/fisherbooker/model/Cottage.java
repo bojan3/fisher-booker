@@ -41,22 +41,22 @@ public class Cottage {
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	public List<Room> room;
 	
-	@OneToMany(cascade=CascadeType.PERSIST)
+	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
 	public Set<Rule> rule;
 	
-	@OneToMany(mappedBy="cottage")
+	@OneToMany(mappedBy="cottage",cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
 	public Set<CottageSuperDeal> cottageSuperDeal;
 	
 	@OneToOne(cascade=CascadeType.ALL)
 	public AvailabilityPeriod availabilityPeriod;
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	public Set<CottagePicture> cottagePicture;
 	
-	@OneToMany
+	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
 	public Set<CottageReservation> cottageReservation;
 	
-	@ManyToMany(cascade=CascadeType.PERSIST)
+	@ManyToMany(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<CottageOption> cottageOptions;
 	
 	@ManyToOne
