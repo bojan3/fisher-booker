@@ -19,11 +19,13 @@ import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.DTO.AdventureDTO;
 import com.example.fisherbooker.model.DTO.CottageDTO;
 import com.example.fisherbooker.service.AdventureService;
+import com.example.fisherbooker.service.FishingInstructorService;
 
 @RestController
 @RequestMapping("/api/adventure")
 public class AdventureController {
 public AdventureService adventureService;
+public FishingInstructorService fishinginstructorservice;
 	
 	@Autowired
 	public AdventureController(AdventureService adventureService) {
@@ -43,7 +45,7 @@ public AdventureService adventureService;
 			List<Adventure> adventures = this.adventureService.getAll();
 			List<AdventureDTO> adventuresDTO = new ArrayList<AdventureDTO>();
 			for(Adventure a : adventures) {
-				AdventureDTO adventureDTO = new AdventureDTO(a);
+				AdventureDTO adventureDTO =AdventureDTO.createAdventureDTO(a);
 				adventuresDTO.add(adventureDTO);
 			}
 			return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);

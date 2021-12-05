@@ -3,6 +3,7 @@ package com.example.fisherbooker.controller;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.query.JpaCountQueryCreator;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fisherbooker.model.Account;
+import com.example.fisherbooker.model.DTO.AccountDTO;
 import com.example.fisherbooker.service.CottageOwnerService;
-//import com.example.fisherbooker.service.InstructorService;
-import com.example.fisherbooker.service.RegistrationRequestService;
+import com.example.fisherbooker.service.FishingInstructorService;
 import com.example.fisherbooker.service.ShipOwnerService;
 import com.example.fisherbooker.service.impl.AccountServiceImpl;
 
@@ -22,7 +23,7 @@ import com.example.fisherbooker.service.impl.AccountServiceImpl;
 public class RegistationController {
 	private CottageOwnerService cottageOwnerService;
 	private ShipOwnerService shipOwnerService;
- 	//private InstructorService instructorService;
+ 	private FishingInstructorService instructorService;
  	
  	@Autowired
  	private AccountServiceImpl accountService;
@@ -35,8 +36,10 @@ public class RegistationController {
  	
 	@GetMapping("/whoami")
 	@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
-	public Account account(Principal account) {
-		return this.accountService.findByUsername(account.getName());
+	public AccountDTO account(Principal account) {
+		//AccountDTO accountDTO = new AccountDTO();
+		
+		return AccountDTO.createAccountDTO(accountService.findByUsername(account.getName()));
 	}
 
 	

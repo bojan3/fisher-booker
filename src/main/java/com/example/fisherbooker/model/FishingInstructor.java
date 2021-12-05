@@ -15,6 +15,30 @@ public class FishingInstructor {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+
+	public String getBiography() {
+		return biography;
+	}
+
+	public void setBiography(String biography) {
+		this.biography = biography;
+	}
+
 	@OneToOne
 	public Account account;
 
