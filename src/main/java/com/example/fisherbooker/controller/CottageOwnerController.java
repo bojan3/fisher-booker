@@ -27,9 +27,9 @@ public class CottageOwnerController {
 	}
 	
 	@GetMapping("/allCottagesByOwner")
-	public ResponseEntity<Set<CottageDTO>> getAllCottagesByOwner(Long id){
-		System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
-		Set<CottageDTO> cottages = this.cottageOwnerService.getAllCottagesByOwner(id);
+	public ResponseEntity<Set<CottageDTO>> getAllCottagesByOwner(){
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		Set<CottageDTO> cottages = this.cottageOwnerService.getAllCottagesByOwner(username);
 		return new ResponseEntity<>(cottages, HttpStatus.OK);
 	}
 	

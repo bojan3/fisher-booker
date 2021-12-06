@@ -10,6 +10,6 @@ import com.example.fisherbooker.model.CottageOwner;
 @Repository
 public interface CottageOwnerRepository extends JpaRepository<CottageOwner, Long>{
 	
-	public Optional<CottageOwner> findOneById(Long id);
+	public Optional<CottageOwner> findOneByAccountUsername(String username);
 
 }

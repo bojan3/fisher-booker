@@ -40,10 +40,10 @@ public class Cottage {
 	public Address address;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-	public List<Room> room;
+	public List<Room> rooms;
 	
 	@OneToMany(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
-	public Set<Rule> rule;
+	public Set<Rule> rules;
 	
 	@OneToMany(mappedBy="cottage", fetch = FetchType.EAGER)
 	public Set<CottageSuperDeal> cottageSuperDeal;
@@ -52,7 +52,7 @@ public class Cottage {
 	public AvailabilityPeriod availabilityPeriod;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-	public Set<CottagePicture> cottagePicture;
+	public Set<CottagePicture> cottagePictures;
 	
 	@OneToMany(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<CottageReservation> cottageReservation;
@@ -109,19 +109,19 @@ public class Cottage {
 	}
 
 	public List<Room> getRoom() {
-		return room;
+		return rooms;
 	}
 
 	public void setRoom(List<Room> room) {
-		this.room = room;
+		this.rooms = room;
 	}
 
 	public Set<Rule> getRule() {
-		return rule;
+		return rules;
 	}
 
 	public void setRule(Set<Rule> rule) {
-		this.rule = rule;
+		this.rules = rule;
 	}
 
 	public Set<CottageSuperDeal> getCottageFastReservation() {
@@ -141,11 +141,11 @@ public class Cottage {
 	}
 
 	public Set<CottagePicture> getCottagePicture() {
-		return cottagePicture;
+		return cottagePictures;
 	}
 
 	public void setCottagePicture(Set<CottagePicture> cottagePicture) {
-		this.cottagePicture = cottagePicture;
+		this.cottagePictures = cottagePicture;
 	}
 
 	public Set<CottageReservation> getCottageReservation() {

@@ -22,8 +22,8 @@ public class CottageOwnerService {
 		this.cottageOwnerRepository = cottageOwnerRepository;
 	}
 	
-	public Set<CottageDTO> getAllCottagesByOwner(Long id){
-		CottageOwner owner = this.cottageOwnerRepository.findOneById(id).orElse(null);
+	public Set<CottageDTO> getAllCottagesByOwner(String username){
+		CottageOwner owner = this.cottageOwnerRepository.findOneByAccountUsername(username).orElse(null);
 		return this.createCottageDTOs(owner.getCottages());
 	}
 	

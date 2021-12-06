@@ -12,7 +12,7 @@ public class CottagePicture {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(length = 150)
-	private int path;
+	private String path;
 
 	public CottagePicture() {
 		super();
@@ -27,11 +27,11 @@ public class CottagePicture {
 		this.id = id;
 	}
 
-	public int getPath() {
+	public String getPath() {
 		return path;
 	}
 
-	public void setPath(int path) {
+	public void setPath(String path) {
 		this.path = path;
 	}
 
