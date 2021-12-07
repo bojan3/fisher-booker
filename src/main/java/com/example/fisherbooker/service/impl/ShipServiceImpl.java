@@ -26,4 +26,12 @@ public class ShipServiceImpl {
 	public List<Ship> getAll() {
 		return this.shipRepository.findAll();
 	}
+
+	
+	
+	public void deleteShip(Long id) {
+		// TODO Auto-generated method stub
+		 this.shipRepository.deleteById(id);
+	}
+	
 }
