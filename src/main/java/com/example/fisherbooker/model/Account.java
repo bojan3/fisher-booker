@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,6 +27,8 @@ public class Account implements UserDetails {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	private static final long serialVersionUID = 1L;
 
 	@Id
     @Column(name = "id")
@@ -53,7 +56,7 @@ public class Account implements UserDetails {
     inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private List<Role> roles;
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	public Address address;
 
 	public Long getId() {
@@ -148,7 +151,6 @@ public class Account implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
 		return this.username;
 	}
 
@@ -179,6 +181,12 @@ public class Account implements UserDetails {
 		return enabled;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Account [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
+				+ ", name=" + name + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", enabled=" + enabled
+				+ ", lastPasswordResetDate=" + lastPasswordResetDate + ", roles=" + roles + ", address=" + address
+				+ "]";
+	}
 
 }
