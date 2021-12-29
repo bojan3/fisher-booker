@@ -133,6 +133,14 @@ public class Account implements UserDetails {
 		return this.roles;
 	}
 	
+	@Override
+	public String toString() {
+		return "Account [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
+				+ ", name=" + name + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", enabled=" + enabled
+				+ ", lastPasswordResetDate=" + lastPasswordResetDate + ", roles=" + roles + ", address=" + address
+				+ "]";
+	}
+
 	public Timestamp getLastPasswordResetDate() {
         return lastPasswordResetDate;
     }

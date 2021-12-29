@@ -142,6 +142,12 @@ public class AccountDTO {
 			this.lastPasswordResetDate = lastPasswordResetDate;
 		}
 
+		public List<Role> getRoles() {
+			return roles;
+		}
+
+		public void setRoles(List<Role> roles) {
+			this.roles = roles;
 		public String getRole() {
 			return role;
 		}
@@ -157,6 +163,25 @@ public class AccountDTO {
 		public void setAddress(Address address) {
 			this.address = address;
 		}
+
+		public AccountDTO(Account a) {
+			super();
+			this.id=a.getId();
+			this.username = a.getUsername();
+			this.email = a.getEmail();
+			this.password = a.getPassword();
+			this.name = a.getName();
+			this.lastName = a.getLastName();
+			this.phoneNumber = a.getPhoneNumber();
+			//this.enabled = a.isEnabled();
+			//this.lastPasswordResetDate = a.getLastPasswordResetDate();
+			//this.roles = a.getRoles();
+			this.address = a.address;
+			
+			
+			
+		}
+		
 		
 		
 		

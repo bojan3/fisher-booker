@@ -1,6 +1,7 @@
 package com.example.fisherbooker.service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageOwner;
+import com.example.fisherbooker.model.FishingInstructor;
 import com.example.fisherbooker.model.DTO.CottageDTO;
 import com.example.fisherbooker.repository.CottageOwnerRepository;
 
@@ -33,6 +35,10 @@ public class CottageOwnerService {
 			cottageDTOs.add(CottageDTO.createCottageDTO(cottage));
 		}
 		return cottageDTOs;
+	}
+	
+	public List<CottageOwner> getAll(){
+		return this.cottageOwnerRepository.findAll();
 	}
 	
 
