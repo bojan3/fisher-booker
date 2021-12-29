@@ -142,12 +142,13 @@ public class AccountDTO {
 			this.lastPasswordResetDate = lastPasswordResetDate;
 		}
 
-		public List<Role> getRoles() {
+		/*public List<Role> getRoles() {
 			return roles;
 		}
 
 		public void setRoles(List<Role> roles) {
-			this.roles = roles;
+			this.roles = roles;*/
+			
 		public String getRole() {
 			return role;
 		}
