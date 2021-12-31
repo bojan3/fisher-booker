@@ -98,8 +98,8 @@ insert into cottage_option(name, description, price) values('Masaža', 'Sat vrem
 insert into cottage_cottage_options(cottage_id, cottage_options_id) values(1, 1);
 insert into cottage_cottage_options(cottage_id, cottage_options_id) values(1, 2);
 
-insert into cottage_super_deal(start_date, end_date, discounted_price, capacity, cottage_id) values('2021-12-29', '2022-01-03', 1200, 4, 1);
-insert into cottage_super_deal(start_date, end_date, discounted_price, capacity, cottage_id) values('2022-01-05', '2022-01-10', 1000, 4, 1);
+insert into cottage_super_deal(start_date, end_date, discounted_price, capacity, cottage_id) values('2021-12-29', '2022-01-03', 12, 4, 1);
+insert into cottage_super_deal(start_date, end_date, discounted_price, capacity, cottage_id) values('2022-01-05', '2022-01-10', 10, 4, 1);
 
 insert into ship (name, type, length, description, average_mark,rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate) values ('Jahta Bosanka' , null, 3, 'Jahta za uzivanje', 5, 100, 10, 170, 150, 30, 0);
 insert into ship (name, type, length, description, average_mark,rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate) values ('Jahta Jovana' , null, 3, 'Jahta za uzivanje', 3, 150, 20, 200, 100, 40, 0);

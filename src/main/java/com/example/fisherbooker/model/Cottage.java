@@ -19,6 +19,7 @@ import javax.persistence.Transient;
 
 import com.example.fisherbooker.model.DTO.CottageAddDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "cottage")
@@ -45,6 +46,7 @@ public class Cottage {
 	@OneToMany(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<Rule> rules;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy="cottage", fetch = FetchType.EAGER)
 	public Set<CottageSuperDeal> cottageSuperDeal;
 	
