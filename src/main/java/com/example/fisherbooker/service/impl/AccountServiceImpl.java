@@ -70,4 +70,18 @@ public class AccountServiceImpl {
 	public Account findById(Long id) throws AccessDeniedException {
 		return accountRepository.findById(id).orElseGet(null);
 	}
+	
+	public boolean updateUser(AccountRequest account) {
+		Account oldAccount = accountRepository.getById(account.getId());
+		oldAccount.setUsername(account.getUsername());
+		oldAccount.setPassword(account.getPassword());
+		oldAccount.setName(account.getFirstname());
+		oldAccount.setLastName(account.getEmail());
+		oldAccount.setPhoneNumber(account.getPhoneNumber());
+		oldAccount.setAddress(oldAccount.getAddress());
+		System.out.println("Updated account:");
+		System.out.println(oldAccount);
+		accountRepository.save(oldAccount);
+		return true;
+	}
 }

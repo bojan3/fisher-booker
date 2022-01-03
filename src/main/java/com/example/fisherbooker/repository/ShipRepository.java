@@ -10,4 +10,8 @@ import com.example.fisherbooker.model.Ship;
 @Repository
 public interface ShipRepository extends JpaRepository<Ship, Long>{
 	public List<Ship> findAll();
+	public List<Ship> findByOrderByName();
+	public List<Ship> findByOrderByAverageMarkDesc();
+	public List<Ship> findByOrderByRentPrice();
+	public List<Ship> findByOrderByCapacityDesc();
 }

@@ -3,28 +3,57 @@ package com.example.fisherbooker.model.DTO;
 import com.example.fisherbooker.model.Address;
 import com.example.fisherbooker.model.Cottage;
 
+import net.bytebuddy.asm.Advice.This;
+import net.bytebuddy.description.type.RecordComponentDescription.ForLoadedRecordComponent;
+import net.bytebuddy.description.type.TypeList.Generic.OfLoadedInterfaceTypes;
+
 public class CottageDTO {
 	private Long id;
 	private String name;
 	private String description;
 	private int pricePerDay;
 	public Address address;
-	
-	public CottageDTO(Long id, String name, String description, Address address,int price) {
+	public float averageMark;
+	public CottageDTO(Long id, String name, String description, Address address,int price, float averageMark) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.pricePerDay=price;
 		this.address = address;
+		this.averageMark = averageMark;
 	}
 	
 	public static CottageDTO createCottageDTO(Cottage c) {
-		return new CottageDTO(c.getId(), c.getName(), c.getDescription(), c.getAddress(),c.getPricePerDay());
+		return new CottageDTO(c.getId(), c.getName(), c.getDescription(), c.getAddress(),c.getPricePerDay(), c.getAverageMark());
 	}
 
 	public CottageDTO() {
 		super();
+	}
+
+	public int getPricePerDay() {
+		return pricePerDay;
+	}
+
+	public void setPricePerDay(int pricePerDay) {
+		this.pricePerDay = pricePerDay;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public float getAverageMark() {
+		return averageMark;
+	}
+
+	public void setAverageMark(float averageMark) {
+		this.averageMark = averageMark;
 	}
 
 	public Long getId() {

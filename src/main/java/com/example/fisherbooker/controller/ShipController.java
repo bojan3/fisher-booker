@@ -18,19 +18,52 @@ import com.example.fisherbooker.service.impl.ShipServiceImpl;
 @RestController
 @RequestMapping("/api/ship")
 public class ShipController {
-	
+
 	public ShipServiceImpl shipService;
-	
+
 	@Autowired
 	public ShipController(ShipServiceImpl shipServiceImpl) {
 		this.shipService = shipServiceImpl;
 	}
-	
-	@GetMapping("/all")
-	public ResponseEntity<List<ShipDTO>> getAll(){
-		List<Ship> ships = this.shipService.getAll();
+
+	@GetMapping("/all/name")
+	public ResponseEntity<List<ShipDTO>> getAllByName() {
+		List<Ship> ships = this.shipService.getAllByName();
 		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
-		for(Ship ship: ships) {
+		for (Ship ship : ships) {
+			ShipDTO shipDTO = new ShipDTO().createShipDTO(ship);
+			shipsDTO.add(shipDTO);
+		}
+		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
+	}
+
+	@GetMapping("/all/price")
+	public ResponseEntity<List<ShipDTO>> getAllByPrice() {
+		List<Ship> ships = this.shipService.getAllByRentPrice();
+		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
+		for (Ship ship : ships) {
+			ShipDTO shipDTO = new ShipDTO().createShipDTO(ship);
+			shipsDTO.add(shipDTO);
+		}
+		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
+	}
+
+	@GetMapping("/all/rating")
+	public ResponseEntity<List<ShipDTO>> getAllByAverageMark() {
+		List<Ship> ships = this.shipService.getAllByAverageMark();
+		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
+		for (Ship ship : ships) {
+			ShipDTO shipDTO = new ShipDTO().createShipDTO(ship);
+			shipsDTO.add(shipDTO);
+		}
+		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
+	}
+
+	@GetMapping("/all/capacity")
+	public ResponseEntity<List<ShipDTO>> getAllByCapacity() {
+		List<Ship> ships = this.shipService.getAllByCapacity();
+		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
+		for (Ship ship : ships) {
 			ShipDTO shipDTO = new ShipDTO().createShipDTO(ship);
 			shipsDTO.add(shipDTO);
 		}

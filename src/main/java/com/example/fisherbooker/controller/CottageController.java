@@ -36,9 +36,9 @@ public class CottageController {
 	}
 	
 	
-	@GetMapping("/all")
-	public ResponseEntity<List<CottageDTO>> getAll(){
-		List<Cottage> cottages = this.cottageService.getAll();
+	@GetMapping("/all/name")
+	public ResponseEntity<List<CottageDTO>> getAllByName(){
+		List<Cottage> cottages = this.cottageService.getAllbyName();
 		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
 		for(Cottage cottage : cottages) {
 			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
@@ -48,6 +48,29 @@ public class CottageController {
 		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
 	}
 	
+	@GetMapping("/all/price")
+	public ResponseEntity<List<CottageDTO>> getAllbyPrice(){
+		List<Cottage> cottages = this.cottageService.getAllbyPrice();
+		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
+		for(Cottage cottage : cottages) {
+			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
+			System.out.println(cottageDTO.getPrice_per_day());
+			cottagesDTO.add(cottageDTO);
+		}
+		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
+	}
+	
+	@GetMapping("/all/rate")
+	public ResponseEntity<List<CottageDTO>> getAllByRate(){
+		List<Cottage> cottages = this.cottageService.getAllbyRate();
+		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
+		for(Cottage cottage : cottages) {
+			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
+			System.out.println(cottageDTO.getPrice_per_day());
+			cottagesDTO.add(cottageDTO);
+		}
+		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
+	}
 	
 
 }

@@ -26,4 +26,20 @@ public class ShipServiceImpl {
 	public List<Ship> getAll() {
 		return this.shipRepository.findAll();
 	}
+	
+	public List<Ship> getAllByName(){
+		return this.shipRepository.findByOrderByName();
+	}
+	
+	public List<Ship> getAllByAverageMark(){
+		return this.shipRepository.findByOrderByAverageMarkDesc();
+	}
+	
+	public List<Ship> getAllByRentPrice(){
+		return this.shipRepository.findByOrderByRentPrice();
+	}
+	
+	public List<Ship> getAllByCapacity(){
+		return this.shipRepository.findByOrderByCapacityDesc();
+	}
 }
