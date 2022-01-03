@@ -60,12 +60,12 @@ insert into adventure (account,name,description,capacity,price,cancel_rate,addre
 
 insert into availability_period(start_date, end_date) values(null, null);
 
-insert into cottage (description, name, address_id, availability_period_id,price_per_day) values ('rezervisi bre', 'Najjaca vikendica', 2, 1,20);
-insert into cottage (description, name, address_id, availability_period_id,price_per_day) values ('Slike govore vise od reci', 'Villa Mirna', 3, 1,50);
-insert into cottage (description, name, address_id, availability_period_id,price_per_day) values ('Zlatiborske lepote, veoma lep pogled', 'Villa Anja', 4, 1,50);
-insert into cottage (description, name, address_id, availability_period_id,price_per_day) values ('Visoko u panini, zubori reka u blizini', 'Villa Smilja', 6, 1,70);
-insert into cottage (description, name, address_id, availability_period_id,price_per_day) values ('u kotlini, brza voda tece', 'Villa Tamara', 1, 1,40);
-insert into cottage (description, name, address_id, availability_period_id,price_per_day) values ('Vikendica skrivena u sumi', 'Villa Zagorka', 5, 1,30);
+insert into cottage (description, name, address_id, availability_period_id,price_per_day, average_mark) values ('rezervisi bre', 'Najjaca vikendica', 2, 1,20, 0);
+insert into cottage (description, name, address_id, availability_period_id,price_per_day, average_mark) values ('Slike govore vise od reci', 'Villa Mirna', 3, 1,50, 1);
+insert into cottage (description, name, address_id, availability_period_id,price_per_day, average_mark) values ('Zlatiborske lepote, veoma lep pogled', 'Villa Anja', 4, 1,50, 2);
+insert into cottage (description, name, address_id, availability_period_id,price_per_day, average_mark) values ('Visoko u panini, zubori reka u blizini', 'Villa Smilja', 6, 1,70, 3);
+insert into cottage (description, name, address_id, availability_period_id,price_per_day, average_mark) values ('u kotlini, brza voda tece', 'Villa Tamara', 1, 1,40, 4);
+insert into cottage (description, name, address_id, availability_period_id,price_per_day, average_mark) values ('Vikendica skrivena u sumi', 'Villa Zagorka', 5, 1,30, 5);
 
 insert into cottage_owner_cottages(cottage_owner_id, cottages_id) values (1, 1);
 insert into cottage_owner_cottages(cottage_owner_id, cottages_id) values (1, 2);
@@ -97,6 +97,12 @@ insert into cottage_option(name, description, price) values('Masaža', 'Sat vrem
 
 insert into cottage_cottage_options(cottage_id, cottage_options_id) values(1, 1);
 insert into cottage_cottage_options(cottage_id, cottage_options_id) values(1, 2);
+insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('rezervisi bre', 'Najjaca vikendica', 2, 1, 20, 5);
+insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('Slike govore vise od reci', 'Villa Mirna', 3, 1, 100, 4);
+insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('Zlatiborske lepote, veoma lep pogled', 'Villa Anja', 4, 1, 10, 3);
+insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('Visoko u panini, zubori reka u blizini', 'Villa Smilja', 6, 1, 20, 2);
+insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('u kotlini, brza voda tece', 'Villa Tamara', 1, 1, 50, 1);
+insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('Vikendica skrivena u sumi', 'Villa Zagorka', 5, 1, 50, 1);
 
 insert into cottage_super_deal(start_date, end_date, discounted_price, capacity, cottage_id) values('2021-12-29', '2022-01-03', 1200, 4, 1);
 insert into cottage_super_deal(start_date, end_date, discounted_price, capacity, cottage_id) values('2022-01-05', '2022-01-10', 1000, 4, 1);

@@ -25,12 +25,19 @@ public class CottageService {
 		return true;
 	}
 	
-	public List<Cottage> getAll(){
-		return this.cottageRepository.findAll();	
+	public List<Cottage> getAllbyName(){
+		return this.cottageRepository.findByOrderByName();	
+	}
+
+	public List<Cottage> getAllbyPrice(){
+		return this.cottageRepository.findByOrderByPricePerDay();	
 	}
 	
 	public Cottage getById(Long id) {
 		return this.cottageRepository.findById(id).orElse(null);
 	}
 	
+	public List<Cottage> getAllbyRate(){
+		return this.cottageRepository.findByOrderByAverageMarkDesc();	
+	}
 }

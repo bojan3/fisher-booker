@@ -34,4 +34,20 @@ public class ShipServiceImpl {
 		 this.shipRepository.deleteById(id);
 	}
 	
+	
+	public List<Ship> getAllByName(){
+		return this.shipRepository.findByOrderByName();
+	}
+	
+	public List<Ship> getAllByAverageMark(){
+		return this.shipRepository.findByOrderByAverageMarkDesc();
+	}
+	
+	public List<Ship> getAllByRentPrice(){
+		return this.shipRepository.findByOrderByRentPrice();
+	}
+	
+	public List<Ship> getAllByCapacity(){
+		return this.shipRepository.findByOrderByCapacityDesc();
+	}
 }

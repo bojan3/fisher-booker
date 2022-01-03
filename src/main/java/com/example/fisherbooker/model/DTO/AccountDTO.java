@@ -62,7 +62,6 @@ public class AccountDTO {
 			String split[] = roles.get(0).toString().split("=", 0);
 			split[2] = split[2].replace("]", "");
 			this.role = split[2];
-			System.out.println(this.role);
 			this.address = address;
 		}
 		
