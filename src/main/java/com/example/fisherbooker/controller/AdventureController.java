@@ -24,57 +24,70 @@ import com.example.fisherbooker.service.FishingInstructorService;
 @RestController
 @RequestMapping("/api/adventure")
 public class AdventureController {
-public AdventureService adventureService;
-public FishingInstructorService fishinginstructorservice;
-	
+	public AdventureService adventureService;
+	public FishingInstructorService fishinginstructorservice;
+
 	@Autowired
 	public AdventureController(AdventureService adventureService) {
 		this.adventureService = adventureService;
 	}
-	
-	// ownerId ce drugacije da se dobavlja jednom kada dodamo spring security
-		@PostMapping("/add/{InstructorId}")
-		public ResponseEntity<Boolean> getAllByOwner(@RequestBody Adventure adventure){
-			this.adventureService.saveAdventure(adventure);
-			return new ResponseEntity<>(true, HttpStatus.OK);
-		}
-		
-		
-		@GetMapping("/all")
-		public ResponseEntity<List<AdventureDTO>> getAll(){
-			List<Adventure> adventures = this.adventureService.getAll();
-			List<AdventureDTO> adventuresDTO = new ArrayList<AdventureDTO>();
-			for(Adventure a : adventures) {
-				AdventureDTO adventureDTO =AdventureDTO.createAdventureDTO(a);
-				adventuresDTO.add(adventureDTO);
-			}
-			return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
-		}
-		
-	 
-	
-	  @PostMapping("/update/{AdventureID}")
-	  public ResponseEntity<Boolean>updateAdventure(@RequestBody Adventure adventure){
-		  
-		  
-			return new ResponseEntity<>(true, HttpStatus.OK);
 
-	  }
-	
-	  @DeleteMapping("/delete/{id}")
-	  void deleteEmployee(@PathVariable Long id) {
-	    adventureService.deleteById(id);
-	  }
-	  
-	  
-	  @PostMapping("/new")
-	  public ResponseEntity<Boolean>SaveAdventure(@RequestBody Adventure adventure){
-		  adventureService.saveAdventure(adventure);
-		  return new ResponseEntity<>(true,HttpStatus.OK);
-	  }
-	  
-	  
-	  
-	
-	
+	// ownerId ce drugacije da se dobavlja jednom kada dodamo spring security
+	@PostMapping("/add/{InstructorId}")
+	public ResponseEntity<Boolean> getAllByOwner(@RequestBody Adventure adventure) {
+		this.adventureService.saveAdventure(adventure);
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+
+	@GetMapping("/all/name")
+	public ResponseEntity<List<AdventureDTO>> getAllByName() {
+		List<Adventure> adventures = this.adventureService.getAllByName();
+		List<AdventureDTO> adventuresDTO = new ArrayList<AdventureDTO>();
+		for (Adventure a : adventures) {
+			AdventureDTO adventureDTO = AdventureDTO.createAdventureDTO(a);
+			adventuresDTO.add(adventureDTO);
+		}
+		return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
+	}
+
+	@GetMapping("/all/price")
+	public ResponseEntity<List<AdventureDTO>> getAllByPrice() {
+		List<Adventure> adventures = this.adventureService.getAllByPrice();
+		List<AdventureDTO> adventuresDTO = new ArrayList<AdventureDTO>();
+		for (Adventure a : adventures) {
+			AdventureDTO adventureDTO = AdventureDTO.createAdventureDTO(a);
+			adventuresDTO.add(adventureDTO);
+		}
+		return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
+	}
+
+	@GetMapping("/all/capacity")
+	public ResponseEntity<List<AdventureDTO>> getAllByCapacity() {
+		List<Adventure> adventures = this.adventureService.getAllByCapacity();
+		List<AdventureDTO> adventuresDTO = new ArrayList<AdventureDTO>();
+		for (Adventure a : adventures) {
+			AdventureDTO adventureDTO = AdventureDTO.createAdventureDTO(a);
+			adventuresDTO.add(adventureDTO);
+		}
+		return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
+	}
+
+	@PostMapping("/update/{AdventureID}")
+	public ResponseEntity<Boolean> updateAdventure(@RequestBody Adventure adventure) {
+
+		return new ResponseEntity<>(true, HttpStatus.OK);
+
+	}
+
+	@DeleteMapping("/delete/{id}")
+	void deleteEmployee(@PathVariable Long id) {
+		adventureService.deleteById(id);
+	}
+
+	@PostMapping("/new")
+	public ResponseEntity<Boolean> SaveAdventure(@RequestBody Adventure adventure) {
+		adventureService.saveAdventure(adventure);
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+
 }

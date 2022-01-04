@@ -37,8 +37,6 @@ public class RegistationController {
 	@GetMapping("/whoami")
 	@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
 	public AccountDTO account(Principal account) {
-		//AccountDTO accountDTO = new AccountDTO();
-		
 		return AccountDTO.createAccountDTO(accountService.findByUsername(account.getName()));
 	}
 
