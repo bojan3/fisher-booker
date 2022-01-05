@@ -110,20 +110,20 @@ public class Cottage {
 		this.address = address;
 	}
 
-	public List<Room> getRoom() {
+	public List<Room> getRooms() {
 		return rooms;
 	}
 
-	public void setRoom(List<Room> room) {
-		this.rooms = room;
+	public void setRooms(List<Room> rooms) {
+		this.rooms = rooms;
 	}
 
-	public Set<Rule> getRule() {
+	public Set<Rule> getRules() {
 		return rules;
 	}
 
-	public void setRule(Set<Rule> rule) {
-		this.rules = rule;
+	public void setRules(Set<Rule> rules) {
+		this.rules = rules;
 	}
 
 	public Set<CottageSuperDeal> getCottageFastReservation() {
