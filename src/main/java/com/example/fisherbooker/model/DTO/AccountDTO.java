@@ -164,6 +164,7 @@ public class AccountDTO {
 			this.address = address;
 		}
 
+		//accountDTO test
 		public AccountDTO(Account a) {
 			super();
 			this.id=a.getId();
@@ -177,12 +178,12 @@ public class AccountDTO {
 			//this.lastPasswordResetDate = a.getLastPasswordResetDate();
 			//this.roles = a.getRoles();
 			this.address = a.address;
-			
-			
-			
 		}
 		
-		
+		public void test() {
+			int test = 0;
+			test = 10;
+		}
 		
 		
 		
