@@ -79,5 +79,11 @@ public class CottageController {
 		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
 	}
 	
+	@PostMapping("/save")
+	public ResponseEntity<Boolean> save(@RequestBody Cottage cottage){
+		this.cottageService.saveCottage(cottage);
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+	
 
 }
