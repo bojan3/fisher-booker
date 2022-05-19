@@ -16,8 +16,8 @@ insert into role (name) values ('ROLE_COTTAGE_OWNER');
 insert into role (name) values ('ROLE_SHIP_OWNER');
 insert into role (name) values ('ROLE_INSTRUCTOR');
 
-insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('majstor','goran.tatomirov@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Goran', 'Tatomirov', '123456789', 1, TRUE);
-insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('gale','gale@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Jovan', 'Gaspar', '123456789', 1, TRUE);
+insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('majstor','goran.tatomirov@gmail.com', '$2a$10$H/Ei64SSObBqEIM9q2AZxeeU7xIK9z0lWUKemkn1Q36iwtodZ/pXC', 'Goran', 'Tatomirov', '123456789', 1, TRUE);
+insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('gale','gale@gmail.com', '$2a$12$.t9Q6PrLVvIrsEQZNke9uOP23FMUmWo42PUdNwDEQA59Qc8FbE3Pi', 'Jovan', 'Gaspar', '123456789', 1, TRUE);
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('bojan','bojan@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Bojan', 'Skokic', '123456789', 1, TRUE);
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('sasvimprirodno','jovopustolov@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Jovan', 'Memedovic', '123456789', 7, TRUE);
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('mire','miroljub@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Miroljub', 'Petrovic', '123456789', 3, TRUE);
@@ -67,7 +67,7 @@ insert into cottage (description, name, address_id, availability_period_id,price
 insert into cottage (description, name, address_id, availability_period_id,price_per_day, average_mark) values ('u kotlini, brza voda tece', 'Villa Tamara', 1, 1,40, 4);
 insert into cottage (description, name, address_id, availability_period_id,price_per_day, average_mark) values ('Vikendica skrivena u sumi', 'Villa Zagorka', 5, 1,30, 5);
 
-insert into cottage_owner_cottages(cottage_owner_id, cottages_id) values (1, 1);
+--insert into cottage_owner_cottages(cottage_owner_id, cottages_id) values (1, 1);
 insert into cottage_owner_cottages(cottage_owner_id, cottages_id) values (1, 2);
 
 insert into room(label, num_of_beds) values('A1', 2);
