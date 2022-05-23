@@ -9,7 +9,6 @@ insert into address (country, city, street, number) values ('United Kingdom', 'L
 insert into address (country, city, street, number) values ('Jadran sea', 'Five cave Island', 'Wild Street', '1');
 insert into address (country, city, street, number) values ('Serbia', 'Nis', 'Spic Petrol', '1');
 
-
 insert into role (name) values ('ROLE_CLIENT');
 insert into role (name) values ('ROLE_ADMIN');
 insert into role (name) values ('ROLE_COTTAGE_OWNER');
@@ -37,6 +36,7 @@ insert into account_role (account_id, role_id) values (7,4);
 insert into account_role (account_id, role_id) values (8,1);
 
 insert into cottage_owner (account_id) values (5);
+insert into cottage_owner (account_id) values (1);
 
 insert into fishing_instructor(account_id) values(4);
 
@@ -46,7 +46,6 @@ insert into fishing_instructor(account_id,biography) values(4,'Jednom recju smek
 
 insert into client(account_id) values(8);
 
-insert into cottage_owner (account_id) values (1);
 
 insert into fishing_instructor(account_id,biography) values(4,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Sasvim prirodno" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
 insert into fishing_instructor(account_id,biography) values(5,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Bear Grylls" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
@@ -97,16 +96,10 @@ insert into cottage_option(name, description, price) values('Masaža', 'Sat vrem
 
 insert into cottage_cottage_options(cottage_id, cottage_options_id) values(1, 1);
 insert into cottage_cottage_options(cottage_id, cottage_options_id) values(1, 2);
-insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('rezervisi bre', 'Najjaca vikendica', 2, 1, 20, 5);
-insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('Slike govore vise od reci', 'Villa Mirna', 3, 1, 100, 4);
-insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('Zlatiborske lepote, veoma lep pogled', 'Villa Anja', 4, 1, 10, 3);
-insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('Visoko u panini, zubori reka u blizini', 'Villa Smilja', 6, 1, 20, 2);
-insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('u kotlini, brza voda tece', 'Villa Tamara', 1, 1, 50, 1);
-insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('Vikendica skrivena u sumi', 'Villa Zagorka', 5, 1, 50, 1);
 
 insert into cottage_super_deal(start_date, end_date, discounted_price, capacity, cottage_id) values('2021-12-29', '2022-01-03', 12, 4, 1);
 insert into cottage_super_deal(start_date, end_date, discounted_price, capacity, cottage_id) values('2022-01-05', '2022-01-10', 10, 4, 1);
 
-insert into ship (name, type, length, description, average_mark,rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate) values ('Jahta Bosanka' , null, 3, 'Jahta za uzivanje', 5, 100, 10, 170, 150, 30, 0);
-insert into ship (name, type, length, description, average_mark,rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate) values ('Jahta Jovana' , null, 3, 'Jahta za uzivanje', 3, 150, 20, 200, 100, 40, 0);
-insert into ship (name, type, length, description, average_mark,rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate) values ('Jahta Katarina' , null, 3, 'Jahta za uzivanje', 7, 100, 30, 300, 150, 10, 0);
+insert into ship (name, type, length, description, average_mark, rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate, ship_owner_id) values ('Jahta Bosanka' , null, 3, 'Jahta za uzivanje', 5, 100, 10, 170, 150, 30, 0, 1);
+insert into ship (name, type, length, description, average_mark, rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate, ship_owner_id) values ('Jahta Jovana' , null, 3, 'Jahta za uzivanje', 3, 150, 20, 200, 100, 40, 0, 1);
+insert into ship (name, type, length, description, average_mark, rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate, ship_owner_id) values ('Jahta Katarina' , null, 3, 'Jahta za uzivanje', 7, 100, 30, 300, 150, 10, 0, 2);

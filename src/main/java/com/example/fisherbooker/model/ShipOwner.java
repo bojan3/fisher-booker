@@ -19,10 +19,10 @@ public class ShipOwner {
 
 	@OneToOne
 	public Account account;
-	
-	@OneToMany(fetch = FetchType.EAGER)
+
+	@OneToMany(mappedBy = "shipOwner", fetch = FetchType.EAGER)
 	public Set<Ship> ships;
-	
+
 	public ShipOwner() {
 		super();
 	}
@@ -48,5 +48,10 @@ public class ShipOwner {
 	public void setShips(Set<Ship> ships) {
 		this.ships = ships;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "ShipOwner [id=" + id + ", account=" + account + ", ships=" + ships + "]";
+	}
+
 }

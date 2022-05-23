@@ -34,7 +34,6 @@ public class Cottage {
 	@Column
 	private int pricePerDay;
 	
-	
 	private float averageMark;
 
 	@OneToOne(cascade=CascadeType.ALL)
