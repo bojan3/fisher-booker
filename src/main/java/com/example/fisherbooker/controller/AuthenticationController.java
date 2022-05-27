@@ -21,6 +21,7 @@ import com.example.fisherbooker.model.Account;
 import com.example.fisherbooker.model.DTO.AccountRequest;
 import com.example.fisherbooker.model.DTO.JwtAuthenticationRequest;
 import com.example.fisherbooker.model.DTO.UserTokenState;
+import com.example.fisherbooker.service.RegistrationRequestService;
 import com.example.fisherbooker.service.impl.AccountServiceImpl;
 import com.example.fisherbooker.util.TokenUtils;
 
@@ -28,6 +29,9 @@ import com.example.fisherbooker.util.TokenUtils;
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthenticationController {
 
+	@Autowired
+	private RegistrationRequestService rrs;
+	
 	@Autowired
 	private TokenUtils tokenUtils;
 
@@ -60,9 +64,9 @@ public class AuthenticationController {
 		return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
 	}
 
-	// Endpoint za registraciju novog korisnika
+	// Endpoint za slanje zahteva registraciju novog korisnika
 	@PostMapping("/signup")
-	public ResponseEntity<Account> addUser(@RequestBody AccountRequest accountRequest, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<String> addUser(@RequestBody AccountRequest accountRequest, UriComponentsBuilder ucBuilder) {
 		System.out.println(accountRequest.getRole());
 		Account existAccount = this.accountService.findByUsername(accountRequest.getUsername());
 
@@ -70,8 +74,10 @@ public class AuthenticationController {
 			throw new ResourceConflictException(accountRequest.getId(), "Username already exists");
 		}
 
-		Account account = this.accountService.save(accountRequest);
+		//Account account = this.accountService.save(accountRequest);
 
-		return new ResponseEntity<>(account, HttpStatus.CREATED);
+		//this.rrs.send_request(accountRequest);
+		
+		return new ResponseEntity<>("Zahtev je uspesno poslat!", HttpStatus.CREATED);
 	}
 }

@@ -1,8 +1,11 @@
 package com.example.fisherbooker.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,9 +28,10 @@ public class Client {
 	@OneToMany
 	public Set<CottageReservation> cottageReservation;
 
-	@OneToMany
-	public Set<AdventureReservation> adventureReservation;
-
+	@OneToMany(mappedBy = "adventure", cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
+	public Set<AdventureReservation> adventureReservation = new HashSet<AdventureReservation>();
+	
+	
 	public Client() {
 		super();
 		// TODO Auto-generated constructor stub

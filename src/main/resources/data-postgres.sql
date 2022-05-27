@@ -10,7 +10,6 @@ insert into address (country, city, street, number) values ('Jadran sea', 'Five 
 insert into address (country, city, street, number) values ('Serbia', 'Nis', 'Spic Petrol', '1');
 
 
-
 insert into role (name) values ('ROLE_CLIENT');
 insert into role (name) values ('ROLE_ADMIN');
 insert into role (name) values ('ROLE_COTTAGE_OWNER');
@@ -18,7 +17,7 @@ insert into role (name) values ('ROLE_SHIP_OWNER');
 insert into role (name) values ('ROLE_INSTRUCTOR');
 
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('majstor','goran.tatomirov@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Goran', 'Tatomirov', '123456789', 1, TRUE);
-insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('gale','gale@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Jovan', 'Gaspar', '123456789', 1, TRUE);
+insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('gale','gale@gmail.com', '1234', 'Jovan', 'Gaspar', '123456789', 1, TRUE);
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('bojan','bojan@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Bojan', 'Skokic', '123456789', 1, TRUE);
 
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('sasvimprirodno','jovopustolov@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Jovan', 'Memedovic', '123456789', 7, TRUE);
@@ -28,30 +27,80 @@ insert into account (username, email, password, name, last_name, phone_number, a
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('Crnobradi','crnobradi@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Crnobradi', 'Paja', '123456789', 9, TRUE);
 
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('Spic','tihomirspic@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Tihomir', 'Stojkovic', '123456789', 10, TRUE);
-
+insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('Crocop','mcc@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Mirko', 'Filipovic', '123456789', 10, TRUE);
 
 
 insert into account_role (account_id, role_id) values (1,1);
+
 insert into account_role (account_id, role_id) values (2,2);
+
 insert into account_role (account_id, role_id) values (3,1);
+
 insert into account_role (account_id, role_id) values (4,5);
+
 insert into account_role (account_id, role_id) values (5,5);
+
 insert into account_role (account_id, role_id) values (6,4);
+
 insert into account_role (account_id, role_id) values (7,4);
+
 insert into account_role (account_id, role_id) values (8,1);
 
 insert into client(account_id) values(8);
+insert into client(account_id) values(9);
+
+
 
 insert into cottage_owner (account_id) values (1);
 insert into fishing_instructor(account_id,biography) values(4,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Sasvim prirodno" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
 insert into fishing_instructor(account_id,biography) values(5,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Bear Grylls" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
 
+
+
 insert into ship_owner (account_id) values (6);
 insert into ship_owner (account_id) values (7);
 
-insert into adventure (account,name,description,capacity,price,cancel_rate,address_id) values (1,'Obilazak Djerdapske klisure','Ujutru se krece iz Beograda. Vozicemo se camcem Dunavom do Djerdapske klisure. Tamo cemo se zadrzati par sati dok obidjemo znamenita mesta. U povratku cemo svratiti u Vincu. Povratak se ocekuje predvece.',20,10,0.2,7);
-insert into adventure (account,name,description,capacity,price,cancel_rate,address_id) values (1,'Spustanje Tarom','Poslepodne se krece iz Beograda. Vozicemo se camcem Dunavom do Djerdapske klisure. Tamo cemo se zadrzati par sati dok obidjemo znamenita mesta. U povratku cemo svratiti u Vincu. Povratak se ocekuje predvece.',20,10,0.2,7);
-insert into adventure (account,name,description,capacity,price,cancel_rate,address_id) values (1,'Zora na Rtnju','Iz Beograda se krece pre ponoci. Na odrediste stizemo oko pola 4. Odmah nakon dolaska krece se u osvajanje Rtnja. Nakon 2,3 sata borbe sa zimom dolazimo do vrha. Povratak se ocekuje predvece.',20,10,0.2,7);
+insert into adventure (instructor_id,name,description,capacity,price,cancel_rate,address_id) values (1,'Obilazak Djerdapske klisure','Ujutru se krece iz Beograda. Vozicemo se camcem Dunavom do Djerdapske klisure. Tamo cemo se zadrzati par sati dok obidjemo znamenita mesta. U povratku cemo svratiti u Vincu. Povratak se ocekuje predvece.',20,10,0.2,7);
+insert into adventure (instructor_id,name,description,capacity,price,cancel_rate,address_id) values (1,'Spustanje Tarom','Poslepodne se krece iz Beograda. Vozicemo se camcem Dunavom do Djerdapske klisure. Tamo cemo se zadrzati par sati dok obidjemo znamenita mesta. U povratku cemo svratiti u Vincu. Povratak se ocekuje predvece.',20,10,0.2,7);
+insert into adventure (instructor_id,name,description,capacity,price,cancel_rate,address_id) values (1,'Zora na Rtnju','Iz Beograda se krece pre ponoci. Na odrediste stizemo oko pola 4. Odmah nakon dolaska krece se u osvajanje Rtnja. Nakon 2,3 sata borbe sa zimom dolazimo do vrha. Povratak se ocekuje predvece.',20,10,0.2,7);
+
+insert into adventure (instructor_id,name,description,capacity,price,cancel_rate,address_id) values (2,'Obilazak Palickog jezera','Ujutru se krece iz Beograda. Vozicemo se camcem Dunavom do Djerdapske klisure. Tamo cemo se zadrzati par sati dok obidjemo znamenita mesta. U povratku cemo svratiti u Vincu. Povratak se ocekuje predvece.',20,10,0.2,7);
+insert into adventure (instructor_id,name,description,capacity,price,cancel_rate,address_id) values (2,'Pecanje u Ohridskom jezeru','Poslepodne se krece iz Beograda. Vozicemo se camcem Dunavom do Djerdapske klisure. Tamo cemo se zadrzati par sati dok obidjemo znamenita mesta. U povratku cemo svratiti u Vincu. Povratak se ocekuje predvece.',20,10,0.2,7);
+insert into adventure (instructor_id,name,description,capacity,price,cancel_rate,address_id) values (2,'Obedska bara','Iz Beograda se krece pre ponoci. Na odrediste stizemo oko pola 4. Odmah nakon dolaska krece se u osvajanje Rtnja. Nakon 2,3 sata borbe sa zimom dolazimo do vrha. Povratak se ocekuje predvece.',20,10,0.2,7);
+
+insert into rule (description) values ('Drzati se grupe!');
+insert into rule (description) values ('Poneti kupaci!');
+insert into rule (description) values ('Poneti satore!');
+insert into rule (description) values ('Postovati satnicu dogadjaja!');
+
+
+
+--insert into adventure_rule (adventure_id, rule_id) values (1,1);
+
+
+insert into adventure_option(name,description,price) values('Voznja motorima','Nakon pauze pre povratka nazad, obilazi se jedna staza na kojoj je moguce provozati motore',10);
+insert into adventure_option(name,description,price) values('Jahanje konja','Nakon pauze pre povratka nazad, obilazi se proplanak pun divljih konja',10);
+insert into adventure_option(name,description,price) values('Planinarenje Vitorogom','Nakon pauze pre povratka nazad, obilazi se jedna staza na kojoj je moguce provozati motore',10);
+insert into adventure_option(name,description,price) values('Spust niz ski stazu','Nakon pauze pre povratka nazad, obilazi se jedna staza na kojoj je moguce provozati motore',10);
+insert into adventure_option(name,description,price) values('Penjanje žičarom','Nakon pauze pre povratka nazad, obilazi se jedna staza na kojoj je moguce provozati motore',10);
+insert into adventure_option(name,description,price) values('Letenje balonom','Nakon pauze pre povratka nazad, obilazi se jedna staza na kojoj je moguce provozati motore',10);
+insert into adventure_option(name,description,price) values('Ronjenje','Nakon pauze pre povratka nazad, obilazi se jedna staza na kojoj je moguce provozati motore',10);
+insert into adventure_option(name,description,price) values('Pecanje','Nakon pauze pre povratka nazad, obilazi se jedna staza na kojoj je moguce provozati motore',10);
+
+
+
+--insert into adventure_adventure_option(adventure_id, adventure_option_id) values(1,1);
+
+insert into adventure_reservation(start_time, duration, price, cancel_rate, capacity, adventure_id, client_id)values('11/12/2021', 12, 20,  0.2, 20, 1, 1);
+insert into adventure_reservation(start_time, duration, price, cancel_rate, capacity, adventure_id, client_id)values('12/12/2021', 12, 20,  0.2, 20, 2, 1);
+insert into adventure_reservation(start_time, duration, price, cancel_rate, capacity, adventure_id, client_id)values('13/12/2021', 12, 20,  0.2, 20, 3, 1);
+insert into adventure_reservation(start_time, duration, price, cancel_rate, capacity, adventure_id, client_id)values('14/12/2021', 12, 20,  0.2, 20, 4, 1);
+
+insert into adventure_reservation(start_time, duration, price, cancel_rate, capacity, adventure_id, client_id)values('11/12/2021', 12, 20,  0.2, 20, 1, 2);
+insert into adventure_reservation(start_time, duration, price, cancel_rate, capacity, adventure_id, client_id)values('12/12/2021', 12, 20,  0.2, 20, 2, 2);
+insert into adventure_reservation(start_time, duration, price, cancel_rate, capacity, adventure_id, client_id)values('13/12/2021', 12, 20,  0.2, 20, 3, 2);
+insert into adventure_reservation(start_time, duration, price, cancel_rate, capacity, adventure_id, client_id)values('14/12/2021', 12, 20,  0.2, 20, 4, 2);
+
 
 
 

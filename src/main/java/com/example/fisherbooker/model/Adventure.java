@@ -1,16 +1,25 @@
-package com.example.fisherbooker.model;
+ package com.example.fisherbooker.model;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="adventure")
@@ -26,40 +35,81 @@ public class Adventure {
 	
 
 	@Id
+    @Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(length=30, nullable=false)
 	private String name;
+	
 	@Column(length=350)
 	private String description;
 	
+	@Column
 	private int capacity;
+	
 	@Column
 	private int price;
+	
+	@Column
 	private float cancelRate;
 
-	@OneToMany
+	@OneToMany(mappedBy = "adventure", cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
+	//@JoinTable(name = "adventure_adventure_option",
+    //joinColumns = @JoinColumn(name = "adventure_id", referencedColumnName = "id"),
+    //inverseJoinColumns = @JoinColumn(name = "adventure_option_id", referencedColumnName = "id"))
 	public Set<AdventureOption> adventureOption;
 	
 	@ManyToOne
 	public Address address;
 	
-	@OneToMany
-	public java.util.Set<AdventurePicture> adventurePicture;
+	@JsonIgnore
+	@OneToMany(mappedBy = "adventure", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	public Set<AdventurePicture> adventurePicture = new HashSet<AdventurePicture>();
 	
-	@OneToMany
-	public Set<AdventureFastReservation> adventureFastReservation;
+	@JsonIgnore
+	@OneToMany(mappedBy = "adventure", cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
+	public Set<AdventureFastReservation> adventureFastReservation = new HashSet<AdventureFastReservation>();
 	
-	@OneToMany
-	public Set<Rule> rule;
+	@JsonIgnore
+	@OneToMany(mappedBy = "adventure", cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
+	public Set<AdventureReservation> adventureReservation = new HashSet<AdventureReservation>();
 	
-	@OneToMany
-	public Set<AdventureReservation> adventureReservation;
-	
-	@ManyToOne
-	@JoinColumn(name="account", nullable=false)
+	@JsonIgnore
+	@OneToMany(mappedBy = "adventure",cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
+	public Set<Rule> rule = new HashSet<Rule>();
+	 
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JsonIgnore
+	@JoinColumn(name="instructor_id", nullable=false)
 	public FishingInstructor fishingInstructor;
+		
+	
+		
+//	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+//	public List<Room> room;
+	
+
+	
+//	@OneToMany(mappedBy="cottage",cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
+//	public Set<CottageSuperDeal> cottageSuperDeal;
+	
+//	@OneToOne(cascade=CascadeType.ALL)
+//	public AvailabilityPeriod availabilityPeriod;
+	
+//	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+//	public Set<CottagePicture> cottagePicture;
+	
+//	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
+//	public Set<CottageReservation> cottageReservation;
+	
+//	@ManyToMany(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
+//	public Set<CottageOption> cottageOptions;
+	
+//	@ManyToOne
+//	private CottageOwner cottageOwner;
+	
+	
 	
 	public Long getId() {
 		return id;
@@ -102,7 +152,7 @@ public class Adventure {
 	}
 
 	public float getCancelRate() {
-		return cancelRate;
+		return this.cancelRate;
 	}
 
 	public void setCancelRate(float cancelRate) {
@@ -125,37 +175,37 @@ public class Adventure {
 		this.address = address;
 	}
 
-	public java.util.Set<AdventurePicture> getAdventurePicture() {
-		return adventurePicture;
-	}
+//	public java.util.Set<AdventurePicture> getAdventurePicture() {
+//		return adventurePicture;
+//	}
 
-	public void setAdventurePicture(java.util.Set<AdventurePicture> adventurePicture) {
-		this.adventurePicture = adventurePicture;
-	}
+//	public void setAdventurePicture(java.util.Set<AdventurePicture> adventurePicture) {
+//		this.adventurePicture = adventurePicture;
+//	}
 
-	public Set<AdventureFastReservation> getAdventureFastReservation() {
-		return adventureFastReservation;
-	}
+//	public Set<AdventureFastReservation> getAdventureFastReservation() {
+//		return adventureFastReservation;
+//	}
 
-	public void setAdventureFastReservation(Set<AdventureFastReservation> adventureFastReservation) {
-		this.adventureFastReservation = adventureFastReservation;
-	}
+//	public void setAdventureFastReservation(Set<AdventureFastReservation> adventureFastReservation) {
+//		this.adventureFastReservation = adventureFastReservation;
+//	}
 
-	public Set<Rule> getRule() {
-		return rule;
-	}
+//	public Set<Rule> getRule() {
+//		return rule;
+//	}
 
-	public void setRule(Set<Rule> rule) {
-		this.rule = rule;
-	}
+//	public void setRule(Set<Rule> rule) {
+//		this.rule = rule;
+//	}
 
-	public Set<AdventureReservation> getAdventureReservation() {
-		return adventureReservation;
-	}
+//	public Set<AdventureReservation> getAdventureReservation() {
+//		return adventureReservation;
+//	}
 
-	public void setAdventureReservation(Set<AdventureReservation> adventureReservation) {
-		this.adventureReservation = adventureReservation;
-	}
+//	public void setAdventureReservation(Set<AdventureReservation> adventureReservation) {
+//		this.adventureReservation = adventureReservation;
+//	}
 
 	public FishingInstructor getFishingInstructor() {
 		return fishingInstructor;

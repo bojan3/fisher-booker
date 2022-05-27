@@ -1,7 +1,11 @@
 package com.example.fisherbooker.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,13 +49,20 @@ public class FishingInstructor {
 	@Column(length=350)
 	private String biography;
 
-	@OneToMany(mappedBy = "fishingInstructor")
-	public java.util.Set<Adventure> adventure;
+	@OneToMany(mappedBy = "fishingInstructor", fetch = FetchType.EAGER)
+	public java.util.Set<Adventure> adventure = new HashSet<Adventure>();
+
+	@Override
+	public String toString() {
+		return "FishingInstructor [id=" + id + ", account=" + account + ", biography=" + biography + "]";
+	}
 
 	public FishingInstructor() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	
 
 	/** @pdGenerated default getter */
 	public java.util.Set<Adventure> getAdventure() {
