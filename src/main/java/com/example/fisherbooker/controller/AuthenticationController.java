@@ -53,10 +53,9 @@ public class AuthenticationController {
 		// Ukoliko je autentifikacija uspesna, ubaci korisnika u trenutni security
 		// kontekst
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-
+		
 		// Kreiraj token za tog korisnika
 		Account account = (Account) authentication.getPrincipal();
-		System.out.println(account);
 		String jwt = tokenUtils.generateToken(account.getUsername());
 		int expiresIn = tokenUtils.getExpiredIn();
 
@@ -68,6 +67,7 @@ public class AuthenticationController {
 	@PostMapping("/signup")
 	public ResponseEntity<String> addUser(@RequestBody AccountRequest accountRequest, UriComponentsBuilder ucBuilder) {
 		System.out.println(accountRequest.getRole());
+		System.out.println(accountRequest);
 		Account existAccount = this.accountService.findByUsername(accountRequest.getUsername());
 
 		if (existAccount != null) {

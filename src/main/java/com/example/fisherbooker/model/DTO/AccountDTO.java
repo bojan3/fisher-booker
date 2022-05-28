@@ -61,8 +61,10 @@ public class AccountDTO {
 			this.lastPasswordResetDate = lastPasswordResetDate;
 			String split[] = roles.get(0).toString().split("=", 0);
 			split[2] = split[2].replace("]", "");
-	//		this.role = split[2];
+
 			System.out.println(this.role);
+//uloga
+			this.role = split[2];
 			this.address = address;
 		}
 		
@@ -142,6 +144,7 @@ public class AccountDTO {
 			this.lastPasswordResetDate = lastPasswordResetDate;
 		}
 
+
 //		public List<Role> getRoles() {
 //			return roles;
 //		}
@@ -151,6 +154,18 @@ public class AccountDTO {
 //		public String getRole() {
 //			return role;
 //		}
+
+		/*public List<Role> getRoles() {
+			return roles;
+		}
+
+		public void setRoles(List<Role> roles) {
+			this.roles = roles;*/
+			
+		public String getRole() {
+			return role;
+		}
+
 
 //		public void setRole(String role) {
 //			this.role = role;
@@ -164,6 +179,7 @@ public class AccountDTO {
 			this.address = address;
 		}
 
+		//accountDTO test
 		public AccountDTO(Account a) {
 			super();
 			this.id=a.getId();
@@ -177,12 +193,12 @@ public class AccountDTO {
 			//this.lastPasswordResetDate = a.getLastPasswordResetDate();
 			//this.roles = a.getRoles();
 			this.address = a.address;
-			
-			
-			
 		}
 		
-		
+		public void test() {
+			int test = 0;
+			test = 10;
+		}
 		
 		
 		

@@ -43,15 +43,26 @@ public class AdventureService {
 		return ar.findAll();
 	}
 
-
+	public List<Adventure> getAllByName(){
+		return ar.findByOrderByName();
+	}
+	
+	public List<Adventure> getAllByPrice(){
+		return ar.findByOrderByPrice();
+	}
+	
+	public List<Adventure> getAllByCapacity(){
+		return ar.findByOrderByCapacityDesc();
+	}
+	
 	public Adventure deleteById(Long id) {
         return ar.deleteAllById(id);	
 	}
 
-
 	public Adventure getById(Long id) {
 		return ar.getById(id);
 	}
+
 		
    public Optional<Adventure> findOneById(Long id){
 	   return ar.findById(id);

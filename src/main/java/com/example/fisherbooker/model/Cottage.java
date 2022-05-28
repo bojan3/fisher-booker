@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.example.fisherbooker.model.DTO.CottageAddDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "cottage")
@@ -32,33 +34,35 @@ public class Cottage {
 	@Column
 	private int pricePerDay;
 	
-	@Transient
+	
 	private float averageMark;
 
 	@OneToOne(cascade=CascadeType.ALL)
 	public Address address;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-	public List<Room> room;
+	public List<Room> rooms;
 	
-	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
-	public Set<Rule> rule;
+	@OneToMany(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
+	public Set<Rule> rules;
 	
-	@OneToMany(mappedBy="cottage",cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
+	@JsonManagedReference
+	@OneToMany(mappedBy="cottage", fetch = FetchType.EAGER)
 	public Set<CottageSuperDeal> cottageSuperDeal;
 	
 	@OneToOne(cascade=CascadeType.ALL)
 	public AvailabilityPeriod availabilityPeriod;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	public Set<CottagePicture> cottagePicture;
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	public Set<CottagePicture> cottagePictures;
 	
-	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
+	@OneToMany(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<CottageReservation> cottageReservation;
 	
 	@ManyToMany(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<CottageOption> cottageOptions;
 	
+	@JsonIgnore
 	@ManyToOne
 	private CottageOwner cottageOwner;
 
@@ -106,20 +110,20 @@ public class Cottage {
 		this.address = address;
 	}
 
-	public List<Room> getRoom() {
-		return room;
+	public List<Room> getRooms() {
+		return rooms;
 	}
 
-	public void setRoom(List<Room> room) {
-		this.room = room;
+	public void setRooms(List<Room> rooms) {
+		this.rooms = rooms;
 	}
 
-	public Set<Rule> getRule() {
-		return rule;
+	public Set<Rule> getRules() {
+		return rules;
 	}
 
-	public void setRule(Set<Rule> rule) {
-		this.rule = rule;
+	public void setRules(Set<Rule> rules) {
+		this.rules = rules;
 	}
 
 	public Set<CottageSuperDeal> getCottageFastReservation() {
@@ -139,11 +143,11 @@ public class Cottage {
 	}
 
 	public Set<CottagePicture> getCottagePicture() {
-		return cottagePicture;
+		return cottagePictures;
 	}
 
 	public void setCottagePicture(Set<CottagePicture> cottagePicture) {
-		this.cottagePicture = cottagePicture;
+		this.cottagePictures = cottagePicture;
 	}
 
 	public Set<CottageReservation> getCottageReservation() {

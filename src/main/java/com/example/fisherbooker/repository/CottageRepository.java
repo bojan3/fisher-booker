@@ -12,4 +12,7 @@ import com.example.fisherbooker.model.Cottage;
 public interface CottageRepository extends JpaRepository<Cottage, Long>{
 	
 	public List<Cottage> findAll();
+	public List<Cottage> findByOrderByName();
+	public List<Cottage> findByOrderByPricePerDay();
+	public List<Cottage> findByOrderByAverageMarkDesc();
 }
