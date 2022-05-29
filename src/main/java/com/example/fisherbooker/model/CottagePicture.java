@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class CottagePicture {
@@ -13,6 +15,10 @@ public class CottagePicture {
 	private int id;
 	@Column(length = 150)
 	private String path;
+
+	@ManyToOne
+	@JoinColumn(name = "cottage_id")
+	private Cottage cottage;
 
 	public CottagePicture() {
 		super();
@@ -33,6 +39,14 @@ public class CottagePicture {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	public Cottage getCottage() {
+		return cottage;
+	}
+
+	public void setCottage(Cottage cottage) {
+		this.cottage = cottage;
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -22,7 +23,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "cottage")
 public class Cottage {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,36 +33,37 @@ public class Cottage {
 	private String description;
 	@Column
 	private int pricePerDay;
-	
+
 	private float averageMark;
 
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	public Address address;
-	
-	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-	public List<Room> rooms;
-	
-	@OneToMany(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
+
+	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER)
+	public Set<Room> rooms;
+
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<Rule> rules;
-	
-	@JsonManagedReference
-	@OneToMany(mappedBy="cottage", fetch = FetchType.EAGER)
+
+	// @JsonManagedReference
+	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER)
 	public Set<CottageSuperDeal> cottageSuperDeal;
-	
-	@OneToOne(cascade=CascadeType.ALL)
+
+	@OneToOne(cascade = CascadeType.ALL)
 	public AvailabilityPeriod availabilityPeriod;
-	
-	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+
+	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public Set<CottagePicture> cottagePictures;
-	
-	@OneToMany(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
+
+	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<CottageReservation> cottageReservation;
-	
-	@ManyToMany(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
+
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<CottageOption> cottageOptions;
-	
-	@JsonIgnore
+
+	// @JsonIgnore
 	@ManyToOne
+	@JoinColumn(name = "cottage_owner_id")
 	private CottageOwner cottageOwner;
 
 	public Cottage() {
@@ -109,11 +110,11 @@ public class Cottage {
 		this.address = address;
 	}
 
-	public List<Room> getRooms() {
+	public Set<Room> getRooms() {
 		return rooms;
 	}
 
-	public void setRooms(List<Room> rooms) {
+	public void setRooms(Set<Room> rooms) {
 		this.rooms = rooms;
 	}
 
@@ -184,5 +185,5 @@ public class Cottage {
 	public int getPricePerDay() {
 		return this.pricePerDay;
 	}
-	
+
 }

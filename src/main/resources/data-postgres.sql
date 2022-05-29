@@ -46,7 +46,6 @@ insert into fishing_instructor(account_id,biography) values(4,'Jednom recju smek
 
 insert into client(account_id) values(8);
 
-
 insert into fishing_instructor(account_id,biography) values(4,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Sasvim prirodno" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
 insert into fishing_instructor(account_id,biography) values(5,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Bear Grylls" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
 
@@ -59,37 +58,26 @@ insert into adventure (account,name,description,capacity,price,cancel_rate,addre
 
 insert into availability_period(start_date, end_date) values(null, null);
 
-insert into cottage (description, name, address_id, availability_period_id,price_per_day, average_mark) values ('rezervisi bre', 'Najjaca vikendica', 2, 1,20, 0);
-insert into cottage (description, name, address_id, availability_period_id,price_per_day, average_mark) values ('Slike govore vise od reci', 'Villa Mirna', 3, 1,50, 1);
+insert into cottage (description, name, address_id, availability_period_id,price_per_day, average_mark, cottage_owner_id) values ('rezervisi bre', 'Najjaca vikendica', 2, 1,20, 0, 1);
+insert into cottage (description, name, address_id, availability_period_id,price_per_day, average_mark, cottage_owner_id) values ('Slike govore vise od reci', 'Villa Mirna', 3, 1,50, 1, 1);
 insert into cottage (description, name, address_id, availability_period_id,price_per_day, average_mark) values ('Zlatiborske lepote, veoma lep pogled', 'Villa Anja', 4, 1,50, 2);
 insert into cottage (description, name, address_id, availability_period_id,price_per_day, average_mark) values ('Visoko u panini, zubori reka u blizini', 'Villa Smilja', 6, 1,70, 3);
 insert into cottage (description, name, address_id, availability_period_id,price_per_day, average_mark) values ('u kotlini, brza voda tece', 'Villa Tamara', 1, 1,40, 4);
 insert into cottage (description, name, address_id, availability_period_id,price_per_day, average_mark) values ('Vikendica skrivena u sumi', 'Villa Zagorka', 5, 1,30, 5);
 
-insert into cottage_owner_cottages(cottage_owner_id, cottages_id) values (1, 1);
-insert into cottage_owner_cottages(cottage_owner_id, cottages_id) values (1, 2);
-
-insert into room(label, num_of_beds) values('A1', 2);
-insert into room(label, num_of_beds) values('A2', 1);
-insert into room(label, num_of_beds) values('B1', 2);
-insert into room(label, num_of_beds) values('B2', 1);
+insert into room(label, num_of_beds, cottage_id) values('A1', 2, 1);
+insert into room(label, num_of_beds, cottage_id) values('A2', 1, 1);
+insert into room(label, num_of_beds, cottage_id) values('B1', 2, 2);
+insert into room(label, num_of_beds, cottage_id) values('B2', 1, 2);
 
 insert into rule(description) values('Zabranjeno pušenje u vikendici');
 insert into rule(description) values('Zabranjeno uništavanje imovine');
 
-insert into cottage_picture(path) values('../../assets/images/cottage1.png');
-insert into cottage_picture(path) values('../../assets/images/cottage2.png');
-
-insert into cottage_rooms(cottage_id, rooms_label) values(1, 'A1');
-insert into cottage_rooms(cottage_id, rooms_label) values(1, 'A2');
-insert into cottage_rooms(cottage_id, rooms_label) values(2, 'B1');
-insert into cottage_rooms(cottage_id, rooms_label) values(2, 'B2');
+insert into cottage_picture(path, cottage_id) values('../../assets/images/cottage1.png', 1);
+insert into cottage_picture(path, cottage_id) values('../../assets/images/cottage2.png', 1);
 
 insert into cottage_rules(cottage_id, rules_id) values(1, 1);
 insert into cottage_rules(cottage_id, rules_id) values(1, 2);
-
-insert into cottage_cottage_pictures(cottage_id, cottage_pictures_id) values(1, 1);
-insert into cottage_cottage_pictures(cottage_id, cottage_pictures_id) values(1, 2);
 
 insert into cottage_option(name, description, price) values('Teniski teren', 'Iznajmljuje se na sat', 400);
 insert into cottage_option(name, description, price) values('Masaža', 'Sat vremena', 1000);

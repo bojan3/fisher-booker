@@ -3,6 +3,8 @@ package com.example.fisherbooker.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -13,6 +15,10 @@ public class Room {
 	private String label;
 	private int numOfBeds;
 	
+	@ManyToOne
+	@JoinColumn(name="cottage_id")
+	private Cottage cottage;
+
 	public Room() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -38,6 +44,14 @@ public class Room {
 
 	public void setNumOfBeds(int numOfBeds) {
 		this.numOfBeds = numOfBeds;
+	}
+	
+	public Cottage getCottage() {
+		return cottage;
+	}
+
+	public void setCottage(Cottage cottage) {
+		this.cottage = cottage;
 	}
 
 	@Override

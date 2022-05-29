@@ -2,6 +2,7 @@ package com.example.fisherbooker.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -36,6 +37,9 @@ public class Ship {
 	private int capacity;
 	private float cancelRate;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	public Address address;
+
 	@ManyToOne
 	@JoinColumn(name = "ship_owner_id")
 	public ShipOwner shipOwner;
@@ -49,14 +53,11 @@ public class Ship {
 	@ManyToMany
 	public Set<FishingEquipment> fishingEquipment;
 
-	@OneToMany
+	@OneToMany(mappedBy = "ship")
 	public Set<ShipPicture> shipPicture;
 
 	@OneToMany(mappedBy = "ship")
 	public Set<ShipSuperDeal> shipSuperDeal;
-
-	@OneToOne
-	public Address address;
 
 	@ManyToMany
 	public Set<ShipOption> shipOptions;

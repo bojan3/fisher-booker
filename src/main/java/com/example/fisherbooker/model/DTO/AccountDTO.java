@@ -181,12 +181,5 @@ public class AccountDTO {
 			
 			
 		}
-		
-		
-		
-		
-		
-	
-	
-	
-}
+
+	}
