@@ -1,18 +1,28 @@
 package com.example.fisherbooker.service.impl;
 
 import java.util.List;
+import java.util.Objects;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.InvalidCsrfTokenException;
 import org.springframework.stereotype.Service;
 
+import com.example.fisherbooker.exception.InvalidTokenException;
 import com.example.fisherbooker.model.Account;
+import com.example.fisherbooker.model.AccountVerificationEmailContext;
 import com.example.fisherbooker.model.Role;
 import com.example.fisherbooker.model.DTO.AccountRequest;
 import com.example.fisherbooker.repository.AccountRepository;
+import com.example.fisherbooker.repository.SecureTokenRepository;
+import com.example.fisherbooker.security.auth.SecureToken;
+import com.example.fisherbooker.service.EmailService;
 import com.example.fisherbooker.service.RoleService;
+import com.example.fisherbooker.service.SecureTokenService;
 
 @Service
 public class AccountServiceImpl {
@@ -26,6 +36,19 @@ public class AccountServiceImpl {
 	@Autowired
 	private RoleService roleService;
 	
+	@Autowired
+	private SecureTokenService secureTokenService;
+	//sad dal treba naglasiti koji implementira ili ce sam da skonta
+	
+	@Autowired 
+	private SecureTokenRepository secureTokenRepository;
+	
+	@Value("${site.base.url.https}")
+	private String baseURL;
+	
+	@Autowired
+	private EmailService emailService;
+	
 	// adresa onoga ko se registruje treba da se doda
 	public Account save(AccountRequest accountRequest) {
 		
@@ -35,15 +58,36 @@ public class AccountServiceImpl {
 		account.setName(accountRequest.getFirstname());
 		account.setLastName(accountRequest.getLastname());
 		account.setPhoneNumber(accountRequest.getPhoneNumber());
-		account.setEnabled(true);
+		account.setEnabled(false);
 		account.setEmail(accountRequest.getEmail());
 		account.setAddress(accountRequest.getAddress());
 
 		List<Role> roles = getRoles(accountRequest.getRole());
 		account.setRoles(roles);
 		
-		return this.accountRepository.save(account);
+		Account savedAccount = this.accountRepository.save(account);	
+		
+		sendRegistrationConfirmationEmail(savedAccount);
+		
+		return savedAccount;
 	}
+	
+    public void sendRegistrationConfirmationEmail(Account account) {
+        SecureToken secureToken= secureTokenService.createSecureToken();
+        secureToken.setAccount(account);
+        secureTokenRepository.save(secureToken);
+        
+        AccountVerificationEmailContext emailContext = new AccountVerificationEmailContext();
+        emailContext.init(account);
+        emailContext.setToken(secureToken.getToken());
+        emailContext.buildVerificationUrl("http://localhost:4200", secureToken.getToken());
+        try {
+            emailService.sendMail(emailContext);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 	
 	public Account findByUsername(String username) throws UsernameNotFoundException {
 		return accountRepository.findByUsername(username);
@@ -84,4 +128,22 @@ public class AccountServiceImpl {
 		accountRepository.save(oldAccount);
 		return true;
 	}
+
+	public boolean verifyUser(String token) throws InvalidTokenException {
+		SecureToken secureToken = secureTokenService.findByToken(token);
+		System.out.println("Token iz baze: " + secureToken);
+		System.out.println("Token sa fronta: " + token);
+		
+        if(Objects.isNull(secureToken) || !StringUtils.equals(token, secureToken.getToken()) || secureToken.isExpired()){
+            throw new InvalidTokenException("Token is not valid");
+        }
+        
+        Account account = secureToken.getAccount();
+        account.setEmailVerified(true);
+        accountRepository.save(account);
+
+        secureTokenService.removeToken(secureToken);
+        return true;
+	}
+	
 }

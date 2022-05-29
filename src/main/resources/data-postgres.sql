@@ -11,19 +11,18 @@ insert into address (country, city, street, number) values ('Serbia', 'Nis', 'Sp
 
 insert into role (name) values ('ROLE_CLIENT');
 insert into role (name) values ('ROLE_ADMIN');
-insert into role (name) values ('ROLE_COTTAGE_OWNER');
+insert into role (name) values ('ROLE_COTTAGE_OWNER');	
 insert into role (name) values ('ROLE_SHIP_OWNER');
 insert into role (name) values ('ROLE_INSTRUCTOR');
 
-insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('majstor','goran.tatomirov@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Goran', 'Tatomirov', '123456789', 1, TRUE);
-insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('gale','gale@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Jovan', 'Gaspar', '123456789', 1, TRUE);
-insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('bojan','bojan@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Bojan', 'Skokic', '123456789', 1, TRUE);
-insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('sasvimprirodno','jovopustolov@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Jovan', 'Memedovic', '123456789', 7, TRUE);
-insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('mire','miroljub@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Miroljub', 'Petrovic', '123456789', 3, TRUE);
-insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('BearGrylls','beargrills@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Bear', 'Grylls', '123456789', 7, TRUE);
-insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('JackSparrow','jacksparrow@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Jack', 'Sparrow', '123456789', 9, TRUE);
-insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('Crnobradi','crnobradi@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Crnobradi', 'Paja', '123456789', 9, TRUE);
-insert into account (username, email, password, name, last_name, phone_number, address_id, enabled) values ('Spic','tihomirspic@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Tihomir', 'Stojkovic', '123456789', 10, TRUE);
+insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('gale','gale@gmail.com', '$2a$10$H/Ei64SSObBqEIM9q2AZxeeU7xIK9z0lWUKemkn1Q36iwtodZ/pXC', 'Jovan', 'Gaspar', '123456789', 1, TRUE, TRUE, FALSE);
+insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('bojan','bojan@gmail.com', '$2a$10$h8VcT2Y42IFQZUdjNRG7leGGw2gXnUZzXRDmvgLOmjzjR29b32jlK', 'Bojan', 'Skokic', '123456789', 1, TRUE, TRUE, TRUE);
+insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('sasvimprirodno','jovopustolov@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Jovan', 'Memedovic', '123456789', 7, TRUE, TRUE, TRUE);
+insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('mire','miroljub@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Miroljub', 'Petrovic', '123456789', 3, TRUE, TRUE, TRUE);
+insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('BearGrylls','beargrills@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Bear', 'Grylls', '123456789', 7, TRUE, TRUE, TRUE);
+insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('JackSparrow','jacksparrow@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Jack', 'Sparrow', '123456789', 9, TRUE, TRUE, TRUE);
+insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('Crnobradi','crnobradi@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Crnobradi', 'Paja', '123456789', 9, TRUE, TRUE, TRUE);
+insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('Spic','tihomirspic@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Tihomir', 'Stojkovic', '123456789', 10, TRUE, TRUE, TRUE);
 
 insert into account_role (account_id, role_id) values (1,1);
 insert into account_role (account_id, role_id) values (2,2);

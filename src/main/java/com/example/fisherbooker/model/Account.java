@@ -1,5 +1,6 @@
 package com.example.fisherbooker.model;
 
+import java.io.StreamTokenizer;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
@@ -16,11 +17,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
+import org.aspectj.weaver.ast.And;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.example.fisherbooker.security.auth.SecureToken;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import antlr.Token;
 
 @Entity
 public class Account implements UserDetails {
@@ -49,6 +55,34 @@ public class Account implements UserDetails {
 	@Column(length=15)
 	private String phoneNumber;
 	
+	private boolean emailVerified;
+	
+	private boolean adminVerified;
+	
+	
+	
+	public boolean isAdminVerified() {
+		return adminVerified;
+	}
+
+	public void setAdminVerified(boolean adminVerified) {
+		this.adminVerified = adminVerified;
+		if (emailVerified && adminVerified) {
+			this.enabled = true;
+		}
+	}
+
+	public boolean isEmailVerified() {
+		return emailVerified;
+	}
+
+	public void setEmailVerified(boolean emailVerified) {
+		this.emailVerified = emailVerified;
+		if (emailVerified && adminVerified) {
+			this.enabled = true;
+		}
+	}
+
 	private boolean enabled;
 	private Timestamp lastPasswordResetDate;
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -59,7 +93,11 @@ public class Account implements UserDetails {
 
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	public Address address;
-
+	
+//  tokeni za verifkaciju e-mail adrese
+	@OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
+    private Set<SecureToken> tokens;
+	
 	public Long getId() {
 		return id;
 	}
@@ -158,6 +196,7 @@ public class Account implements UserDetails {
 	public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+	
 	
 	@JsonIgnore
 	@Override
