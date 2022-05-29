@@ -2,6 +2,7 @@ package com.example.fisherbooker.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,7 +10,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -18,12 +21,12 @@ public class Ship {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(length=20)
+	@Column(length = 20)
 	private String name;
 	@Enumerated(EnumType.ORDINAL)
 	private ShipType type;
 	private float length;
-	@Column(length=350)
+	@Column(length = 350)
 	private String description;
 	@Column(nullable = true)
 	private float averageMark;
@@ -34,28 +37,32 @@ public class Ship {
 	private int capacity;
 	private float cancelRate;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	public Address address;
+
+	@ManyToOne
+	@JoinColumn(name = "ship_owner_id")
+	public ShipOwner shipOwner;
+
 	@OneToMany
 	public Set<Rule> rule;
-	
+
 	@ManyToMany
 	public Set<NavigationEquipment> navigationEquipment;
-	
+
 	@ManyToMany
 	public Set<FishingEquipment> fishingEquipment;
-	
-	@OneToMany
+
+	@OneToMany(mappedBy = "ship")
 	public Set<ShipPicture> shipPicture;
-	
-	@OneToMany(mappedBy="ship")
+
+	@OneToMany(mappedBy = "ship")
 	public Set<ShipSuperDeal> shipSuperDeal;
-	
-	@OneToOne
-	public Address address;
-	
+
 	@ManyToMany
 	public Set<ShipOption> shipOptions;
-	
-	@OneToMany(mappedBy="ship")
+
+	@OneToMany(mappedBy = "ship")
 	public Set<ShipReservation> shipReservation;
 
 	public Ship() {
@@ -220,6 +227,14 @@ public class Ship {
 
 	public void setShipReservation(Set<ShipReservation> shipReservation) {
 		this.shipReservation = shipReservation;
+	}
+
+	public ShipOwner getShipOwner() {
+		return shipOwner;
+	}
+
+	public void setShipOwner(ShipOwner shipOwner) {
+		this.shipOwner = shipOwner;
 	}
 
 }

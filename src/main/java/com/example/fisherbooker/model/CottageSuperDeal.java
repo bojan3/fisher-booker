@@ -24,7 +24,7 @@ public class CottageSuperDeal {
 	private Date endDate;
 	private int capacity;
 
-	@JsonBackReference
+	//@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="cottage_id", nullable=false)
 	public Cottage cottage;

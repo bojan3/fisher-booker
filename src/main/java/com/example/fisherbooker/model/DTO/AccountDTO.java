@@ -194,15 +194,5 @@ public class AccountDTO {
 			//this.roles = a.getRoles();
 			this.address = a.address;
 		}
-		
-		public void test() {
-			int test = 0;
-			test = 10;
-		}
-		
-		
-		
-	
-	
-	
-}
+
+	}

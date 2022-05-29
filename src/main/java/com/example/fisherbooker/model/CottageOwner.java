@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class CottageOwner {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -20,9 +20,9 @@ public class CottageOwner {
 	@OneToOne
 	public Account account;
 
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "cottageOwner", fetch = FetchType.EAGER)
 	public Set<Cottage> cottages;
-	
+
 	public CottageOwner() {
 		super();
 	}
@@ -53,5 +53,5 @@ public class CottageOwner {
 	public String toString() {
 		return "CottageOwner [account=" + account + ", cottage=" + cottages + "]";
 	}
-	
+
 }

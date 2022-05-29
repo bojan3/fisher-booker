@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -20,10 +21,12 @@ public class CottageReservation {
 	private int price;
 	private int duration;
 	private int capacity;
+	
 	@ManyToMany
 	private Set<CottageOption> cottageOption;
 
 	@ManyToOne
+	@JoinColumn(name="cottage_id", nullable=false)
 	public Cottage cottage;
 
 	public CottageReservation() {

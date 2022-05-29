@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.repository.ShipRepository;
+import com.example.fisherbooker.service.ShipService;
 
 @Service
-public class ShipServiceImpl {
+public class ShipServiceImpl implements ShipService {
 
 	public ShipRepository shipRepository;
 
@@ -27,27 +28,35 @@ public class ShipServiceImpl {
 		return this.shipRepository.findAll();
 	}
 
-	
-	
 	public void deleteShip(Long id) {
 		// TODO Auto-generated method stub
-		 this.shipRepository.deleteById(id);
+		this.shipRepository.deleteById(id);
 	}
-	
-	
-	public List<Ship> getAllByName(){
+
+	public List<Ship> getAllByName() {
 		return this.shipRepository.findByOrderByName();
 	}
-	
-	public List<Ship> getAllByAverageMark(){
+
+	public List<Ship> getAllByAverageMark() {
 		return this.shipRepository.findByOrderByAverageMarkDesc();
 	}
-	
-	public List<Ship> getAllByRentPrice(){
+
+	public List<Ship> getAllByRentPrice() {
 		return this.shipRepository.findByOrderByRentPrice();
 	}
-	
-	public List<Ship> getAllByCapacity(){
+
+	public List<Ship> getAllByCapacity() {
 		return this.shipRepository.findByOrderByCapacityDesc();
+	}
+
+	public Boolean checkIfOwnerHasShip(String username, Long shipId) {
+		List<Ship> ships = this.shipRepository.findByShipOwnerAccountUsername(username);
+		for(Ship ship : ships) {
+			System.out.println(ship.getShipOwner());
+			if (ship.getId().equals(shipId)){
+				return true;
+			}
+		}
+		return false;
 	}
 }
