@@ -42,7 +42,7 @@ public class ShipOwnerController {
 		Set<ShipDTO> ships = this.shipOwnerService.getAllShipsByOwner(username);
 		return new ResponseEntity<>(ships, HttpStatus.OK);
 	}
-
+// PULL REQUEST
 	@GetMapping("/all")
 	public ResponseEntity<List<ShipOwnerDTO>> getAll() {
 		List<ShipOwner> shipowners = this.shipOwnerService.getAll();
