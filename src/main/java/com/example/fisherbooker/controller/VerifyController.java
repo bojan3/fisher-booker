@@ -24,8 +24,6 @@ public class VerifyController {
 	
 	@PostMapping("/email")
     public ResponseEntity<Boolean> verifyEmail(@RequestBody(required = false) String securetoken){
-    	System.out.println("usao sam ovde!");
-    	System.out.println("Token u kontroleru" + securetoken);
 //        if(token == null){
 //            redirAttr.addFlashAttribute("tokenError", messageSource.getMessage("user.registration.verification.missing.token", null,LocaleContextHolder.getLocale()));
 //            return REDIRECT_LOGIN;

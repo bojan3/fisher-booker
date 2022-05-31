@@ -21,6 +21,7 @@ public interface ShipRepository extends JpaRepository<Ship, Long> {
 	public List<Ship> findByOrderByRentPrice();
 
 	public List<Ship> findByOrderByCapacityDesc();
-	
+
 	public List<Ship> findByShipOwnerAccountUsername(String username);
+
 }

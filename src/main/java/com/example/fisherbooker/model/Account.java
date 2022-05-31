@@ -34,33 +34,31 @@ public class Account implements UserDetails {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(length=15, nullable=false)
-    private String username;
-	@Column(nullable=false)
+	@Column(length = 15, nullable = false)
+	private String username;
+	@Column(nullable = false)
 	private String email;
-	@Column(length=100, nullable=false)
+	@Column(length = 100, nullable = false)
 	private String password;
-	@Column(length=20, nullable=false)
+	@Column(length = 20, nullable = false)
 	private String name;
-	@Column(length=25, nullable=false)
+	@Column(length = 25, nullable = false)
 	private String lastName;
-	@Column(length=15)
+	@Column(length = 15)
 	private String phoneNumber;
-	
+
 	private boolean emailVerified;
-	
+
 	private boolean adminVerified;
-	
-	
-	
+
 	public boolean isAdminVerified() {
 		return adminVerified;
 	}
@@ -86,18 +84,16 @@ public class Account implements UserDetails {
 	private boolean enabled;
 	private Timestamp lastPasswordResetDate;
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "account_role",
-    joinColumns = @JoinColumn(name = "account_id", referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	@JoinTable(name = "account_role", joinColumns = @JoinColumn(name = "account_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private List<Role> roles;
 
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	public Address address;
-	
+
 //  tokeni za verifkaciju e-mail adrese
 	@OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
-    private Set<SecureToken> tokens;
-	
+	private Set<SecureToken> tokens;
+
 	public Long getId() {
 		return id;
 	}
@@ -158,7 +154,6 @@ public class Account implements UserDetails {
 		this.phoneNumber = phoneNumber;
 	}
 
-
 	public Address getAddress() {
 		return address;
 	}
@@ -171,7 +166,7 @@ public class Account implements UserDetails {
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.roles;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Account [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
@@ -181,12 +176,12 @@ public class Account implements UserDetails {
 	}
 
 	public Timestamp getLastPasswordResetDate() {
-        return lastPasswordResetDate;
-    }
+		return lastPasswordResetDate;
+	}
 
-    public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
-        this.lastPasswordResetDate = lastPasswordResetDate;
-    }
+	public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
+		this.lastPasswordResetDate = lastPasswordResetDate;
+	}
 
 	@Override
 	public String getUsername() {
@@ -194,16 +189,15 @@ public class Account implements UserDetails {
 	}
 
 	public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-	
-	
+		this.enabled = enabled;
+	}
+
 	@JsonIgnore
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
 	}
-	
+
 	@JsonIgnore
 	@Override
 	public boolean isAccountNonLocked() {

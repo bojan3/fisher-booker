@@ -90,3 +90,7 @@ insert into cottage_super_deal(start_date, end_date, discounted_price, capacity,
 insert into ship (name, type, length, description, average_mark, rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate, ship_owner_id) values ('Jahta Bosanka' , null, 3, 'Jahta za uzivanje', 5, 100, 10, 170, 150, 30, 0, 1);
 insert into ship (name, type, length, description, average_mark, rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate, ship_owner_id) values ('Jahta Jovana' , null, 3, 'Jahta za uzivanje', 3, 150, 20, 200, 100, 40, 0, 1);
 insert into ship (name, type, length, description, average_mark, rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate, ship_owner_id) values ('Jahta Katarina' , null, 3, 'Jahta za uzivanje', 7, 100, 30, 300, 150, 10, 0, 2);
+
+insert into ship_picture(path, ship_id) values('../../assets/images/gusar1.png', 1);
+
+insert into ship_reservation(start_date, end_date, ship_id) values ('2021-05-31', '2021-06-10', 1);

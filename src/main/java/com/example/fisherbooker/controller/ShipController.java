@@ -1,11 +1,15 @@
 package com.example.fisherbooker.controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +42,7 @@ public class ShipController {
 		List<Ship> ships = this.shipService.getAllByName();
 		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
 		for (Ship ship : ships) {
-			ShipDTO shipDTO = new ShipDTO().createShipDTO(ship);
+			ShipDTO shipDTO = ShipDTO.createShipDTO(ship);
 			shipsDTO.add(shipDTO);
 		}
 		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
@@ -49,7 +53,7 @@ public class ShipController {
 		List<Ship> ships = this.shipService.getAllByRentPrice();
 		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
 		for (Ship ship : ships) {
-			ShipDTO shipDTO = new ShipDTO().createShipDTO(ship);
+			ShipDTO shipDTO = ShipDTO.createShipDTO(ship);
 			shipsDTO.add(shipDTO);
 		}
 		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
@@ -60,7 +64,7 @@ public class ShipController {
 		List<Ship> ships = this.shipService.getAllByAverageMark();
 		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
 		for (Ship ship : ships) {
-			ShipDTO shipDTO = new ShipDTO().createShipDTO(ship);
+			ShipDTO shipDTO = ShipDTO.createShipDTO(ship);
 			shipsDTO.add(shipDTO);
 		}
 		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
@@ -71,13 +75,14 @@ public class ShipController {
 		List<Ship> ships = this.shipService.getAllByCapacity();
 		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
 		for (Ship ship : ships) {
-			ShipDTO shipDTO = new ShipDTO().createShipDTO(ship);
+			ShipDTO shipDTO = ShipDTO.createShipDTO(ship);
 			shipsDTO.add(shipDTO);
 		}
 		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
 	}
 
-	@GetMapping("/get/delete/{ShipId}")
+	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping("/delete/{ShipId}")
 	public ResponseEntity<List<ShipDTO>> deleteShip(@PathVariable("ShipId") Long ShipId) {
 		List<Ship> ships = this.shipService.getAll();
 		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
@@ -86,11 +91,33 @@ public class ShipController {
 				this.shipService.deleteShip(ShipId);
 				System.out.println("Brod sa identifikatorom" + ShipId + "je uspesno obrisan");
 			} else {
-				ShipDTO shipDTO = new ShipDTO().createShipDTO(ship);
+				ShipDTO shipDTO = ShipDTO.createShipDTO(ship);
 				shipsDTO.add(shipDTO);
 			}
 		}
 		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
+	}
+
+	@PreAuthorize("hasRole('SHIP_OWNER')")
+	@DeleteMapping("/delete/owner/{ShipId}")
+	public ResponseEntity<List<ShipDTO>> delete(@PathVariable("ShipId") Long ShipId) {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		if (this.shipService.checkIfOwnerHasShip(username, ShipId)) {
+
+			if (!this.shipService.checkIfShipHasReservation(ShipId)) {
+				this.shipService.deleteShip(ShipId);
+			} else {
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			}
+
+			// this.shipService.deleteShip(ShipId);
+		}
+		List<Ship> ownersShips = this.shipService.getAllByOwnerUsername(username);
+		List<ShipDTO> shipDTOs = new ArrayList<ShipDTO>();
+		for (Ship ship : ownersShips) {
+			shipDTOs.add(ShipDTO.createShipDTO(ship));
+		}
+		return new ResponseEntity<>(shipDTOs, HttpStatus.OK);
 	}
 
 	@PostMapping("/save")
