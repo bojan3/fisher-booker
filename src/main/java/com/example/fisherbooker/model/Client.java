@@ -19,13 +19,13 @@ public class Client {
 	@OneToOne
 	public Account account;
 	
-	@OneToMany
+	@OneToMany(mappedBy="client")
 	public Set<ShipReservation> shipReservation;
 	
-	@OneToMany
+	@OneToMany(mappedBy="client")
 	public Set<CottageReservation> cottageReservation;
 
-	@OneToMany
+	@OneToMany(mappedBy="client")
 	public Set<AdventureReservation> adventureReservation;
 
 	public Client() {

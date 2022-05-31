@@ -27,15 +27,13 @@ insert into account (username, email, password, name, last_name, phone_number, a
 insert into account_role (account_id, role_id) values (1,1);
 insert into account_role (account_id, role_id) values (2,2);
 insert into account_role (account_id, role_id) values (3,1);
-insert into account_role (account_id, role_id) values (4,5);
-insert into account_role (account_id, role_id) values (5,3);
+insert into account_role (account_id, role_id) values (4,3);
 insert into account_role (account_id, role_id) values (5,5);
 insert into account_role (account_id, role_id) values (6,4);
 insert into account_role (account_id, role_id) values (7,4);
 insert into account_role (account_id, role_id) values (8,1);
 
-insert into cottage_owner (account_id) values (5);
-insert into cottage_owner (account_id) values (1);
+insert into cottage_owner (account_id) values (4);
 
 insert into fishing_instructor(account_id) values(4);
 
@@ -55,14 +53,15 @@ insert into adventure (account,name,description,capacity,price,cancel_rate,addre
 insert into adventure (account,name,description,capacity,price,cancel_rate,address_id) values (1,'Spustanje Tarom','Poslepodne se krece iz Beograda. Vozicemo se camcem Dunavom do Djerdapske klisure. Tamo cemo se zadrzati par sati dok obidjemo znamenita mesta. U povratku cemo svratiti u Vincu. Povratak se ocekuje predvece.',20,10,0.2,7);
 insert into adventure (account,name,description,capacity,price,cancel_rate,address_id) values (1,'Zora na Rtnju','Iz Beograda se krece pre ponoci. Na odrediste stizemo oko pola 4. Odmah nakon dolaska krece se u osvajanje Rtnja. Nakon 2,3 sata borbe sa zimom dolazimo do vrha. Povratak se ocekuje predvece.',20,10,0.2,7);
 
-insert into availability_period(start_date, end_date) values(null, null);
+insert into availability_period(start_date, end_date) values('2022-05-31', '2022-06-30');
+insert into availability_period(start_date, end_date) values('2022-06-02', '2022-06-12');
 
-insert into cottage (description, name, address_id, availability_period_id,price_per_day, average_mark, cottage_owner_id) values ('rezervisi bre', 'Najjaca vikendica', 2, 1,20, 0, 1);
-insert into cottage (description, name, address_id, availability_period_id,price_per_day, average_mark, cottage_owner_id) values ('Slike govore vise od reci', 'Villa Mirna', 3, 1,50, 1, 1);
-insert into cottage (description, name, address_id, availability_period_id,price_per_day, average_mark) values ('Zlatiborske lepote, veoma lep pogled', 'Villa Anja', 4, 1,50, 2);
-insert into cottage (description, name, address_id, availability_period_id,price_per_day, average_mark) values ('Visoko u panini, zubori reka u blizini', 'Villa Smilja', 6, 1,70, 3);
-insert into cottage (description, name, address_id, availability_period_id,price_per_day, average_mark) values ('u kotlini, brza voda tece', 'Villa Tamara', 1, 1,40, 4);
-insert into cottage (description, name, address_id, availability_period_id,price_per_day, average_mark) values ('Vikendica skrivena u sumi', 'Villa Zagorka', 5, 1,30, 5);
+insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark, cottage_owner_id) values ('rezervisi bre', 'Najjaca vikendica', 2, 1,20, 0, 1);
+insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark, cottage_owner_id) values ('Slike govore vise od reci', 'Villa Mirna', 3, 2,50, 1, 1);
+insert into cottage (description, name, address_id, price_per_day, average_mark) values ('Zlatiborske lepote, veoma lep pogled', 'Villa Anja', 4, 50, 2);
+insert into cottage (description, name, address_id, price_per_day, average_mark) values ('Visoko u panini, zubori reka u blizini', 'Villa Smilja', 6,70, 3);
+insert into cottage (description, name, address_id, price_per_day, average_mark) values ('u kotlini, brza voda tece', 'Villa Tamara', 1, 40, 4);
+insert into cottage (description, name, address_id, price_per_day, average_mark) values ('Vikendica skrivena u sumi', 'Villa Zagorka', 5, 30, 5);
 
 insert into room(label, num_of_beds, cottage_id) values('A1', 2, 1);
 insert into room(label, num_of_beds, cottage_id) values('A2', 1, 1);
@@ -93,4 +92,4 @@ insert into ship (name, type, length, description, average_mark, rent_price, eng
 
 insert into ship_picture(path, ship_id) values('../../assets/images/gusar1.png', 1);
 
-insert into ship_reservation(start_date, end_date, ship_id) values ('2021-05-31', '2021-06-10', 1);
+insert into ship_reservation(start_date, end_date, ship_id, client_id) values ('2022-05-31', '2022-06-10', 1, 1);

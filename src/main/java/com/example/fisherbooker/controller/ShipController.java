@@ -109,8 +109,6 @@ public class ShipController {
 			} else {
 				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 			}
-
-			// this.shipService.deleteShip(ShipId);
 		}
 		List<Ship> ownersShips = this.shipService.getAllByOwnerUsername(username);
 		List<ShipDTO> shipDTOs = new ArrayList<ShipDTO>();

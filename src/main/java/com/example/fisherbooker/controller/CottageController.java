@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fisherbooker.model.Cottage;
+import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.DTO.CottageDTO;
+import com.example.fisherbooker.model.DTO.ShipDTO;
 import com.example.fisherbooker.service.CottageService;
 
 @RestController
@@ -27,13 +31,6 @@ public class CottageController {
 	@Autowired
 	public CottageController(CottageService cottageService) {
 		this.cottageService = cottageService;
-	}
-
-	// ownerId ce drugacije da se dobavlja jednom kada dodamo spring security
-	@PostMapping("/add/{ownerId}")
-	public ResponseEntity<Boolean> getAllByOwner(@RequestBody Cottage cottage) {
-		this.cottageService.saveCottage(cottage);
-		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 
 	@GetMapping("/all/name")
@@ -76,6 +73,26 @@ public class CottageController {
 			cottagesDTO.add(cottageDTO);
 		}
 		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('COTTAGE_OWNER')")
+	@DeleteMapping("/delete/owner/{CottageId}")
+	public ResponseEntity<List<CottageDTO>> delete(@PathVariable("CottageId") Long id) {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		if (this.cottageService.checkIfOwnerHasCottage(username, id)) {
+
+			if (!this.cottageService.checkIfCottageHasReservation(id)) {
+				this.cottageService.deleteCottage(id);
+			} else {
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			}
+		}
+		List<Cottage> ownersCottages = this.cottageService.getAllByOwnerUsername(username);
+		List<CottageDTO> cottageDTOs = new ArrayList<CottageDTO>();
+		for (Cottage cottage : ownersCottages) {
+			cottageDTOs.add(CottageDTO.createCottageDTO(cottage));
+		}
+		return new ResponseEntity<>(cottageDTOs, HttpStatus.OK);
 	}
 
 	@PostMapping("/save")
