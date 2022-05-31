@@ -1,6 +1,5 @@
 package com.example.fisherbooker.model;
 
-import java.io.StreamTokenizer;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
@@ -19,14 +18,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import org.aspectj.weaver.ast.And;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.fisherbooker.security.auth.SecureToken;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import antlr.Token;
 
 @Entity
 public class Account implements UserDetails {
@@ -91,7 +88,7 @@ public class Account implements UserDetails {
     inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private List<Role> roles;
 
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne(cascade=CascadeType.ALL)
 	public Address address;
 	
 //  tokeni za verifkaciju e-mail adrese

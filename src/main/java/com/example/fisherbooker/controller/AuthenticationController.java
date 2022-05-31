@@ -70,6 +70,8 @@ public class AuthenticationController {
 			throw new ResourceConflictException(accountRequest.getId(), "Username already exists");
 		}
 
+		System.out.println(accountRequest);
+		
 		Account account = this.accountService.save(accountRequest);
 
 		return new ResponseEntity<>(account, HttpStatus.CREATED);
