@@ -51,7 +51,7 @@ public class AdventureService {
 		return ar.findByOrderByPrice();
 	}
 	
-	public List<Adventure> getAllByCapacity(){
+	public List<Adventure> getAllByCapacity1(){
 		return ar.findByOrderByCapacityDesc();
 	}
 	
@@ -68,10 +68,10 @@ public class AdventureService {
 	   return ar.findById(id);
    }
 
-public List<Adventure> getAllByName() {
+//public List<Adventure> getAllByName() {
 	// TODO Auto-generated method stub
-	return ar.findByOrderByName();
-}
+//	return ar.findByOrderByName();
+//}
 	
 public List<Adventure> getAllByRentPrice() {
 	// TODO Auto-generated method stub

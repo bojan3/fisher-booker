@@ -64,8 +64,8 @@ public class FishingInstructorService {
 	public Optional<FishingInstructor> findOneById(Long id) {
 		return this.fishinginstructorrepository.findById(id);
 	}
-	
-	
-	
-	
+
+	public void save(FishingInstructor fishinginstructor) {
+		this.fishinginstructorrepository.save(fishinginstructor);		
+	}
 }

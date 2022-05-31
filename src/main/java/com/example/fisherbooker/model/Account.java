@@ -33,6 +33,9 @@ public class Account implements UserDetails {
 	public Account() {
 		super();
 		// TODO Auto-generated constructor stub
+// 	this.adminVerified = false;
+//	this.emailVerified = false;
+//	this.enabled = false; 
 	}
 	
 	private static final long serialVersionUID = 1L;
@@ -214,4 +217,15 @@ public class Account implements UserDetails {
 		return enabled;
 	}
 
+	@Override
+	public String toString() {
+		return "Account [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
+				+ ", name=" + name + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", emailVerified="
+				+ emailVerified + ", adminVerified=" + adminVerified + ", enabled=" + enabled
+				+ ", lastPasswordResetDate=" + lastPasswordResetDate + ", roles=" + roles + ", address=" + address
+		//		+ ", tokens=" + tokens + "]";
+		;
+	}
+
+	
 }

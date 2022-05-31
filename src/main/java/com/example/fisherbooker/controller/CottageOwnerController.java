@@ -42,10 +42,14 @@ public class CottageOwnerController {
 	@GetMapping("/all")
 	public ResponseEntity<List<CottageOwnerDTO>> getAll(){
 		List<CottageOwner> cottageowners = this.cottageOwnerService.getAll();
+		
 		List<CottageOwnerDTO> cottageownersDTO = new ArrayList<CottageOwnerDTO>();
 		for(CottageOwner cottageowner : cottageowners) {
-			CottageOwnerDTO cottageownerDTO = CottageOwnerDTO.createCottageOwnerDTO(cottageowner);
-			cottageownersDTO.add(cottageownerDTO);
+			//CottageOwnerDTO cottageownerDTO = new CottageOwnerDTO(cottageowner.getAccount(),cottageowner.getCottages());			
+				CottageOwnerDTO cottageownerDTO = new CottageOwnerDTO();
+				cottageownerDTO.setAccount(cottageowner.getAccount());
+			//	cottageownerDTO.setCottages(cottageowner.getCottages());
+				cottageownersDTO.add(cottageownerDTO);
 		}
 		return new ResponseEntity<>(cottageownersDTO, HttpStatus.OK);
 	}

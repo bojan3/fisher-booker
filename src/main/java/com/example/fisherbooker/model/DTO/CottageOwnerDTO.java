@@ -22,5 +22,24 @@ public class CottageOwnerDTO {
 	public static CottageOwnerDTO createCottageOwnerDTO(CottageOwner cottageowner) {
 		return new CottageOwnerDTO(cottageowner.getAccount(),cottageowner.getCottages());
 	}
+	
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+
+	public Set<Cottage> getCottages() {
+		return cottages;
+	}
+	
+	public void setCottages(Set<Cottage> cottages) {
+		this.cottages=cottages;
+	}
+	
+	
 
 }

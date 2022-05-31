@@ -48,7 +48,9 @@ public class ShipOwnerController {
 		List<ShipOwner> shipowners = this.shipOwnerService.getAll();
 		List<ShipOwnerDTO> shipownersDTO = new ArrayList<ShipOwnerDTO>();
 		for (ShipOwner shipowner : shipowners) {
-			ShipOwnerDTO shipownerDTO = ShipOwnerDTO.createShipOwnerDTO(shipowner);
+			//ShipOwnerDTO shipownerDTO = ShipOwnerDTO.createShipOwnerDTO(shipowner);
+			ShipOwnerDTO shipownerDTO = new  ShipOwnerDTO();
+			shipownerDTO.account = shipowner.getAccount();
 			shipownersDTO.add(shipownerDTO);
 		}
 		return new ResponseEntity<>(shipownersDTO, HttpStatus.OK);

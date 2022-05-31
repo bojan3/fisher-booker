@@ -34,27 +34,32 @@ public class Cottage {
 	@Column
 	private int pricePerDay;
 
+	@Column
 	private float averageMark;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	public Address address;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER)
 	public Set<Room> rooms;
-
+	
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<Rule> rules;
 
 	// @JsonManagedReference
 	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER)
 	public Set<CottageSuperDeal> cottageSuperDeal;
-
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	public AvailabilityPeriod availabilityPeriod;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public Set<CottagePicture> cottagePictures;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<CottageReservation> cottageReservation;
 
@@ -63,6 +68,7 @@ public class Cottage {
 
 	// @JsonIgnore
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name = "cottage_owner_id")
 	private CottageOwner cottageOwner;
 
@@ -186,4 +192,7 @@ public class Cottage {
 		return this.pricePerDay;
 	}
 
+	
+	
+	
 }

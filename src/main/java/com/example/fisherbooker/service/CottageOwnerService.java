@@ -40,6 +40,12 @@ public class CottageOwnerService {
 	public List<CottageOwner> getAll(){
 		return this.cottageOwnerRepository.findAll();
 	}
+
+	public void save(CottageOwner cottageowner) {
+		
+		this.cottageOwnerRepository.save(cottageowner);
+		
+	}
 	
 
 }

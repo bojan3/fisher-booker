@@ -1,5 +1,6 @@
 package com.example.fisherbooker.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -21,7 +22,7 @@ public class CottageOwner {
 	public Account account;
 
 	@OneToMany(mappedBy = "cottageOwner", fetch = FetchType.EAGER)
-	public Set<Cottage> cottages;
+	public Set<Cottage> cottages = new HashSet<Cottage>();
 
 	public CottageOwner() {
 		super();
@@ -54,4 +55,23 @@ public class CottageOwner {
 		return "CottageOwner [account=" + account + ", cottage=" + cottages + "]";
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -74,7 +74,9 @@ public class AuthenticationController {
 			throw new ResourceConflictException(accountRequest.getId(), "Username already exists");
 		}
 
-		//Account account = this.accountService.save(accountRequest);
+		//Account novi = new Account();
+		
+		Account account = this.accountService.save(accountRequest);
 
 		//this.rrs.send_request(accountRequest);
 		

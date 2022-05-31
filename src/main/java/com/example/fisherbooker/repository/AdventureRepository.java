@@ -22,10 +22,10 @@ public interface AdventureRepository extends JpaRepository<Adventure, Long> {
 	Adventure save(Adventure adventure);
 
 
-	List<Adventure> findByOrderByName();
+//	List<Adventure> findByOrderByName();
 
 
-	List<Adventure> findByOrderByPrice();
+//	List<Adventure> findByOrderByPrice();
 	
 	public List<Adventure> findByFishingInstructorAccountUsername(String username);
 

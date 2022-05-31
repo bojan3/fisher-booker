@@ -42,4 +42,8 @@ public class ShipOwnerService {
 		// TODO Auto-generated method stub
 		return this.shipOwnerRepository.findAll();
 	}
+
+	public void save(ShipOwner shipowner) {
+		this.shipOwnerRepository.save(shipowner);		
+	}
 }

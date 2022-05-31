@@ -17,6 +17,7 @@ import org.postgresql.util.LruCache.CreateAction;
 
 import com.example.fisherbooker.model.Account;
 import com.example.fisherbooker.model.Address;
+import com.example.fisherbooker.model.Adventure;
 import com.example.fisherbooker.model.Role;
 
 import net.bytebuddy.asm.Advice.This;
@@ -33,7 +34,7 @@ public class AccountDTO {
 		private String phoneNumber;
 		private boolean enabled;
 		private Timestamp lastPasswordResetDate;
-		private Role role;
+		private String role;
 		public Address address;
 
 		public AccountDTO(){}
@@ -61,9 +62,6 @@ public class AccountDTO {
 			this.lastPasswordResetDate = lastPasswordResetDate;
 			String split[] = roles.get(0).toString().split("=", 0);
 			split[2] = split[2].replace("]", "");
-
-			System.out.println(this.role);
-//uloga
 			this.role = split[2];
 			this.address = address;
 		}
@@ -144,17 +142,6 @@ public class AccountDTO {
 			this.lastPasswordResetDate = lastPasswordResetDate;
 		}
 
-
-//		public List<Role> getRoles() {
-//			return roles;
-//		}
-
-//		public void setRoles(List<Role> roles) {
-//			this.roles = roles;
-//		public String getRole() {
-//			return role;
-//		}
-
 		/*public List<Role> getRoles() {
 			return roles;
 		}
@@ -166,10 +153,9 @@ public class AccountDTO {
 			return role;
 		}
 
-
-//		public void setRole(String role) {
-//			this.role = role;
-//		}
+		public void setRole(String role) {
+			this.role = role;
+		}
 
 		public Address getAddress() {
 			return address;
@@ -195,4 +181,14 @@ public class AccountDTO {
 			this.address = a.address;
 		}
 
+
+		
+		public static AdventureDTO createAdventureDTO(Adventure a) {
+			
+			return new AdventureDTO(a.getId(), a.getName(), a.getDescription(),a.getPrice(),a.getCancelRate(),a.getCapacity(),a.getFishingInstructor().getId(),a.getAddress());
+		}
+		
+		
+		
+		
 	}
