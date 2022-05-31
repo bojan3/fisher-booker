@@ -41,7 +41,6 @@ public class ClientController {
 			ClientDTO clientDTO = ClientDTO.createClientDTO(client);
 			clientsDTO.add(clientDTO);
 		}
-		System.out.println(clientsDTO);
 		return new ResponseEntity<>(clientsDTO, HttpStatus.OK);
 	}
 }

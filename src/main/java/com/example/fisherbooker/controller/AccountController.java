@@ -47,10 +47,8 @@ public class AccountController {
 	private RoleServiceImpl roleservice;
 	
 	@PostMapping("/update")
-	//@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
+	@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
 	public boolean updateUser(@RequestBody AccountRequest accountRequest, UriComponentsBuilder ucBuilder){
-		System.out.println("Account request");
-		System.out.println(accountRequest);
 		return accountService.updateUser(accountRequest);
 	}
 	

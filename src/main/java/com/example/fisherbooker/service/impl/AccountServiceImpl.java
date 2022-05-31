@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.transaction.Transactional;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +34,7 @@ import com.example.fisherbooker.service.RoleService;
 import com.example.fisherbooker.service.SecureTokenService;
 
 @Service
+@Transactional
 public class AccountServiceImpl {
 	
 	@Autowired 
@@ -74,8 +77,8 @@ public class AccountServiceImpl {
 		Account account = new Account();
 		account.setUsername(accountRequest.getUsername());
 		account.setPassword(passwordEncoder.encode(accountRequest.getPassword()));
-		account.setName(accountRequest.getFirstname());
-		account.setLastName(accountRequest.getLastname());
+		account.setName(accountRequest.getName());
+		account.setLastName(accountRequest.getLastName());
 		account.setPhoneNumber(accountRequest.getPhoneNumber());
 		account.setEnabled(false);
 		account.setEmail(accountRequest.getEmail());
@@ -83,6 +86,9 @@ public class AccountServiceImpl {
 		account.setAdminVerified(false);
 		
 		
+		
+		if(accountRequest.getRole().equals("CLIENT"))
+			account.setAdminVerified(true);
 		
 		List<Role> roles = getRoles(accountRequest.getRole());
 		account.setRoles(roles);
@@ -138,15 +144,15 @@ public class AccountServiceImpl {
 	}
 	
 	public boolean updateUser(AccountRequest account) {
-		Account oldAccount = accountRepository.getById(account.getId());
+		Account oldAccount = accountRepository.getOne(account.getId());
+//		System.out.println("Stari akaunt: " + oldAccount);
 		oldAccount.setUsername(account.getUsername());
 		oldAccount.setPassword(account.getPassword());
-		oldAccount.setName(account.getFirstname());
-		oldAccount.setLastName(account.getEmail());
+		oldAccount.setName(account.getName());
 		oldAccount.setPhoneNumber(account.getPhoneNumber());
 		oldAccount.setAddress(oldAccount.getAddress());
 		System.out.println("Updated account:");
-		System.out.println(oldAccount);
+//		System.out.println(oldAccount);
 		accountRepository.save(oldAccount);
 		return true;
 	}

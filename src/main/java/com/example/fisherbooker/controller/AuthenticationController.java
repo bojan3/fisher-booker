@@ -65,16 +65,14 @@ public class AuthenticationController {
 
 	// Endpoint za slanje zahteva registraciju novog korisnika
 	@PostMapping("/signup")
-	public ResponseEntity<String> addUser(@RequestBody AccountRequest accountRequest, UriComponentsBuilder ucBuilder) {
-		System.out.println(accountRequest.getRole());
-		System.out.println(accountRequest);
+	public ResponseEntity<Account> addUser(@RequestBody AccountRequest accountRequest, UriComponentsBuilder ucBuilder) {
 		Account existAccount = this.accountService.findByUsername(accountRequest.getUsername());
 
 		if (existAccount != null) {
 			throw new ResourceConflictException(accountRequest.getId(), "Username already exists");
 		}
 
-		//Account novi = new Account();
+		System.out.println(accountRequest);
 		
 		Account account = this.accountService.save(accountRequest);
 

@@ -41,15 +41,14 @@ public class Cottage {
 	public Address address;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	public Set<Room> rooms;
 	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<Rule> rules;
 
-	// @JsonManagedReference
-	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	public Set<CottageSuperDeal> cottageSuperDeal;
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)

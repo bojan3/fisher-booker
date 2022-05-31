@@ -8,17 +8,21 @@ import org.springframework.stereotype.Service;
 
 import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.DTO.ShipDTO;
+import com.example.fisherbooker.model.ShipReservation;
 import com.example.fisherbooker.repository.ShipRepository;
+import com.example.fisherbooker.repository.ShipReservationRepository;
 import com.example.fisherbooker.service.ShipService;
 
 @Service
 public class ShipServiceImpl implements ShipService {
 
-	public ShipRepository shipRepository;
+	private ShipRepository shipRepository;
+	private ShipReservationRepository shipReservationRepository;
 
 	@Autowired
-	public ShipServiceImpl(ShipRepository shipRepository) {
+	public ShipServiceImpl(ShipRepository shipRepository, ShipReservationRepository shipReservationRepository) {
 		this.shipRepository = shipRepository;
+		this.shipReservationRepository = shipReservationRepository;
 	}
 
 	public Boolean saveShip(Ship ship) {
@@ -31,7 +35,6 @@ public class ShipServiceImpl implements ShipService {
 	}
 
 	public void deleteShip(Long id) {
-		// TODO Auto-generated method stub
 		this.shipRepository.deleteById(id);
 	}
 
@@ -50,12 +53,16 @@ public class ShipServiceImpl implements ShipService {
 	public List<Ship> getAllByCapacity() {
 		return this.shipRepository.findByOrderByCapacityDesc();
 	}
+	
+	public List<Ship> getAllByOwnerUsername(String username){
+		return this.shipRepository.findByShipOwnerAccountUsername(username);
+	}
 
 	public Boolean checkIfOwnerHasShip(String username, Long shipId) {
 		List<Ship> ships = this.shipRepository.findByShipOwnerAccountUsername(username);
-		for(Ship ship : ships) {
+		for (Ship ship : ships) {
 			System.out.println(ship.getShipOwner());
-			if (ship.getId().equals(shipId)){
+			if (ship.getId().equals(shipId)) {
 				return true;
 			}
 		}
@@ -87,4 +94,8 @@ public class ShipServiceImpl implements ShipService {
 	
 	
 	
+	public Boolean checkIfShipHasReservation(Long id) {
+		List<ShipReservation> reservations = this.shipReservationRepository.findByShipId(id);
+		return !reservations.isEmpty();
+	}
 }

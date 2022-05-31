@@ -1,6 +1,5 @@
 package com.example.fisherbooker.model;
 
-import java.io.StreamTokenizer;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
@@ -19,14 +18,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import org.aspectj.weaver.ast.And;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.fisherbooker.security.auth.SecureToken;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import antlr.Token;
 
 @Entity
 public class Account implements UserDetails {
@@ -37,33 +34,31 @@ public class Account implements UserDetails {
 //	this.emailVerified = false;
 //	this.enabled = false; 
 	}
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(length=15, nullable=false)
-    private String username;
-	@Column(nullable=false)
+	@Column(length = 15, nullable = false)
+	private String username;
+	@Column(nullable = false)
 	private String email;
-	@Column(length=100, nullable=false)
+	@Column(length = 100, nullable = false)
 	private String password;
-	@Column(length=20, nullable=false)
+	@Column(length = 20, nullable = false)
 	private String name;
-	@Column(length=25, nullable=false)
+	@Column(length = 25, nullable = false)
 	private String lastName;
-	@Column(length=15)
+	@Column(length = 15)
 	private String phoneNumber;
-	
+
 	private boolean emailVerified;
-	
+
 	private boolean adminVerified;
-	
-	
-	
+
 	public boolean isAdminVerified() {
 		return adminVerified;
 	}
@@ -89,18 +84,16 @@ public class Account implements UserDetails {
 	private boolean enabled;
 	private Timestamp lastPasswordResetDate;
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "account_role",
-    joinColumns = @JoinColumn(name = "account_id", referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	@JoinTable(name = "account_role", joinColumns = @JoinColumn(name = "account_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private List<Role> roles;
 
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne(cascade=CascadeType.ALL)
 	public Address address;
-	
+
 //  tokeni za verifkaciju e-mail adrese
 	@OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
-    private Set<SecureToken> tokens;
-	
+	private Set<SecureToken> tokens;
+
 	public Long getId() {
 		return id;
 	}
@@ -161,7 +154,6 @@ public class Account implements UserDetails {
 		this.phoneNumber = phoneNumber;
 	}
 
-
 	public Address getAddress() {
 		return address;
 	}
@@ -175,14 +167,21 @@ public class Account implements UserDetails {
 		return this.roles;
 	}
 
+	@Override
+	public String toString() {
+		return "Account [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
+				+ ", name=" + name + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", enabled=" + enabled
+				+ ", lastPasswordResetDate=" + lastPasswordResetDate + ", roles=" + roles + ", address=" + address
+				+ "]";
+	}
 
 	public Timestamp getLastPasswordResetDate() {
-        return lastPasswordResetDate;
-    }
+		return lastPasswordResetDate;
+	}
 
-    public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
-        this.lastPasswordResetDate = lastPasswordResetDate;
-    }
+	public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
+		this.lastPasswordResetDate = lastPasswordResetDate;
+	}
 
 	@Override
 	public String getUsername() {
@@ -190,16 +189,15 @@ public class Account implements UserDetails {
 	}
 
 	public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-	
-	
+		this.enabled = enabled;
+	}
+
 	@JsonIgnore
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
 	}
-	
+
 	@JsonIgnore
 	@Override
 	public boolean isAccountNonLocked() {
@@ -217,15 +215,7 @@ public class Account implements UserDetails {
 		return enabled;
 	}
 
-	@Override
-	public String toString() {
-		return "Account [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
-				+ ", name=" + name + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", emailVerified="
-				+ emailVerified + ", adminVerified=" + adminVerified + ", enabled=" + enabled
-				+ ", lastPasswordResetDate=" + lastPasswordResetDate + ", roles=" + roles + ", address=" + address
-		//		+ ", tokens=" + tokens + "]";
-		;
-	}
+
 
 	
 }

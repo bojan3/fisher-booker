@@ -39,7 +39,11 @@ public class AdventureReservation {
 	@Column
 	private float cancelRate;
 	
-	@OneToMany
+	@ManyToOne
+	@JoinColumn(name="client_id", nullable=false)
+	public Client client;
+	
+	@ManyToMany
 	private Set<AdventureOption> adventureOption;
 	
 	

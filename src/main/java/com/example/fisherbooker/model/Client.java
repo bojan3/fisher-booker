@@ -22,10 +22,10 @@ public class Client {
 	@OneToOne
 	public Account account;
 	
-	@OneToMany
+	@OneToMany(mappedBy="client")
 	public Set<ShipReservation> shipReservation;
 	
-	@OneToMany
+	@OneToMany(mappedBy="client")
 	public Set<CottageReservation> cottageReservation;
 
 	@OneToMany(mappedBy = "adventure", cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)

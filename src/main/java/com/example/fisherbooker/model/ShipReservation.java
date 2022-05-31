@@ -25,6 +25,10 @@ public class ShipReservation {
 	@ManyToOne
 	@JoinColumn(name="ship_id", nullable=false)
 	public Ship ship;
+	
+	@ManyToOne
+	@JoinColumn(name="client_id", nullable=false)
+	public Client client;
 
 	public ShipReservation() {
 		super();

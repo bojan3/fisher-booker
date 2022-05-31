@@ -19,9 +19,13 @@ public interface ShipService {
 	public List<Ship> getAllByRentPrice();
 
 	public List<Ship> getAllByCapacity();
-	
+
+	public List<Ship> getAllByOwnerUsername(String username);
+
 	public Boolean checkIfOwnerHasShip(String username, Long shipId);
 	
 	public List<ShipDTO> deleteShipDTO(Long id);
 	
+
+	public Boolean checkIfShipHasReservation(Long id);
 }

@@ -53,7 +53,7 @@ public class Ship {
 	@ManyToMany
 	public Set<FishingEquipment> fishingEquipment;
 
-	@OneToMany(mappedBy = "ship")
+	@OneToMany(mappedBy = "ship", cascade = CascadeType.ALL)
 	public Set<ShipPicture> shipPicture;
 
 	@OneToMany(mappedBy = "ship")

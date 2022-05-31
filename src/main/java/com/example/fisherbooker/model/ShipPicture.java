@@ -15,7 +15,7 @@ public class ShipPicture {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(length = 150)
-	private int path;
+	private String path;
 
 	@ManyToOne
 	@JoinColumn(name = "ship_id")
@@ -26,7 +26,7 @@ public class ShipPicture {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ShipPicture(int id, int path) {
+	public ShipPicture(int id, String path) {
 		super();
 		this.id = id;
 		this.path = path;
@@ -40,11 +40,11 @@ public class ShipPicture {
 		this.id = id;
 	}
 
-	public int getPath() {
+	public String getPath() {
 		return path;
 	}
 
-	public void setPath(int path) {
+	public void setPath(String path) {
 		this.path = path;
 	}
 

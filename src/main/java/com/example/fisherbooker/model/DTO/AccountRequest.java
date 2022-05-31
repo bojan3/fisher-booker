@@ -8,8 +8,8 @@ public class AccountRequest {
 	private Long id;
 	private String username;
 	private String password;
-	private String firstname;
-	private String lastname;
+	private String name;
+	private String lastName;
 	private String email;
 	private String phoneNumber;
 	private Address address;
@@ -48,20 +48,20 @@ public class AccountRequest {
 		this.password = password;
 	}
 
-	public String getFirstname() {
-		return firstname;
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setLastname(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getEmail() {
@@ -92,19 +92,19 @@ public class AccountRequest {
 
 	@Override
 	public String toString() {
-		return "AccountRequest [ username=" + username + ", password=" + password + ", firstname="
-				+ firstname + ", lastname=" + lastname + ", email=" + email + ", phoneNumber=" + phoneNumber
+		return "AccountRequest [id=" + id + ", username=" + username + ", password=" + password + ", name="
+				+ name + ", lastName=" + lastName + ", email=" + email + ", phoneNumber=" + phoneNumber
 				+ ", address=" + address + ", role=" + role + "]";
 	}
 
-	public AccountRequest(Long id, String username, String password, String firstname, String lastname, String email,
+	public AccountRequest(Long id, String username, String password, String name, String lastName, String email,
 			String role) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
-		this.firstname = firstname;
-		this.lastname = lastname;
+		this.name = name;
+		this.lastName = lastName;
 		this.email = email;
 		this.role = role;
 	}

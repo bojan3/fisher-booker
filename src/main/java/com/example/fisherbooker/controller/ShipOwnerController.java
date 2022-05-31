@@ -38,11 +38,10 @@ public class ShipOwnerController {
 	@GetMapping("/allShipsByOwner")
 	public ResponseEntity<Set<ShipDTO>> getAllShipsByOwner() {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		System.out.println("username " + username);
 		Set<ShipDTO> ships = this.shipOwnerService.getAllShipsByOwner(username);
 		return new ResponseEntity<>(ships, HttpStatus.OK);
 	}
-
+// PULL REQUEST
 	@GetMapping("/all")
 	public ResponseEntity<List<ShipOwnerDTO>> getAll() {
 		List<ShipOwner> shipowners = this.shipOwnerService.getAll();
