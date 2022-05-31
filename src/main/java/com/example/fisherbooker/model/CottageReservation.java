@@ -28,6 +28,10 @@ public class CottageReservation {
 	@ManyToOne
 	@JoinColumn(name="cottage_id", nullable=false)
 	public Cottage cottage;
+	
+	@ManyToOne
+	@JoinColumn(name="client_id", nullable=false)
+	public Client client;
 
 	public CottageReservation() {
 		super();

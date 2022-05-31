@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class AdventureReservation {
@@ -23,6 +25,10 @@ public class AdventureReservation {
 	private Date endDate;
 	private int duration;
 	private int capacity;
+	
+	@ManyToOne
+	@JoinColumn(name="client_id", nullable=false)
+	public Client client;
 	
 	@ManyToMany
 	private Set<AdventureOption> adventureOption;

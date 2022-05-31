@@ -7,38 +7,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.fisherbooker.model.Cottage;
+import com.example.fisherbooker.model.Ship;
+import com.example.fisherbooker.model.ShipReservation;
 import com.example.fisherbooker.model.DTO.CottageAddDTO;
 import com.example.fisherbooker.repository.CottageRepository;
 
-@Service
-public class CottageService {
-	
-	public CottageRepository cottageRepository;
+public interface CottageService {
 
-	@Autowired
-	public CottageService(CottageRepository cottageRepository) {
-		this.cottageRepository = cottageRepository;
-	}
+	public Boolean saveCottage(Cottage cottage);
 	
-	public Boolean saveCottage(Cottage cottage) {
-		this.cottageRepository.save(cottage);
-		return true;
-	}
-	
-	public List<Cottage> getAllbyName(){
-		return this.cottageRepository.findByOrderByName();	
-	}
+	public void deleteCottage(Long id);
 
-	public List<Cottage> getAllbyPrice(){
-		return this.cottageRepository.findByOrderByPricePerDay();	
-	}
+	public List<Cottage> getAllbyName();
+
+	public List<Cottage> getAllbyPrice();
+
+	public Cottage getById(Long id);
+
+	public List<Cottage> getAllbyRate();
 	
-	public Cottage getById(Long id) {
-		return this.cottageRepository.findById(id).orElse(null);
-	}
+	public List<Cottage> getAllByOwnerUsername(String username);
 	
-	public List<Cottage> getAllbyRate(){
-		return this.cottageRepository.findByOrderByAverageMarkDesc();	
-	}
+	public Boolean checkIfOwnerHasCottage(String username, Long cottageId);
 	
+	public Boolean checkIfCottageHasReservation(Long id);
+
 }
