@@ -8,32 +8,34 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-@Table(name="adventure")
+@Table(name = "adventure")
 public class Adventure {
 	public Adventure() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
-	public Adventure(String name,String adress, String description,AdventurePicture pic,int capacity, AdventureFastReservation afr ,Rule rule, FishingEquipment fe, AdventureOption ao, float CancelRate)
-		{}
-	
+
+	public Adventure(String name, String adress, String description, AdventurePicture pic, int capacity,
+			AdventureFastReservation afr, Rule rule, FishingEquipment fe, AdventureOption ao, float CancelRate) {
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(length=30, nullable=false)
+	@Column(length = 30, nullable = false)
 	private String name;
-	@Column(length=350)
+	@Column(length = 350)
 	private String description;
-	
+
 	private int capacity;
 	@Column
 	private int price;
@@ -41,26 +43,30 @@ public class Adventure {
 
 	@OneToMany
 	public Set<AdventureOption> adventureOption;
-	
+
 	@ManyToOne
 	public Address address;
-	
+
 	@OneToMany
 	public java.util.Set<AdventurePicture> adventurePicture;
-	
+
 	@OneToMany
 	public Set<AdventureFastReservation> adventureFastReservation;
-	
+
 	@OneToMany
 	public Set<Rule> rule;
-	
+
 	@OneToMany
 	public Set<AdventureReservation> adventureReservation;
-	
+
 	@ManyToOne
-	@JoinColumn(name="account", nullable=false)
+	@JoinColumn(name = "account", nullable = false)
 	public FishingInstructor fishingInstructor;
 	
+	@JsonIgnore
+	@ManyToMany(mappedBy = "adventureSubscriptions")
+	private Set<Client> client;
+
 	public Long getId() {
 		return id;
 	}
@@ -164,6 +170,5 @@ public class Adventure {
 	public void setFishingInstructor(FishingInstructor fishingInstructor) {
 		this.fishingInstructor = fishingInstructor;
 	}
-
 
 }

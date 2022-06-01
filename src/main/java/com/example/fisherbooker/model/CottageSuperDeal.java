@@ -11,21 +11,23 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class CottageSuperDeal {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@JsonFormat(pattern="dd.MM.yyyy.")
+	@JsonFormat(pattern = "dd.MM.yyyy.")
 	private Date startDate;
 	private int discountedPrice;
-	@JsonFormat(pattern="dd.MM.yyyy.")
+	@JsonFormat(pattern = "dd.MM.yyyy.")
 	private Date endDate;
 	private int capacity;
 
+	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name="cottage_id", nullable=false)
+	@JoinColumn(name = "cottage_id", nullable = false)
 	public Cottage cottage;
 
 	public CottageSuperDeal() {
@@ -72,19 +74,16 @@ public class CottageSuperDeal {
 		this.capacity = capacity;
 	}
 
-	/*public Cottage getCottage() {
-		return cottage;
-	}
-
-	public void setCottage(Cottage cottage) {
-		this.cottage = cottage;
-	}*/
+	/*
+	 * public Cottage getCottage() { return cottage; }
+	 * 
+	 * public void setCottage(Cottage cottage) { this.cottage = cottage; }
+	 */
 
 	@Override
 	public String toString() {
 		return "CottageSuperDeal [id=" + id + ", startDate=" + startDate + ", discountedPrice=" + discountedPrice
-				+ ", endDate=" + endDate + ", capacity=" + capacity + ", cottage=" + cottage
-				+ "]";
+				+ ", endDate=" + endDate + ", capacity=" + capacity + ", cottage=" + cottage + "]";
 	}
-	
+
 }
