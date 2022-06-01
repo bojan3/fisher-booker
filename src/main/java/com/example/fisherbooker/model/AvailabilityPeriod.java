@@ -7,12 +7,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class AvailabilityPeriod {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@JsonFormat(pattern = "dd.MM.yyyy.")
 	private Date startDate;
+	@JsonFormat(pattern = "dd.MM.yyyy.")
 	private Date endDate;
 	
 	public AvailabilityPeriod() {

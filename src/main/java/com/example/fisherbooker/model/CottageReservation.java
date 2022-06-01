@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class CottageReservation {
 	@Id
@@ -25,6 +27,7 @@ public class CottageReservation {
 	@ManyToMany
 	private Set<CottageOption> cottageOption;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="cottage_id", nullable=false)
 	public Cottage cottage;

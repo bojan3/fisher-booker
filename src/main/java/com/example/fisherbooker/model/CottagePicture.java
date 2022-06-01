@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class CottagePicture {
 	@Id
@@ -16,6 +18,7 @@ public class CottagePicture {
 	@Column(length = 150)
 	private String path;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "cottage_id")
 	private Cottage cottage;

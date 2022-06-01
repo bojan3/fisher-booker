@@ -6,27 +6,42 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Client {
-		
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@OneToOne
 	public Account account;
-	
-	@OneToMany(mappedBy="client")
+
+	@OneToMany(mappedBy = "client")
 	public Set<ShipReservation> shipReservation;
-	
-	@OneToMany(mappedBy="client")
+
+	@OneToMany(mappedBy = "client")
 	public Set<CottageReservation> cottageReservation;
 
-	@OneToMany(mappedBy="client")
+	@OneToMany(mappedBy = "client")
 	public Set<AdventureReservation> adventureReservation;
+
+	@ManyToMany
+	@JoinTable(name = "cottage_subscriptions", joinColumns = @JoinColumn(name = "client_id"), inverseJoinColumns = @JoinColumn(name = "cottage_id"))
+	Set<Cottage> cottageSubscriptions;
+
+	@ManyToMany
+	@JoinTable(name = "ship_subscriptions", joinColumns = @JoinColumn(name = "client_id"), inverseJoinColumns = @JoinColumn(name = "ship_id"))
+	Set<Ship> shipSubscriptions;
+
+	@ManyToMany
+	@JoinTable(name = "adventure_subscriptions", joinColumns = @JoinColumn(name = "client_id"), inverseJoinColumns = @JoinColumn(name = "adventure_id"))
+	Set<Adventure> adventureSubscriptions;
 
 	public Client() {
 		super();
@@ -158,7 +173,52 @@ public class Client {
 		return this.account;
 	}
 
+	public Long getId() {
+		return id;
+	}
 
-	
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Set<Cottage> getCottageSubscriptions() {
+		return cottageSubscriptions;
+	}
+
+	public void setCottageSubscriptions(Set<Cottage> cottageSubscriptions) {
+		this.cottageSubscriptions = cottageSubscriptions;
+	}
+
+	public Set<Ship> getShipSubscriptions() {
+		return shipSubscriptions;
+	}
+
+	public void setShipSubscriptions(Set<Ship> shipSubscriptions) {
+		this.shipSubscriptions = shipSubscriptions;
+	}
+
+	public Set<Adventure> getAdventureSubscriptions() {
+		return adventureSubscriptions;
+	}
+
+	public void setAdventureSubscriptions(Set<Adventure> adventureSubscriptions) {
+		this.adventureSubscriptions = adventureSubscriptions;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+
+	public void setCottageReservation(Set<CottageReservation> cottageReservation) {
+		this.cottageReservation = cottageReservation;
+	}
+
+	@Override
+	public String toString() {
+		return "Client [id=" + id + ", account=" + account + ", shipReservation=" + shipReservation
+				+ ", cottageReservation=" + cottageReservation + ", adventureReservation=" + adventureReservation
+				+ ", cottageSubscriptions=" + cottageSubscriptions + ", shipSubscriptions=" + shipSubscriptions
+				+ ", adventureSubscriptions=" + adventureSubscriptions + "]";
+	}
 
 }

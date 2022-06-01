@@ -1,6 +1,5 @@
 package com.example.fisherbooker.model;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,12 +14,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
 
-import com.example.fisherbooker.model.DTO.CottageAddDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Cottage {
@@ -60,10 +55,14 @@ public class Cottage {
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<CottageOption> cottageOptions;
 
-	// @JsonIgnore
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "cottage_owner_id")
 	private CottageOwner cottageOwner;
+	
+	@JsonIgnore
+	@ManyToMany(mappedBy = "cottageSubscriptions")
+	private Set<Client> client;
 
 	public Cottage() {
 		super();

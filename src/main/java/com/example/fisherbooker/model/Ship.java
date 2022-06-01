@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Ship {
 	@Id
@@ -64,6 +66,10 @@ public class Ship {
 
 	@OneToMany(mappedBy = "ship")
 	public Set<ShipReservation> shipReservation;
+	
+	@JsonIgnore
+	@ManyToMany(mappedBy = "shipSubscriptions")
+	private Set<Client> client;
 
 	public Ship() {
 		super();
