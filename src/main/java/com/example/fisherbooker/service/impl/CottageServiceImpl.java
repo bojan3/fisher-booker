@@ -68,4 +68,9 @@ public class CottageServiceImpl implements CottageService {
 		System.out.println(reservations);
 		return !reservations.isEmpty();
 	}
+
+	@Override
+	public List<Cottage> getAll() {
+		return cottageRepository.findAll();
+	}
 }
