@@ -33,7 +33,18 @@ public class ShipController {
 		this.shipService = shipService;
 	}
 
-	@GetMapping("/get/all/name")
+	@GetMapping("/all")
+	public ResponseEntity<List<ShipDTO>> getAll() {
+		List<Ship> ships = this.shipService.getAll();
+		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
+		for (Ship ship : ships) {
+			ShipDTO shipDTO = new ShipDTO().createShipDTO(ship);
+			shipsDTO.add(shipDTO);
+		}
+		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
+	}
+	
+	@GetMapping("/all/name")
 	public ResponseEntity<List<ShipDTO>> getAllByName() {
 		List<Ship> ships = this.shipService.getAllByName();
 		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
@@ -44,7 +55,7 @@ public class ShipController {
 		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
 	}
 
-	@GetMapping("/get/all/price")
+	@GetMapping("/all/price")
 	public ResponseEntity<List<ShipDTO>> getAllByPrice() {
 		List<Ship> ships = this.shipService.getAllByRentPrice();
 		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
@@ -55,7 +66,7 @@ public class ShipController {
 		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
 	}
 
-	@GetMapping("/get/all/rating")
+	@GetMapping("/all/rating")
 	public ResponseEntity<List<ShipDTO>> getAllByAverageMark() {
 		List<Ship> ships = this.shipService.getAllByAverageMark();
 		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
@@ -66,7 +77,7 @@ public class ShipController {
 		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
 	}
 
-	@GetMapping("/get/all/capacity")
+	@GetMapping("/all/capacity")
 	public ResponseEntity<List<ShipDTO>> getAllByCapacity() {
 		List<Ship> ships = this.shipService.getAllByCapacity();
 		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
@@ -77,7 +88,7 @@ public class ShipController {
 		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
 	}
 
-	@GetMapping("/get/delete/{ShipId}")
+	@GetMapping("/delete/{ShipId}")
 	public ResponseEntity<List<ShipDTO>> deleteShip(@PathVariable("ShipId") Long ShipId) {
 		List<Ship> ships = this.shipService.getAll();
 		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();

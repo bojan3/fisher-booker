@@ -50,6 +50,19 @@ public class AdventureController {
 		return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
 	}
 
+	@GetMapping("/all")
+	public ResponseEntity<List<AdventureDTO>> getAll() {
+		List<Adventure> adventures = this.adventureService.getAll();
+		List<AdventureDTO> adventuresDTO = new ArrayList<AdventureDTO>();
+		for (Adventure a : adventures) {
+			AdventureDTO adventureDTO = AdventureDTO.createAdventureDTO(a);
+			adventuresDTO.add(adventureDTO);
+		}
+		System.out.println("Broj avantura: " + adventuresDTO.size());
+		System.out.println("Avature: " + adventuresDTO);
+		return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
+	}
+	
 	@GetMapping("/all/price")
 	public ResponseEntity<List<AdventureDTO>> getAllByPrice() {
 		List<Adventure> adventures = this.adventureService.getAllByPrice();
@@ -72,11 +85,58 @@ public class AdventureController {
 		return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
 	}
 
+	@GetMapping("/all/instructor/{instructorId}")
+	public ResponseEntity<List<AdventureDTO>> getAllByInstructorId(@PathVariable Long instructorId) {
+		List<Adventure> adventures = this.adventureService.getAllByAccount(instructorId);
+		
+//		System.out.println(Avanture:" + "");
+		
+		List<AdventureDTO> adventuresDTO = new ArrayList<AdventureDTO>();
+		for (Adventure a : adventures) {
+			AdventureDTO adventureDTO = AdventureDTO.createAdventureDTO(a);
+			adventuresDTO.add(adventureDTO);
+		}
+		return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
+	}
+	
+	@GetMapping("/all/instructor/{instructorId}/orderByName")
+	public ResponseEntity<List<AdventureDTO>> getAllByInstructorIdOrderByName(@PathVariable Long instructorId) {
+		List<Adventure> adventures = this.adventureService.getAllByAccountOrderByName(instructorId);
+		List<AdventureDTO> adventuresDTO = new ArrayList<AdventureDTO>();
+		for (Adventure a : adventures) {
+			AdventureDTO adventureDTO = AdventureDTO.createAdventureDTO(a);
+			adventuresDTO.add(adventureDTO);
+		}
+		return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
+	}
+	
+	@GetMapping("/all/instructor/{instructorId}/orderByPrice")
+	public ResponseEntity<List<AdventureDTO>> getAllByInstructorIdOrderByPrice(@PathVariable Long instructorId) {
+		List<Adventure> adventures = this.adventureService.getAllByAccountOrderByPrice(instructorId);
+		List<AdventureDTO> adventuresDTO = new ArrayList<AdventureDTO>();
+		for (Adventure a : adventures) {
+			AdventureDTO adventureDTO = AdventureDTO.createAdventureDTO(a);
+			adventuresDTO.add(adventureDTO);
+		}
+		return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/all/instructor/{instructorId}/orderByCapacity")
+	public ResponseEntity<List<AdventureDTO>> getAllByInstructorIdOrderByCapacity(@PathVariable Long instructorId) {
+		List<Adventure> adventures = this.adventureService.getAllByAccountOrderByCapacity(instructorId);
+		List<AdventureDTO> adventuresDTO = new ArrayList<AdventureDTO>();
+		for (Adventure a : adventures) {
+			AdventureDTO adventureDTO = AdventureDTO.createAdventureDTO(a);
+			adventuresDTO.add(adventureDTO);
+		}
+		return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
+	}
+	
+	
 	@PostMapping("/update/{AdventureID}")
 	public ResponseEntity<Boolean> updateAdventure(@RequestBody Adventure adventure) {
-
 		return new ResponseEntity<>(true, HttpStatus.OK);
-
 	}
 
 	@DeleteMapping("/delete/{id}")

@@ -36,6 +36,16 @@ public class CottageController {
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 	
+	@GetMapping("/all")
+	public ResponseEntity<List<CottageDTO>> getAll(){
+		List<Cottage> cottages = this.cottageService.getAll();
+		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
+		for(Cottage cottage : cottages) {
+			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
+			cottagesDTO.add(cottageDTO);
+		}
+		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
+	}
 	
 	@GetMapping("/all/name")
 	public ResponseEntity<List<CottageDTO>> getAllByName(){
@@ -43,7 +53,6 @@ public class CottageController {
 		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
 		for(Cottage cottage : cottages) {
 			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
-			System.out.println(cottageDTO.getPrice_per_day());
 			cottagesDTO.add(cottageDTO);
 		}
 		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
@@ -55,13 +64,13 @@ public class CottageController {
 		return new ResponseEntity<>(cottage, HttpStatus.OK);
 	}
 	
+
 	@GetMapping("/all/price")
 	public ResponseEntity<List<CottageDTO>> getAllbyPrice(){
 		List<Cottage> cottages = this.cottageService.getAllbyPrice();
 		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
 		for(Cottage cottage : cottages) {
 			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
-			System.out.println(cottageDTO.getPrice_per_day());
 			cottagesDTO.add(cottageDTO);
 		}
 		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
@@ -73,7 +82,6 @@ public class CottageController {
 		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
 		for(Cottage cottage : cottages) {
 			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
-			System.out.println(cottageDTO.getPrice_per_day());
 			cottagesDTO.add(cottageDTO);
 		}
 		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
@@ -84,6 +92,5 @@ public class CottageController {
 		this.cottageService.saveCottage(cottage);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
-	
 
 }

@@ -9,19 +9,19 @@ import com.example.fisherbooker.model.Adventure;
 import com.example.fisherbooker.model.AdventureFastReservation;
 import com.example.fisherbooker.model.AdventureOption;
 import com.example.fisherbooker.model.AdventurePicture;
-import com.example.fisherbooker.model.AdventureReservation;
 import com.example.fisherbooker.model.FishingEquipment;
 import com.example.fisherbooker.model.Rule;
+import com.example.fisherbooker.model.DTO.AdventureDTO;
 import com.example.fisherbooker.repository.AdventureRepository;
 
 @Service
 public class AdventureService {
 
-	public AdventureRepository ar;
+	public AdventureRepository adventureRepository;
 	@Autowired
 	public AdventureService (AdventureRepository ar) {
 		
-		this.ar=ar;
+		this.adventureRepository=ar;
 		
 	}
 	
@@ -32,35 +32,49 @@ public class AdventureService {
 
 
 	public void saveAdventure(Adventure adventure) {
-           ar.save(adventure);		
+           adventureRepository.save(adventure);		
 	}
 
 
 	public List<Adventure> getAll() {
-		return ar.findAll();
+		return adventureRepository.findAll();
 	}
 
 	public List<Adventure> getAllByName(){
-		return ar.findByOrderByName();
+		return adventureRepository.findByOrderByName();
 	}
 	
 	public List<Adventure> getAllByPrice(){
-		return ar.findByOrderByPrice();
+		return adventureRepository.findByOrderByPrice();
 	}
 	
 	public List<Adventure> getAllByCapacity(){
-		return ar.findByOrderByCapacityDesc();
+		return adventureRepository.findByOrderByCapacityDesc();
 	}
 	
 	public Adventure deleteById(Long id) {
-        return ar.deleteAllById(id);	
+        return adventureRepository.deleteAllById(id);	
 	}
 		
+//	by instructor id
+	public List<Adventure> getAllByAccount(Long instructorId){
+	return adventureRepository.findByInstructor(instructorId);
+	}
 	
-		
-		
-		
+	public List<Adventure> getAllByAccountOrderByName(Long instructorId) {
+		return adventureRepository.findByInstructorOrderByName(instructorId);
 	}
+
+	public List<Adventure> getAllByAccountOrderByPrice(Long instructorId) {
+		return adventureRepository.findByInstructorOrderByPrice(instructorId);
+	}
+
+
+	public List<Adventure> getAllByAccountOrderByCapacity(Long instructorId) {
+		return adventureRepository.findByInstructorOrderByCapacity(instructorId);
+	}
+		
+}
 	
 	
 

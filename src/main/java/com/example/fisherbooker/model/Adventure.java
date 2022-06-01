@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,16 +46,16 @@ public class Adventure {
 	@ManyToOne
 	public Address address;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	public java.util.Set<AdventurePicture> adventurePicture;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	public Set<AdventureFastReservation> adventureFastReservation;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	public Set<Rule> rule;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	public Set<AdventureReservation> adventureReservation;
 	
 	@ManyToOne
@@ -165,5 +166,14 @@ public class Adventure {
 		this.fishingInstructor = fishingInstructor;
 	}
 
+
+	@Override
+	public String toString() {
+		return "Adventure [id=" + id + ", name=" + name + ", description=" + description + ", capacity=" + capacity
+				+ ", price=" + price + ", cancelRate=" + cancelRate + ", adventureOption=" + adventureOption
+				+ ", address=" + address + ", adventurePicture=" + adventurePicture + ", adventureFastReservation="
+				+ adventureFastReservation + ", rule=" + rule + ", adventureReservation=" + adventureReservation
+				+ ", fishingInstructor=" + fishingInstructor + "]";
+	}
 
 }

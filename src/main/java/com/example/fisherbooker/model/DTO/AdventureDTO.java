@@ -122,9 +122,12 @@ public class AdventureDTO {
 	public void setCancelRate(float cancelRate) {
 		this.cancelRate = cancelRate;
 	}
-	
-	
-	
-	
 
+
+	@Override
+	public String toString() {
+		return "AdventureDTO [id=" + id + ", name=" + name + ", description=" + description + ", address=" + address
+				+ ", capacity=" + capacity + ", price=" + price + ", cancelRate=" + cancelRate + ", instructor_id="
+				+ instructor_id + "]";
+	}
 }

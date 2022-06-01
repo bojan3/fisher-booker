@@ -40,5 +40,9 @@ public class CottageService {
 	public List<Cottage> getAllbyRate(){
 		return this.cottageRepository.findByOrderByAverageMarkDesc();	
 	}
+
+	public List<Cottage> getAll(){
+		return this.cottageRepository.findAll();
+	}
 	
 }

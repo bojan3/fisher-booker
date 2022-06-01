@@ -62,7 +62,7 @@ public class AuthenticationController {
 	// Endpoint za registraciju novog korisnika
 	@PostMapping("/signup")
 	public ResponseEntity<Account> addUser(@RequestBody AccountRequest accountRequest, UriComponentsBuilder ucBuilder) {
-		System.out.println(accountRequest.getRole());
+		System.out.println(accountRequest.getRole());	
 		System.out.println(accountRequest);
 		Account existAccount = this.accountService.findByUsername(accountRequest.getUsername());
 
