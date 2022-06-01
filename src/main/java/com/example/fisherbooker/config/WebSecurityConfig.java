@@ -52,18 +52,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	// Definisemo prava pristupa za zahteve ka odredjenim URL-ovima/rutama
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+		http
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 
 				// sve neautentifikovane zahteve obradi uniformno i posalji 401 gresku
 				.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
 
 				// svim korisnicima dopusti da pristupe sledecim putanjama:
-				.authorizeRequests().antMatchers("/auth/**").permitAll().antMatchers("/h2-console/**").permitAll()
-				.antMatchers("/api/cottage/**").permitAll().antMatchers("/api/ship/get").permitAll()
-				.antMatchers("/api/adventure/**").permitAll().antMatchers("/api/instructor/**").permitAll()
-				.antMatchers("/api/cottageOwner/**").permitAll().antMatchers("/api/shipOwner/**").permitAll()
-				.antMatchers("/api/client/**").permitAll().antMatchers("/api/verify/**").permitAll()
-//								.antMatchers("/api/registration/**").permitAll()
+				.authorizeRequests().antMatchers("/auth/**").permitAll()
+				.antMatchers("/h2-console/**").permitAll()
+				.antMatchers("/api/cottage/**").permitAll()
+				.antMatchers("/api/ship/**").permitAll()
+				.antMatchers("/api/adventure/**").permitAll()
+				.antMatchers("/api/instructor/**").permitAll()
+				.antMatchers("/api/cottageOwner/**").permitAll()
+				.antMatchers("/api/shipOwner/**").permitAll()
+				.antMatchers("/api/client/**").permitAll()
+				.antMatchers("/api/verify/**").permitAll()
+				// .antMatchers("/api/registration/**").permitAll()
 
 				// ukoliko ne zelimo da koristimo @PreAuthorize anotacije nad metodama
 				// kontrolera, moze se iskoristiti hasRole() metoda da se ogranici

@@ -33,13 +33,30 @@ public class CottageController {
 		this.cottageService = cottageService;
 	}
 
+	// ownerId ce drugacije da se dobavlja jednom kada dodamo spring security
+	@PostMapping("/add/{ownerId}")
+	public ResponseEntity<Boolean> getAllByOwner(@RequestBody Cottage cottage) {
+		this.cottageService.saveCottage(cottage);
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+
+	@GetMapping("/all")
+	public ResponseEntity<List<CottageDTO>> getAll() {
+		List<Cottage> cottages = this.cottageService.getAll();
+		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
+		for (Cottage cottage : cottages) {
+			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
+			cottagesDTO.add(cottageDTO);
+		}
+		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
+	}
+
 	@GetMapping("/all/name")
 	public ResponseEntity<List<CottageDTO>> getAllByName() {
 		List<Cottage> cottages = this.cottageService.getAllbyName();
 		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
 		for (Cottage cottage : cottages) {
 			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
-			System.out.println(cottageDTO.getPrice_per_day());
 			cottagesDTO.add(cottageDTO);
 		}
 		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
@@ -57,7 +74,6 @@ public class CottageController {
 		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
 		for (Cottage cottage : cottages) {
 			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
-			System.out.println(cottageDTO.getPrice_per_day());
 			cottagesDTO.add(cottageDTO);
 		}
 		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
@@ -69,12 +85,11 @@ public class CottageController {
 		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
 		for (Cottage cottage : cottages) {
 			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
-			System.out.println(cottageDTO.getPrice_per_day());
 			cottagesDTO.add(cottageDTO);
 		}
 		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
 	}
-	
+
 	@PreAuthorize("hasRole('COTTAGE_OWNER')")
 	@DeleteMapping("/delete/owner/{CottageId}")
 	public ResponseEntity<List<CottageDTO>> delete(@PathVariable("CottageId") Long id) {

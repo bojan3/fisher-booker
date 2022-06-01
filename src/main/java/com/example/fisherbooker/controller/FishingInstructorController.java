@@ -41,6 +41,16 @@ public class FishingInstructorController {
 		return new ResponseEntity<>(FishingInstructorsDTO, HttpStatus.OK);
 	}
 	
+	@GetMapping("/all/byName")
+	public ResponseEntity<List<FishingInstructorDTO>> getAllOrderByName(){
+		List<FishingInstructor> fishinginstructors = this.FishingInstructorService.getAllOrderByName();
+		List<FishingInstructorDTO> FishingInstructorsDTO = new ArrayList<FishingInstructorDTO>();
+		for(FishingInstructor fishinginstructor : fishinginstructors) {
+			FishingInstructorDTO fishinginstructorDTO = FishingInstructorDTO.createFishingInstructorDTO(fishinginstructor);
+			FishingInstructorsDTO.add(fishinginstructorDTO);
+		}
+		return new ResponseEntity<>(FishingInstructorsDTO, HttpStatus.OK);
+	}
 	
 
 }

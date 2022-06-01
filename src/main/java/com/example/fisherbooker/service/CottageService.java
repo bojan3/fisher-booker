@@ -15,7 +15,7 @@ import com.example.fisherbooker.repository.CottageRepository;
 public interface CottageService {
 
 	public Boolean saveCottage(Cottage cottage);
-	
+
 	public void deleteCottage(Long id);
 
 	public List<Cottage> getAllbyName();
@@ -25,11 +25,11 @@ public interface CottageService {
 	public Cottage getById(Long id);
 
 	public List<Cottage> getAllbyRate();
-	
+
 	public List<Cottage> getAllByOwnerUsername(String username);
-	
+
 	public Boolean checkIfOwnerHasCottage(String username, Long cottageId);
-	
+
 	public Boolean checkIfCottageHasReservation(Long id);
 
 }

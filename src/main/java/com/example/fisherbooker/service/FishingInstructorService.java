@@ -30,6 +30,11 @@ public class FishingInstructorService {
 	public FishingInstructor getById(Long id){
 		return this.FishingInstructorRepository.getById(id);
 	}
+
+	public List<FishingInstructor> getAllOrderByName() {
+		
+		return this.FishingInstructorRepository.findByOrderByAccountName();
+	}
 	
 	
 	

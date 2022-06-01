@@ -36,7 +36,7 @@ public class AuthenticationController {
 
 	@Autowired
 	private AccountServiceImpl accountService;
-	
+
 	@PostMapping("/login")
 	public ResponseEntity<UserTokenState> createAuthenticationToken(
 			@RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) {
@@ -49,7 +49,7 @@ public class AuthenticationController {
 		// Ukoliko je autentifikacija uspesna, ubaci korisnika u trenutni security
 		// kontekst
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		
+
 		// Kreiraj token za tog korisnika
 		Account account = (Account) authentication.getPrincipal();
 		String jwt = tokenUtils.generateToken(account.getUsername());
@@ -69,7 +69,7 @@ public class AuthenticationController {
 		}
 
 		System.out.println(accountRequest);
-		
+
 		Account account = this.accountService.save(accountRequest);
 
 		return new ResponseEntity<>(account, HttpStatus.CREATED);
