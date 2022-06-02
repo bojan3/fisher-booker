@@ -39,9 +39,7 @@ insert into cottage_owner (account_id) values (4);
 
 insert into cottage_owner (account_id) values (3);
 --insert into cottage_owner (account_id) values (1);
-
 --insert into fishing_instructor(account_id) values(4);
-
 --insert into fishing_instructor(account_id,biography) values(4,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Sasvim prirodno" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
 
 insert into client(account_id) values(8);
