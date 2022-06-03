@@ -7,6 +7,8 @@ import com.example.fisherbooker.model.DTO.ShipDTO;
 
 public interface ShipService {
 	public Boolean saveShip(Ship ship);
+	
+	public Ship getById(Long id);
 
 	public List<Ship> getAll();
 

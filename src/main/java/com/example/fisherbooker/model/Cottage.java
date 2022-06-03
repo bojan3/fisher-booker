@@ -28,7 +28,6 @@ public class Cottage {
 	private String description;
 	@Column
 	private int pricePerDay;
-
 	private float averageMark;
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -41,7 +40,7 @@ public class Cottage {
 	public Set<Rule> rules;
 
 	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	public Set<CottageSuperDeal> cottageSuperDeal;
+	public Set<CottageSuperDeal> cottageSuperDeals;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	public AvailabilityPeriod availabilityPeriod;
@@ -50,16 +49,16 @@ public class Cottage {
 	public Set<CottagePicture> cottagePictures;
 
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	public Set<CottageReservation> cottageReservation;
+	public Set<CottageReservation> cottageReservations;
 
-	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<CottageOption> cottageOptions;
 
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "cottage_owner_id")
 	private CottageOwner cottageOwner;
-	
+
 	@JsonIgnore
 	@ManyToMany(mappedBy = "cottageSubscriptions")
 	private Set<Client> client;
@@ -124,14 +123,6 @@ public class Cottage {
 		this.rules = rules;
 	}
 
-	public Set<CottageSuperDeal> getCottageFastReservation() {
-		return cottageSuperDeal;
-	}
-
-	public void setCottageFastReservation(Set<CottageSuperDeal> cottageFastReservation) {
-		this.cottageSuperDeal = cottageFastReservation;
-	}
-
 	public AvailabilityPeriod getAvailabilityPeriod() {
 		return availabilityPeriod;
 	}
@@ -148,28 +139,12 @@ public class Cottage {
 		this.cottagePictures = cottagePicture;
 	}
 
-	public Set<CottageReservation> getCottageReservation() {
-		return cottageReservation;
-	}
-
-	public void setCottageReservation(Set<CottageReservation> cottageReservation) {
-		this.cottageReservation = cottageReservation;
-	}
-
 	public Set<CottageOption> getCottageOptions() {
 		return cottageOptions;
 	}
 
 	public void setCottageOptions(Set<CottageOption> cottageOptions) {
 		this.cottageOptions = cottageOptions;
-	}
-
-	public Set<CottageSuperDeal> getCottageSuperDeal() {
-		return cottageSuperDeal;
-	}
-
-	public void setCottageSuperDeal(Set<CottageSuperDeal> cottageSuperDeal) {
-		this.cottageSuperDeal = cottageSuperDeal;
 	}
 
 	public CottageOwner getCottageOwner() {
@@ -182,6 +157,34 @@ public class Cottage {
 
 	public int getPricePerDay() {
 		return this.pricePerDay;
+	}
+
+	public Set<CottageSuperDeal> getCottageSuperDeals() {
+		return cottageSuperDeals;
+	}
+
+	public void setCottageSuperDeals(Set<CottageSuperDeal> cottageSuperDeals) {
+		this.cottageSuperDeals = cottageSuperDeals;
+	}
+
+	public Set<CottagePicture> getCottagePictures() {
+		return cottagePictures;
+	}
+
+	public void setCottagePictures(Set<CottagePicture> cottagePictures) {
+		this.cottagePictures = cottagePictures;
+	}
+
+	public Set<CottageReservation> getCottageReservations() {
+		return cottageReservations;
+	}
+
+	public void setCottageReservations(Set<CottageReservation> cottageReservations) {
+		this.cottageReservations = cottageReservations;
+	}
+
+	public void setPricePerDay(int pricePerDay) {
+		this.pricePerDay = pricePerDay;
 	}
 
 }
