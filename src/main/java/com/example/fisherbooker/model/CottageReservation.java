@@ -23,22 +23,21 @@ public class CottageReservation {
 	private int price;
 	private int duration;
 	private int capacity;
-	
+
 	@ManyToMany
 	private Set<CottageOption> cottageOption;
 
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name="cottage_id", nullable=false)
+	@JoinColumn(name = "cottage_id", nullable = false)
 	public Cottage cottage;
-	
+
 	@ManyToOne
-	@JoinColumn(name="client_id", nullable=false)
+	@JoinColumn(name = "client_id", nullable = false)
 	public Client client;
 
 	public CottageReservation() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Long getId() {

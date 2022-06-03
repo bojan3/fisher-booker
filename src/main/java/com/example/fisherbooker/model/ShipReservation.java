@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class ShipReservation {
 	@Id
@@ -22,6 +24,7 @@ public class ShipReservation {
 	@ManyToMany
 	public Set<ShipOption> shipOption;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="ship_id", nullable=false)
 	public Ship ship;
@@ -32,7 +35,6 @@ public class ShipReservation {
 
 	public ShipReservation() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getId() {

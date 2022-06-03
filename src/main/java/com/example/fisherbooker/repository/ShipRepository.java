@@ -11,6 +11,8 @@ import com.example.fisherbooker.model.Ship;
 @Repository
 public interface ShipRepository extends JpaRepository<Ship, Long> {
 	public List<Ship> findAll();
+	
+	public Optional<Ship> findById(Long id);
 
 	public void deleteById(Long id);
 

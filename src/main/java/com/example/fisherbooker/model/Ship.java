@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,31 +43,36 @@ public class Ship {
 	@OneToOne(cascade = CascadeType.ALL)
 	public Address address;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "ship_owner_id")
-	public ShipOwner shipOwner;
+	private ShipOwner shipOwner;
 
-	@OneToMany
-	public Set<Rule> rule;
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	private Set<Rule> rules;
 
-	@ManyToMany
-	public Set<NavigationEquipment> navigationEquipment;
+	@OneToMany(mappedBy = "ship", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	private Set<NavigationEquipment> navigationEquipments;
 
-	@ManyToMany
-	public Set<FishingEquipment> fishingEquipment;
+	@OneToMany(mappedBy = "ship", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	private Set<FishingEquipment> fishingEquipments;
 
-	@OneToMany(mappedBy = "ship", cascade = CascadeType.ALL)
-	public Set<ShipPicture> shipPicture;
+	@OneToMany(mappedBy = "ship", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<ShipPicture> shipPictures;
 
-	@OneToMany(mappedBy = "ship")
-	public Set<ShipSuperDeal> shipSuperDeal;
+	@OneToMany(mappedBy = "ship", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<ShipSuperDeal> shipSuperDeals;
 
-	@ManyToMany
-	public Set<ShipOption> shipOptions;
+	@OneToOne(cascade = CascadeType.ALL)
+	private AvailabilityPeriod availabilityPeriod;
 
-	@OneToMany(mappedBy = "ship")
-	public Set<ShipReservation> shipReservation;
-	
+	@OneToMany(mappedBy = "ship", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	private Set<ShipOption> shipOptions;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "ship", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	private Set<ShipReservation> shipReservations;
+
 	@JsonIgnore
 	@ManyToMany(mappedBy = "shipSubscriptions")
 	private Set<Client> client;
@@ -171,46 +177,6 @@ public class Ship {
 		this.cancelRate = cancelRate;
 	}
 
-	public Set<Rule> getRule() {
-		return rule;
-	}
-
-	public void setRule(Set<Rule> rule) {
-		this.rule = rule;
-	}
-
-	public Set<NavigationEquipment> getNavigationEquipment() {
-		return navigationEquipment;
-	}
-
-	public void setNavigationEquipment(Set<NavigationEquipment> navigationEquipment) {
-		this.navigationEquipment = navigationEquipment;
-	}
-
-	public Set<FishingEquipment> getFishingEquipment() {
-		return fishingEquipment;
-	}
-
-	public void setFishingEquipment(Set<FishingEquipment> fishingEquipment) {
-		this.fishingEquipment = fishingEquipment;
-	}
-
-	public Set<ShipPicture> getShipPicture() {
-		return shipPicture;
-	}
-
-	public void setShipPicture(Set<ShipPicture> shipPicture) {
-		this.shipPicture = shipPicture;
-	}
-
-	public Set<ShipSuperDeal> getShipSuperDeal() {
-		return shipSuperDeal;
-	}
-
-	public void setShipSuperDeal(Set<ShipSuperDeal> shipSuperDeal) {
-		this.shipSuperDeal = shipSuperDeal;
-	}
-
 	public Address getAddress() {
 		return address;
 	}
@@ -227,20 +193,76 @@ public class Ship {
 		this.shipOptions = shipOptions;
 	}
 
-	public Set<ShipReservation> getShipReservation() {
-		return shipReservation;
-	}
-
-	public void setShipReservation(Set<ShipReservation> shipReservation) {
-		this.shipReservation = shipReservation;
-	}
-
 	public ShipOwner getShipOwner() {
 		return shipOwner;
 	}
 
 	public void setShipOwner(ShipOwner shipOwner) {
 		this.shipOwner = shipOwner;
+	}
+
+	public AvailabilityPeriod getAvailabilityPeriod() {
+		return availabilityPeriod;
+	}
+
+	public void setAvailabilityPeriod(AvailabilityPeriod availabilityPeriod) {
+		this.availabilityPeriod = availabilityPeriod;
+	}
+
+	public Set<Rule> getRules() {
+		return rules;
+	}
+
+	public void setRules(Set<Rule> rules) {
+		this.rules = rules;
+	}
+
+	public Set<NavigationEquipment> getNavigationEquipments() {
+		return navigationEquipments;
+	}
+
+	public void setNavigationEquipments(Set<NavigationEquipment> navigationEquipments) {
+		this.navigationEquipments = navigationEquipments;
+	}
+
+	public Set<FishingEquipment> getFishingEquipments() {
+		return fishingEquipments;
+	}
+
+	public void setFishingEquipments(Set<FishingEquipment> fishingEquipments) {
+		this.fishingEquipments = fishingEquipments;
+	}
+
+	public Set<ShipPicture> getShipPictures() {
+		return shipPictures;
+	}
+
+	public void setShipPictures(Set<ShipPicture> shipPictures) {
+		this.shipPictures = shipPictures;
+	}
+
+	public Set<ShipSuperDeal> getShipSuperDeals() {
+		return shipSuperDeals;
+	}
+
+	public void setShipSuperDeals(Set<ShipSuperDeal> shipSuperDeals) {
+		this.shipSuperDeals = shipSuperDeals;
+	}
+
+	public Set<ShipReservation> getShipReservations() {
+		return shipReservations;
+	}
+
+	public void setShipReservations(Set<ShipReservation> shipReservations) {
+		this.shipReservations = shipReservations;
+	}
+
+	public Set<Client> getClient() {
+		return client;
+	}
+
+	public void setClient(Set<Client> client) {
+		this.client = client;
 	}
 
 }

@@ -27,6 +27,10 @@ public class ShipServiceImpl implements ShipService {
 		this.shipRepository.save(ship);
 		return true;
 	}
+	
+	public Ship getById(Long id) {
+		return this.shipRepository.findById(id).orElse(null);
+	}
 
 	public List<Ship> getAll() {
 		return this.shipRepository.findAll();

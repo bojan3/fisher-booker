@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class ShipPicture {
 
@@ -17,13 +19,13 @@ public class ShipPicture {
 	@Column(length = 150)
 	private String path;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "ship_id")
 	private Ship ship;
 
 	public ShipPicture() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public ShipPicture(int id, String path) {

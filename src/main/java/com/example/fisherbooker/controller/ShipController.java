@@ -36,13 +36,19 @@ public class ShipController {
 	public ShipController(ShipService shipService) {
 		this.shipService = shipService;
 	}
+	
+	@GetMapping("/page/{id}")
+	public ResponseEntity<Ship> getById(@PathVariable Long id) {
+		Ship ship = this.shipService.getById(id);
+		return new ResponseEntity<>(ship, HttpStatus.OK);
+	}
 
 	@GetMapping("/all")
 	public ResponseEntity<List<ShipDTO>> getAll() {
 		List<Ship> ships = this.shipService.getAll();
 		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
 		for (Ship ship : ships) {
-			ShipDTO shipDTO = new ShipDTO().createShipDTO(ship);
+			ShipDTO shipDTO = ShipDTO.createShipDTO(ship);
 			shipsDTO.add(shipDTO);
 		}
 		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
