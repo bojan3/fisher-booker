@@ -99,4 +99,25 @@ public class ClientController {
 		List<ShipDTO> ship = this.clientService.getShipSubscriptions(accountId); 		
 		return new ResponseEntity<>(ship, HttpStatus.OK);
 	}
+	
+	@PreAuthorize("hasRole('CLIENT')")
+	@PutMapping("unsubscribe/cottage/{cottageId}")
+	public ResponseEntity<Boolean> unsubscribeToCottage(@PathVariable Long cottageId, @RequestBody Long accountId){
+		this.clientService.unsubscribeToCottage(cottageId, accountId);
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('CLIENT')")
+	@PutMapping("unsubscribe/ship/{shipId}")
+	public ResponseEntity<Boolean> unsubscribeToShip(@PathVariable Long shipId, @RequestBody Long accountId){
+		this.clientService.unsubscribeToShip(shipId, accountId);
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('CLIENT')")
+	@PutMapping("unsubscribe/instructor/{instructorId}")
+	public ResponseEntity<Boolean> unsubscribeToInstructor(@PathVariable Long instructorId, @RequestBody Long accountId){
+		this.clientService.unsubscribeToInstructor(instructorId, accountId);
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
 }

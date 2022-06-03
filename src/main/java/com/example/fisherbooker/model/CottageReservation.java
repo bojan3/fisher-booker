@@ -35,7 +35,7 @@ public class CottageReservation {
 	@ManyToOne
 	@JoinColumn(name = "client_id", nullable = false)
 	public Client client;
-
+	
 	public CottageReservation() {
 		super();
 	}
@@ -104,4 +104,5 @@ public class CottageReservation {
 		this.cottage = cottage;
 	}
 
+//	isFinished
 }
