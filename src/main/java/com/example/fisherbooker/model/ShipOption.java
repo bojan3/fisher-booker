@@ -18,6 +18,7 @@ public class ShipOption {
 	private String description;
 	private int price;
 	
+	
 	public ShipOption() {
 		super();
 		// TODO Auto-generated constructor stub

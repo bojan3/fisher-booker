@@ -35,7 +35,7 @@ public class CottageReservation {
 	@ManyToOne
 	@JoinColumn(name="client_id", nullable=false)
 	public Client client;
-
+	
 	public CottageReservation() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -105,4 +105,5 @@ public class CottageReservation {
 		this.cottage = cottage;
 	}
 
+//	isFinished
 }

@@ -44,11 +44,13 @@ insert into fishing_instructor(account_id,biography) values(6,'Dve reci smeker p
 insert into ship_owner (account_id) values (5);
 insert into ship_owner (account_id) values (7);
 
-
 insert into adventure (account,name,description,capacity,price,cancel_rate, address_id) values (1,'Zbilazak Djerdapske klisure','Ujutru se krece iz Beograda. Vozicemo se camcem Dunavom do Djerdapske klisure. Tamo cemo se zadrzati par sati dok obidjemo znamenita mesta. U povratku cemo svratiti u Vincu. Povratak se ocekuje predvece.',20,10,0.2, 7);
 insert into adventure (account,name,description,capacity,price,cancel_rate,address_id) values (2,'Zbilazak Djerdapske klisure','Ujutru se krece iz Beograda. Vozicemo se camcem Dunavom do Djerdapske klisure. Tamo cemo se zadrzati par sati dok obidjemo znamenita mesta. U povratku cemo svratiti u Vincu. Povratak se ocekuje predvece.',20,10,0.2,7);
 insert into adventure (account,name,description,capacity,price,cancel_rate,address_id) values (2,'Spustanje Tarom','Poslepodne se krece iz Beograda. Vozicemo se camcem Dunavom do Djerdapske klisure. Tamo cemo se zadrzati par sati dok obidjemo znamenita mesta. U povratku cemo svratiti u Vincu. Povratak se ocekuje predvece.',20,10,0.2,7);
 insert into adventure (account,name,description,capacity,price,cancel_rate,address_id) values (2,'Zora na Rtnju','Iz Beograda se krece pre ponoci. Na odrediste stizemo oko pola 4. Odmah nakon dolaska krece se u osvajanje Rtnja. Nakon 2,3 sata borbe sa zimom dolazimo do vrha. Povratak se ocekuje predvece.',20,10,0.2,7);
+
+insert into instructor_subscriptions (client_id, instructor_id) values (1, 1);
+insert into instructor_subscriptions (client_id, instructor_id) values (1, 2);
 
 insert into availability_period(start_date, end_date) values('2022-05-31', '2022-06-30');
 insert into availability_period(start_date, end_date) values('2022-06-02', '2022-06-12');

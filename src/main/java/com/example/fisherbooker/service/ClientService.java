@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.server.reactive.AbstractListenerWriteFlushProcessor;
 import org.springframework.stereotype.Service;
 
 import com.example.fisherbooker.model.Client;
@@ -20,6 +23,7 @@ import com.example.fisherbooker.repository.FishingInstructorRepository;
 import com.example.fisherbooker.repository.ShipRepository;
 
 @Service
+@Transactional
 public class ClientService {
 	
 	public ClientRepository clientRepository;
@@ -101,6 +105,27 @@ public class ClientService {
 		}
 		
 		return shipDTOs;
+	}
+
+	public void unsubscribeToCottage(Long cottageId, Long accountId) {
+		Client client = clientRepository.findByAccountId(accountId);
+		Cottage cottage = cottageRepository.getOne(cottageId);
+		client.getCottageSubscriptions().remove(cottage);
+		clientRepository.save(client);
+	}
+	
+	public void unsubscribeToShip(Long shipId, Long accountId) {
+		Client client = clientRepository.findByAccountId(accountId);
+		Ship ship = shipRepository.getOne(shipId);
+		client.getShipSubscriptions().remove(ship);
+		clientRepository.save(client);
+	}
+	
+	public void unsubscribeToInstructor(Long instructorId, Long accountId) {
+		Client client = clientRepository.findByAccountId(accountId);
+		FishingInstructor fishingInstructor = fishingInstructorRepository.getOne(instructorId);
+		client.getInstructorSubscriptions().remove(fishingInstructor);
+		clientRepository.save(client);
 	}
 	
 //	public List<Client> getAll(){
