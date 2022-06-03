@@ -2,7 +2,9 @@ package com.example.fisherbooker.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,26 +24,26 @@ public class Client {
 	@OneToOne
 	public Account account;
 
-	@OneToMany(mappedBy = "client")
+	@OneToMany(mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	public Set<ShipReservation> shipReservation;
 
-	@OneToMany(mappedBy = "client")
+	@OneToMany(mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	public Set<CottageReservation> cottageReservation;
 
-	@OneToMany(mappedBy = "client")
+	@OneToMany(mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	public Set<AdventureReservation> adventureReservation;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "cottage_subscriptions", joinColumns = @JoinColumn(name = "client_id"), inverseJoinColumns = @JoinColumn(name = "cottage_id"))
 	Set<Cottage> cottageSubscriptions;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "ship_subscriptions", joinColumns = @JoinColumn(name = "client_id"), inverseJoinColumns = @JoinColumn(name = "ship_id"))
 	Set<Ship> shipSubscriptions;
 
-	@ManyToMany
-	@JoinTable(name = "adventure_subscriptions", joinColumns = @JoinColumn(name = "client_id"), inverseJoinColumns = @JoinColumn(name = "adventure_id"))
-	Set<Adventure> adventureSubscriptions;
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "instructor_subscriptions", joinColumns = @JoinColumn(name = "client_id"), inverseJoinColumns = @JoinColumn(name = "instructor_id"))
+	Set<FishingInstructor> instructorSubscriptions;
 
 	public Client() {
 		super();
@@ -146,6 +148,13 @@ public class Client {
 			addAdventureReservation((AdventureReservation) iter.next());
 	}
 
+	public void removeAdventureReservation(AdventureReservation oldAdventureReservation) {
+		if (oldAdventureReservation == null)
+			return;
+		if (this.adventureReservation != null)
+			if (this.adventureReservation.contains(oldAdventureReservation))
+				this.adventureReservation.remove(oldAdventureReservation);
+	}
 	public void addAdventureReservation(AdventureReservation newAdventureReservation) {
 		if (newAdventureReservation == null)
 			return;
@@ -154,15 +163,6 @@ public class Client {
 		if (!this.adventureReservation.contains(newAdventureReservation))
 			this.adventureReservation.add(newAdventureReservation);
 	}
-
-	public void removeAdventureReservation(AdventureReservation oldAdventureReservation) {
-		if (oldAdventureReservation == null)
-			return;
-		if (this.adventureReservation != null)
-			if (this.adventureReservation.contains(oldAdventureReservation))
-				this.adventureReservation.remove(oldAdventureReservation);
-	}
-
 	public void removeAllAdventureReservation() {
 		if (adventureReservation != null)
 			adventureReservation.clear();
@@ -197,12 +197,12 @@ public class Client {
 		this.shipSubscriptions = shipSubscriptions;
 	}
 
-	public Set<Adventure> getAdventureSubscriptions() {
-		return adventureSubscriptions;
+	public Set<FishingInstructor> getInstructorSubscriptions() {
+		return instructorSubscriptions;
 	}
 
-	public void setAdventureSubscriptions(Set<Adventure> adventureSubscriptions) {
-		this.adventureSubscriptions = adventureSubscriptions;
+	public void setInstructorSubscriptions(Set<FishingInstructor> instructorSubscriptions) {
+		this.instructorSubscriptions = instructorSubscriptions;
 	}
 
 	public void setAccount(Account account) {
@@ -218,7 +218,7 @@ public class Client {
 		return "Client [id=" + id + ", account=" + account + ", shipReservation=" + shipReservation
 				+ ", cottageReservation=" + cottageReservation + ", adventureReservation=" + adventureReservation
 				+ ", cottageSubscriptions=" + cottageSubscriptions + ", shipSubscriptions=" + shipSubscriptions
-				+ ", adventureSubscriptions=" + adventureSubscriptions + "]";
+				+ ", instructorSubscriptions=" + instructorSubscriptions + "]";
 	}
 
 }

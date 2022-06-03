@@ -24,6 +24,15 @@ public class CottageDTO {
 		this.averageMark = averageMark;
 	}
 	
+	public CottageDTO(Cottage cottage) {
+		this.id = cottage.getId();
+		this.name = cottage.getName();
+		this.description = cottage.getDescription();
+		this.pricePerDay = cottage.getPricePerDay();
+		this.address = cottage.getAddress();
+		this.averageMark = cottage.getAverageMark();
+	}
+	
 	public static CottageDTO createCottageDTO(Cottage c) {
 		return new CottageDTO(c.getId(), c.getName(), c.getDescription(), c.getAddress(),c.getPricePerDay(), c.getAverageMark());
 	}

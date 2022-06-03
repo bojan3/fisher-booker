@@ -12,15 +12,16 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.fisherbooker.model.Account;
 import com.example.fisherbooker.model.Cottage;
-import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.DTO.CottageDTO;
-import com.example.fisherbooker.model.DTO.ShipDTO;
 import com.example.fisherbooker.service.CottageService;
+import com.example.fisherbooker.service.impl.AccountServiceImpl;
 
 @RestController
 @RequestMapping("/api/cottage")
@@ -109,7 +110,9 @@ public class CottageController {
 		}
 		return new ResponseEntity<>(cottageDTOs, HttpStatus.OK);
 	}
-
+	
+	
+	
 	@PostMapping("/save")
 	public ResponseEntity<Boolean> save(@RequestBody Cottage cottage) {
 		this.cottageService.saveCottage(cottage);

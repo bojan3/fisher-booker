@@ -9,46 +9,41 @@ insert into address (country, city, street, number) values ('United Kingdom', 'L
 insert into address (country, city, street, number) values ('Jadran sea', 'Five cave Island', 'Wild Street', '1');
 insert into address (country, city, street, number) values ('Serbia', 'Nis', 'Spic Petrol', '1');
 
-insert into role (name) values ('ROLE_CLIENT');
 insert into role (name) values ('ROLE_ADMIN');
+insert into role (name) values ('ROLE_CLIENT');
+insert into role (name) values ('ROLE_INSTRUCTOR');
 insert into role (name) values ('ROLE_COTTAGE_OWNER');	
 insert into role (name) values ('ROLE_SHIP_OWNER');
-insert into role (name) values ('ROLE_INSTRUCTOR');
 
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('gale','gale@gmail.com', '$2a$10$H/Ei64SSObBqEIM9q2AZxeeU7xIK9z0lWUKemkn1Q36iwtodZ/pXC', 'Jovan', 'Gaspar', '123456789', 1, TRUE, TRUE, FALSE);
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('bojan','bojan@gmail.com', '$2a$10$h8VcT2Y42IFQZUdjNRG7leGGw2gXnUZzXRDmvgLOmjzjR29b32jlK', 'Bojan', 'Skokic', '123456789', 2, TRUE, TRUE, TRUE);
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('sasvimprirodno','jovopustolov@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Jovan', 'Memedovic', '123456789', 3, TRUE, TRUE, TRUE);
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('mire','miroljub@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Miroljub', 'Petrovic', '123456789', 4, TRUE, TRUE, TRUE);
-insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('BearGrylls','beargrills@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Bear', 'Grylls', '123456789', 5, TRUE, TRUE, TRUE);
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('JackSparrow','jacksparrow@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Jack', 'Sparrow', '123456789', 6, TRUE, TRUE, TRUE);
+insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('BearGrylls','beargrills@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Bear', 'Grylls', '123456789', 5, TRUE, TRUE, TRUE);
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('Crnobradi','crnobradi@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Crnobradi', 'Paja', '123456789', 7, TRUE, TRUE, TRUE);
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('Spic','tihomirspic@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Tihomir', 'Stojkovic', '123456789', 8, TRUE, TRUE, TRUE);
-
 
 insert into account_role (account_id, role_id) values (1,1);
 insert into account_role (account_id, role_id) values (2,2);
 insert into account_role (account_id, role_id) values (3,3);
 insert into account_role (account_id, role_id) values (4,4);
 insert into account_role (account_id, role_id) values (5,5);
-insert into account_role (account_id, role_id) values (6,5);
---insert into account_role (account_id, role_id) values (6,4);
---insert into account_role (account_id, role_id) values (7,4);
---insert into account_role (account_id, role_id) values (8,5);
+insert into account_role (account_id, role_id) values (6,3);
+insert into account_role (account_id, role_id) values (7,5);
+insert into account_role (account_id, role_id) values (8,4);
 
 insert into cottage_owner (account_id) values (4);
+insert into cottage_owner (account_id) values (8);
 
-insert into cottage_owner (account_id) values (3);
---insert into cottage_owner (account_id) values (1);
---insert into fishing_instructor(account_id) values(4);
---insert into fishing_instructor(account_id,biography) values(4,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Sasvim prirodno" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
-
-insert into client(account_id) values(8);
+insert into client(account_id) values(2);
 
 insert into fishing_instructor(account_id,biography) values(5,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Sasvim prirodno" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
 insert into fishing_instructor(account_id,biography) values(6,'Dve reci smeker prejak. Poznat po televizijskom serijalu pod nazivom "Bear Grylls" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
 
-insert into ship_owner (account_id) values (6);
+insert into ship_owner (account_id) values (5);
 insert into ship_owner (account_id) values (7);
+
 
 insert into adventure (account,name,description,capacity,price,cancel_rate, address_id) values (1,'Zbilazak Djerdapske klisure','Ujutru se krece iz Beograda. Vozicemo se camcem Dunavom do Djerdapske klisure. Tamo cemo se zadrzati par sati dok obidjemo znamenita mesta. U povratku cemo svratiti u Vincu. Povratak se ocekuje predvece.',20,10,0.2, 7);
 insert into adventure (account,name,description,capacity,price,cancel_rate,address_id) values (2,'Zbilazak Djerdapske klisure','Ujutru se krece iz Beograda. Vozicemo se camcem Dunavom do Djerdapske klisure. Tamo cemo se zadrzati par sati dok obidjemo znamenita mesta. U povratku cemo svratiti u Vincu. Povratak se ocekuje predvece.',20,10,0.2,7);

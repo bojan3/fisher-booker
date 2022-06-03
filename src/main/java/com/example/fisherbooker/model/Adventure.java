@@ -63,10 +63,6 @@ public class Adventure {
 	@ManyToOne
 	@JoinColumn(name = "account", nullable = false)
 	public FishingInstructor fishingInstructor;
-	
-	@JsonIgnore
-	@ManyToMany(mappedBy = "adventureSubscriptions")
-	private Set<Client> client;
 
 	public Long getId() {
 		return id;

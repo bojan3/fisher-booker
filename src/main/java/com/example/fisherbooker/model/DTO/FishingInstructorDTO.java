@@ -15,6 +15,12 @@ public class FishingInstructorDTO {
 		this.biography = biography;
 	}
 
+	public FishingInstructorDTO(FishingInstructor instructor) {
+		this.account = instructor.getAccount();
+		this.id = instructor.getId();
+		this.biography = instructor.getBiography();
+	}
+
 	public static FishingInstructorDTO createFishingInstructorDTO(FishingInstructor fi) {
 		
 		return new FishingInstructorDTO(fi.getAccount(), fi.getId(), fi.getBiography());

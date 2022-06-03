@@ -13,7 +13,7 @@ import com.example.fisherbooker.model.Ship;
 public interface CottageRepository extends JpaRepository<Cottage, Long> {
 
 	public void deleteById(Long id);
-
+	
 	public List<Cottage> findAll();
 
 	public List<Cottage> findByOrderByName();

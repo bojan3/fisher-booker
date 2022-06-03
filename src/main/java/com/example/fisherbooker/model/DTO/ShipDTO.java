@@ -59,6 +59,20 @@ public class ShipDTO {
 
 	public ShipDTO() {}
 	
+	public ShipDTO(Ship ship) {
+		this.id = ship.getId();
+		this.name = ship.getName();
+		this.length = ship.getLength();
+		this.description = ship.getDescription();
+		this.averageMark = ship.getAverageMark();
+		this.rentPrice = ship.getRentPrice();
+		this.engineNumber = ship.getEngineNumber();
+		this.enginePower = ship.getEnginePower();
+		this.maxSpeed = ship.getMaxSpeed();
+		this.capacity = ship.getCapacity();
+		this.cancelRate = ship.getCancelRate();
+	}
+
 	public Long getId() {
 		return id;
 	}
