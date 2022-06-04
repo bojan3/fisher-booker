@@ -69,8 +69,10 @@ insert into room(label, num_of_beds, cottage_id) values('A2', 1, 1);
 insert into room(label, num_of_beds, cottage_id) values('B1', 2, 2);
 insert into room(label, num_of_beds, cottage_id) values('B2', 1, 2);
 
-insert into rule(description) values('Zabranjeno pušenje u vikendici');
-insert into rule(description) values('Zabranjeno uništavanje imovine');
+insert into rule(description) values('zabranjeno pušenje u vikendici');
+insert into rule(description) values('zabranjeno uništavanje imovine');
+insert into rule(description) values('zabranjeno pušenje u unutar kabine');
+insert into rule(description) values('zabranjeno skakanje u vodu sa palube');
 
 insert into cottage_picture(path, cottage_id) values('../../assets/images/cottage1.png', 1);
 insert into cottage_picture(path, cottage_id) values('../../assets/images/cottage2.png', 1);
@@ -84,19 +86,25 @@ insert into cottage_option(name, description, price, cottage_id) values('Masaža
 insert into cottage_super_deal(start_date, end_date, discounted_price, capacity, cottage_id) values('2021-12-29', '2022-01-03', 12, 4, 1);
 insert into cottage_super_deal(start_date, end_date, discounted_price, capacity, cottage_id) values('2022-01-05', '2022-01-10', 10, 4, 1);
 
-insert into ship (name, type, length, description, average_mark, rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate, ship_owner_id, availability_period_id) values ('Jahta Bosanka' , null, 3, 'Jahta za uzivanje', 5, 100, 10, 170, 150, 30, 0, 1, 3);
-insert into ship (name, type, length, description, average_mark, rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate, ship_owner_id, availability_period_id) values ('Jahta Jovana' , null, 3, 'Jahta za uzivanje', 3, 150, 20, 200, 100, 40, 0, 1, 4);
-insert into ship (name, type, length, description, average_mark, rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate, ship_owner_id) values ('Jahta Katarina' , null, 3, 'Jahta za uzivanje', 7, 100, 30, 300, 150, 10, 0, 2);
+insert into ship (name, type, length, address_id, description, average_mark, rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate, ship_owner_id, availability_period_id) values ('Jahta Bosanka' , 'jahta', 3, 9, 'Jahta za uzivanje', 5, 100, 10, 170, 150, 30, 0, 1, 3);
+insert into ship (name, type, length, description, average_mark, rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate, ship_owner_id, availability_period_id) values ('Jahta Jovana' , 'ledolomac', 3, 'Jahta za uzivanje', 3, 150, 20, 200, 100, 40, 0, 1, 4);
+insert into ship (name, type, length, description, average_mark, rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate, ship_owner_id) values ('Jahta Katarina' , 'jahta', 3, 'Jahta za uzivanje', 7, 100, 30, 300, 150, 10, 0, 2);
 
 insert into ship_picture(path, ship_id) values('../../assets/images/gusar1.png', 1);
 
-insert into ship_reservation(start_date, end_date, ship_id, client_id) values ('2022-05-31', '2022-06-10', 1, 1);
+insert into ship_reservation(start_date, end_date, ship_id, capacity, price, client_id) values ('2022-05-31', '2022-06-10', 1, 10, 200, 1);
 
-insert into ship_rules(ship_id, rules_id) values(1, 1);
-insert into ship_rules(ship_id, rules_id) values(1, 2);
+insert into ship_rules(ship_id, rules_id) values(1, 3);
+insert into ship_rules(ship_id, rules_id) values(1, 4);
 
 insert into ship_option(name, description, price, ship_id) values('Obilazak akvarijuma', 'Gleda se', 350, 1);
 insert into ship_option(name, description, price, ship_id) values('Masaža', 'Sat vremena', 1000, 1);
 
 insert into ship_super_deal(start_date, end_date, discounted_price, capacity, ship_id) values('2021-12-29', '2022-01-03', 12, 4, 1);
 insert into ship_super_deal(start_date, end_date, discounted_price, capacity, ship_id) values('2022-01-05', '2022-01-10', 10, 4, 1);
+
+insert into navigation_equipment(name, ship_id) values ('GPS', 1);
+insert into navigation_equipment(name, ship_id) values ('radar', 1);
+
+insert into fishing_equipment(name, ship_id) values('Štapovi za pecanje', 1);
+insert into fishing_equipment(name, ship_id) values('Mamac', 1);

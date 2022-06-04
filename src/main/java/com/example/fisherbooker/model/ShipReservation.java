@@ -20,17 +20,19 @@ public class ShipReservation {
 	private int id;
 	private Date startDate;
 	private Date endDate;
+	private int price;
+	private int capacity;
 
 	@ManyToMany
 	public Set<ShipOption> shipOption;
-	
+
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name="ship_id", nullable=false)
+	@JoinColumn(name = "ship_id", nullable = false)
 	public Ship ship;
-	
+
 	@ManyToOne
-	@JoinColumn(name="client_id", nullable=false)
+	@JoinColumn(name = "client_id", nullable = false)
 	public Client client;
 
 	public ShipReservation() {
@@ -76,5 +78,36 @@ public class ShipReservation {
 	public void setShip(Ship ship) {
 		this.ship = ship;
 	}
-	
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public int getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
+
+	@Override
+	public String toString() {
+		return "ShipReservation [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", price=" + price
+				+ ", capacity=" + capacity + ", shipOption=" + shipOption + ", ship=" + ship + ", client=" + client
+				+ "]";
+	}
+
 }

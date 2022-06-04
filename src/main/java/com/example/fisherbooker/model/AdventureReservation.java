@@ -11,77 +11,104 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class AdventureReservation {
-	public AdventureReservation() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Date startDate;
 	private Date endDate;
-	private int duration;
 	private int capacity;
-	
+	private int price;
+
+	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name="client_id", nullable=false)
+	@JoinColumn(name = "adventure_id", nullable = false)
+	public Adventure adventure;
+
+	@ManyToOne
+	@JoinColumn(name = "client_id", nullable = false)
 	public Client client;
-	
+
 	@ManyToMany
 	private Set<AdventureOption> adventureOption;
-	private int price;
-	
+
+	public AdventureReservation() {
+		super();
+	}
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public Date getStartDate() {
 		return startDate;
 	}
+
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
+
 	public Date getEndDate() {
 		return endDate;
 	}
+
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-	public int getDuration() {
-		return duration;
-	}
-	public void setDuration(int duration) {
-		this.duration = duration;
-	}
+
 	public int getCapacity() {
 		return capacity;
 	}
+
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
+
 	public Set<AdventureOption> getAdventureOption() {
 		return adventureOption;
 	}
+
 	public void setAdventureOption(Set<AdventureOption> adventureOption) {
 		this.adventureOption = adventureOption;
 	}
+
 	public int getPrice() {
 		return price;
 	}
+
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	
+
+	public Adventure getAdventure() {
+		return adventure;
+	}
+
+	public void setAdventure(Adventure adventure) {
+		this.adventure = adventure;
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
 	@Override
 	public String toString() {
-		return "AdventureReservation [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", duration="
-				+ duration + ", capacity=" + capacity + ", adventureOption=" + adventureOption + ", price=" + price
-				+ "]";
+		return "AdventureReservation [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", capacity="
+				+ capacity + ", adventure=" + adventure + ", client=" + client + ", adventureOption=" + adventureOption
+				+ ", price=" + price + "]";
 	}
 
 }

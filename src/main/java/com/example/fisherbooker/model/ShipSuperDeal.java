@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -17,8 +18,10 @@ public class ShipSuperDeal {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@JsonFormat(pattern = "dd.MM.yyyy.")
 	private Date startDate;
 	private int discountedPrice;
+	@JsonFormat(pattern = "dd.MM.yyyy.")
 	private Date endDate;
 	private int capacity;
 

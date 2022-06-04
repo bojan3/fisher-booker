@@ -25,7 +25,6 @@ public class CottagePicture {
 
 	public CottagePicture() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getId() {

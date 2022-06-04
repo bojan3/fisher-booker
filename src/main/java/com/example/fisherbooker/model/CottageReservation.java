@@ -21,7 +21,6 @@ public class CottageReservation {
 	private Date startDate;
 	private Date endDate;
 	private int price;
-	private int duration;
 	private int capacity;
 
 	@ManyToMany
@@ -72,14 +71,6 @@ public class CottageReservation {
 		this.price = price;
 	}
 
-	public int getDuration() {
-		return duration;
-	}
-
-	public void setDuration(int duration) {
-		this.duration = duration;
-	}
-
 	public int getCapacity() {
 		return capacity;
 	}
@@ -104,5 +95,11 @@ public class CottageReservation {
 		this.cottage = cottage;
 	}
 
-//	isFinished
+	@Override
+	public String toString() {
+		return "CottageReservation [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", price=" + price
+				+ ", capacity=" + capacity + ", cottageOption=" + cottageOption + ", cottage=" + cottage + ", client="
+				+ client + "]";
+	}
+
 }

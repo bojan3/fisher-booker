@@ -26,7 +26,7 @@ public class Ship {
 	private Long id;
 	@Column(length = 20)
 	private String name;
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	private ShipType type;
 	private float length;
 	@Column(length = 350)
@@ -49,7 +49,7 @@ public class Ship {
 	private ShipOwner shipOwner;
 
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	private Set<Rule> rules;
+	public Set<Rule> rules;
 
 	@OneToMany(mappedBy = "ship", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private Set<NavigationEquipment> navigationEquipments;
