@@ -91,6 +91,14 @@ insert into ship (name, type, length, description, average_mark, rent_price, eng
 insert into ship_picture(path, ship_id) values('../../assets/images/gusar1.png', 1);
 
 insert into ship_reservation(start_date, end_date, ship_id, client_id) values ('2022-05-31', '2022-06-10', 1, 1);
+insert into ship_reservation(start_date, end_date, ship_id, client_id) values ('2022-05-25', '2022-05-30', 2, 1);
+insert into ship_reservation(start_date, end_date, ship_id, client_id) values ('2022-06-20', '2022-06-30', 3, 1);
+
+insert into cottage_reservation(capacity, duration, start_date, end_date, price, cottage_id, client_id) values (10, 11, '2022-05-31', '2022-06-10', 40, 1, 1);
+insert into cottage_reservation(capacity, duration, start_date, end_date, price, cottage_id, client_id) values (15, 5, '2022-05-25', '2022-05-30', 50, 2, 1);
+insert into cottage_reservation(capacity, duration, start_date, end_date, price, cottage_id, client_id) values (20, 5, '2022-06-20', '2022-06-30', 60, 3, 1);
+
+insert into adventure_reservation(capacity, duration, start_date, end_date, price, client_id)
 
 insert into ship_rules(ship_id, rules_id) values(1, 1);
 insert into ship_rules(ship_id, rules_id) values(1, 2);

@@ -1,6 +1,6 @@
 package com.example.fisherbooker.exception;
 
-public class InvalidTokenException extends Exception {
+public class InvalidTokenException extends Throwable{
 
     public InvalidTokenException() {
         super();
