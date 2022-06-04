@@ -2,7 +2,6 @@ package com.example.fisherbooker.service.impl;
 
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -15,8 +14,6 @@ import org.springframework.stereotype.Service;
 import com.example.fisherbooker.repository.SecureTokenRepository;
 import com.example.fisherbooker.security.auth.SecureToken;
 import com.example.fisherbooker.service.SecureTokenService;
-
-import ch.qos.logback.core.subst.Token;
 
 @Service
 public class DefaultSecureTokenService implements SecureTokenService {

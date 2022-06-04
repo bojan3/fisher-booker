@@ -2,7 +2,6 @@ package com.example.fisherbooker.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,15 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fisherbooker.model.Client;
-import com.example.fisherbooker.model.CottageOwner;
-import com.example.fisherbooker.model.FishingInstructor;
+import com.example.fisherbooker.model.DTO.AdventureReservationDTO;
 import com.example.fisherbooker.model.DTO.ClientDTO;
 import com.example.fisherbooker.model.DTO.CottageDTO;
-import com.example.fisherbooker.model.DTO.CottageOwnerDTO;
+import com.example.fisherbooker.model.DTO.CottageReservationDTO;
 import com.example.fisherbooker.model.DTO.FishingInstructorDTO;
 import com.example.fisherbooker.model.DTO.ShipDTO;
+import com.example.fisherbooker.model.DTO.ShipReservationDTO;
 import com.example.fisherbooker.service.ClientService;
-import com.example.fisherbooker.service.CottageOwnerService;
 
 @RestController
 @RequestMapping("/api/client")
@@ -119,5 +117,49 @@ public class ClientController {
 	public ResponseEntity<Boolean> unsubscribeToInstructor(@PathVariable Long instructorId, @RequestBody Long accountId){
 		this.clientService.unsubscribeToInstructor(instructorId, accountId);
 		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+	
+	
+//	rezervacije koje nisu prosle
+	@PreAuthorize("hasRole('CLIENT')")
+	@GetMapping("/reservation/adventure/{accountId}")
+	public ResponseEntity<List<AdventureReservationDTO>> getAdventureReservations(@PathVariable Long accountId){
+		List<AdventureReservationDTO> adventureReservationDTOs = this.clientService.getAdventureReservations(accountId); 		
+		return new ResponseEntity<>(adventureReservationDTOs, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('CLIENT')")
+	@GetMapping("/finisedreservation/adventure/{accountId}")
+	public ResponseEntity<List<AdventureReservationDTO>> getFinishedAdventureReservations(@PathVariable Long accountId){
+		List<AdventureReservationDTO> adventureReservationDTOs = this.clientService.getFinishedAdventureReservations(accountId); 		
+		return new ResponseEntity<>(adventureReservationDTOs, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('CLIENT')")
+	@GetMapping("/reservation/ship/{accountId}")
+	public ResponseEntity<List<ShipReservationDTO>> getShipReservations(@PathVariable Long accountId){
+		List<ShipReservationDTO> shipReservationDTOs = this.clientService.getShipReservations(accountId); 		
+		return new ResponseEntity<>(shipReservationDTOs, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('CLIENT')")
+	@GetMapping("/finishedreservation/ship/{accountId}")
+	public ResponseEntity<List<ShipReservationDTO>> getFinishedShipReservations(@PathVariable Long accountId){
+		List<ShipReservationDTO> shipReservationDTOs = this.clientService.getFinishedShipReservations(accountId); 		
+		return new ResponseEntity<>(shipReservationDTOs, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('CLIENT')")
+	@GetMapping("/reservation/cottage/{accountId}")
+	public ResponseEntity<List<CottageReservationDTO>> getCottageReservations(@PathVariable Long accountId){
+		List<CottageReservationDTO> cottageReservationDTOs = this.clientService.getCottageReservations(accountId); 		
+		return new ResponseEntity<>(cottageReservationDTOs, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('CLIENT')")
+	@GetMapping("/finishedreservation/cottage/{accountId}")
+	public ResponseEntity<List<CottageReservationDTO>> getFinishedCottageReservations(@PathVariable Long accountId){
+		List<CottageReservationDTO> cottageReservationDTOs = this.clientService.getFisnihedCottageReservations(accountId); 		
+		return new ResponseEntity<>(cottageReservationDTOs, HttpStatus.OK);
 	}
 }
