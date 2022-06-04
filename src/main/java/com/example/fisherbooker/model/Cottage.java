@@ -91,6 +91,14 @@ public class Cottage {
 		this.description = description;
 	}
 
+	public int getPricePerDay() {
+		return pricePerDay;
+	}
+
+	public void setPricePerDay(int pricePerDay) {
+		this.pricePerDay = pricePerDay;
+	}
+
 	public float getAverageMark() {
 		return averageMark;
 	}
@@ -123,48 +131,20 @@ public class Cottage {
 		this.rules = rules;
 	}
 
-	public AvailabilityPeriod getAvailabilityPeriod() {
-		return availabilityPeriod;
-	}
-
-	public void setAvailabilityPeriod(AvailabilityPeriod availabilityPeriod) {
-		this.availabilityPeriod = availabilityPeriod;
-	}
-
-	public Set<CottagePicture> getCottagePicture() {
-		return cottagePictures;
-	}
-
-	public void setCottagePicture(Set<CottagePicture> cottagePicture) {
-		this.cottagePictures = cottagePicture;
-	}
-
-	public Set<CottageOption> getCottageOptions() {
-		return cottageOptions;
-	}
-
-	public void setCottageOptions(Set<CottageOption> cottageOptions) {
-		this.cottageOptions = cottageOptions;
-	}
-
-	public CottageOwner getCottageOwner() {
-		return cottageOwner;
-	}
-
-	public void setCottageOwner(CottageOwner cottageOwner) {
-		this.cottageOwner = cottageOwner;
-	}
-
-	public int getPricePerDay() {
-		return this.pricePerDay;
-	}
-
 	public Set<CottageSuperDeal> getCottageSuperDeals() {
 		return cottageSuperDeals;
 	}
 
 	public void setCottageSuperDeals(Set<CottageSuperDeal> cottageSuperDeals) {
 		this.cottageSuperDeals = cottageSuperDeals;
+	}
+
+	public AvailabilityPeriod getAvailabilityPeriod() {
+		return availabilityPeriod;
+	}
+
+	public void setAvailabilityPeriod(AvailabilityPeriod availabilityPeriod) {
+		this.availabilityPeriod = availabilityPeriod;
 	}
 
 	public Set<CottagePicture> getCottagePictures() {
@@ -183,8 +163,28 @@ public class Cottage {
 		this.cottageReservations = cottageReservations;
 	}
 
-	public void setPricePerDay(int pricePerDay) {
-		this.pricePerDay = pricePerDay;
+	public Set<CottageOption> getCottageOptions() {
+		return cottageOptions;
+	}
+
+	public void setCottageOptions(Set<CottageOption> cottageOptions) {
+		this.cottageOptions = cottageOptions;
+	}
+
+	public CottageOwner getCottageOwner() {
+		return cottageOwner;
+	}
+
+	public void setCottageOwner(CottageOwner cottageOwner) {
+		this.cottageOwner = cottageOwner;
+	}
+
+	public Set<Client> getClient() {
+		return client;
+	}
+
+	public void setClient(Set<Client> client) {
+		this.client = client;
 	}
 
 }
