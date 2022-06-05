@@ -36,7 +36,7 @@ public class Cottage {
 	@JsonIgnore
 	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	public Set<Room> rooms;
-	
+
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true)
 	public Set<Rule> rules;
@@ -51,14 +51,12 @@ public class Cottage {
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	public Set<CottagePicture> cottagePictures;
 
-	
 	@JsonIgnore
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<CottageReservation> cottageReservations;
 
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<CottageOption> cottageOptions;
-
 
 	@ManyToOne
 	@JsonIgnore
@@ -69,14 +67,13 @@ public class Cottage {
 	@ManyToMany(mappedBy = "cottageSubscriptions")
 	private Set<Client> client;
 
-	
 	public void free() {
 		this.setAvailabilityPeriod(null);
 		this.setCottageOptions(null);
-		this.setCottageReservations(null); 
+		this.setCottageReservations(null);
 		this.setCottageSuperDeals(null);
 	}
-	
+
 	public Cottage() {
 		super();
 	}
@@ -201,7 +198,4 @@ public class Cottage {
 		this.client = client;
 	}
 
-	
-	
-	
 }

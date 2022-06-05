@@ -9,13 +9,13 @@ insert into address (country, city, street, number) values ('United Kingdom', 'L
 insert into address (country, city, street, number) values ('Jadran sea', 'Five cave Island', 'Wild Street', '1');
 insert into address (country, city, street, number) values ('Serbia', 'Nis', 'Spic Petrol', '1');
 
-insert into role (name) values ('ROLE_CLIENT');
 insert into role (name) values ('ROLE_ADMIN');
+insert into role (name) values ('ROLE_CLIENT');
 insert into role (name) values ('ROLE_INSTRUCTOR');
 insert into role (name) values ('ROLE_COTTAGE_OWNER');	
 insert into role (name) values ('ROLE_SHIP_OWNER');
 
-insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('majstor','goran.tatomirov@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Goran', 'Tatomirov', '123456789', 1, TRUE, TRUE, TRUE);
+
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('gale','gale@gmail.com', '$2a$10$H/Ei64SSObBqEIM9q2AZxeeU7xIK9z0lWUKemkn1Q36iwtodZ/pXC', 'Jovan', 'Gaspar', '123456789', 1, TRUE, TRUE, FALSE);
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('bojan','bojan@gmail.com', '$2a$10$h8VcT2Y42IFQZUdjNRG7leGGw2gXnUZzXRDmvgLOmjzjR29b32jlK', 'Bojan', 'Skokic', '123456789', 2, TRUE, TRUE, TRUE);
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('sasvimprirodno','jovopustolov@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Jovan', 'Memedovic', '123456789', 3, TRUE, TRUE, TRUE);
@@ -30,10 +30,10 @@ insert into account (username, email, password, name, last_name, phone_number, a
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('Neverifikovani3','neverifikovani@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'nn', 'nn', '123456789', 10, FALSE, FALSE, TRUE);
 
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('ЋопавиХХХ','crnobradi@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Ћопави', 'Драгиша', '123456789', 9, TRUE, TRUE, TRUE);
+insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('majstor','goran.tatomirov@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Goran', 'Tatomirov', '123456789', 1, TRUE, TRUE, TRUE);
 
 
-
-insert into account_role (account_id, role_id) values (1,3);
+insert into account_role (account_id, role_id) values (1,1);
 insert into account_role (account_id, role_id) values (2,2);
 insert into account_role (account_id, role_id) values (3,3);
 insert into account_role (account_id, role_id) values (4,4);
@@ -132,8 +132,8 @@ insert into availability_period(start_date, end_date) values('2022-07-02', '2022
 
 insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark, cottage_owner_id) values ('rezervisi bre', 'Najjaca vikendica', 2, 1,20, 0, 1);
 insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark, cottage_owner_id) values ('Slike govore vise od reci', 'Villa Mirna', 3, 2,50, 1, 1);
-insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('Zlatiborske lepote, veoma lep pogled', 'Villa Anja', 4,3, 50, 2);
-insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('Visoko u panini, zubori reka u blizini', 'Villa Smilja', 6,4,70, 3);
+insert into cottage (description, name, address_id, price_per_day, average_mark) values ('Zlatiborske lepote, veoma lep pogled', 'Villa Anja', 4, 50, 2);
+insert into cottage (description, name, address_id, price_per_day, average_mark) values ('Visoko u panini, zubori reka u blizini', 'Villa Smilja', 6,70, 3);
 --insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('u kotlini, brza voda tece', 'Villa Tamara', 1, 40, 4);
 --insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('Vikendica skrivena u sumi', 'Villa Zagorka', 5, 30, 5);
 

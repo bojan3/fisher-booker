@@ -52,9 +52,6 @@ public class Adventure {
 	
 	@Column
 	private float cancelRate;
-
-	@Column 
-	private int duration;
 	
 	@OneToMany(mappedBy = "adventure", cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
 	//@JoinTable(name = "adventure_adventure_option",
