@@ -24,12 +24,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.example.fisherbooker.security.auth.SecureToken;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 @Entity
 public class Account implements UserDetails {
 	public Account() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	private static final long serialVersionUID = 1L;
@@ -84,12 +82,16 @@ public class Account implements UserDetails {
 	@JoinTable(name = "account_role", joinColumns = @JoinColumn(name = "account_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private List<Role> roles;
 
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	public Address address;
 
 //  tokeni za verifkaciju e-mail adrese
 	@OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
 	private Set<SecureToken> tokens;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "account")
+	private Set<DeleteAccountRequest> deleteAccountRequests;
 
 	public Long getId() {
 		return id;
@@ -210,6 +212,14 @@ public class Account implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return enabled;
+	}
+
+	public Set<DeleteAccountRequest> getDeleteAccountRequests() {
+		return deleteAccountRequests;
+	}
+
+	public void setDeleteAccountRequests(Set<DeleteAccountRequest> deleteAccountRequests) {
+		this.deleteAccountRequests = deleteAccountRequests;
 	}
 
 }

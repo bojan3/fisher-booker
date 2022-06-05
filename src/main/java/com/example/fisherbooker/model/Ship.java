@@ -44,17 +44,17 @@ public class Ship {
 	public Address address;
 
 	@JsonIgnore
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ship_owner_id")
 	private ShipOwner shipOwner;
 
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<Rule> rules;
 
-	@OneToMany(mappedBy = "ship", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "ship", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<NavigationEquipment> navigationEquipments;
 
-	@OneToMany(mappedBy = "ship", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "ship", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<FishingEquipment> fishingEquipments;
 
 	@OneToMany(mappedBy = "ship", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -63,7 +63,7 @@ public class Ship {
 	@OneToMany(mappedBy = "ship", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<ShipSuperDeal> shipSuperDeals;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private AvailabilityPeriod availabilityPeriod;
 
 	@OneToMany(mappedBy = "ship", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
@@ -74,7 +74,7 @@ public class Ship {
 	private Set<ShipReservation> shipReservations;
 
 	@JsonIgnore
-	@ManyToMany(mappedBy = "shipSubscriptions")
+	@ManyToMany(mappedBy = "shipSubscriptions", fetch = FetchType.EAGER)
 	private Set<Client> client;
 
 	public Ship() {
@@ -263,6 +263,17 @@ public class Ship {
 
 	public void setClient(Set<Client> client) {
 		this.client = client;
+	}
+
+	@Override
+	public String toString() {
+		return "Ship [id=" + id + ", name=" + name + ", type=" + type + ", length=" + length + ", description="
+				+ description + ", averageMark=" + averageMark + ", rentPrice=" + rentPrice + ", engineNumber="
+				+ engineNumber + ", enginePower=" + enginePower + ", maxSpeed=" + maxSpeed + ", capacity=" + capacity
+				+ ", cancelRate=" + cancelRate + ", address=" + address + ", rules=" + rules + ", navigationEquipments="
+				+ navigationEquipments + ", fishingEquipments=" + fishingEquipments + ", shipPictures=" + shipPictures
+				+ ", shipSuperDeals=" + shipSuperDeals + ", availabilityPeriod=" + availabilityPeriod + ", shipOptions="
+				+ shipOptions + "]";
 	}
 
 }

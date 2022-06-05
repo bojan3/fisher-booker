@@ -47,10 +47,9 @@ public class Client {
 
 	public Client() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public java.util.Set<ShipReservation> getShipReservation() {
+	/*public java.util.Set<ShipReservation> getShipReservation() {
 		if (shipReservation == null)
 			shipReservation = new java.util.HashSet<ShipReservation>();
 		return shipReservation;
@@ -155,6 +154,7 @@ public class Client {
 			if (this.adventureReservation.contains(oldAdventureReservation))
 				this.adventureReservation.remove(oldAdventureReservation);
 	}
+
 	public void addAdventureReservation(AdventureReservation newAdventureReservation) {
 		if (newAdventureReservation == null)
 			return;
@@ -163,13 +163,13 @@ public class Client {
 		if (!this.adventureReservation.contains(newAdventureReservation))
 			this.adventureReservation.add(newAdventureReservation);
 	}
+
 	public void removeAllAdventureReservation() {
 		if (adventureReservation != null)
 			adventureReservation.clear();
-	}
+	}*/
 
 	public Account getAccount() {
-		// TODO Auto-generated method stub
 		return this.account;
 	}
 

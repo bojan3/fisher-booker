@@ -14,9 +14,11 @@ public class AvailabilityPeriod {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@JsonFormat(pattern = "dd.MM.yyyy.")
+	//@JsonFormat(pattern = "dd.MM.yyyy.")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date startDate;
-	@JsonFormat(pattern = "dd.MM.yyyy.")
+	//@JsonFormat(pattern = "dd.MM.yyyy.")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date endDate;
 
 	public AvailabilityPeriod() {

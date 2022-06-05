@@ -34,7 +34,6 @@ public class CottageController {
 		this.cottageService = cottageService;
 	}
 
-	// ownerId ce drugacije da se dobavlja jednom kada dodamo spring security
 	@PostMapping("/add/{ownerId}")
 	public ResponseEntity<Boolean> getAllByOwner(@RequestBody Cottage cottage) {
 		this.cottageService.saveCottage(cottage);
@@ -110,9 +109,7 @@ public class CottageController {
 		}
 		return new ResponseEntity<>(cottageDTOs, HttpStatus.OK);
 	}
-	
-	
-	
+
 	@PostMapping("/save")
 	public ResponseEntity<Boolean> save(@RequestBody Cottage cottage) {
 		this.cottageService.saveCottage(cottage);

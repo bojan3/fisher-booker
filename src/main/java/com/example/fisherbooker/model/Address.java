@@ -10,21 +10,20 @@ import javax.persistence.Id;
 public class Address {
 	public Address() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(length=25)
+	@Column(length = 25)
 	private String country;
-	@Column(length=30)
+	@Column(length = 30)
 	private String city;
-	@Column(length=30)
+	@Column(length = 30)
 	private String street;
-	@Column(length=10)
+	@Column(length = 10)
 	private String number;
-	
+
 	public Address(String country, String city, String street, String number) {
 		super();
 		this.country = country;
@@ -69,5 +68,5 @@ public class Address {
 	public String toString() {
 		return "Address [country=" + country + ", city=" + city + ", street=" + street + ", number=" + number + "]";
 	}
-	
+
 }

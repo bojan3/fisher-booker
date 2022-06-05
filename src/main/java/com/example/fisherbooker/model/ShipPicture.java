@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -17,7 +18,9 @@ public class ShipPicture {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(length = 150)
-	private String path;
+	private String name;
+	@Lob
+	private byte[] data;
 
 	@JsonIgnore
 	@ManyToOne
@@ -28,10 +31,10 @@ public class ShipPicture {
 		super();
 	}
 
-	public ShipPicture(int id, String path) {
+	public ShipPicture(int id, String name) {
 		super();
 		this.id = id;
-		this.path = path;
+		this.name = name;
 	}
 
 	public int getId() {
@@ -42,12 +45,20 @@ public class ShipPicture {
 		this.id = id;
 	}
 
-	public String getPath() {
-		return path;
+	public String getName() {
+		return name;
 	}
 
-	public void setPath(String path) {
-		this.path = path;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public byte[] getData() {
+		return data;
+	}
+
+	public void setData(byte[] data) {
+		this.data = data;
 	}
 
 	public Ship getShip() {
@@ -56,11 +67,6 @@ public class ShipPicture {
 
 	public void setShip(Ship ship) {
 		this.ship = ship;
-	}
-
-	@Override
-	public String toString() {
-		return "ShipPicture [id=" + id + ", path=" + path + "]";
 	}
 
 }
