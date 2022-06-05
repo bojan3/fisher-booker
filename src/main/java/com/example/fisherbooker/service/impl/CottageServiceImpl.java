@@ -1,8 +1,12 @@
 package com.example.fisherbooker.service.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.hibernate.engine.query.spi.ReturnMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.MethodInfoTransformer;
 import org.springframework.stereotype.Service;
 
 import com.example.fisherbooker.model.Cottage;
@@ -72,5 +76,30 @@ public class CottageServiceImpl implements CottageService {
 	@Override
 	public List<Cottage> getAll() {
 		return cottageRepository.findAll();
+	}
+
+	@Override
+	public List<Cottage> getAllByDate(Date date) {
+		List<Cottage> cottages = cottageRepository.findAll();
+		List<Cottage> returnList = new ArrayList<Cottage>();
+		for (Cottage cottage: cottages) {
+			if(date.before(cottage.availabilityPeriod.getStartDate()) || date.after(cottage.getAvailabilityPeriod().getEndDate()))
+				return new ArrayList<Cottage>();
+			
+			List<CottageReservation> cottageReservations = cottageReservationRepository.findByCottageId(cottage.getId());
+			if(isFree(cottageReservations, date)) {
+				returnList.add(cottage);
+			}
+		}
+		return returnList;
+	}
+	
+	private boolean isFree(List<CottageReservation> cottageReservations, Date date) {
+		for(CottageReservation cottageReservation: cottageReservations) {
+			if (date.after(cottageReservation.getStartDate()) && date.before(cottageReservation.getEndDate())) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

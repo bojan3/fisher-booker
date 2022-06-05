@@ -1,6 +1,8 @@
 package com.example.fisherbooker.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -8,7 +10,10 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.MethodInfoTransformer;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException.Gone;
+import org.yaml.snakeyaml.tokens.FlowSequenceEndToken;
 
 import com.example.fisherbooker.model.AdventureReservation;
 import com.example.fisherbooker.model.Adventure;
@@ -136,14 +141,14 @@ public class ClientService {
 		client.getInstructorSubscriptions().remove(fishingInstructor);
 		clientRepository.save(client);
 	}
-
+// odavden pocinje rezervacije da samaraju
 	public List<AdventureReservationDTO> getAdventureReservations(Long accountId) {
 		Client client = clientRepository.findByAccountId(accountId);
 		List<AdventureReservation> adventureReservations = new ArrayList<AdventureReservation>(client.getAdventureReservation());
 		List<AdventureReservationDTO> adventureReservationDTOs = new ArrayList<AdventureReservationDTO>();
 		for(AdventureReservation adventureReservation: adventureReservations) {
 			AdventureReservationDTO adventureReservationDTO = new AdventureReservationDTO(adventureReservation);
-			if(!adventureReservationDTO.isFinished()) {
+			if(!adventureReservationDTO.isFinished() && !adventureReservation.isDeleted()) {
 				adventureReservationDTOs.add(adventureReservationDTO);
 			}
 		}
@@ -157,7 +162,7 @@ public class ClientService {
 		List<AdventureReservationDTO> adventureReservationDTOs = new ArrayList<AdventureReservationDTO>();
 		for(AdventureReservation adventureReservation: adventureReservations) {
 			AdventureReservationDTO adventureReservationDTO = new AdventureReservationDTO(adventureReservation);
-			if(adventureReservationDTO.isFinished()) {
+			if(adventureReservationDTO.isFinished() && !adventureReservation.isDeleted()) {
 				adventureReservationDTOs.add(adventureReservationDTO);
 			}
 		}
@@ -170,7 +175,9 @@ public class ClientService {
 		List<CottageReservationDTO> cottageReservationDTOs = new ArrayList<CottageReservationDTO>();
 		for(CottageReservation cottageReservation: cottageReservations) {
 			CottageReservationDTO cottageReservationDTO = new CottageReservationDTO(cottageReservation);
-			if(!cottageReservationDTO.isFinished()) {
+			
+			System.out.println(cottageReservationDTO);
+			if(!cottageReservationDTO.isFinished() && !cottageReservation.isDeleted()) {
 				cottageReservationDTOs.add(cottageReservationDTO);
 			}
 		}
@@ -183,7 +190,7 @@ public class ClientService {
 		List<CottageReservationDTO> cottageReservationDTOs = new ArrayList<CottageReservationDTO>();
 		for(CottageReservation cottageReservation: cottageReservations) {
 			CottageReservationDTO cottageReservationDTO = new CottageReservationDTO(cottageReservation);
-			if(cottageReservationDTO.isFinished()) {
+			if(cottageReservationDTO.isFinished() && !cottageReservation.isDeleted()) {
 				cottageReservationDTOs.add(cottageReservationDTO);
 			}
 		}
@@ -196,7 +203,7 @@ public class ClientService {
 		List<ShipReservationDTO> ShipReservationDTOs = new ArrayList<ShipReservationDTO>();
 		for(ShipReservation shipReservation: shipReservations) {
 			ShipReservationDTO shipReservationDTO = new ShipReservationDTO(shipReservation);
-			if(!shipReservationDTO.isFinished()) {
+			if(!shipReservationDTO.isFinished() && !shipReservation.isDeleted()) {
 				ShipReservationDTOs.add(shipReservationDTO);
 			}
 		}
@@ -209,11 +216,57 @@ public class ClientService {
 		List<ShipReservationDTO> ShipReservationDTOs = new ArrayList<ShipReservationDTO>();
 		for(ShipReservation shipReservation: shipReservations) {
 			ShipReservationDTO shipReservationDTO = new ShipReservationDTO(shipReservation);
-			if(shipReservationDTO.isFinished()) {
+			if(shipReservationDTO.isFinished() && !shipReservation.isDeleted()) {
 				ShipReservationDTOs.add(shipReservationDTO);
 			}
 		}
+		System.out.println(ShipReservationDTOs);
 		return ShipReservationDTOs;
+	}
+
+	public void deleteCottageReservation(Long accountId, Long cottageReesrvationId) {
+		Client client = clientRepository.findByAccountId(accountId);
+		List<CottageReservation> cottageReservations = new ArrayList<CottageReservation>(client.getCottageReservation()); 
+		
+		for(CottageReservation cottageReservation: cottageReservations) {
+			if(cottageReservation.getId() == cottageReesrvationId) {
+				cottageReservation.setDeleted(true);
+			}
+		}
+		
+		client.setCottageReservation(cottageReservations);
+		
+		this.clientRepository.save(client);
+	}
+
+	public void deleteShipReservation(Long accountId, Long shipReservationId) {
+		Client client = clientRepository.findByAccountId(accountId);
+		List<ShipReservation> shipReservations = new ArrayList<ShipReservation>(client.getShipReservation()); 
+		
+		for(ShipReservation shipReservation: shipReservations) {
+			if(shipReservation.getId() == shipReservationId) {
+				shipReservation.setDeleted(true);
+			}
+		}
+		client.setShipReservation(shipReservations);
+		
+		this.clientRepository.save(client);
+		
+	}
+	
+	public void deleteAdventureReservation(Long accountId, Long adventureReservationId) {
+		Client client = clientRepository.findByAccountId(accountId);
+		List<AdventureReservation> adventureReservations = new ArrayList<AdventureReservation>(client.getAdventureReservation()); 
+		
+		for(AdventureReservation adventureReservation: adventureReservations) {
+			if(adventureReservation.getId() == adventureReservationId) {
+				adventureReservation.setDeleted(true);
+			}
+		}
+		client.setAdventureReservation(adventureReservations);
+		
+		this.clientRepository.save(client);
+		
 	}
 	
 	public Optional<Client> findOneById(Long client_id) {

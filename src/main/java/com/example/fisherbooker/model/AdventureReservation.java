@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,9 +29,10 @@ public class AdventureReservation {
 	private int price;
 	private float cancelRate;
 	private int duration;
+	private boolean deleted;
 
 	@JsonIgnore
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "adventure_id", nullable = false)
 	public Adventure adventure;
 
@@ -38,13 +40,13 @@ public class AdventureReservation {
 	@JoinColumn(name = "client_id", nullable = false)
 	public Client client;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<AdventureOption> adventureOption;
 
 	public AdventureReservation() {
 		super();
 	}
-		
+
 	public Long getId() {
 		return id;
 	}
@@ -68,8 +70,6 @@ public class AdventureReservation {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-
-
 
 	public int getCapacity() {
 		return capacity;
@@ -111,12 +111,21 @@ public class AdventureReservation {
 		this.client = client;
 	}
 
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	@Override
 	public String toString() {
 		return "AdventureReservation [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", capacity="
-				+ capacity + ", adventure=" + adventure + ", client=" + client + ", adventureOption=" + adventureOption
-				+ ", price=" + price + "]";
+				+ capacity + ", price=" + price + ", deleted=" + deleted + ", adventure=" + adventure + ", client="
+				+ client + ", adventureOption=" + adventureOption + "]";
 	}
+
 	public Address getAddress() {
 		// TODO Auto-generated method stub
 		return this.getAdventure().getAddress();

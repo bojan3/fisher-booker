@@ -1,12 +1,16 @@
 package com.example.fisherbooker.controller;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.management.loading.PrivateClassLoader;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -129,7 +133,7 @@ public class ClientController {
 	}
 	
 	@PreAuthorize("hasRole('CLIENT')")
-	@GetMapping("/finisedreservation/adventure/{accountId}")
+	@GetMapping("/finishedreservation/adventure/{accountId}")
 	public ResponseEntity<List<AdventureReservationDTO>> getFinishedAdventureReservations(@PathVariable Long accountId){
 		List<AdventureReservationDTO> adventureReservationDTOs = this.clientService.getFinishedAdventureReservations(accountId); 		
 		return new ResponseEntity<>(adventureReservationDTOs, HttpStatus.OK);
@@ -161,5 +165,26 @@ public class ClientController {
 	public ResponseEntity<List<CottageReservationDTO>> getFinishedCottageReservations(@PathVariable Long accountId){
 		List<CottageReservationDTO> cottageReservationDTOs = this.clientService.getFisnihedCottageReservations(accountId); 		
 		return new ResponseEntity<>(cottageReservationDTOs, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('CLIENT')")
+	@DeleteMapping("/reservation/ship/delete/{accountId}")
+	public ResponseEntity<Boolean> deleteShipReservations(@PathVariable Long accountId, @RequestBody Long shipReservationId){
+		this.clientService.deleteShipReservation(accountId, shipReservationId);
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('CLIENT')")
+	@DeleteMapping("/reservation/cottage/delete/{accountId}")
+	public ResponseEntity<Boolean> deleteCottageReservations(@PathVariable Long accountId, @RequestBody Long cottageReservationId){
+		this.clientService.deleteCottageReservation(accountId, cottageReservationId);
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('CLIENT')")
+	@DeleteMapping("/reservation/adventure/delete/{accountId}")
+	public ResponseEntity<Boolean> deleteAdventureReservations(@PathVariable Long accountId, @RequestBody Long adventureReservationId){
+		this.clientService.deleteAdventureReservation(accountId, adventureReservationId);
+		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 }

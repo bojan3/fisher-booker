@@ -130,12 +130,12 @@ insert into availability_period(start_date, end_date) values('2022-06-02', '2022
 insert into availability_period(start_date, end_date) values('2022-06-15', '2022-06-27');
 insert into availability_period(start_date, end_date) values('2022-07-02', '2022-08-12');
 
-insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark, cottage_owner_id) values ('rezervisi bre', 'Najjaca vikendica', 2, 1, 20, 0, 1);
-insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark, cottage_owner_id) values ('Slike govore vise od reci', 'Villa Mirna', 3, 1,50, 1, 1);
-insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark, cottage_owner_id) values ('Zlatiborske lepote, veoma lep pogled', 'Villa Anja', 4, 1,50, 1, 1);
-insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark, cottage_owner_id) values ('Visoko u panini, zubori reka u blizini', 'Villa Smilja', 6, 1,70, 2, 2);
-insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark, cottage_owner_id) values ('u kotlini, brza voda tece', 'Villa Tamara', 1, 1,40, 2, 2);
-insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark, cottage_owner_id) values ('Vikendica skrivena u sumi', 'Villa Zagorka', 5, 1,30, 2,2);
+insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark, cottage_owner_id) values ('rezervisi bre', 'Najjaca vikendica', 2, 1,20, 0, 1);
+insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark, cottage_owner_id) values ('Slike govore vise od reci', 'Villa Mirna', 3, 2,50, 1, 1);
+insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('Zlatiborske lepote, veoma lep pogled', 'Villa Anja', 4,3, 50, 2);
+insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('Visoko u panini, zubori reka u blizini', 'Villa Smilja', 6,4,70, 3);
+--insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('u kotlini, brza voda tece', 'Villa Tamara', 1, 40, 4);
+--insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('Vikendica skrivena u sumi', 'Villa Zagorka', 5, 30, 5);
 
 insert into room(label, num_of_beds, cottage_id) values('A1', 2, 1);
 insert into room(label, num_of_beds, cottage_id) values('A2', 1, 1);
@@ -165,7 +165,17 @@ insert into ship (name, type, length, description, average_mark, rent_price, eng
 
 insert into ship_picture(path, ship_id) values('../../assets/images/gusar1.png', 1);
 
-insert into ship_reservation(start_date, end_date, ship_id, capacity, price, client_id) values ('2022-05-31', '2022-06-10', 1, 10, 200, 1);
+insert into ship_reservation(start_date, end_date, ship_id, capacity, price, client_id, deleted) values ('2022-05-31', '2022-06-10', 1, 2, 20, 1, FALSE);
+insert into ship_reservation(start_date, end_date, ship_id, capacity, price, client_id, deleted) values ('2022-06-25', '2022-06-30', 2, 3, 15, 1, FALSE);
+insert into ship_reservation(start_date, end_date, ship_id, capacity, price, client_id, deleted) values ('2022-05-31', '2022-06-10', 3, 4, 40, 1, FALSE);
+
+insert into adventure_reservation(start_date, end_date, adventure_id, capacity, price, client_id, deleted) values ('2022-05-31', '2022-06-10', 1, 1, 20, 1, FALSE);
+insert into adventure_reservation(start_date, end_date, adventure_id, capacity, price, client_id, deleted) values ('2022-06-25', '2022-06-30', 2, 5, 70, 1, FALSE);
+insert into adventure_reservation(start_date, end_date, adventure_id, capacity, price, client_id, deleted) values ('2022-05-31', '2022-06-10', 3, 4, 40, 1, FALSE);
+
+insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-05-31', '2022-06-10', 1, 2, 25, 1, FALSE);
+insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-06-25', '2022-06-30', 2, 3, 15, 1, FALSE);
+insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-05-31', '2022-06-10', 3, 5, 50, 1, FALSE);
 
 insert into ship_rules(ship_id, rules_id) values(1, 3);
 insert into ship_rules(ship_id, rules_id) values(1, 4);

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,8 +23,9 @@ public class ShipReservation {
 	private Date endDate;
 	private int price;
 	private int capacity;
+	private boolean deleted;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	public Set<ShipOption> shipOption;
 
 	@JsonIgnore
@@ -103,11 +105,19 @@ public class ShipReservation {
 		this.capacity = capacity;
 	}
 
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	@Override
 	public String toString() {
 		return "ShipReservation [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", price=" + price
-				+ ", capacity=" + capacity + ", shipOption=" + shipOption + ", ship=" + ship + ", client=" + client
-				+ "]";
+				+ ", capacity=" + capacity + ", deleted=" + deleted + ", shipOption=" + shipOption + ", ship=" + ship
+				+ ", client=" + client + "]";
 	}
 
 }
