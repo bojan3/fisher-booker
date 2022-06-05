@@ -3,6 +3,8 @@ package com.example.fisherbooker.model;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,7 +28,7 @@ public class AdventureReservation {
 	private int price;
 
 	@JsonIgnore
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name = "adventure_id", nullable = false)
 	public Adventure adventure;
 
@@ -39,7 +42,7 @@ public class AdventureReservation {
 	public AdventureReservation() {
 		super();
 	}
-
+		
 	public Long getId() {
 		return id;
 	}
@@ -64,6 +67,20 @@ public class AdventureReservation {
 		this.endDate = endDate;
 	}
 
+
+	public int getCancelRate() {
+		return duration;
+	}
+	public void setCancelRate(float duration) {
+		this.cancelRate = duration;
+	}
+	
+	public int getDuration() {
+		return duration;
+	}
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
 	public int getCapacity() {
 		return capacity;
 	}
@@ -109,6 +126,10 @@ public class AdventureReservation {
 		return "AdventureReservation [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", capacity="
 				+ capacity + ", adventure=" + adventure + ", client=" + client + ", adventureOption=" + adventureOption
 				+ ", price=" + price + "]";
+	}
+	public Address getAddress() {
+		// TODO Auto-generated method stub
+		return this.getAdventure().getAddress();
 	}
 
 }

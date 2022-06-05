@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Set;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.fisherbooker.model.AdventureReservation;
+import com.example.fisherbooker.model.Adventure;
 import com.example.fisherbooker.model.Client;
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageReservation;
@@ -214,6 +216,15 @@ public class ClientService {
 		return ShipReservationDTOs;
 	}
 	
+	public Optional<Client> findOneById(Long client_id) {
+		// TODO Auto-generated method stub
+		return clientRepository.findById(client_id);
+	}
+
+	public Object getById(Long client_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 //	public List<Client> getAll(){
 //		return clientRepository.getAll();

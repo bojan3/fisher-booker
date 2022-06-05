@@ -21,6 +21,7 @@ public class AdventureReservationDTO {
 	private int price;
 	private boolean canCancel;
 	private boolean isFinished;
+	private float cancelRate;
 	
 	public AdventureReservationDTO(Long id, Date startDate, Date endDate, int duration, int capacity,
 			Set<AdventureOption> adventureOption, int price, boolean canCancel, boolean isFinished) {
@@ -134,4 +135,15 @@ public class AdventureReservationDTO {
 				+ "]";
 	}
 	
+
+	public float getCancelRate() {
+		return cancelRate;
+	}
+
+
+	public void setCancelRate(float cancelRate) {
+		this.cancelRate = cancelRate;
+	}
+	
+
 }

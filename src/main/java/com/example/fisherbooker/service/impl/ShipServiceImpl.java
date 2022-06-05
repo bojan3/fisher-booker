@@ -1,11 +1,13 @@
 package com.example.fisherbooker.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.fisherbooker.model.Ship;
+import com.example.fisherbooker.model.DTO.ShipDTO;
 import com.example.fisherbooker.model.ShipReservation;
 import com.example.fisherbooker.repository.ShipRepository;
 import com.example.fisherbooker.repository.ShipReservationRepository;
@@ -70,6 +72,31 @@ public class ShipServiceImpl implements ShipService {
 		}
 		return false;
 	}
+	
+	public List<ShipDTO> deleteShipDTO(Long id){
+		
+		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
+		List<Ship> ships = this.shipRepository.findAll();
+		
+		if(this.shipRepository.findById(id).get().getName()!="") {
+		for (Ship ship : ships) {
+			if (ship.getId().equals(id)) {
+				this.shipRepository.delete(ship);
+				System.out.println("Brod sa identifikatorom" + id + "je uspesno obrisan");
+			} else {
+				ShipDTO shipDTO = new ShipDTO().createShipDTO(ship);
+				shipsDTO.add(shipDTO);
+				}
+								}
+		} 
+		
+		return shipsDTO;
+	}
+	
+	
+	
+	
+	
 	
 	public Boolean checkIfShipHasReservation(Long id) {
 		List<ShipReservation> reservations = this.shipReservationRepository.findByShipId(id);

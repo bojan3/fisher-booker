@@ -33,10 +33,12 @@ public class Cottage {
 	@OneToOne(cascade = CascadeType.ALL)
 	public Address address;
 
-	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JsonIgnore
+	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	public Set<Room> rooms;
-
-	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true)
 	public Set<Rule> rules;
 
 	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -45,9 +47,12 @@ public class Cottage {
 	@OneToOne(cascade = CascadeType.ALL)
 	public AvailabilityPeriod availabilityPeriod;
 
-	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JsonIgnore
+	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	public Set<CottagePicture> cottagePictures;
 
+	
+	@JsonIgnore
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<CottageReservation> cottageReservations;
 
@@ -56,6 +61,7 @@ public class Cottage {
 
 	@JsonIgnore
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name = "cottage_owner_id")
 	private CottageOwner cottageOwner;
 
@@ -63,6 +69,14 @@ public class Cottage {
 	@ManyToMany(mappedBy = "cottageSubscriptions")
 	private Set<Client> client;
 
+	
+	public void free() {
+		this.setAvailabilityPeriod(null);
+		this.setCottageOptions(null);
+		this.setCottageReservation(null); 
+		this.setCottageFastReservation(null);
+	}
+	
 	public Cottage() {
 		super();
 	}
@@ -187,4 +201,7 @@ public class Cottage {
 		this.client = client;
 	}
 
+	
+	
+	
 }

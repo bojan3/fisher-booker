@@ -17,6 +17,7 @@ import org.postgresql.util.LruCache.CreateAction;
 
 import com.example.fisherbooker.model.Account;
 import com.example.fisherbooker.model.Address;
+import com.example.fisherbooker.model.Adventure;
 import com.example.fisherbooker.model.Role;
 
 import net.bytebuddy.asm.Advice.This;
@@ -180,4 +181,14 @@ public class AccountDTO {
 			this.address = a.address;
 		}
 
+
+		
+		public static AdventureDTO createAdventureDTO(Adventure a) {
+			
+			return new AdventureDTO(a.getId(), a.getName(), a.getDescription(),a.getPrice(),a.getCancelRate(),a.getCapacity(),a.getFishingInstructor().getId(),a.getAddress());
+		}
+		
+		
+		
+		
 	}

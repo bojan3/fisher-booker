@@ -1,12 +1,18 @@
 package com.example.fisherbooker.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+//@Table(name="adventure_option")
 public class AdventureOption {
 	public AdventureOption() {
 		super();
@@ -19,7 +25,13 @@ public class AdventureOption {
 	private String name;
 	@Column(length=350)
 	private String description;
+	@Column
 	private int price;
+	
+	@ManyToOne(cascade=CascadeType.PERSIST)
+//	@JoinTable(name="adventure")
+	public Adventure adventure;
+	
 	
 	public Long getId() {
 		return id;

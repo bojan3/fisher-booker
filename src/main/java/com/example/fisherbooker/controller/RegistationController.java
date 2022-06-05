@@ -25,8 +25,12 @@ import com.example.fisherbooker.model.Account;
 import com.example.fisherbooker.model.DTO.AccountDTO;
 import com.example.fisherbooker.service.CottageOwnerService;
 import com.example.fisherbooker.service.FishingInstructorService;
+import com.example.fisherbooker.service.RegistrationRequestService;
 import com.example.fisherbooker.service.ShipOwnerService;
 import com.example.fisherbooker.service.impl.AccountServiceImpl;
+
+
+import antlr.collections.List;
 
 
 @RestController
@@ -38,6 +42,7 @@ public class RegistationController {
 	private CottageOwnerService cottageOwnerService;
 	private ShipOwnerService shipOwnerService;
  	private FishingInstructorService instructorService;
+ 	//private RegistrationRequestService registration
  	
  	@Autowired
  	private MessageSource messageSource;
@@ -57,5 +62,14 @@ public class RegistationController {
 		return AccountDTO.createAccountDTO(accountService.findByUsername(account.getName()));
 	}
 
+//	@GetMapping("/all")@PreAuthorize("hasRole('ADMIN')")
+//	public List<AccountDTO> loadAll() {
+//		return this.regisService.findAll();
+//	}
+	
+	
+	
+	
+	
 
 }

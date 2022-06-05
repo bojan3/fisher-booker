@@ -1,6 +1,9 @@
 package com.example.fisherbooker.model.DTO;
 
+import java.util.Set;
+
 import com.example.fisherbooker.model.Account;
+import com.example.fisherbooker.model.Adventure;
 import com.example.fisherbooker.model.FishingInstructor;
 
 public class FishingInstructorDTO {
@@ -8,11 +11,14 @@ public class FishingInstructorDTO {
 	private Long id;
 	private Account account;
 	private String biography;
-
-	FishingInstructorDTO(Account account, Long id, String biography) {
+	private Set<Adventure> adventures;
+	
+	
+	FishingInstructorDTO(Account account, Long id, String biography, Set<Adventure> adventures) {
 		this.account = account;
 		this.id = id;
 		this.biography = biography;
+	    this.adventures= adventures;
 	}
 
 	public FishingInstructorDTO(FishingInstructor instructor) {
@@ -25,9 +31,25 @@ public class FishingInstructorDTO {
 		
 		return new FishingInstructorDTO(fi.getAccount(), fi.getId(), fi.getBiography());
 
-	}
+	}	
 
 	
+	public static FishingInstructorDTO createFishingInstructorDTOincludeAdventures(FishingInstructor fi) {
+		
+		return new FishingInstructorDTO(fi.getAccount(), fi.getId(), fi.getBiography(),fi.getAdventure());
+
+		
+		
+	} 
+	
+public  FishingInstructorDTO(FishingInstructor fishingInstructor) {
+		this.setAccount(fishingInstructor.getAccount());
+		this.setBiography(fishingInstructor.getBiography());
+		this.setId(fishingInstructor.getId());
+		
+	}
+
+
 	public Long getId() {
 		return id;
 	}

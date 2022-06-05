@@ -58,18 +58,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// sve neautentifikovane zahteve obradi uniformno i posalji 401 gresku
 				.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
 
-				// svim korisnicima dopusti da pristupe sledecim putanjama:
-				.authorizeRequests().antMatchers("/auth/**").permitAll()
-				.antMatchers("/h2-console/**").permitAll()
-				.antMatchers("/api/cottage/**").permitAll()
-				.antMatchers("/api/ship/**").permitAll()
-				.antMatchers("/api/adventure/**").permitAll()
-				.antMatchers("/api/instructor/**").permitAll()
-				.antMatchers("/api/cottageOwner/**").permitAll()
-				.antMatchers("/api/shipOwner/**").permitAll()
-				.antMatchers("/api/client/**").permitAll()
-				.antMatchers("/api/verify/**").permitAll()
-				// .antMatchers("/api/registration/**").permitAll()
+			// svim korisnicima dopusti da pristupe sledecim putanjama:
+			.authorizeRequests().antMatchers("/auth/**").permitAll()
+								.antMatchers("/h2-console/**").permitAll()
+								.antMatchers("/api/cottage/**").permitAll()
+								.antMatchers("/api/ship/**").permitAll()
+								.antMatchers("/api/adventure/**").permitAll()
+								.antMatchers("/api/instructor/**").permitAll()
+								.antMatchers("/api/cottageOwner/**").permitAll()
+								.antMatchers("/api/shipOwner/**").permitAll()
+								.antMatchers("/api/client/**").permitAll()
+
+								.antMatchers("/api/adventurereservation/**").permitAll()
+								.antMatchers("/api/account/**").permitAll()
+
+								.antMatchers("/api/verify/**").permitAll()
+								.antMatchers("/api/registration/**").permitAll()
+								.antMatchers("/api/review/**").permitAll()
+							
 
 				// ukoliko ne zelimo da koristimo @PreAuthorize anotacije nad metodama
 				// kontrolera, moze se iskoristiti hasRole() metoda da se ogranici

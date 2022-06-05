@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,10 +49,22 @@ public class ShipOwnerController {
 		List<ShipOwner> shipowners = this.shipOwnerService.getAll();
 		List<ShipOwnerDTO> shipownersDTO = new ArrayList<ShipOwnerDTO>();
 		for (ShipOwner shipowner : shipowners) {
-			ShipOwnerDTO shipownerDTO = ShipOwnerDTO.createShipOwnerDTO(shipowner);
+			//ShipOwnerDTO shipownerDTO = ShipOwnerDTO.createShipOwnerDTO(shipowner);
+			ShipOwnerDTO shipownerDTO = new  ShipOwnerDTO();
+			shipownerDTO.account = shipowner.getAccount();
 			shipownersDTO.add(shipownerDTO);
 		}
 		return new ResponseEntity<>(shipownersDTO, HttpStatus.OK);
 	}
+	
+	@DeleteMapping("/delete")
+	//@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
+	public ResponseEntity<Boolean> deleteInstructorByID(@RequestBody Long instructor_id){	
+		this.shipOwnerService.deleteOne(instructor_id);	
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+	
+	
+		
 
 }

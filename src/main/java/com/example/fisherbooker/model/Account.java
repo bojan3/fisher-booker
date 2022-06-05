@@ -30,6 +30,9 @@ public class Account implements UserDetails {
 	public Account() {
 		super();
 		// TODO Auto-generated constructor stub
+// 	this.adminVerified = false;
+//	this.emailVerified = false;
+//	this.enabled = false; 
 	}
 
 	private static final long serialVersionUID = 1L;
@@ -212,4 +215,7 @@ public class Account implements UserDetails {
 		return enabled;
 	}
 
+
+
+	
 }

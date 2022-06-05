@@ -16,9 +16,4 @@ public class RegistrationRequest {
     @Column
 	private Account acc;
 	
-	
-	
-	
-	
-	
 }
