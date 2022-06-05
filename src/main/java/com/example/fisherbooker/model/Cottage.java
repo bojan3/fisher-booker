@@ -59,7 +59,7 @@ public class Cottage {
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<CottageOption> cottageOptions;
 
-	@JsonIgnore
+
 	@ManyToOne
 	@JsonIgnore
 	@JoinColumn(name = "cottage_owner_id")
@@ -73,8 +73,8 @@ public class Cottage {
 	public void free() {
 		this.setAvailabilityPeriod(null);
 		this.setCottageOptions(null);
-		this.setCottageReservation(null); 
-		this.setCottageFastReservation(null);
+		this.setCottageReservations(null); 
+		this.setCottageSuperDeals(null);
 	}
 	
 	public Cottage() {

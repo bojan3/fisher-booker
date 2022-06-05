@@ -43,7 +43,7 @@ public class CottageReservationDTO {
 		this.startDate = cottageReservation.getStartDate();
 		this.endDate = cottageReservation.getEndDate();
 		this.price = cottageReservation.getPrice();
-		this.duration = cottageReservation.getDuration();
+		//this.duration = cottageReservation.getDuration();
 		this.capacity = cottageReservation.getCapacity();
 		this.cottageOption = cottageReservation.getCottageOption();
 		this.cottageDTO = new CottageDTO(cottageReservation.getCottage());

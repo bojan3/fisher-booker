@@ -26,6 +26,8 @@ public class AdventureReservation {
 	private Date endDate;
 	private int capacity;
 	private int price;
+	private float cancelRate;
+	private int duration;
 
 	@JsonIgnore
 	@ManyToOne(cascade=CascadeType.PERSIST)
@@ -68,19 +70,7 @@ public class AdventureReservation {
 	}
 
 
-	public int getCancelRate() {
-		return duration;
-	}
-	public void setCancelRate(float duration) {
-		this.cancelRate = duration;
-	}
-	
-	public int getDuration() {
-		return duration;
-	}
-	public void setDuration(int duration) {
-		this.duration = duration;
-	}
+
 	public int getCapacity() {
 		return capacity;
 	}

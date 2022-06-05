@@ -60,10 +60,6 @@ insert into fishing_instructor(account_id,biography) values(6,'Dve reci smeker p
 insert into ship_owner (account_id) values (5);
 insert into ship_owner (account_id) values (7);
 
-insert into adventure (account,name,description,capacity,price,cancel_rate, address_id) values (1,'Zbilazak Djerdapske klisure','Ujutru se krece iz Beograda. Vozicemo se camcem Dunavom do Djerdapske klisure. Tamo cemo se zadrzati par sati dok obidjemo znamenita mesta. U povratku cemo svratiti u Vincu. Povratak se ocekuje predvece.',20,10,0.2, 7);
-insert into adventure (account,name,description,capacity,price,cancel_rate,address_id) values (2,'Zbilazak Djerdapske klisure','Ujutru se krece iz Beograda. Vozicemo se camcem Dunavom do Djerdapske klisure. Tamo cemo se zadrzati par sati dok obidjemo znamenita mesta. U povratku cemo svratiti u Vincu. Povratak se ocekuje predvece.',20,10,0.2,7);
-insert into adventure (account,name,description,capacity,price,cancel_rate,address_id) values (2,'Spustanje Tarom','Poslepodne se krece iz Beograda. Vozicemo se camcem Dunavom do Djerdapske klisure. Tamo cemo se zadrzati par sati dok obidjemo znamenita mesta. U povratku cemo svratiti u Vincu. Povratak se ocekuje predvece.',20,10,0.2,7);
-insert into adventure (account,name,description,capacity,price,cancel_rate,address_id) values (2,'Zora na Rtnju','Iz Beograda se krece pre ponoci. Na odrediste stizemo oko pola 4. Odmah nakon dolaska krece se u osvajanje Rtnja. Nakon 2,3 sata borbe sa zimom dolazimo do vrha. Povratak se ocekuje predvece.',20,10,0.2,7);
 
 insert into instructor_subscriptions (client_id, instructor_id) values (1, 1);
 insert into instructor_subscriptions (client_id, instructor_id) values (1, 2);
@@ -77,14 +73,9 @@ insert into instructor_subscriptions (client_id, instructor_id) values (1, 2);
 insert into client(account_id) values(8);
 insert into client(account_id) values(9);
 
-
-
 insert into fishing_instructor(account_id,biography) values(4,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Sasvim prirodno" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
 insert into fishing_instructor(account_id,biography) values(5,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Bear Grylls" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
 insert into fishing_instructor(account_id,biography) values(13,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Bear Grylls" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
-
-
-
 
 insert into ship_owner (account_id) values (6);
 insert into ship_owner (account_id) values (7);
@@ -123,15 +114,15 @@ insert into adventure_option(name,description,price) values('Pecanje','Nakon pau
 
 --insert into adventure_adventure_option(adventure_id, adventure_option_id) values(1,1);
 
-insert into adventure_reservation(start_time, duration, price, cancel_rate, capacity, adventure_id, client_id)values('11/12/2021', 12, 20,  0.2, 20, 1, 1);
-insert into adventure_reservation(start_time, duration, price, cancel_rate, capacity, adventure_id, client_id)values('12/12/2021', 12, 20,  0.2, 20, 2, 1);
-insert into adventure_reservation(start_time, duration, price, cancel_rate, capacity, adventure_id, client_id)values('13/12/2021', 12, 20,  0.2, 20, 3, 1);
-insert into adventure_reservation(start_time, duration, price, cancel_rate, capacity, adventure_id, client_id)values('14/12/2021', 12, 20,  0.2, 20, 4, 1);
+insert into adventure_reservation(start_date, duration, price, cancel_rate, capacity, adventure_id, client_id)values('11/12/2021', 12, 20,  0.2, 20, 1, 1);
+insert into adventure_reservation(start_date, duration, price, cancel_rate, capacity, adventure_id, client_id)values('12/12/2021', 12, 20,  0.2, 20, 2, 1);
+insert into adventure_reservation(start_date, duration, price, cancel_rate, capacity, adventure_id, client_id)values('13/12/2021', 12, 20,  0.2, 20, 3, 1);
+insert into adventure_reservation(start_date, duration, price, cancel_rate, capacity, adventure_id, client_id)values('14/12/2021', 12, 20,  0.2, 20, 4, 1);
 
-insert into adventure_reservation(start_time, duration, price, cancel_rate, capacity, adventure_id, client_id)values('11/12/2021', 12, 20,  0.2, 20, 1, 2);
-insert into adventure_reservation(start_time, duration, price, cancel_rate, capacity, adventure_id, client_id)values('12/12/2021', 12, 20,  0.2, 20, 2, 2);
-insert into adventure_reservation(start_time, duration, price, cancel_rate, capacity, adventure_id, client_id)values('13/12/2021', 12, 20,  0.2, 20, 3, 2);
-insert into adventure_reservation(start_time, duration, price, cancel_rate, capacity, adventure_id, client_id)values('14/12/2021', 12, 20,  0.2, 20, 4, 2);
+insert into adventure_reservation(start_date, duration, price, cancel_rate, capacity, adventure_id, client_id)values('11/12/2021', 12, 20,  0.2, 20, 1, 2);
+insert into adventure_reservation(start_date, duration, price, cancel_rate, capacity, adventure_id, client_id)values('12/12/2021', 12, 20,  0.2, 20, 2, 2);
+insert into adventure_reservation(start_date, duration, price, cancel_rate, capacity, adventure_id, client_id)values('13/12/2021', 12, 20,  0.2, 20, 3, 2);
+insert into adventure_reservation(start_date, duration, price, cancel_rate, capacity, adventure_id, client_id)values('14/12/2021', 12, 20,  0.2, 20, 4, 2);
 
 
 insert into availability_period(start_date, end_date) values('2022-05-31', '2022-06-30');

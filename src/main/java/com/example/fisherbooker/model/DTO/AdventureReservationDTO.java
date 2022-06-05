@@ -43,7 +43,6 @@ public class AdventureReservationDTO {
 		this.id = adventureReservation.getId();
 		this.startDate = adventureReservation.getStartDate();
 		this.endDate = adventureReservation.getEndDate();
-		this.duration = adventureReservation.getDuration();
 		this.capacity = adventureReservation.getCapacity();
 		this.adventureOption = adventureReservation.getAdventureOption();
 		this.price = adventureReservation.getPrice();
@@ -143,6 +142,11 @@ public class AdventureReservationDTO {
 
 	public void setCancelRate(float cancelRate) {
 		this.cancelRate = cancelRate;
+	}
+
+	public static AdventureReservationDTO createAdventureReservationDTO(AdventureReservation a) {
+		// TODO Auto-generated method stub
+		 return new AdventureReservationDTO(a);
 	}
 	
 

@@ -34,7 +34,7 @@ public class AdventureService {
 
 
 	public Adventure saveAdventure(Adventure adventure) {
-           adventureRepository.save(adventure);		
+           return adventureRepository.save(adventure);		
 
 	}
 
@@ -80,12 +80,12 @@ public class AdventureService {
 	
 	
 	public Adventure getById(Long id) {
-		return ar.getById(id);
+		return adventureRepository.getById(id);
 	}
 
 		
    public Optional<Adventure> findOneById(Long id){
-	   return ar.findById(id);
+	   return adventureRepository.findById(id);
    }
 
 //public List<Adventure> getAllByName() {
@@ -95,25 +95,19 @@ public class AdventureService {
 	
 public List<Adventure> getAllByRentPrice() {
 	// TODO Auto-generated method stub
-	return ar.findByOrderByPrice();
+	return adventureRepository.findByOrderByPrice();
 }
 
 public List<Adventure> getAllByAverageMark() {
 	// TODO Auto-generated method stub
-	return ar.findByOrderByName();
-}
-
-
-public List<Adventure> getAllByCapacity() {
-	// TODO Auto-generated method stub
-	return ar.findByOrderByName();
+	return adventureRepository.findByOrderByName();
 }
 
 
 
 
 public Boolean checkIfOwnerHasAdventure(String username, Long adventureId) {
-	List<Adventure> adventures = this.ar.findByFishingInstructorAccountUsername(username);
+	List<Adventure> adventures = this.adventureRepository.findByFishingInstructorAccountUsername(username);
 	for(Adventure adventure : adventures) {
 		System.out.println(adventure.getFishingInstructor());
 		if (adventure.getId().equals(adventureId)){

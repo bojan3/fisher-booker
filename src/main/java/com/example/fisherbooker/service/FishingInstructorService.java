@@ -64,7 +64,7 @@ public class FishingInstructorService {
 
 	public List<FishingInstructor> getAllOrderByName() {
 		
-		return this.FishingInstructorRepository.findByOrderByAccountName();
+		return this.fishinginstructorrepository.findByOrderByAccountName();
 	}
 	
 	

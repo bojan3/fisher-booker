@@ -66,15 +66,7 @@ public class AdventureController {
 		return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
 	}
 	
-	@GetMapping("/all/price")
-	public ResponseEntity<List<AdventureDTO>> getAllByPrice() {
-		List<Adventure> adventures = this.adventureService.getAllByPrice();
-		List<AdventureDTO> adventuresDTO = new ArrayList<AdventureDTO>();
-		for (Adventure a : adventures) {
-			AdventureDTO adventureDTO = AdventureDTO.createAdventureDTO(a);
-			adventuresDTO.add(adventureDTO);
-		}
-		
+	
 
 		@GetMapping("/one/{id}")
 		 public ResponseEntity<AdventureDTO> GetOne(@PathVariable Long id) {

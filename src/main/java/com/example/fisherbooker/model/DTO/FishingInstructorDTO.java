@@ -21,12 +21,19 @@ public class FishingInstructorDTO {
 	    this.adventures= adventures;
 	}
 
-	public FishingInstructorDTO(FishingInstructor instructor) {
-		this.account = instructor.getAccount();
-		this.id = instructor.getId();
-		this.biography = instructor.getBiography();
+	FishingInstructorDTO(Account account, Long id, String biography) {
+		this.account = account;
+		this.id = id;
+		this.biography = biography;
 	}
 
+	public  FishingInstructorDTO(FishingInstructor fishingInstructor) {
+		this.setAccount(fishingInstructor.getAccount());
+		this.setBiography(fishingInstructor.getBiography());
+		this.setId(fishingInstructor.getId());
+		
+	}
+	
 	public static FishingInstructorDTO createFishingInstructorDTO(FishingInstructor fi) {
 		
 		return new FishingInstructorDTO(fi.getAccount(), fi.getId(), fi.getBiography());
@@ -35,21 +42,9 @@ public class FishingInstructorDTO {
 
 	
 	public static FishingInstructorDTO createFishingInstructorDTOincludeAdventures(FishingInstructor fi) {
-		
 		return new FishingInstructorDTO(fi.getAccount(), fi.getId(), fi.getBiography(),fi.getAdventure());
-
-		
-		
 	} 
 	
-public  FishingInstructorDTO(FishingInstructor fishingInstructor) {
-		this.setAccount(fishingInstructor.getAccount());
-		this.setBiography(fishingInstructor.getBiography());
-		this.setId(fishingInstructor.getId());
-		
-	}
-
-
 	public Long getId() {
 		return id;
 	}
