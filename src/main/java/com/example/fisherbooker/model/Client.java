@@ -1,5 +1,7 @@
 package com.example.fisherbooker.model;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -62,9 +64,9 @@ public class Client {
 		return shipReservation.iterator();
 	}
 
-	public void setShipReservation(java.util.Set<ShipReservation> newShipReservation) {
+	public void setShipReservation(Collection<ShipReservation> shipReservations) {
 		removeAllShipReservation();
-		for (java.util.Iterator iter = newShipReservation.iterator(); iter.hasNext();)
+		for (java.util.Iterator iter = shipReservations.iterator(); iter.hasNext();)
 			addShipReservation((ShipReservation) iter.next());
 	}
 
@@ -142,9 +144,9 @@ public class Client {
 		return adventureReservation.iterator();
 	}
 
-	public void setAdventureReservation(java.util.Set<AdventureReservation> newAdventureReservation) {
+	public void setAdventureReservation(Collection<AdventureReservation> adventureReservations) {
 		removeAllAdventureReservation();
-		for (java.util.Iterator iter = newAdventureReservation.iterator(); iter.hasNext();)
+		for (java.util.Iterator iter = adventureReservations.iterator(); iter.hasNext();)
 			addAdventureReservation((AdventureReservation) iter.next());
 	}
 

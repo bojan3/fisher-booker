@@ -1,5 +1,6 @@
 package com.example.fisherbooker.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -33,5 +34,7 @@ public interface CottageService {
 	public Boolean checkIfCottageHasReservation(Long id);
 
 	public List<Cottage> getAll();
+
+	public List<Cottage> getAllByDate(Date date);
 
 }

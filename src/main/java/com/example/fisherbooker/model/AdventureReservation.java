@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,6 +24,7 @@ public class AdventureReservation {
 	private Date endDate;
 	private int capacity;
 	private int price;
+	private boolean deleted;
 
 	@JsonIgnore
 	@ManyToOne
@@ -33,7 +35,7 @@ public class AdventureReservation {
 	@JoinColumn(name = "client_id", nullable = false)
 	public Client client;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<AdventureOption> adventureOption;
 
 	public AdventureReservation() {
@@ -103,12 +105,20 @@ public class AdventureReservation {
 	public void setClient(Client client) {
 		this.client = client;
 	}
+	
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 
 	@Override
 	public String toString() {
 		return "AdventureReservation [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", capacity="
-				+ capacity + ", adventure=" + adventure + ", client=" + client + ", adventureOption=" + adventureOption
-				+ ", price=" + price + "]";
+				+ capacity + ", price=" + price + ", deleted=" + deleted + ", adventure=" + adventure + ", client="
+				+ client + ", adventureOption=" + adventureOption + "]";
 	}
 
 }
