@@ -4,17 +4,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.engine.query.spi.ReturnMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.MethodInfoTransformer;
 import org.springframework.stereotype.Service;
 
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageReservation;
-import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.repository.CottageRepository;
 import com.example.fisherbooker.repository.CottageReservationRepository;
 import com.example.fisherbooker.service.CottageService;
+
 
 @Service
 public class CottageServiceImpl implements CottageService {
