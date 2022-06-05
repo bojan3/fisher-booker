@@ -31,6 +31,9 @@ public class Client {
 	@OneToMany(mappedBy = "adventure", cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<AdventureReservation> adventureReservation = new HashSet<AdventureReservation>();
 	
+//	@OneToMany(mappedBy="client")
+//	public Set<Review> reviews;
+	
 	
 	public Client() {
 		super();

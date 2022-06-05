@@ -14,7 +14,7 @@ public interface AdventureReservationRepository extends JpaRepository<AdventureR
 
 	List<AdventureReservation> findAll();
 
-	AdventureReservation deleteAllById(Long id);
+	void deleteById(Long id);
 
 	AdventureReservation getById(Long id);
 

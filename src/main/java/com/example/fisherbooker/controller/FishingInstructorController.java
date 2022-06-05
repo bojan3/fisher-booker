@@ -8,11 +8,14 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fisherbooker.model.Adventure;
@@ -41,12 +44,20 @@ public class FishingInstructorController {
 		return new ResponseEntity<>(adventures, HttpStatus.OK);
 	}
 	
-	@GetMapping("/allAdventuresByOwnerUsername/{username}")
-	public ResponseEntity<Set<AdventureDTO>> getAllCottagesByOwnerUsername(@PathVariable String username){
+	@GetMapping("/allAdventuresByOwner")
+	public ResponseEntity<Set<AdventureDTO>> getAllAdventuresByOwnerUsername(){
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		Set<AdventureDTO> adventures = this.FishingInstructorService.getAllAdventuresByOwnerUsername(username);
 		return new ResponseEntity<>(adventures, HttpStatus.OK);
 	}
 	
+	
+	@GetMapping("/allReservationsByOwner")
+	public ResponseEntity<Set<AdventureDTO>> getAllReservationsByInstructorUsername(){
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		Set<AdventureDTO> adventures = this.FishingInstructorService.getAllAdventuresByOwnerUsername(username);
+		return new ResponseEntity<>(adventures, HttpStatus.OK);
+	}
 	
 	
 	@GetMapping("/all")
@@ -61,15 +72,22 @@ public class FishingInstructorController {
 	}
 	
 	
-	@GetMapping("/{id}")
-	public ResponseEntity<FishingInstructorDTO> getOneInstrucotrByID(@PathVariable Long id){
+	@GetMapping("/")
+	public ResponseEntity<FishingInstructorDTO> getOneInstrucotrByID(@RequestBody Long id){
 		
 		Optional<FishingInstructor> f =this.FishingInstructorService.findOneById(id);		
 		return new ResponseEntity<>(new FishingInstructorDTO(f.get()) ,HttpStatus.OK);
 	}
 	
 	
-
+	@DeleteMapping("/delete")
+	//@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
+	public ResponseEntity<Boolean> deleteInstructorByID(@RequestBody Long instructor_id){	
+		this.FishingInstructorService.deleteOne(instructor_id);	
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+	
+	
 }
 	
 	

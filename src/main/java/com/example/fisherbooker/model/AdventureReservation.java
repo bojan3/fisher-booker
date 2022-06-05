@@ -49,10 +49,7 @@ public class AdventureReservation {
 	
 	@Column
 	private int price;
-	
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	public Client client;
-	
+
 	
 	@ManyToOne(cascade=CascadeType.PERSIST)
 //	@JoinColumn(name="adventure")
@@ -109,11 +106,33 @@ public class AdventureReservation {
 		this.price = price;
 	}
 	
+	public Date getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+	public Client getClient() {
+		return client;
+	}
+	public void setClient(Client client) {
+		this.client = client;
+	}
+	public Adventure getAdventure() {
+		return adventure;
+	}
+	public void setAdventure(Adventure adventure) {
+		this.adventure = adventure;
+	}
 	@Override
 	public String toString() {
 		return "AdventureReservation [id=" + id + ", startDate=" + startTime + ", duration="
 				+ duration + ", capacity=" + capacity + ", adventureOption=" + adventureOption + ", price=" + price
 				+ "]";
+	}
+	public Address getAddress() {
+		// TODO Auto-generated method stub
+		return this.getAdventure().getAddress();
 	}
 
 }

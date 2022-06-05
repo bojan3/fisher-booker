@@ -65,7 +65,7 @@ public class AuthenticationController {
 
 	// Endpoint za slanje zahteva registraciju novog korisnika
 	@PostMapping("/signup")
-	public ResponseEntity<Account> addUser(@RequestBody AccountRequest accountRequest, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<String> addUser(@RequestBody AccountRequest accountRequest, UriComponentsBuilder ucBuilder) {
 		Account existAccount = this.accountService.findByUsername(accountRequest.getUsername());
 
 		if (existAccount != null) {

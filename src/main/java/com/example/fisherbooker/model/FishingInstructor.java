@@ -3,6 +3,7 @@ package com.example.fisherbooker.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -43,18 +44,18 @@ public class FishingInstructor {
 		this.biography = biography;
 	}
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
 	public Account account;
 
 	@Column(length=350)
 	private String biography;
 
-	@OneToMany(mappedBy = "fishingInstructor", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "fishingInstructor", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	public java.util.Set<Adventure> adventure = new HashSet<Adventure>();
 
 	@Override
 	public String toString() {
-		return "FishingInstructor [id=" + id + ", account=" + account + ", biography=" + biography + "]";
+		return "FishingInstructor [id=" + id + ", account=" + account + ", biography=" + biography + "adventure:"+ adventure+"]";
 	}
 
 	public FishingInstructor() {
@@ -124,7 +125,7 @@ public class FishingInstructor {
 			for (java.util.Iterator iter = getIteratorAdventure(); iter.hasNext();) {
 				oldAdventure = (Adventure) iter.next();
 				iter.remove();
-				oldAdventure.setFishingInstructor((FishingInstructor) null);
+			//	oldAdventure.setFishingInstructor((FishingInstructor) null);
 			}
 		}
 	}

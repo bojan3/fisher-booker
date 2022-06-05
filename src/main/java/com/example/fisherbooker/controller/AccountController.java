@@ -8,12 +8,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -60,6 +62,17 @@ public class AccountController {
 		return true;
 	}
 	
+
+	@PostMapping("/newAdmin")
+//	@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')") *, UriComponentsBuilder ucBuilder
+	public boolean newAdmin(@RequestBody AccountRequest accountRequest, UriComponentsBuilder ucBuilder){
+			System.out.println("ulaz u kontoler:");
+			System.out.println(accountRequest);		
+			this.accountService.newAdmin(accountRequest);
+			
+		return true;
+	}
+	
 	
 	@GetMapping("/unverified")
 	public ResponseEntity<List<AccountDTO>> getUnverifiedAccounts(){
@@ -67,13 +80,18 @@ public class AccountController {
 		return new ResponseEntity<>(this.accountService.getAllUnverified(), HttpStatus.OK);
 	}
 	
-	@PutMapping("/verify/{account_id}")
-	public ResponseEntity<Boolean> AdminVerifyAccount(@PathVariable Long account_id){
+	@PutMapping("/verify")
+	public ResponseEntity<Boolean> AdminVerifyAccount(@RequestBody Long account_id){
 		
 		return new ResponseEntity<>(this.accountService.AdminVerifyUser(account_id), HttpStatus.OK);
 	}
 	
-	
+	@DeleteMapping("/delete")
+	//@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
+	public boolean deleteAccountByID(@RequestBody Long account_id){	
+		this.accountService.deleteAccountRequest(account_id);	
+		return true;
+	}
 	
 	
 	@GetMapping("/all")

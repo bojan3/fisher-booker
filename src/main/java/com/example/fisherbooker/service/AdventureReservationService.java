@@ -23,12 +23,13 @@ import com.example.fisherbooker.repository.AdventureReservationRepository;
 @Service
 public class AdventureReservationService {
 
-	public AdventureReservationRepository ar;
+	public AdventureReservationRepository arr;
+	public AdventureRepository ar;
 	@Autowired
-	public AdventureReservationService (AdventureReservationRepository ar) {
+	public AdventureReservationService (AdventureReservationRepository arr, AdventureRepository ar) {
 		
 		this.ar=ar;
-		
+		this.arr = arr;	
 	}
 	
 	
@@ -36,34 +37,47 @@ public class AdventureReservationService {
 	
 	}
 
+	
+	
+	
 
 	public void saveAdventureReservation(AdventureReservation adventure) {
-           ar.save(adventure);		
+           arr.save(adventure);		
 	}
 
 
 	public List<AdventureReservation> getAll() {
-		return ar.findAll();
+		return arr.findAll();
 	}
 
 
-	public AdventureReservation deleteById(Long id) {
-        return ar.deleteAllById(id);	
+	public void deleteById(Long id) {
+    //    AdventureReservation adventurereservation =	this.arr.findById(id).get();
+		
+        //if(!adventurereservation.equals(null)) {
+     //  Adventure adventure = adventurereservation.getAdventure();
+        
+      //  if(adventure.getAdventureReservation().remove(adventure)){
+      //  adventure.setAdventureReservation(adventure.getAdventureReservation());
+      //  this.ar.save(adventure);
+       // }
+		 this.arr.deleteById(id);
+      //  }
 	}
 
 
 	public AdventureReservation getById(Long id) {
-		return ar.getById(id);
+		return this.arr.getById(id);
 	}
 		
    public Optional<AdventureReservation> findOneById(Long id){
-	   return ar.findById(id);
+	   return arr.findById(id);
    }
 
 
 
 public List<AdventureReservation> getAllByAdventure(Long adventureID) {
-	List<AdventureReservation> sve = ar.findAll();	
+	List<AdventureReservation> sve = arr.findAll();	
 	List<AdventureReservation> neke = new ArrayList<AdventureReservation>();
 	
 	for (AdventureReservation adventureReservation : sve) {
@@ -76,7 +90,7 @@ public List<AdventureReservation> getAllByAdventure(Long adventureID) {
 
 
 public List<AdventureReservation> getAllByClient(Client client) {
-	List<AdventureReservation> sve = ar.findAll();	
+	List<AdventureReservation> sve = arr.findAll();	
 	List<AdventureReservation> neke = new ArrayList<AdventureReservation>();
 	
 	for (AdventureReservation adventureReservation : sve) {
@@ -87,12 +101,12 @@ public List<AdventureReservation> getAllByClient(Client client) {
 	return neke;
 }
 
-public List<AdventureReservation> getAllByInstructor(FishingInstructor fishingInstructor) {
-	List<AdventureReservation> sve = ar.findAll();	
+public List<AdventureReservation> getAllByInstructor(Long fishingInstructor) {
+	List<AdventureReservation> sve = arr.findAll();	
 	List<AdventureReservation> neke = new ArrayList<AdventureReservation>();
 	
 	for (AdventureReservation adventureReservation : sve) {
-		if (adventureReservation.adventure.fishingInstructor.getAccount().getId().equals(fishingInstructor.account.getId())) {
+		if (adventureReservation.getAdventure().getFishingInstructor().getId().equals(fishingInstructor)) {
 			neke.add(adventureReservation);
 		}
 	}

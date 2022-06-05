@@ -41,23 +41,24 @@ public class Cottage {
 	public Address address;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	public Set<Room> rooms;
 	
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true)
 	public Set<Rule> rules;
 
-	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	public Set<CottageSuperDeal> cottageSuperDeal;
 	@JsonIgnore
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	public AvailabilityPeriod availabilityPeriod;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	public Set<CottagePicture> cottagePictures;
 
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<CottageReservation> cottageReservation;
@@ -71,6 +72,14 @@ public class Cottage {
 	@JoinColumn(name = "cottage_owner_id")
 	private CottageOwner cottageOwner;
 
+	
+	public void free() {
+		this.setAvailabilityPeriod(null);
+		this.setCottageOptions(null);
+		this.setCottageReservation(null); 
+		this.setCottageFastReservation(null);
+	}
+	
 	public Cottage() {
 		super();
 	}

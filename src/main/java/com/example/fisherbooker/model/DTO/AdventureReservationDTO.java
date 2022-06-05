@@ -41,7 +41,7 @@ public class AdventureReservationDTO {
 	public  AdventureReservationDTO(AdventureReservation a) {
 	this.id=a.getId();
 	//this.name=a.getName();
-	//this.address=a.getAddress();
+	this.address=a.getAddress();
 	//this.description=a.getDescription();
 	this.price=a.getPrice();
 	this.capacity=a.getCapacity();

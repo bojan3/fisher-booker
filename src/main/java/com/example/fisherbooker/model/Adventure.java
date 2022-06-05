@@ -72,14 +72,14 @@ public class Adventure {
 	public Set<AdventureFastReservation> adventureFastReservation = new HashSet<AdventureFastReservation>();
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "adventure", cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "adventure", cascade=CascadeType.REMOVE, fetch = FetchType.EAGER)
 	public Set<AdventureReservation> adventureReservation = new HashSet<AdventureReservation>();
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "adventure",cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
 	public Set<Rule> rule = new HashSet<Rule>();
 	 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
 	@JsonIgnore
 	@JoinColumn(name="instructor_id", nullable=false)
 	public FishingInstructor fishingInstructor;
@@ -199,13 +199,13 @@ public class Adventure {
 //		this.rule = rule;
 //	}
 
-//	public Set<AdventureReservation> getAdventureReservation() {
-//		return adventureReservation;
-//	}
+	public Set<AdventureReservation> getAdventureReservation() {
+		return adventureReservation;
+	}
 
-//	public void setAdventureReservation(Set<AdventureReservation> adventureReservation) {
-//		this.adventureReservation = adventureReservation;
-//	}
+	public void setAdventureReservation(Set<AdventureReservation> adventureReservation) {
+		this.adventureReservation = adventureReservation;
+	}
 
 	public FishingInstructor getFishingInstructor() {
 		return fishingInstructor;
@@ -216,4 +216,34 @@ public class Adventure {
 	}
 
 
+	public void removeAdventureReservation(AdventureReservation oldAdventureReservation) {
+		if (oldAdventureReservation == null)
+			return;
+		if (this.adventureReservation != null)
+			if (this.adventureReservation.contains(oldAdventureReservation)) {
+				this.adventureReservation.remove(oldAdventureReservation);
+				//oldAdventure.setFishingInstructor((FishingInstructor) null);
+			}
+	}
+
+	/** @pdGenerated default removeAll */
+	public void removeAllAdventureReservations() {
+		if (adventureReservation != null) {
+			AdventureReservation oldAdventureReservation;
+			for (java.util.Iterator iter = getIteratorAdventureReservation(); iter.hasNext();) {
+				oldAdventureReservation = (AdventureReservation) iter.next();
+				iter.remove();
+		//		oldAdventureReservation.setFishingInstructor((FishingInstructor) null);
+			}
+		}
+	}
+
+
+	/** @pdGenerated default iterator getter */
+	public java.util.Iterator getIteratorAdventureReservation() {
+		if (adventureReservation == null)
+			adventureReservation = new java.util.HashSet<AdventureReservation>();
+		return adventureReservation.iterator();
+	}
+	
 }

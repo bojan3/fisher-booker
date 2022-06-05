@@ -48,6 +48,8 @@ insert into account (username, email, password, name, last_name, phone_number, a
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('Neverifikovani2','neverifikovani@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'nn', 'nn', '123456789', 10, FALSE, FALSE, TRUE);
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('Neverifikovani3','neverifikovani@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'nn', 'nn', '123456789', 10, FALSE, FALSE, TRUE);
 
+insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('ЋопавиХХХ','crnobradi@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Ћопави', 'Драгиша', '123456789', 9, TRUE, TRUE, TRUE);
+
 
 
 insert into account_role (account_id, role_id) values (1,3);
@@ -69,6 +71,10 @@ insert into account_role (account_id, role_id) values (7,4);
 insert into account_role (account_id, role_id) values (8,1);
 
 insert into account_role (account_id, role_id) values (9,1);
+
+insert into account_role (account_id, role_id) values (13,5);
+
+
 
 --ULOGE NEVERIFIKOVANIH OD STRANE ADMINA
 insert into account_role (account_id, role_id) values (10,3);
@@ -93,6 +99,8 @@ insert into client(account_id) values(9);
 
 insert into fishing_instructor(account_id,biography) values(4,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Sasvim prirodno" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
 insert into fishing_instructor(account_id,biography) values(5,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Bear Grylls" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
+insert into fishing_instructor(account_id,biography) values(13,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Bear Grylls" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
+
 
 
 
@@ -106,6 +114,9 @@ insert into adventure (instructor_id,name,description,capacity,price,cancel_rate
 insert into adventure (instructor_id,name,description,capacity,price,cancel_rate,address_id) values (2,'Obilazak Palickog jezera','Ujutru se krece iz Beograda. Vozicemo se camcem Dunavom do Djerdapske klisure. Tamo cemo se zadrzati par sati dok obidjemo znamenita mesta. U povratku cemo svratiti u Vincu. Povratak se ocekuje predvece.',20,10,0.2,7);
 insert into adventure (instructor_id,name,description,capacity,price,cancel_rate,address_id) values (2,'Pecanje u Ohridskom jezeru','Poslepodne se krece iz Beograda. Vozicemo se camcem Dunavom do Djerdapske klisure. Tamo cemo se zadrzati par sati dok obidjemo znamenita mesta. U povratku cemo svratiti u Vincu. Povratak se ocekuje predvece.',20,10,0.2,7);
 insert into adventure (instructor_id,name,description,capacity,price,cancel_rate,address_id) values (2,'Obedska bara','Iz Beograda se krece pre ponoci. Na odrediste stizemo oko pola 4. Odmah nakon dolaska krece se u osvajanje Rtnja. Nakon 2,3 sata borbe sa zimom dolazimo do vrha. Povratak se ocekuje predvece.',20,10,0.2,7);
+
+insert into adventure (instructor_id,name,description,capacity,price,cancel_rate,address_id) values (3,'Homoljske planine','Iz Beograda se krece pre ponoci. Na odrediste stizemo oko pola 4. Odmah nakon dolaska krece se u osvajanje Rtnja. Nakon 2,3 sata borbe sa zimom dolazimo do vrha. Povratak se ocekuje predvece.',20,10,0.2,7);
+
 
 insert into rule (description) values ('Drzati se grupe!');
 insert into rule (description) values ('Poneti kupaci!');
@@ -181,3 +192,21 @@ insert into ship (name, type, length, description, average_mark, rent_price, eng
 insert into ship_picture(path, ship_id) values('../../assets/images/gusar1.png', 1);
 
 insert into ship_reservation(start_date, end_date, ship_id, client_id) values ('2022-05-31', '2022-06-10', 1, 1);
+
+
+insert into review(comment, grade, client_id, id_entity, r_entity, published) values ('Pravi profesionalac. Bilo mi je zadovoljstvo biti deo njegove ekipe. Jedva cekam sledecu avanturu. :D', 5.0, 1,1, 0, true);
+insert into review(comment, grade, client_id, id_entity, r_entity, published) values ('Nisam naucio mnogo toga na casu tamo. Ali pored toga moram priznati da je duhovit covek i to se ceni.', 3.5, 1,1, 0, true);
+insert into review(comment, grade, client_id, id_entity, r_entity, published) values ('Bolje da sam poveo nekog iz kafane da me nauci nesto nego ovaj covek. Na greskama se uci. :/', 1.0, 1,1, 0, false);
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -108,6 +108,14 @@ public class AccountRequest {
 		this.email = email;
 		this.role = role;
 	}
+	
+	public AccountRequest(String username, String password ) {
+		
+		
+	}
+	
+	
+	
 
 	public AccountRequest() {
 		super();

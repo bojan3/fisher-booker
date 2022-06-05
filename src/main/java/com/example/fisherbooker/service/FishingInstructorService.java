@@ -1,5 +1,6 @@
 package com.example.fisherbooker.service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -8,22 +9,33 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.fisherbooker.model.Account;
 import com.example.fisherbooker.model.Adventure;
+import com.example.fisherbooker.model.AdventureReservation;
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageOwner;
 import com.example.fisherbooker.model.FishingInstructor;
 import com.example.fisherbooker.model.DTO.AdventureDTO;
 import com.example.fisherbooker.model.DTO.CottageDTO;
+import com.example.fisherbooker.repository.AccountRepository;
+import com.example.fisherbooker.repository.AdventureRepository;
+import com.example.fisherbooker.repository.AdventureReservationRepository;
 import com.example.fisherbooker.repository.FishingInstructorRepository;
 
 @Service
 public class FishingInstructorService {
 
 	public FishingInstructorRepository fishinginstructorrepository;
+	public AccountRepository accountrepository;
+	public AdventureRepository adventurerepository;
+	public AdventureReservationRepository adventurereservationrepository;
 
 	@Autowired
-	public FishingInstructorService(FishingInstructorRepository instructorRepository) {
+	public FishingInstructorService(FishingInstructorRepository instructorRepository, AccountRepository accountrepository, AdventureRepository adventurerepository, AdventureReservationRepository adventurereservationrepository) {
 		this.fishinginstructorrepository = instructorRepository;
+		this.accountrepository = accountrepository;
+		this.adventurerepository = adventurerepository;
+		this.adventurereservationrepository = adventurereservationrepository;
 	}
 	
 	public Boolean saveFishingInstructor(FishingInstructor f) {
@@ -67,5 +79,30 @@ public class FishingInstructorService {
 
 	public void save(FishingInstructor fishinginstructor) {
 		this.fishinginstructorrepository.save(fishinginstructor);		
+	}
+
+	public void deleteOne(Long instructor_id) {
+		FishingInstructor fi =this.fishinginstructorrepository.findOneById(instructor_id).get();
+		System.out.println(fi);
+	//	long acc_id = fi.getAccount().getId();		
+		Account acc = fi.getAccount();
+	//	Set<Adventure> avanture = fi.getAdventure();
+		System.out.println("ulazak u iteracije");
+		System.out.println(fi);
+		fi.removeAllAdventure();
+		//for (Adventure a : fi.getAdventure()){		
+		//}
+		
+		acc.setAddress(null);
+		this.accountrepository.save(acc);  
+		fi.setAccount(null);
+		fi.setBiography(null);
+		System.out.println(fi);
+		System.out.println(acc);
+
+		
+		this.fishinginstructorrepository.save(fi);
+    	this.accountrepository.delete(acc);    
+		this.fishinginstructorrepository.delete(fi);	
 	}
 }

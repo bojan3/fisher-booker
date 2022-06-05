@@ -15,5 +15,7 @@ public interface CottageOwnerRepository extends JpaRepository<CottageOwner, Long
 	public Optional<CottageOwner> findOneByAccountUsername(String username);
 	
 	 List<CottageOwner> findAll();
+	 
+	 
 
 }

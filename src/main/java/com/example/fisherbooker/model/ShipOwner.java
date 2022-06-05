@@ -54,4 +54,13 @@ public class ShipOwner {
 		return "ShipOwner [id=" + id + ", account=" + account + ", ships=" + ships + "]";
 	}
 
+	public void removeAllShips() {
+		
+	}
+
+	public Long getId() {
+		// TODO Auto-generated method stub
+		return this.id;
+	}
+
 }

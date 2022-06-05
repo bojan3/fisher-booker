@@ -58,7 +58,8 @@ public class AdventureService {
 	public Adventure deleteById(Long id) {
         return ar.deleteAllById(id);	
 	}
-
+	
+	
 	public Adventure getById(Long id) {
 		return ar.getById(id);
 	}

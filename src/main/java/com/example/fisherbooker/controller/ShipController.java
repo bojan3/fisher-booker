@@ -92,11 +92,11 @@ public class ShipController {
 		
 		else 
 			return new ResponseEntity<>(shipsDTO, HttpStatus.BAD_REQUEST);
-	
+	}
 		
-	@PreAuthorize("hasRole('ADMIN')")
-	@GetMapping("/delete/{ShipId}")
-	public ResponseEntity<List<ShipDTO>> deleteShip(@PathVariable("ShipId") Long ShipId) {
+	//@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping("/delete1/{ShipId}")
+	public ResponseEntity<List<ShipDTO>> deleteShip1(@PathVariable("ShipId") Long ShipId) {
 		List<Ship> ships = this.shipService.getAll();
 		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
 		for (Ship ship : ships) {
@@ -108,6 +108,8 @@ public class ShipController {
 				shipsDTO.add(shipDTO);
 			}
 		}
+		return new ResponseEntity<>(shipsDTO, HttpStatus.BAD_REQUEST);
+	}
 
 	@PreAuthorize("hasRole('SHIP_OWNER')")
 	@DeleteMapping("/delete/owner/{ShipId}")
