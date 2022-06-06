@@ -116,34 +116,27 @@ public class CottageController {
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 	
-	@PostMapping("/all/date")
-	public ResponseEntity<List<CottageDTO>> getAllByDate(@RequestBody Date date) {
-//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//		Date date = null;
-//		try {
-//			date = formatter.parse(dateInput);
-//		} catch (ParseException e) {
-//			
-//			e.printStackTrace();
-//		}
+	@GetMapping("/all/date/{dateString}")
+	public ResponseEntity<List<CottageDTO>> getAllByDate(@PathVariable String dateString) {
 		
-		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = null;
+		try {
+			date = formatter.parse(dateString);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
 		System.out.println("datum: " + date);
-//		System.out.println("datum: " + date.toGMTString());
-//		
-//		List<Cottage> cottages = this.cottageService.getAllByDate(date);
-//		
-//		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
-//		for (Cottage cottage : cottages) {
-//			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
-//			cottagesDTO.add(cottageDTO);
-//		}
+		List<Cottage> cottages = this.cottageService.getAllByDate(date);
 		
-		return new ResponseEntity<>(null, HttpStatus.OK);
+		List<CottageDTO> cottagesDTOs = new ArrayList<CottageDTO>();
+		for (Cottage cottage : cottages) {
+			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
+			cottagesDTOs.add(cottageDTO);
+		}
+		return new ResponseEntity<>(cottagesDTOs, HttpStatus.OK);
 	}
 
-//	private String getDate(String dateString) {
-//		String[] part = dateString.split("T");
-//		return part[0];
-//	}
 }

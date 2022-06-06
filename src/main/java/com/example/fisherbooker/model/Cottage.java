@@ -54,6 +54,10 @@ public class Cottage {
 	@JsonIgnore
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<CottageReservation> cottageReservations;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	public Set<CottageComplaint> cottageComplaints;
 
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<CottageOption> cottageOptions;

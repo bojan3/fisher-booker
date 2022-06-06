@@ -1,24 +1,19 @@
 package com.example.fisherbooker.service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.MethodInfoTransformer;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException.Gone;
-import org.yaml.snakeyaml.tokens.FlowSequenceEndToken;
 
 import com.example.fisherbooker.model.AdventureReservation;
-import com.example.fisherbooker.model.Adventure;
 import com.example.fisherbooker.model.Client;
 import com.example.fisherbooker.model.Cottage;
+import com.example.fisherbooker.model.CottageComplaint;
 import com.example.fisherbooker.model.CottageReservation;
 import com.example.fisherbooker.model.FishingInstructor;
 import com.example.fisherbooker.model.Ship;
@@ -30,6 +25,7 @@ import com.example.fisherbooker.model.DTO.FishingInstructorDTO;
 import com.example.fisherbooker.model.DTO.ShipDTO;
 import com.example.fisherbooker.model.DTO.ShipReservationDTO;
 import com.example.fisherbooker.repository.ClientRepository;
+import com.example.fisherbooker.repository.CottageComplaintRepository;
 import com.example.fisherbooker.repository.CottageRepository;
 import com.example.fisherbooker.repository.FishingInstructorRepository;
 import com.example.fisherbooker.repository.ShipRepository;
@@ -43,16 +39,18 @@ public class ClientService {
 	private ShipRepository shipRepository;
 	private FishingInstructorRepository fishingInstructorRepository;
 	private AdventureService adventureService;
+	private CottageComplaintRepository cottageComplaintRepository;
 
 	@Autowired
 	public ClientService(ClientRepository clientRepository, CottageRepository cotageRepository,
 			ShipRepository shipRepository, FishingInstructorRepository fishingInstructorRepository,
-			AdventureService adventureService) {
+			AdventureService adventureService, CottageComplaintRepository cottageComplaintRepository) {
 		this.clientRepository = clientRepository;
 		this.cottageRepository = cotageRepository;
 		this.shipRepository = shipRepository;
 		this.fishingInstructorRepository = fishingInstructorRepository;
 		this.adventureService = adventureService;
+		this.cottageComplaintRepository = cottageComplaintRepository;
 
 	}
 
@@ -146,7 +144,7 @@ public class ClientService {
 		clientRepository.save(client);
 	}
 
-// odavden pocinje rezervacije da samaraju
+	// odavden pocinje rezervacije da samaraju
 	public List<AdventureReservationDTO> getAdventureReservations(Long accountId) {
 		Client client = clientRepository.findByAccountId(accountId);
 		List<AdventureReservation> adventureReservations = new ArrayList<AdventureReservation>(
@@ -290,7 +288,19 @@ public class ClientService {
 		return null;
 	}
 
-//	public List<Client> getAll(){
-//		return clientRepository.getAll();
-//	}
+	<<<<<<<HEAD=======
+
+	public void createCottageComplaint(Long cottageId, Long accountId, String text) {
+		Client client = clientRepository.findByAccountId(accountId);
+		Cottage cottage = cottageRepository.getOne(cottageId);
+		
+		CottageComplaint cottageComplaint = new CottageComplaint(cottage, client, text, "");
+		
+		this.cottageComplaintRepository.save(cottageComplaint);
+	}
+
+	>>>>>>>student1
+	// public List<Client> getAll(){
+	// return clientRepository.getAll();
+	// }
 }
