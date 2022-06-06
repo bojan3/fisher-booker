@@ -8,34 +8,21 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
-public class ShipOption {
-
+public class DeleteAccountRequest {
 	@Id
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(length = 20)
-	private String name;
-	@Column(length = 300)
+
+	@Column(length = 500, nullable = false)
 	private String description;
-	private int price;
 
-	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "ship_id")
-	private Ship ship;
+	@JoinColumn(name = "account_id")
+	private Account account;
 
-	public Ship getShip() {
-		return ship;
-	}
-
-	public void setShip(Ship ship) {
-		this.ship = ship;
-	}
-
-	public ShipOption() {
+	public DeleteAccountRequest() {
 		super();
 	}
 
@@ -47,14 +34,6 @@ public class ShipOption {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -63,17 +42,17 @@ public class ShipOption {
 		this.description = description;
 	}
 
-	public int getPrice() {
-		return price;
+	public Account getAccount() {
+		return account;
 	}
 
-	public void setPrice(int price) {
-		this.price = price;
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 	@Override
 	public String toString() {
-		return "ShipOption [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + "]";
+		return "DeleteAccountRequest [id=" + id + ", description=" + description + ", account=" + account + "]";
 	}
 
 }

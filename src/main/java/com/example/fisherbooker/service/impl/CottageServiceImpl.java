@@ -8,7 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.fisherbooker.model.Cottage;
+import com.example.fisherbooker.model.CottageOption;
 import com.example.fisherbooker.model.CottageReservation;
+import com.example.fisherbooker.model.CottageSuperDeal;
+import com.example.fisherbooker.model.FishingEquipment;
+import com.example.fisherbooker.model.NavigationEquipment;
+import com.example.fisherbooker.model.Room;
+import com.example.fisherbooker.model.Ship;
+import com.example.fisherbooker.model.ShipOption;
+import com.example.fisherbooker.model.ShipSuperDeal;
 import com.example.fisherbooker.repository.CottageRepository;
 import com.example.fisherbooker.repository.CottageReservationRepository;
 import com.example.fisherbooker.service.CottageService;
@@ -27,6 +35,16 @@ public class CottageServiceImpl implements CottageService {
 	}
 
 	public Boolean saveCottage(Cottage cottage) {
+		System.out.println("novi: " + cottage.getAvailabilityPeriod());
+		for (Room r : cottage.getRooms()) {
+			r.setCottage(cottage);
+		}
+		for (CottageSuperDeal csd : cottage.getCottageSuperDeals()) {
+			csd.setCottage(cottage);
+		}
+		for (CottageOption co : cottage.getCottageOptions()) {
+			co.setCottage(cottage);
+		}
 		this.cottageRepository.save(cottage);
 		return true;
 	}

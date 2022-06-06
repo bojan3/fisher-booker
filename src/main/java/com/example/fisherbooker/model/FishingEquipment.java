@@ -36,10 +36,10 @@ public class FishingEquipment {
 	public void setShip(Ship ship) {
 		this.ship = ship;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "FishingEquipment [name=" + name + ", ship=" + ship + "]";
+		return "FishingEquipment [name=" + name + "]";
 	}
 
 }

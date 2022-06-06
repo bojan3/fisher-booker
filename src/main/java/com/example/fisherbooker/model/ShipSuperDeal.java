@@ -74,4 +74,18 @@ public class ShipSuperDeal {
 		this.capacity = capacity;
 	}
 
+	public Ship getShip() {
+		return ship;
+	}
+
+	public void setShip(Ship ship) {
+		this.ship = ship;
+	}
+
+	@Override
+	public String toString() {
+		return "ShipSuperDeal [id=" + id + ", startDate=" + startDate + ", discountedPrice=" + discountedPrice
+				+ ", endDate=" + endDate + ", capacity=" + capacity + "]";
+	}
+
 }

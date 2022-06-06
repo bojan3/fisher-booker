@@ -40,7 +40,7 @@ public class NavigationEquipment {
 
 	@Override
 	public String toString() {
-		return "NavigationEquipment [name=" + name + ", ship=" + ship + "]";
+		return "NavigationEquipment [name=" + name + "]";
 	}
 
 }

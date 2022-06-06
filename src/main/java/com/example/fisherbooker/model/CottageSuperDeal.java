@@ -31,7 +31,7 @@ public class CottageSuperDeal {
 	@ManyToOne
 	@JoinColumn(name = "cottage_id", nullable = false)
 	public Cottage cottage;
-	
+
 	public CottageSuperDeal() {
 		super();
 	}
@@ -76,11 +76,13 @@ public class CottageSuperDeal {
 		this.capacity = capacity;
 	}
 
-	/*
-	 * public Cottage getCottage() { return cottage; }
-	 * 
-	 * public void setCottage(Cottage cottage) { this.cottage = cottage; }
-	 */
+	public Cottage getCottage() {
+		return cottage;
+	}
+
+	public void setCottage(Cottage cottage) {
+		this.cottage = cottage;
+	}
 
 	@Override
 	public String toString() {

@@ -22,6 +22,7 @@ import com.example.fisherbooker.model.AccountVerificationEmailContext;
 import com.example.fisherbooker.model.Admin;
 import com.example.fisherbooker.model.CottageOwner;
 import com.example.fisherbooker.model.FishingInstructor;
+import com.example.fisherbooker.model.DeleteAccountRequest;
 import com.example.fisherbooker.model.Role;
 import com.example.fisherbooker.model.ShipOwner;
 import com.example.fisherbooker.model.DTO.AccountDTO;
@@ -30,6 +31,7 @@ import com.example.fisherbooker.repository.AccountRepository;
 import com.example.fisherbooker.repository.AdministratorRepository;
 import com.example.fisherbooker.repository.CottageOwnerRepository;
 import com.example.fisherbooker.repository.FishingInstructorRepository;
+import com.example.fisherbooker.repository.DeleteAccountRequestRepository;
 import com.example.fisherbooker.repository.SecureTokenRepository;
 import com.example.fisherbooker.repository.ShipOwnerRepository;
 import com.example.fisherbooker.security.auth.SecureToken;
@@ -57,29 +59,32 @@ public class AccountServiceImpl {
 	
 	@Autowired
 	private AccountRepository accountRepository;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	private RoleService roleService;
-	
+
 	@Autowired
 	private SecureTokenService secureTokenService;
-	//sad dal treba naglasiti koji implementira ili ce sam da skonta
-	
-	@Autowired 
+	// sad dal treba naglasiti koji implementira ili ce sam da skonta
+
+	@Autowired
 	private SecureTokenRepository secureTokenRepository;
-	
+
+	@Autowired
+	private DeleteAccountRequestRepository deleteAccountRequestRepository;
+
 	@Value("${site.base.url.https}")
 	private String baseURL;
-	
+
 	@Autowired
 	private EmailService emailService;
-	
+
 	// adresa onoga ko se registruje treba da se doda
 	public Account save(AccountRequest accountRequest) {
-		
+
 		Account account = new Account();
 		account.setUsername(accountRequest.getUsername());
 		account.setPassword(passwordEncoder.encode(accountRequest.getPassword()));
@@ -95,60 +100,67 @@ public class AccountServiceImpl {
 		
 		if(accountRequest.getRole().equals("CLIENT"))
 			account.setAdminVerified(true);
-		
+
 		List<Role> roles = getRoles(accountRequest.getRole());
 		account.setRoles(roles);
-		
-		Account savedAccount = this.accountRepository.save(account);	
-		
+
+		Account savedAccount = this.accountRepository.save(account);
+
 		sendRegistrationConfirmationEmail(savedAccount);
-		
+
 		return savedAccount;
 	}
-	
-    public void sendRegistrationConfirmationEmail(Account account) {
-        SecureToken secureToken= secureTokenService.createSecureToken();
-        secureToken.setAccount(account);
-        secureTokenRepository.save(secureToken);
-        
-        AccountVerificationEmailContext emailContext = new AccountVerificationEmailContext();
-        emailContext.init(account);
-        emailContext.setToken(secureToken.getToken());
-        emailContext.buildVerificationUrl("http://localhost:4200", secureToken.getToken());
-        try {
-            emailService.sendMail(emailContext);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-    }
-	
+	public void sendRegistrationConfirmationEmail(Account account) {
+		SecureToken secureToken = secureTokenService.createSecureToken();
+		secureToken.setAccount(account);
+		secureTokenRepository.save(secureToken);
+
+		AccountVerificationEmailContext emailContext = new AccountVerificationEmailContext();
+		emailContext.init(account);
+		emailContext.setToken(secureToken.getToken());
+		emailContext.buildVerificationUrl("http://localhost:4200", secureToken.getToken());
+		try {
+			emailService.sendMail(emailContext);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	public Account findByUsername(String username) throws UsernameNotFoundException {
 		return accountRepository.findByUsername(username);
 	}
-	
+
+	public Boolean createDeleteAccountRequest(String username, DeleteAccountRequest request) {
+		Account account = this.accountRepository.findByUsername(username);
+		request.setAccount(account);
+		this.deleteAccountRequestRepository.save(request);
+		return true;
+	}
+
 	private List<Role> getRoles(String roleType) {
-		
-		switch(roleType) {
-			case "ADMIN":
-				return roleService.findAll();
-			case "CLIENT":
-				return roleService.findByName("ROLE_CLIENT");
-			case "COTTAGE_OWNER":
-				return roleService.findByName("ROLE_COTTAGE_OWNER");
-			case "SHIP_OWNER":
-				return roleService.findByName("ROLE_SHIP_OWNER");
-			case "INSTRUCTOR":
-				return roleService.findByName("ROLE_INSTRUCTOR");
+
+		switch (roleType) {
+		case "ADMIN":
+			return roleService.findAll();
+		case "CLIENT":
+			return roleService.findByName("ROLE_CLIENT");
+		case "COTTAGE_OWNER":
+			return roleService.findByName("ROLE_COTTAGE_OWNER");
+		case "SHIP_OWNER":
+			return roleService.findByName("ROLE_SHIP_OWNER");
+		case "INSTRUCTOR":
+			return roleService.findByName("ROLE_INSTRUCTOR");
 		}
-		
+
 		return null;
 	}
-	
+
 	public Account findById(Long id) throws AccessDeniedException {
 		return accountRepository.findById(id).orElseGet(null);
 	}
-	
+
 	public boolean updateUser(AccountRequest account) {
 		Account oldAccount = accountRepository.getOne(account.getId());
 //		System.out.println("Stari akaunt: " + oldAccount);
@@ -279,17 +291,18 @@ public class AccountServiceImpl {
 		SecureToken secureToken = secureTokenService.findByToken(token);
 		System.out.println("Token iz baze: " + secureToken);
 		System.out.println("Token sa fronta: " + token);
-		
-        if(Objects.isNull(secureToken) || !StringUtils.equals(token, secureToken.getToken()) || secureToken.isExpired()){
-            throw new InvalidTokenException("Token is not valid");
-        }
-        
-        Account account = secureToken.getAccount();
-        account.setEmailVerified(true);
-        accountRepository.save(account);
 
-        secureTokenService.removeToken(secureToken);
-        return true;
+		if (Objects.isNull(secureToken) || !StringUtils.equals(token, secureToken.getToken())
+				|| secureToken.isExpired()) {
+			throw new InvalidTokenException("Token is not valid");
+		}
+
+		Account account = secureToken.getAccount();
+		account.setEmailVerified(true);
+		accountRepository.save(account);
+
+		secureTokenService.removeToken(secureToken);
+		return true;
 	}
 
 	public List<Account> getAll() {

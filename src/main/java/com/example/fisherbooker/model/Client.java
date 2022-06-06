@@ -50,10 +50,9 @@ public class Client {
 
 	public Client() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public java.util.Set<ShipReservation> getShipReservation() {
+	/*public java.util.Set<ShipReservation> getShipReservation() {
 		if (shipReservation == null)
 			shipReservation = new java.util.HashSet<ShipReservation>();
 		return shipReservation;
@@ -171,10 +170,9 @@ public class Client {
 	public void removeAllAdventureReservation() {
 		if (adventureReservation != null)
 			adventureReservation.clear();
-	}
+	}*/
 
 	public Account getAccount() {
-		// TODO Auto-generated method stub
 		return this.account;
 	}
 

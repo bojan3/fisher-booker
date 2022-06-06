@@ -163,7 +163,7 @@ insert into ship (name, type, length, address_id, description, average_mark, ren
 insert into ship (name, type, length, description, average_mark, rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate, ship_owner_id, availability_period_id) values ('Jahta Jovana' , 'ledolomac', 3, 'Jahta za uzivanje', 3, 150, 20, 200, 100, 40, 0, 1, 4);
 insert into ship (name, type, length, description, average_mark, rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate, ship_owner_id) values ('Jahta Katarina' , 'jahta', 3, 'Jahta za uzivanje', 7, 100, 30, 300, 150, 10, 0, 2);
 
-insert into ship_picture(path, ship_id) values('../../assets/images/gusar1.png', 1);
+--insert into ship_picture(path, ship_id) values('../../assets/images/gusar1.png', 1);
 
 insert into ship_reservation(start_date, end_date, ship_id, capacity, price, client_id, deleted) values ('2022-05-31', '2022-06-10', 1, 2, 20, 1, FALSE);
 insert into ship_reservation(start_date, end_date, ship_id, capacity, price, client_id, deleted) values ('2022-06-25', '2022-06-30', 2, 3, 15, 1, FALSE);
@@ -208,3 +208,4 @@ insert into review(comment, grade, client_id, id_entity, r_entity, published) va
 
 
 
+insert into delete_account_request(description, account_id) values ('Dosta mi je svega', 4);

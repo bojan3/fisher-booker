@@ -197,5 +197,7 @@ public class Cottage {
 	public void setClient(Set<Client> client) {
 		this.client = client;
 	}
+	
+	
 
 }

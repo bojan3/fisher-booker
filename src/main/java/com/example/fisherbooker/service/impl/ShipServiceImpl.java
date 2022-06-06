@@ -1,14 +1,20 @@
 package com.example.fisherbooker.service.impl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.fisherbooker.model.FishingEquipment;
+import com.example.fisherbooker.model.NavigationEquipment;
 import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.DTO.ShipDTO;
+import com.example.fisherbooker.model.ShipOption;
+import com.example.fisherbooker.model.ShipPicture;
 import com.example.fisherbooker.model.ShipReservation;
+import com.example.fisherbooker.model.ShipSuperDeal;
 import com.example.fisherbooker.repository.ShipRepository;
 import com.example.fisherbooker.repository.ShipReservationRepository;
 import com.example.fisherbooker.service.ShipService;
@@ -25,10 +31,77 @@ public class ShipServiceImpl implements ShipService {
 		this.shipReservationRepository = shipReservationRepository;
 	}
 
-	public Boolean saveShip(Ship ship) {
+	public Boolean updateShip(Ship ship) { 
+//		Ship oldShip = this.shipRepository.findById(ship.getId()).orElse(null);
+//		oldShip.setName(ship.getName());
+//		oldShip.setType(ship.getType());
+//		oldShip.setLength(ship.getLength());
+//		oldShip.setDescription(ship.getDescription());
+//		oldShip.setRentPrice(ship.getRentPrice());
+//		oldShip.setEngineNumber(ship.getEngineNumber());
+//		oldShip.setEnginePower(ship.getEnginePower());
+//		oldShip.setMaxSpeed(ship.getMaxSpeed());
+//		oldShip.setCapacity(ship.getCapacity());
+//		oldShip.setCancelRate(ship.getCancelRate());
+//		oldShip.setAddress(ship.getAddress());
+//		oldShip.setAvailabilityPeriod(ship.getAvailabilityPeriod());
+//		oldShip.setRules(ship.getRules());
+//
+//		Iterator<NavigationEquipment> itrNav = ship.getNavigationEquipments().iterator();
+//		for(NavigationEquipment ne : oldShip.getNavigationEquipments()) {
+//			ne.setName(itrNav.next().getName());
+//		}
+//		
+//		Iterator<FishingEquipment> itrFish = ship.getFishingEquipments().iterator();
+//		for(FishingEquipment fe : oldShip.getFishingEquipments()) {
+//			fe.setName(itrFish.next().getName());
+//		}
+//		
+////		Iterator<ShipPicture> itrPic = ship.getShipPictures().iterator();
+////		for(ShipPicture sp : oldShip.getShipPictures()) {
+////			sp.setShip(ship);
+////		}
+//		
+//		Iterator<ShipOption> itrOp = ship.getShipOptions().iterator();
+//		for(ShipOption so : oldShip.getShipOptions()) {
+//			so.setName(itrOp.next().getName());
+//			so.setPrice(itrOp.next().getPrice());
+//			so.setDescription(itrOp.next().getDescription());
+//		}
+//		
+//		/*Iterator<ShipSuperDeal> itrSuper = ship.getShipSuperDeals().iterator();
+//		for(ShipSuperDeal ssd : oldShip.getShipSuperDeals()) {
+//			ssd.setStartDate(itrSuper.next().getStartDate());
+//			ssd.setEndDate(itrSuper.next().getEndDate());
+//			ssd.setDiscountedPrice(itrSuper.next().getDiscountedPrice());
+//			ssd.setCapacity(itrSuper.next().getCapacity());
+//		}*/
+//		
+//		oldShip.setRules(ship.getRules());
+		for(NavigationEquipment ne : ship.getNavigationEquipments()) {
+			ne.setShip(ship);
+		}
 		this.shipRepository.save(ship);
 		return true;
 	}
+	
+	public Boolean saveShip(Ship ship) { 
+		for(NavigationEquipment ne : ship.getNavigationEquipments()) {
+			ne.setShip(ship);
+		}
+		for (FishingEquipment fe : ship.getFishingEquipments()) {
+			fe.setShip(ship);
+		}
+		for (ShipSuperDeal ssd : ship.getShipSuperDeals()) {
+			ssd.setShip(ship);
+		}
+		for (ShipOption so : ship.getShipOptions()) {
+			so.setShip(ship);
+		}
+		this.shipRepository.save(ship);
+		return true;
+	}
+	
 	
 	public Ship getById(Long id) {
 		return this.shipRepository.findById(id).orElse(null);
@@ -65,7 +138,7 @@ public class ShipServiceImpl implements ShipService {
 	public Boolean checkIfOwnerHasShip(String username, Long shipId) {
 		List<Ship> ships = this.shipRepository.findByShipOwnerAccountUsername(username);
 		for (Ship ship : ships) {
-			System.out.println(ship.getShipOwner());
+			//System.out.println(ship.getShipOwner());
 			if (ship.getId().equals(shipId)) {
 				return true;
 			}

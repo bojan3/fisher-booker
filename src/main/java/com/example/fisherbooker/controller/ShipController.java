@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,7 +37,7 @@ public class ShipController {
 	public ShipController(ShipService shipService) {
 		this.shipService = shipService;
 	}
-	
+
 	@GetMapping("/page/{id}")
 	public ResponseEntity<Ship> getById(@PathVariable Long id) {
 		Ship ship = this.shipService.getById(id);
@@ -148,14 +149,25 @@ public class ShipController {
 		return new ResponseEntity<>(shipDTOs, HttpStatus.OK);
 	}
 
-	@PostMapping("/save")
-	public ResponseEntity<Boolean> save(@RequestBody Ship ship) {
+	@PreAuthorize("hasRole('SHIP_OWNER')")
+	@PutMapping("/update")
+	public ResponseEntity<Boolean> update(@RequestBody Ship ship) {
+		System.out.println(ship);
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		if (this.shipService.checkIfOwnerHasShip(username, ship.getId())) {
 			this.shipService.saveShip(ship);
 			return new ResponseEntity<>(true, HttpStatus.OK);
 		}
-		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		return new ResponseEntity<>(true, HttpStatus.UNAUTHORIZED);
+	}
+
+	@PreAuthorize("hasRole('SHIP_OWNER')")
+	@PostMapping("/save")
+	public ResponseEntity<Boolean> save(@RequestBody Ship ship) {
+		System.out.println(ship);
+		//String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		this.shipService.saveShip(ship);
+		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 
 }
