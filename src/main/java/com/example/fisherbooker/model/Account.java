@@ -59,6 +59,7 @@ public class Account implements UserDetails {
 
 	private boolean adminVerified;
 
+	
 	public boolean isAdminVerified() {
 		return adminVerified;
 	}

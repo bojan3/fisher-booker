@@ -187,4 +187,11 @@ public class ClientController {
 		this.clientService.deleteAdventureReservation(accountId, adventureReservationId);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
+	
+	@PreAuthorize("hasRole('CLIENT')")
+	@PutMapping("cottagecomplaint/{cottageId}/{accountId}")
+	public ResponseEntity<Boolean> createCottageComplaint(@PathVariable Long cottageId, @PathVariable Long accountId, @RequestBody String text){
+		this.clientService.createCottageComplaint(cottageId, accountId, text);
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
 }

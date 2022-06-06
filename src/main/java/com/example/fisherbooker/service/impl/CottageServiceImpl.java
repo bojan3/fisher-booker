@@ -81,22 +81,25 @@ public class CottageServiceImpl implements CottageService {
 		List<Cottage> cottages = cottageRepository.findAll();
 		List<Cottage> returnList = new ArrayList<Cottage>();
 		for (Cottage cottage: cottages) {
-			if(date.before(cottage.availabilityPeriod.getStartDate()) || date.after(cottage.getAvailabilityPeriod().getEndDate()))
-				return new ArrayList<Cottage>();
+			if(date.after(cottage.availabilityPeriod.getStartDate()) && date.before(cottage.getAvailabilityPeriod().getEndDate())) {
 			
-			List<CottageReservation> cottageReservations = cottageReservationRepository.findByCottageId(cottage.getId());
-			if(isFree(cottageReservations, date)) {
-				returnList.add(cottage);
+				List<CottageReservation> cottageReservations = cottageReservationRepository.findByCottageId(cottage.getId());
+				if(isFree(cottageReservations, date)) {
+					returnList.add(cottage);
+				}
 			}
+			
 		}
+		
 		return returnList;
 	}
 	
 	private boolean isFree(List<CottageReservation> cottageReservations, Date date) {
 		for(CottageReservation cottageReservation: cottageReservations) {
+			if(!cottageReservation.isDeleted()) {
 			if (date.after(cottageReservation.getStartDate()) && date.before(cottageReservation.getEndDate())) {
 				return false;
-			}
+			}}
 		}
 		return true;
 	}

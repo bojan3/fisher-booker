@@ -96,6 +96,12 @@ public class CottageDTO {
 	public void setPrice_per_day(int price_per_day) {
 		this.pricePerDay = price_per_day;
 	}
+
+	@Override
+	public String toString() {
+		return "CottageDTO [id=" + id + ", name=" + name + ", description=" + description + ", pricePerDay="
+				+ pricePerDay + ", address=" + address + ", averageMark=" + averageMark + "]";
+	}
 	
 	
 	
