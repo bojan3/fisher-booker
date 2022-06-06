@@ -288,7 +288,6 @@ public class ClientService {
 		return null;
 	}
 
-	<<<<<<<HEAD=======
 
 	public void createCottageComplaint(Long cottageId, Long accountId, String text) {
 		Client client = clientRepository.findByAccountId(accountId);
@@ -299,7 +298,6 @@ public class ClientService {
 		this.cottageComplaintRepository.save(cottageComplaint);
 	}
 
-	>>>>>>>student1
 	// public List<Client> getAll(){
 	// return clientRepository.getAll();
 	// }
