@@ -20,10 +20,8 @@ public class CottageSuperDeal {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@JsonFormat(pattern = "dd.MM.yyyy.")
 	private Date startDate;
 	private int discountedPrice;
-	@JsonFormat(pattern = "dd.MM.yyyy.")
 	private Date endDate;
 	private int capacity;
 

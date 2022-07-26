@@ -69,6 +69,15 @@ public class CottageOption {
 	public void setCottage(Cottage cottage) {
 		this.cottage = cottage;
 	}
+	
+	public static CottageOption toModel(CottageOption newOption) {
+		CottageOption option = new CottageOption();
+		option.setName(newOption.getName());
+		option.setDescription(newOption.getDescription());
+		option.setPrice(newOption.getPrice());
+		option.setCottage(newOption.getCottage());
+		return option;
+	}
 
 	@Override
 	public String toString() {

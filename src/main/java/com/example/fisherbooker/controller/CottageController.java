@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fisherbooker.model.Cottage;
+import com.example.fisherbooker.model.DTO.CottageAddDTO;
 import com.example.fisherbooker.model.DTO.CottageDTO;
 import com.example.fisherbooker.service.CottageService;
 
@@ -34,11 +35,11 @@ public class CottageController {
 		this.cottageService = cottageService;
 	}
 
-	@PostMapping("/add/{ownerId}")
-	public ResponseEntity<Boolean> getAllByOwner(@RequestBody Cottage cottage) {
-		this.cottageService.saveCottage(cottage);
-		return new ResponseEntity<>(true, HttpStatus.OK);
-	}
+//	@PostMapping("/add/{ownerId}")
+//	public ResponseEntity<Boolean> getAllByOwner(@RequestBody Cottage cottage) {
+//		this.cottageService.saveCottage(cottage);
+//		return new ResponseEntity<>(true, HttpStatus.OK);
+//	}
 
 	@GetMapping("/all")
 	public ResponseEntity<List<CottageDTO>> getAll() {
@@ -111,7 +112,8 @@ public class CottageController {
 	}
 	
 	@PostMapping("/save")
-	public ResponseEntity<Boolean> save(@RequestBody Cottage cottage) {
+	public ResponseEntity<Boolean> save(@RequestBody CottageAddDTO cottage) {
+		System.out.println(cottage);
 		this.cottageService.saveCottage(cottage);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}

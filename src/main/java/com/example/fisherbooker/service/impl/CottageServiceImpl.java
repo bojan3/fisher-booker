@@ -1,51 +1,59 @@
 package com.example.fisherbooker.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
+import com.example.fisherbooker.model.AvailabilityPeriod;
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageOption;
+import com.example.fisherbooker.model.CottageOwner;
 import com.example.fisherbooker.model.CottageReservation;
-import com.example.fisherbooker.model.CottageSuperDeal;
-import com.example.fisherbooker.model.FishingEquipment;
-import com.example.fisherbooker.model.NavigationEquipment;
 import com.example.fisherbooker.model.Room;
-import com.example.fisherbooker.model.Ship;
-import com.example.fisherbooker.model.ShipOption;
-import com.example.fisherbooker.model.ShipSuperDeal;
+import com.example.fisherbooker.model.DTO.CottageAddDTO;
+import com.example.fisherbooker.repository.CottageOwnerRepository;
 import com.example.fisherbooker.repository.CottageRepository;
 import com.example.fisherbooker.repository.CottageReservationRepository;
 import com.example.fisherbooker.service.CottageService;
-
 
 @Service
 public class CottageServiceImpl implements CottageService {
 	private CottageRepository cottageRepository;
 	private CottageReservationRepository cottageReservationRepository;
+	private CottageOwnerRepository cottageOwnerRepository;
 
 	@Autowired
 	public CottageServiceImpl(CottageRepository cottageRepository,
-			CottageReservationRepository cottageReservationRepository) {
+			CottageReservationRepository cottageReservationRepository, CottageOwnerRepository cottageOwnerRepository) {
 		this.cottageRepository = cottageRepository;
 		this.cottageReservationRepository = cottageReservationRepository;
+		this.cottageOwnerRepository = cottageOwnerRepository;
 	}
 
-	public Boolean saveCottage(Cottage cottage) {
-		System.out.println("novi: " + cottage.getAvailabilityPeriod());
-		for (Room r : cottage.getRooms()) {
-			r.setCottage(cottage);
+	public Boolean saveCottage(CottageAddDTO cottage) {
+
+		Cottage newCottage = cottage.toModel();
+
+		for (Room r : newCottage.getRooms()) {
+			r.setCottage(newCottage);
 		}
-		for (CottageSuperDeal csd : cottage.getCottageSuperDeals()) {
-			csd.setCottage(cottage);
+
+//		for (CottageOption co : newCottage.getCottageOptions()) {
+//			co.setCottage(newCottage);
+//		}
+// 
+//		for (AvailabilityPeriod ap : newCottage.getAvailabilityPeriods()) {
+//			ap.setCottage(newCottage);
+//		}
+
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		CottageOwner owner = cottageOwnerRepository.findOneByAccountUsername(username).orElse(null);
+		if (owner != null) {
+			newCottage.setCottageOwner(owner);
+			owner.addCottage(newCottage);
 		}
-		for (CottageOption co : cottage.getCottageOptions()) {
-			co.setCottage(cottage);
-		}
-		this.cottageRepository.save(cottage);
+
+		this.cottageRepository.save(newCottage);
 		return true;
 	}
 
@@ -94,28 +102,28 @@ public class CottageServiceImpl implements CottageService {
 		return cottageRepository.findAll();
 	}
 
-	@Override
-	public List<Cottage> getAllByDate(Date date) {
-		List<Cottage> cottages = cottageRepository.findAll();
-		List<Cottage> returnList = new ArrayList<Cottage>();
-		for (Cottage cottage: cottages) {
-			if(date.before(cottage.availabilityPeriod.getStartDate()) || date.after(cottage.getAvailabilityPeriod().getEndDate()))
-				return new ArrayList<Cottage>();
-			
-			List<CottageReservation> cottageReservations = cottageReservationRepository.findByCottageId(cottage.getId());
-			if(isFree(cottageReservations, date)) {
-				returnList.add(cottage);
-			}
-		}
-		return returnList;
-	}
-	
-	private boolean isFree(List<CottageReservation> cottageReservations, Date date) {
-		for(CottageReservation cottageReservation: cottageReservations) {
-			if (date.after(cottageReservation.getStartDate()) && date.before(cottageReservation.getEndDate())) {
-				return false;
-			}
-		}
-		return true;
-	}
+//	@Override
+//	public List<Cottage> getAllByDate(Date date) {
+//		List<Cottage> cottages = cottageRepository.findAll();
+//		List<Cottage> returnList = new ArrayList<Cottage>();
+//		for (Cottage cottage: cottages) {
+//			if(date.before(cottage.availabilityPeriod.getStartDate()) || date.after(cottage.getAvailabilityPeriod().getEndDate()))
+//				return new ArrayList<Cottage>();
+//			
+//			List<CottageReservation> cottageReservations = cottageReservationRepository.findByCottageId(cottage.getId());
+//			if(isFree(cottageReservations, date)) {
+//				returnList.add(cottage);
+//			}
+//		}
+//		return returnList;
+//	}
+//	
+//	private boolean isFree(List<CottageReservation> cottageReservations, Date date) {
+//		for(CottageReservation cottageReservation: cottageReservations) {
+//			if (date.after(cottageReservation.getStartDate()) && date.before(cottageReservation.getEndDate())) {
+//				return false;
+//			}
+//		}
+//		return true;
+//	}
 }

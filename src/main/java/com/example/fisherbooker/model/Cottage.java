@@ -1,5 +1,6 @@
 package com.example.fisherbooker.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -33,30 +34,26 @@ public class Cottage {
 	@OneToOne(cascade = CascadeType.ALL)
 	public Address address;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	public Set<Room> rooms;
+	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	public Set<Room> rooms = new HashSet<Room>();
 
-	@JsonIgnore
-	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true)
-	public Set<Rule> rules;
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	public Set<Rule> rules = new HashSet<Rule>();
 
 	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	public Set<CottageSuperDeal> cottageSuperDeals;
-
-	@OneToOne(cascade = CascadeType.ALL)
-	public AvailabilityPeriod availabilityPeriod;
-
-	@JsonIgnore
-	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-	public Set<CottagePicture> cottagePictures;
-
-	@JsonIgnore
-	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	public Set<CottageReservation> cottageReservations;
+	public Set<CottageSuperDeal> cottageSuperDeals = new HashSet<CottageSuperDeal>();
 
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	public Set<CottageOption> cottageOptions;
+	public Set<AvailabilityPeriod> availabilityPeriods = new HashSet<AvailabilityPeriod>();
+
+	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	public Set<CottagePicture> cottagePictures = new HashSet<CottagePicture>();
+
+	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	public Set<CottageReservation> cottageReservations = new HashSet<CottageReservation>();
+
+	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	public Set<CottageOption> cottageOptions = new HashSet<CottageOption>();
 
 	@ManyToOne
 	@JsonIgnore
@@ -68,14 +65,9 @@ public class Cottage {
 	private Set<Client> client;
 
 	public void free() {
-		this.setAvailabilityPeriod(null);
 		this.setCottageOptions(null);
 		this.setCottageReservations(null);
 		this.setCottageSuperDeals(null);
-	}
-
-	public Cottage() {
-		super();
 	}
 
 	public Long getId() {
@@ -139,7 +131,9 @@ public class Cottage {
 	}
 
 	public void setRules(Set<Rule> rules) {
-		this.rules = rules;
+		for (Rule r : rules) {
+			this.rules.add(Rule.toModel(r));
+		}
 	}
 
 	public Set<CottageSuperDeal> getCottageSuperDeals() {
@@ -150,12 +144,15 @@ public class Cottage {
 		this.cottageSuperDeals = cottageSuperDeals;
 	}
 
-	public AvailabilityPeriod getAvailabilityPeriod() {
-		return availabilityPeriod;
+	public Set<AvailabilityPeriod> getAvailabilityPeriods() {
+		return availabilityPeriods;
 	}
 
-	public void setAvailabilityPeriod(AvailabilityPeriod availabilityPeriod) {
-		this.availabilityPeriod = availabilityPeriod;
+	public void setAvailabilityPeriods(Set<AvailabilityPeriod> availabilityPeriods) {
+		for (AvailabilityPeriod ap : availabilityPeriods) {
+			ap.setCottage(this);
+			this.availabilityPeriods.add(AvailabilityPeriod.toModel(ap));
+		}
 	}
 
 	public Set<CottagePicture> getCottagePictures() {
@@ -179,7 +176,10 @@ public class Cottage {
 	}
 
 	public void setCottageOptions(Set<CottageOption> cottageOptions) {
-		this.cottageOptions = cottageOptions;
+		for (CottageOption co : cottageOptions) {
+			co.setCottage(this);
+			this.cottageOptions.add(CottageOption.toModel(co));
+		}
 	}
 
 	public CottageOwner getCottageOwner() {
@@ -197,7 +197,5 @@ public class Cottage {
 	public void setClient(Set<Client> client) {
 		this.client = client;
 	}
-	
-	
 
 }
