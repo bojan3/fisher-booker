@@ -38,14 +38,6 @@ public class CottageServiceImpl implements CottageService {
 			r.setCottage(newCottage);
 		}
 
-//		for (CottageOption co : newCottage.getCottageOptions()) {
-//			co.setCottage(newCottage);
-//		}
-// 
-//		for (AvailabilityPeriod ap : newCottage.getAvailabilityPeriods()) {
-//			ap.setCottage(newCottage);
-//		}
-
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		CottageOwner owner = cottageOwnerRepository.findOneByAccountUsername(username).orElse(null);
 		if (owner != null) {
