@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.example.fisherbooker.model.AdventureReservation;
 import com.example.fisherbooker.model.Client;
 import com.example.fisherbooker.model.Cottage;
-import com.example.fisherbooker.model.CottageComplaint;
 import com.example.fisherbooker.model.CottageReservation;
 import com.example.fisherbooker.model.FishingInstructor;
 import com.example.fisherbooker.model.Ship;
@@ -293,9 +292,9 @@ public class ClientService {
 		Client client = clientRepository.findByAccountId(accountId);
 		Cottage cottage = cottageRepository.getOne(cottageId);
 		
-		CottageComplaint cottageComplaint = new CottageComplaint(cottage, client, text, "");
+	//	CottageComplaint cottageComplaint = new CottageComplaint(cottage, client, text, "");
 		
-		this.cottageComplaintRepository.save(cottageComplaint);
+	//	this.cottageComplaintRepository.save(cottageComplaint);
 	}
 
 	// public List<Client> getAll(){

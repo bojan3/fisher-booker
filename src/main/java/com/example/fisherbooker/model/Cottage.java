@@ -55,9 +55,9 @@ public class Cottage {
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true) 
 	public Set<CottageReservation> cottageReservations;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	public Set<CottageComplaint> cottageComplaints;
+	//@JsonIgnore
+	//@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	//public Set<CottageComplaint> cottageComplaints;
 
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<CottageOption> cottageOptions;

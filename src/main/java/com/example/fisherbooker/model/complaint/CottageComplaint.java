@@ -1,13 +1,36 @@
 package com.example.fisherbooker.model.complaint;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.example.fisherbooker.model.Client;
+import com.example.fisherbooker.model.Cottage;
+import com.example.fisherbooker.model.FishingInstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class CottageComplaint {
 
-	private Long clientId;
-	private Long cottageId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "cottage_id", nullable = false)
+	public Cottage cottage;
+
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "client_id", nullable = false)
+	public Client client;
+	
 	private String text;
+	private String answer;
 	private Boolean answered;
 	
 	public CottageComplaint() {
@@ -15,25 +38,25 @@ public class CottageComplaint {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public CottageComplaint(Long clientId, Long cottageId, String text, Boolean answered) {
+	public CottageComplaint(Client clientId, Cottage cottageId, String text, Boolean answered) {
 		super();
-		this.clientId = clientId;
-		this.cottageId = cottageId;
+		this.client = clientId;
+		this.cottage = cottageId;
 		this.text = text;
 		this.answered=answered;
 	}
 	
-	public Long getClientId() {
-		return clientId;
+	public Client getClientId() {
+		return client;
 	}
-	public void setClientId(Long clientId) {
-		this.clientId = clientId;
+	public void setClientId(Client clientId) {
+		this.client = clientId;
 	}
-	public Long getCottageId() {
-		return cottageId;
+	public Cottage getCottageId() {
+		return cottage;
 	}
-	public void setCottageId(Long cottageId) {
-		this.cottageId = cottageId;
+	public void setCottageId(Cottage cottageId) {
+		this.cottage = cottageId;
 	}
 	public String getText() {
 		return text;
@@ -50,9 +73,6 @@ public class CottageComplaint {
 	}
 	
 	
-	@Override
-	public String toString() {
-		return "CottageComplaint [clientId=" + clientId + ", cottageId=" + cottageId + ", text=" + text + "]";
-	}
+	
 	
 }

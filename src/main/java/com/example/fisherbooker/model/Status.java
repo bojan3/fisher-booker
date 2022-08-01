@@ -31,15 +31,19 @@ public class Status {
 		switch(this.name) {
 		case REGULAR:
 			this.name = Status_name.BRONZE;
+			this.points = 0;
 			break;
 		case BRONZE:
 			this.name = Status_name.SILVER;
+			this.points = 0;
 			break;
 		case SILVER:
 			this.name = Status_name.GOLD;
+			this.points = 0;
 			break;
 		case GOLD:
 			this.name = Status_name.DIAMOND;
+			this.points = 0;
 			break;
 		default:
 			break;
@@ -51,7 +55,38 @@ public class Status {
 		return this.points;	
 	}
 	
+	public void increasePoints(){
+		this.points++;
+	}
 	
+	public void ScalePoinsts() {
+			switch(this.points) {
+			case 20:
+				this.IncreaseRank();
+				break;
+				
+			case 15:
+				this.IncreaseRank();
+				break;
+				
+			case 10:
+				this.IncreaseRank();
+				break;
+				
+			case 5:
+				this.IncreaseRank();	
+			default:
+				break;
+			}
+		}
+
+	@Override
+	public String toString() {
+		return "Status [id=" + id + ", name=" + name + ", points=" + points + "]";
+	}
+		
+	
+	}
 	
 
-}
+

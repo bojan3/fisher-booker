@@ -1,39 +1,63 @@
 package com.example.fisherbooker.model.complaint;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.example.fisherbooker.model.Client;
+import com.example.fisherbooker.model.FishingInstructor;
+import com.example.fisherbooker.model.Ship;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class InstructorComplaint {
 
-	private Long clientId;
-	private Long instructorId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "instructor_id", nullable = false)
+	public FishingInstructor instructor;
+
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "client_id", nullable = false)
+	public Client client;
+	
 	private String text;
+	private String answer;
 	private Boolean answered;
+	
 	
 	public InstructorComplaint() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	public InstructorComplaint(Long clientId, Long instructorId, String text, Boolean answered) {
+	public InstructorComplaint(Client clientId, FishingInstructor instructorId, String text, Boolean answered) {
 		super();
-		this.clientId = clientId;
-		this.instructorId = instructorId;
+		this.client = clientId;
+		this.instructor = instructorId;
 		this.text = text;
 		this.answered=answered;
 	}
 	
-	public Long getClientId() {
-		return clientId;
+	public Client getClientId() {
+		return client;
 	}
-	public void setClientId(Long clientId) {
-		this.clientId = clientId;
+	public void setClientId(Client clientId) {
+		this.client = clientId;
 	}
-	public Long getInstructorId() {
-		return instructorId;
+	public FishingInstructor getInstructorId() {
+		return instructor;
 	}
-	public void setShipId(Long shipId) {
-		this.instructorId = shipId;
+	public void setInstructor(FishingInstructor instructorId) {
+		this.instructor = instructorId;
 	}
 	public String getText() {
 		return text;
@@ -49,9 +73,6 @@ public class InstructorComplaint {
 		this.answered = answered;
 	}
 
-	@Override
-	public String toString() {
-		return "InstructorComplaint [clientId=" + clientId + ", instructorId=" + instructorId + ", text=" + text + "]";
-	}
+	
 	
 }

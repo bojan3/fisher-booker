@@ -49,6 +49,22 @@ insert into account_role (account_id, role_id) values (10,3);
 insert into account_role (account_id, role_id) values (11,4);
 insert into account_role (account_id, role_id) values (12,5);
 
+--ACCOUNT STATUS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 insert into cottage_owner (account_id) values (4);
 insert into cottage_owner (account_id) values (8);
 

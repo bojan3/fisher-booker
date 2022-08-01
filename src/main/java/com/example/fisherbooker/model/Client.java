@@ -50,9 +50,9 @@ public class Client {
 	@JoinTable(name = "instructor_subscriptions", joinColumns = @JoinColumn(name = "client_id"), inverseJoinColumns = @JoinColumn(name = "instructor_id"))
 	Set<FishingInstructor> instructorSubscriptions;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "client", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	public Set<CottageComplaint> cottageComplaints;
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "client", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+//	public Set<CottageComplaint> cottageComplaints;
 	
 	public Client() {
 		super();
