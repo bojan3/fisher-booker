@@ -6,7 +6,7 @@ insert into address (country, city, street, number) values ('Serbia', 'Kikinda',
 insert into address (country, city, street, number) values ('Serbia', 'Banatsko Novo Selo', 'Oslobodjenja', '58');
 insert into address (country, city, street, number) values ('Serbia', 'Beograd', 'Cara Dusana', '17-a');
 insert into address (country, city, street, number) values ('United Kingdom', 'London', 'Oxford Street', '34');
-insert into address (country, city, street, number) values ('Jadran sea', 'Five cave Island', 'Wild Street', '1');
+insert into address (country, city, street, number) values ('Jadran sea', '  cave Island', 'Wild Street', '1');
 insert into address (country, city, street, number) values ('Serbia', 'Nis', 'Spic Petrol', '1');
 
 insert into role (name) values ('ROLE_ADMIN');
@@ -17,7 +17,7 @@ insert into role (name) values ('ROLE_SHIP_OWNER');
 
 
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('gale','gale@gmail.com', '$2a$10$H/Ei64SSObBqEIM9q2AZxeeU7xIK9z0lWUKemkn1Q36iwtodZ/pXC', 'Jovan', 'Gaspar', '123456789', 1, TRUE, TRUE, FALSE);
-insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('bojan','bojan@gmail.com', '$2a$10$h8VcT2Y42IFQZUdjNRG7leGGw2gXnUZzXRDmvgLOmjzjR29b32jlK', 'Bojan', 'Skokic', '123456789', 2, TRUE, TRUE, TRUE);
+insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('bojan','bojan@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Bojan', 'Skokic', '123456789', 2, TRUE, TRUE, TRUE);
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('sasvimprirodno','jovopustolov@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Jovan', 'Memedovic', '123456789', 3, TRUE, TRUE, TRUE);
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('mire','miroljub@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Miroljub', 'Petrovic', '123456789', 4, TRUE, TRUE, TRUE);
 insert into account (username, email, password, name, last_name, phone_number, address_id, enabled, admin_verified, email_verified) values ('JackSparrow','jacksparrow@gmail.com', '$2a$12$UxcSVXUNiSn1i0EGlsTOHOkQZxnvk5Ey8xvql7lgmAWJM2CYyXObK', 'Jack', 'Sparrow', '123456789', 6, TRUE, TRUE, TRUE);
