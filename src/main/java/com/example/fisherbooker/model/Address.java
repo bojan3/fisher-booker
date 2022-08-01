@@ -11,7 +11,7 @@ public class Address {
 	public Address() {
 		super();
 	}
-
+ 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

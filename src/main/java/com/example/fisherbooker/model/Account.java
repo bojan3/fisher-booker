@@ -17,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,6 +29,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Account implements UserDetails {
 	public Account() {
 		super();
+		this.status = new Status();
 		// TODO Auto-generated constructor stub
 // 	this.adminVerified = false;
 //	this.emailVerified = false;
@@ -98,6 +100,10 @@ public class Account implements UserDetails {
 	@OneToMany(mappedBy = "account")
 	private Set<DeleteAccountRequest> deleteAccountRequests;
 
+	@OneToOne
+	(cascade = CascadeType.ALL)
+	private Status status;
+	
 	public Long getId() {
 		return id;
 	}
@@ -226,5 +232,11 @@ public class Account implements UserDetails {
 	public void setDeleteAccountRequests(Set<DeleteAccountRequest> deleteAccountRequests) {
 		this.deleteAccountRequests = deleteAccountRequests;
 	}
+	
+	public Status getStatus(){
+		return this.status;
+	}
+	
+	
 
 }

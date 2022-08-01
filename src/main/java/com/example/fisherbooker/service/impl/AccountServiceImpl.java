@@ -139,6 +139,12 @@ public class AccountServiceImpl {
 		return true;
 	}
 
+	public List<DeleteAccountRequest> deleteAccountRequests(){
+		
+		return this.deleteAccountRequestRepository.findAll();
+	}
+	
+	
 	private List<Role> getRoles(String roleType) {
 
 		switch (roleType) {
@@ -252,36 +258,62 @@ public class AccountServiceImpl {
 		return false; 
 	}
 	
+	
+	public void acceptdeleteAccountRequest(Long id) {
+		System.out.println(id);
+		DeleteAccountRequest dcc = this.deleteAccountRequestRepository.getById(id);
+		System.out.println(dcc);
+		Account acc=dcc.getAccount();
+		System.out.println(acc.getRoles().get(0).toString());
+	
+		System.out.println(acc);
+		dcc.setAccount(null);
+		System.out.println(dcc);
+		System.out.println(1);
+		 switch (acc.getRoles().get(0).getName().toString()) {
+			case "ROLE_INSTRUCTOR":
+				FishingInstructor fi = this.fiRep.findByAccountUsername(acc.getUsername()).get();
+				System.out.println(fi);
+				this.fiRep.delete(fi);
+				break;
+
+			case "ROLE_SHIP_OWNER":
+				ShipOwner sho = this.soRep.findOneByAccountUsername(acc.getUsername()).get();
+				System.out.println(sho);
+				this.soRep.delete(sho);
+				break;
+
+			case "ROLE_COTTAGE_OWNER":
+				CottageOwner co = this.coRep.findOneByAccountUsername(acc.getUsername()).get();
+				System.out.println(co);
+				this.coRep.delete(co);
+				break;
+				
+			default:
+				break;
+			}
+			 //brisanje u zavisnosti od uloge			
+			// acc.setAddress(null);
+		    // accountRepository.save(acc);
+			 
+			// accountRepository.deleteById(id);
+		
+		
+		
+		this.deleteAccountRequestRepository.save(dcc);
+		this.deleteAccountRequestRepository.delete(dcc);
+		System.out.println("return");
+	}
+	
+	public void denydeleteAccountRequest(Long id) {
+		DeleteAccountRequest dcc = this.deleteAccountRequestRepository.getById(id);		
+		this.deleteAccountRequestRepository.delete(dcc);
+	}
+	
 	public void deleteAccountRequest(Long id) {
 		 Account account = this.accountRepository.getById(id);
-		 
-		 //provera uloge
-		 switch (account.getRoles().get(0).toString()) {
-		case "ROLE_INSTRUCTOR":
-			FishingInstructor fi = this.fiRep.findByAccountUsername(account.getUsername()).get();
-			this.fiRep.delete(fi);
-			break;
-
-		case "ROLE_SHIP_OWNER":
-			ShipOwner sho = this.soRep.findOneByAccountUsername(account.getUsername()).get();
-			this.soRep.delete(sho);
-			break;
-
-		case "ROLE_COTTAGE_OWNER":
-			CottageOwner co = this.coRep.findOneByAccountUsername(account.getUsername()).get();
-			this.coRep.delete(co);
-			break;
-			
-		default:
-			break;
-		}
-		 
-		 //brisanje u zavisnosti od uloge
-		
 		 account.setAddress(null);
-	     accountRepository.save(account);
-
-		 
+	     accountRepository.save(account);		 
 		 this.accountRepository.deleteById(id);
 	}
 	

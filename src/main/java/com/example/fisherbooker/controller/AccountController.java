@@ -51,17 +51,21 @@ public class AccountController {
 	private ShipOwnerService shipownerservice;
 	private RoleServiceImpl roleservice;
 	
+	
+	
+	
+	
+	
 	@PostMapping("/update")
 	@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
 	public boolean updateUser(@RequestBody AccountRequest accountRequest, UriComponentsBuilder ucBuilder) {
 		return accountService.updateUser(accountRequest);
 	}
-
+	// Брисање налога
 	@PostMapping("/delete")
 	@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
 	public boolean deleteUser(@RequestBody AccountRequest accountRequest, UriComponentsBuilder ucBuilder) {
-		// TO-DO
-
+		this.accountService.acceptdeleteAccountRequest(accountRequest.getId());
 		return true;
 	}
 	
@@ -77,6 +81,7 @@ public class AccountController {
 	}
 	
 	
+	
 	@GetMapping("/unverified")
 	public ResponseEntity<List<AccountDTO>> getUnverifiedAccounts(){
 	
@@ -88,7 +93,7 @@ public class AccountController {
 		
 		return new ResponseEntity<>(this.accountService.AdminVerifyUser(account_id), HttpStatus.OK);
 	}
-	
+	/// Брисање захтева за прављење налога
 	@DeleteMapping("/delete")
 	//@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
 	public boolean deleteAccountByID(@RequestBody Long account_id){	
@@ -130,4 +135,24 @@ public class AccountController {
 		return new ResponseEntity<Boolean>(false, HttpStatus.OK);
 	}
 
+	@GetMapping("/allDeleteRequests")
+	public List<DeleteAccountRequest> getAllDeleteAccountRequests(){
+		return this.accountService.deleteAccountRequests();
+		
+	}
+	
+	@DeleteMapping("/accepteddeleteAccountRequest/{deleteaccount_id}")
+	//@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
+	public boolean acceptdeleteAccountRequest(@PathVariable Long deleteaccount_id){	
+		this.accountService.acceptdeleteAccountRequest(deleteaccount_id);	
+		return true;
+	}
+	
+	@DeleteMapping("/denieddeleteAccountRequest/{deleteaccount_id}")
+	//@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
+	public boolean denydeleteAccountRequestByID(@PathVariable Long deleteaccount_id){	
+		this.accountService.denydeleteAccountRequest(deleteaccount_id);	
+		return true;
+	}
+	
 }

@@ -52,7 +52,7 @@ public class Cottage {
 	public Set<CottagePicture> cottagePictures;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true) 
 	public Set<CottageReservation> cottageReservations;
 	
 	@JsonIgnore
