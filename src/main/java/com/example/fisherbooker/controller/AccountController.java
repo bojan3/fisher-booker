@@ -105,6 +105,7 @@ public class AccountController {
 	@GetMapping("/all")
 	public ResponseEntity<List<AccountDTO>> getAccounts(){
 		List<Account> accounts = this.accountService.getAll();
+		System.out.println(accounts);
 		List<AccountDTO> accountsDTO = new ArrayList<AccountDTO>();
 		for(Account a : accounts) {
 		//	AccountDTO accountDTO =AccountDTO.createAccountDTO(a);
@@ -119,10 +120,12 @@ public class AccountController {
 			accountDTO.setPassword(a.getPassword());
 			accountDTO.setRole(a.getRoles().toString());
 			accountDTO.setEnabled(a.isEnabled());
-			
+			accountDTO.setStatus(a.getStatus());
+			System.out.println(a.getStatus().toString());
 			
 			accountsDTO.add(accountDTO);
 		}
+		System.out.println(accountsDTO);
 		return new ResponseEntity<>(accountsDTO, HttpStatus.OK);
 	}
 
