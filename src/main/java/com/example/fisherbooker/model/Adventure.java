@@ -1,4 +1,4 @@
- package com.example.fisherbooker.model;
+package com.example.fisherbooker.model;
 
 import java.util.HashSet;
 import java.util.List;
@@ -26,7 +26,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Adventure {
 	public Adventure() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Adventure(String name, String adress, String description, AdventurePicture pic, int capacity,
@@ -34,82 +33,78 @@ public class Adventure {
 	}
 
 	@Id
-    @Column(name = "id")
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(length = 30, nullable = false)
 	private String name;
-	
-	@Column(length=350)
+
+	@Column(length = 350)
 	private String description;
-	
+
 	@Column
 	private int capacity;
-	
+
 	@Column
 	private int price;
-	
+
 	@Column
 	private float cancelRate;
-	
-	@OneToMany(mappedBy = "adventure", cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
-	//@JoinTable(name = "adventure_adventure_option",
-    //joinColumns = @JoinColumn(name = "adventure_id", referencedColumnName = "id"),
-    //inverseJoinColumns = @JoinColumn(name = "adventure_option_id", referencedColumnName = "id"))
+
+	@OneToMany(mappedBy = "adventure", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	// @JoinTable(name = "adventure_adventure_option",
+	// joinColumns = @JoinColumn(name = "adventure_id", referencedColumnName =
+	// "id"),
+	// inverseJoinColumns = @JoinColumn(name = "adventure_option_id",
+	// referencedColumnName = "id"))
 	public Set<AdventureOption> adventureOption;
 
 	@ManyToOne
 	public Address address;
-	
+
 	@JsonIgnore
-	@OneToMany(mappedBy = "adventure", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "adventure", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public Set<AdventurePicture> adventurePicture = new HashSet<AdventurePicture>();
-	
+
 	@JsonIgnore
-	@OneToMany(mappedBy = "adventure", cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "adventure", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<AdventureFastReservation> adventureFastReservation = new HashSet<AdventureFastReservation>();
-	
+
 	@JsonIgnore
-	@OneToMany(mappedBy = "adventure", cascade=CascadeType.REMOVE, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "adventure", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	public Set<AdventureReservation> adventureReservation = new HashSet<AdventureReservation>();
-	
+
 	@JsonIgnore
-	@OneToMany(mappedBy = "adventure",cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
+	@OneToMany(/*mappedBy = "adventure", */cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<Rule> rule = new HashSet<Rule>();
-	 
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
 	@JsonIgnore
-	@JoinColumn(name="instructor_id", nullable=false)
+	@JoinColumn(name = "instructor_id", nullable = false)
 	public FishingInstructor fishingInstructor;
-		
-	
-		
+
 //	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 //	public List<Room> room;
-	
 
-	
 //	@OneToMany(mappedBy="cottage",cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
 //	public Set<CottageSuperDeal> cottageSuperDeal;
-	
+
 //	@OneToOne(cascade=CascadeType.ALL)
 //	public AvailabilityPeriod availabilityPeriod;
-	
+
 //	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 //	public Set<CottagePicture> cottagePicture;
-	
+
 //	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
 //	public Set<CottageReservation> cottageReservation;
-	
+
 //	@ManyToMany(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
 //	public Set<CottageOption> cottageOptions;
-	
+
 //	@ManyToOne
 //	private CottageOwner cottageOwner;
-	
-	
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -214,7 +209,6 @@ public class Adventure {
 		this.fishingInstructor = fishingInstructor;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Adventure [id=" + id + ", name=" + name + ", description=" + description + ", capacity=" + capacity
@@ -230,7 +224,7 @@ public class Adventure {
 		if (this.adventureReservation != null)
 			if (this.adventureReservation.contains(oldAdventureReservation)) {
 				this.adventureReservation.remove(oldAdventureReservation);
-				//oldAdventure.setFishingInstructor((FishingInstructor) null);
+				// oldAdventure.setFishingInstructor((FishingInstructor) null);
 			}
 	}
 
@@ -241,11 +235,10 @@ public class Adventure {
 			for (java.util.Iterator iter = getIteratorAdventureReservation(); iter.hasNext();) {
 				oldAdventureReservation = (AdventureReservation) iter.next();
 				iter.remove();
-		//		oldAdventureReservation.setFishingInstructor((FishingInstructor) null);
+				// oldAdventureReservation.setFishingInstructor((FishingInstructor) null);
 			}
 		}
 	}
-
 
 	/** @pdGenerated default iterator getter */
 	public java.util.Iterator getIteratorAdventureReservation() {
@@ -253,5 +246,5 @@ public class Adventure {
 			adventureReservation = new java.util.HashSet<AdventureReservation>();
 		return adventureReservation.iterator();
 	}
-	
+
 }

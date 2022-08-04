@@ -23,4 +23,5 @@ public interface CottageRepository extends JpaRepository<Cottage, Long> {
 	public List<Cottage> findByOrderByAverageMarkDesc();
 
 	public List<Cottage> findByCottageOwnerAccountUsername(String username);
+
 }

@@ -118,24 +118,17 @@ insert into ship_owner (account_id) values (7);
 insert into adventure (instructor_id,name,description,capacity,price,cancel_rate,address_id) values (1,'Obilazak Djerdapske klisure','Ujutru se krece iz Beograda. Vozicemo se camcem Dunavom do Djerdapske klisure. Tamo cemo se zadrzati par sati dok obidjemo znamenita mesta. U povratku cemo svratiti u Vincu. Povratak se ocekuje predvece.',20,10,0.2,7);
 insert into adventure (instructor_id,name,description,capacity,price,cancel_rate,address_id) values (1,'Spustanje Tarom','Poslepodne se krece iz Beograda. Vozicemo se camcem Dunavom do Djerdapske klisure. Tamo cemo se zadrzati par sati dok obidjemo znamenita mesta. U povratku cemo svratiti u Vincu. Povratak se ocekuje predvece.',20,10,0.2,7);
 insert into adventure (instructor_id,name,description,capacity,price,cancel_rate,address_id) values (1,'Zora na Rtnju','Iz Beograda se krece pre ponoci. Na odrediste stizemo oko pola 4. Odmah nakon dolaska krece se u osvajanje Rtnja. Nakon 2,3 sata borbe sa zimom dolazimo do vrha. Povratak se ocekuje predvece.',20,10,0.2,7);
-
 insert into adventure (instructor_id,name,description,capacity,price,cancel_rate,address_id) values (2,'Obilazak Palickog jezera','Ujutru se krece iz Beograda. Vozicemo se camcem Dunavom do Djerdapske klisure. Tamo cemo se zadrzati par sati dok obidjemo znamenita mesta. U povratku cemo svratiti u Vincu. Povratak se ocekuje predvece.',20,10,0.2,7);
 insert into adventure (instructor_id,name,description,capacity,price,cancel_rate,address_id) values (2,'Pecanje u Ohridskom jezeru','Poslepodne se krece iz Beograda. Vozicemo se camcem Dunavom do Djerdapske klisure. Tamo cemo se zadrzati par sati dok obidjemo znamenita mesta. U povratku cemo svratiti u Vincu. Povratak se ocekuje predvece.',20,10,0.2,7);
 insert into adventure (instructor_id,name,description,capacity,price,cancel_rate,address_id) values (2,'Obedska bara','Iz Beograda se krece pre ponoci. Na odrediste stizemo oko pola 4. Odmah nakon dolaska krece se u osvajanje Rtnja. Nakon 2,3 sata borbe sa zimom dolazimo do vrha. Povratak se ocekuje predvece.',20,10,0.2,7);
-
 insert into adventure (instructor_id,name,description,capacity,price,cancel_rate,address_id) values (3,'Homoljske planine','Iz Beograda se krece pre ponoci. Na odrediste stizemo oko pola 4. Odmah nakon dolaska krece se u osvajanje Rtnja. Nakon 2,3 sata borbe sa zimom dolazimo do vrha. Povratak se ocekuje predvece.',20,10,0.2,7);
-
 
 insert into rule (description) values ('Drzati se grupe!');
 insert into rule (description) values ('Poneti kupaci!');
 insert into rule (description) values ('Poneti satore!');
 insert into rule (description) values ('Postovati satnicu dogadjaja!');
 
-
-
 --insert into adventure_rule (adventure_id, rule_id) values (1,1);
-
-
 insert into adventure_option(name,description,price) values('Voznja motorima','Nakon pauze pre povratka nazad, obilazi se jedna staza na kojoj je moguce provozati motore',10);
 insert into adventure_option(name,description,price) values('Jahanje konja','Nakon pauze pre povratka nazad, obilazi se proplanak pun divljih konja',10);
 insert into adventure_option(name,description,price) values('Planinarenje Vitorogom','Nakon pauze pre povratka nazad, obilazi se jedna staza na kojoj je moguce provozati motore',10);
@@ -144,8 +137,6 @@ insert into adventure_option(name,description,price) values('Penjanje žičarom'
 insert into adventure_option(name,description,price) values('Letenje balonom','Nakon pauze pre povratka nazad, obilazi se jedna staza na kojoj je moguce provozati motore',10);
 insert into adventure_option(name,description,price) values('Ronjenje','Nakon pauze pre povratka nazad, obilazi se jedna staza na kojoj je moguce provozati motore',10);
 insert into adventure_option(name,description,price) values('Pecanje','Nakon pauze pre povratka nazad, obilazi se jedna staza na kojoj je moguce provozati motore',10);
-
-
 
 --insert into adventure_adventure_option(adventure_id, adventure_option_id) values(1,1);
 
@@ -160,22 +151,22 @@ insert into adventure_option(name,description,price) values('Pecanje','Nakon pau
 --insert into adventure_reservation(start_date, duration, price, cancel_rate, capacity, adventure_id, client_id, deleted)values('14/12/2021', 12, 20,  0.2, 20, 4, 2, FALSE);
 
 
-insert into availability_period(start_date, end_date) values('2022-05-31', '2022-06-30');
-insert into availability_period(start_date, end_date) values('2022-06-02', '2022-06-12');
-insert into availability_period(start_date, end_date) values('2022-06-15', '2022-06-27');
-insert into availability_period(start_date, end_date) values('2022-07-02', '2022-08-12');
-insert into availability_period(start_date, end_date) values('2021-07-02', '2023-08-12');
-
-insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark, cottage_owner_id) values ('rezervisi bre', 'Najjaca vikendica', 2, 1,20, 0, 1);
-insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark, cottage_owner_id) values ('Slike govore vise od reci', 'Villa Mirna', 3, 2,50, 1, 1);
-insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark, cottage_owner_id) values ('u kotlini, brza voda tece',  'Villa Tamara', 2, 3,20, 5, 1);
-insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark, cottage_owner_id) values ('Slike govore vise od reci', 'Villa Mirna', 3, 4,50, 2, 1);
-insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark, cottage_owner_id) values ('rezervisi bre', 'Najjaca vikendica', 2, 5,20, 3, 1);
-
 --insert into cottage (description, name, address_id, price_per_day, average_mark) values ('Zlatiborske lepote, veoma lep pogled', 'Villa Anja', 4, 50, 2);
 --insert into cottage (description, name, address_id, price_per_day, average_mark) values ('Visoko u panini, zubori reka u blizini', 'Villa Smilja', 6,70, 3);
 --insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark, cottage_owner_id) values ('u kotlini, brza voda tece', 'Villa Tamara', 1, 40, 4);
 --insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark, cottage_owner_id) values ('Vikendica skrivena u sumi', 'Villa Zagorka', 5, 30, 5);
+insert into cottage (description, name, address_id, price_per_day, average_mark, cottage_owner_id) values ('rezervisi bre', 'Najjaca vikendica', 2,20, 0, 1);
+insert into cottage (description, name, address_id, price_per_day, average_mark, cottage_owner_id) values ('Slike govore vise od reci', 'Villa Mirna', 3, 50, 1, 1);
+insert into cottage (description, name, address_id, price_per_day, average_mark) values ('Zlatiborske lepote, veoma lep pogled', 'Villa Anja', 4, 50, 2);
+insert into cottage (description, name, address_id, price_per_day, average_mark) values ('Visoko u panini, zubori reka u blizini', 'Villa Smilja', 6,70, 3);
+--insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('u kotlini, brza voda tece', 'Villa Tamara', 1, 40, 4);
+--insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('Vikendica skrivena u sumi', 'Villa Zagorka', 5, 30, 5);
+
+insert into cottage_availability_period(start_date, end_date, cottage_id) values('2022-05-31', '2022-06-30', 1);
+insert into cottage_availability_period(start_date, end_date, cottage_id) values('2022-06-02', '2022-06-12', 1);
+insert into cottage_availability_period(start_date, end_date, cottage_id) values('2022-06-15', '2022-06-27', 2);
+insert into cottage_availability_period(start_date, end_date, cottage_id) values('2022-07-02', '2022-08-12', 3);
+
 
 insert into room(label, num_of_beds, cottage_id) values('A1', 2, 1);
 insert into room(label, num_of_beds, cottage_id) values('A2', 1, 1);

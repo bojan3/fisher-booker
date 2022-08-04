@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.Ship;
+import com.example.fisherbooker.model.DTO.AddShipDTO;
 import com.example.fisherbooker.model.DTO.CottageDTO;
 import com.example.fisherbooker.model.DTO.ShipDTO;
 import com.example.fisherbooker.service.ShipService;
@@ -149,23 +150,22 @@ public class ShipController {
 		return new ResponseEntity<>(shipDTOs, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('SHIP_OWNER')")
-	@PutMapping("/update")
-	public ResponseEntity<Boolean> update(@RequestBody Ship ship) {
-		System.out.println(ship);
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		if (this.shipService.checkIfOwnerHasShip(username, ship.getId())) {
-			this.shipService.saveShip(ship);
-			return new ResponseEntity<>(true, HttpStatus.OK);
-		}
-		return new ResponseEntity<>(true, HttpStatus.UNAUTHORIZED);
-	}
+//	@PreAuthorize("hasRole('SHIP_OWNER')")
+//	@PutMapping("/update")
+//	public ResponseEntity<Boolean> update(@RequestBody Ship ship) {
+//		System.out.println(ship);
+//		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+//		if (this.shipService.checkIfOwnerHasShip(username, ship.getId())) {
+//			this.shipService.saveShip(ship);
+//			return new ResponseEntity<>(true, HttpStatus.OK);
+//		}
+//		return new ResponseEntity<>(true, HttpStatus.UNAUTHORIZED);
+//	}
 
 	@PreAuthorize("hasRole('SHIP_OWNER')")
 	@PostMapping("/save")
-	public ResponseEntity<Boolean> save(@RequestBody Ship ship) {
+	public ResponseEntity<Boolean> save(@RequestBody AddShipDTO ship) {
 		System.out.println(ship);
-		//String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		this.shipService.saveShip(ship);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}

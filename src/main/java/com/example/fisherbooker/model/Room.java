@@ -24,7 +24,6 @@ public class Room {
 
 	public Room() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Room(String label, int numOfBeds) {
