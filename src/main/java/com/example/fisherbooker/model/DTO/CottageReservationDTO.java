@@ -46,7 +46,7 @@ public class CottageReservationDTO {
 		this.cottageOption = cottageReservation.getCottageOption();
 		this.cottageDTO = new CottageDTO(cottageReservation.getCottage());
 		Date nowDate = new Date();
-		if (cottageReservation.getStartDate().after(nowDate)) {
+		if (cottageReservation.getEndDate().after(nowDate)) {
 			this.isFinished = false;
 		} else {
 			this.isFinished = true;

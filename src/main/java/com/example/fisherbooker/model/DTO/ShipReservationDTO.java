@@ -46,7 +46,7 @@ public class ShipReservationDTO {
 		this.capacity = shipReservation.getCapacity();
 		this.price = shipReservation.getPrice();
 		Date nowDate = new Date();
-		if (shipReservation.getStartDate().after(nowDate)) {
+		if (shipReservation.getEndDate().after(nowDate)) {
 			this.isFinished = false;
 		}else {
 			this.isFinished = true;

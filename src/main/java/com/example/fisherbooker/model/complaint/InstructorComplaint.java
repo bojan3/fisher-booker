@@ -39,12 +39,12 @@ public class InstructorComplaint {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public InstructorComplaint(Client clientId, FishingInstructor instructorId, String text, Boolean answered) {
+	public InstructorComplaint(Client client, FishingInstructor instructor, String text) {
 		super();
-		this.client = clientId;
-		this.instructor = instructorId;
+		this.client = client;
+		this.instructor = instructor;
 		this.text = text;
-		this.answered=answered;
+		this.answered=false;
 	}
 	
 	public Client getClientId() {
