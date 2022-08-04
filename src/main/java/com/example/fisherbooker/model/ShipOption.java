@@ -70,6 +70,15 @@ public class ShipOption {
 	public void setPrice(int price) {
 		this.price = price;
 	}
+	
+	public static ShipOption toModel(ShipOption option) {
+		ShipOption newOption = new ShipOption();
+		option.setName(newOption.getName());
+		option.setDescription(newOption.getDescription());
+		option.setPrice(newOption.getPrice());
+		option.setShip(newOption.getShip());
+		return newOption;
+	}
 
 	@Override
 	public String toString() {

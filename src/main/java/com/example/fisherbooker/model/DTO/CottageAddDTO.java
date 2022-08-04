@@ -1,6 +1,9 @@
 package com.example.fisherbooker.model.DTO;
 
+import java.sql.Blob;
 import java.util.Set;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.fisherbooker.model.Address;
 import com.example.fisherbooker.model.AvailabilityPeriod;
@@ -86,7 +89,7 @@ public class CottageAddDTO {
 	public void setPricePerDay(int pricePerDay) {
 		this.pricePerDay = pricePerDay;
 	}
-	
+
 	public Cottage toModel() {
 		Cottage c = new Cottage();
 		c.setName(this.name);

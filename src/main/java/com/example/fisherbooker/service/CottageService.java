@@ -34,6 +34,8 @@ public interface CottageService {
 	public Boolean checkIfCottageHasReservation(Long id);
 
 	public List<Cottage> getAll();
+	
+	public Boolean checkOwnership(Long id);
 
 //	public List<Cottage> getAllByDate(Date date);
 

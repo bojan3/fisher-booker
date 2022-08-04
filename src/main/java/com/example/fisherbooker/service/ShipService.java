@@ -3,10 +3,11 @@ package com.example.fisherbooker.service;
 import java.util.List;
 
 import com.example.fisherbooker.model.Ship;
+import com.example.fisherbooker.model.DTO.AddShipDTO;
 import com.example.fisherbooker.model.DTO.ShipDTO;
 
 public interface ShipService {
-	public Boolean saveShip(Ship ship);
+	public Boolean saveShip(AddShipDTO ship);
 	
 	public Ship getById(Long id);
 

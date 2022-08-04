@@ -1,6 +1,8 @@
 package com.example.fisherbooker.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -11,6 +13,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class NavigationEquipment {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	private String name;
 
 	@JsonIgnore
@@ -20,6 +25,14 @@ public class NavigationEquipment {
 
 	public NavigationEquipment() {
 		super();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -36,6 +49,13 @@ public class NavigationEquipment {
 
 	public void setShip(Ship ship) {
 		this.ship = ship;
+	}
+
+	public static NavigationEquipment toModel(NavigationEquipment equipment) {
+		NavigationEquipment newEquipment = new NavigationEquipment();
+		newEquipment.setName(equipment.getName());
+		newEquipment.setShip(equipment.getShip());
+		return newEquipment;
 	}
 
 	@Override

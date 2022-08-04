@@ -1,5 +1,6 @@
 package com.example.fisherbooker.service.impl;
 
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +16,10 @@ import com.example.fisherbooker.repository.CottageOwnerRepository;
 import com.example.fisherbooker.repository.CottageRepository;
 import com.example.fisherbooker.repository.CottageReservationRepository;
 import com.example.fisherbooker.service.CottageService;
+import com.example.fisherbooker.util.FileUploadUtil;
+
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class CottageServiceImpl implements CottageService {
@@ -47,6 +52,11 @@ public class CottageServiceImpl implements CottageService {
 
 		this.cottageRepository.save(newCottage);
 		return true;
+	}
+
+	private void saveImageToDisk(String fileName, MultipartFile file) throws IOException {
+		String uploadDir = "src/main/resources/images";
+		FileUploadUtil.saveFile(uploadDir, fileName, file);
 	}
 
 	public void deleteCottage(Long id) {
@@ -92,6 +102,12 @@ public class CottageServiceImpl implements CottageService {
 	@Override
 	public List<Cottage> getAll() {
 		return cottageRepository.findAll();
+	}
+	
+	public Boolean checkOwnership(Long id) {
+		Cottage cottage = this.cottageRepository.findById(id).orElse(null);
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		return cottage.getCottageOwner().getAccount().getUsername().equals(username);
 	}
 
 //	@Override

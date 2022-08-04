@@ -1,5 +1,6 @@
 package com.example.fisherbooker.model;
 
+import java.sql.Blob;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,10 +12,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -30,6 +35,8 @@ public class Cottage {
 	@Column
 	private int pricePerDay;
 	private float averageMark;
+	
+	private String imagePath;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	public Address address;
@@ -196,6 +203,14 @@ public class Cottage {
 
 	public void setClient(Set<Client> client) {
 		this.client = client;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {	
+		this.imagePath = imagePath;
 	}
 
 }

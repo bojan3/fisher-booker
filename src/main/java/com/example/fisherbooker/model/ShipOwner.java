@@ -57,6 +57,17 @@ public class ShipOwner {
 	public void removeAllShips() {
 		
 	}
+	
+	public void addShip(Ship newShip) {
+		if (newShip == null)
+			return;
+		if (this.ships == null)
+			this.ships = new java.util.HashSet<Ship>();
+		if (!this.ships.contains(newShip)) {
+			this.ships.add(newShip);
+			newShip.setShipOwner(this);
+		}
+	}
 
 	public Long getId() {
 		// TODO Auto-generated method stub
