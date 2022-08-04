@@ -29,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Account implements UserDetails {
 	public Account() {
 		super();
-		this.status = new Status();
+		//this.status = new Status();
 		// TODO Auto-generated constructor stub
 // 	this.adminVerified = false;
 //	this.emailVerified = false;
@@ -102,6 +102,7 @@ public class Account implements UserDetails {
 
 	@OneToOne
 	(cascade = CascadeType.ALL)
+	@JoinTable(name = "account_status", joinColumns = @JoinColumn(name = "account_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "status_id", referencedColumnName = "id"))
 	private Status status;
 	
 	public Long getId() {
@@ -181,7 +182,7 @@ public class Account implements UserDetails {
 	public String toString() {
 		return "Account [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
 				+ ", name=" + name + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", enabled=" + enabled
-				+ ", lastPasswordResetDate=" + lastPasswordResetDate + ", roles=" + roles + ", address=" + address
+				+ ", lastPasswordResetDate=" + lastPasswordResetDate + ", roles=" + roles + ", address=" + address+",status="+status
 				+ "]";
 	}
 
@@ -236,7 +237,9 @@ public class Account implements UserDetails {
 	public Status getStatus(){
 		return this.status;
 	}
-	
+	public void setStatus(Status status){
+		this.status=status;
+	}
 	
 
 }

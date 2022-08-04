@@ -19,8 +19,7 @@ public class Status {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Status_name name;
-	private int points;
-		
+	private int points;		
 	
 	public Status() {
 		this.name = Status_name.REGULAR;
@@ -50,6 +49,9 @@ public class Status {
 		}
 	}
 	
+	public Status_name getName() {
+		return this.name;	
+	}
 	
 	public int getPoints() {
 		return this.points;	
@@ -57,24 +59,27 @@ public class Status {
 	
 	public void increasePoints(){
 		this.points++;
+		this.ScalePoinsts();
+		
 	}
 	
 	public void ScalePoinsts() {
-			switch(this.points) {
-			case 20:
+		switch(this.points+"|"+this.name) {
+			case ("20|Status_name.GOLD"):
 				this.IncreaseRank();
 				break;
 				
-			case 15:
+		    case ("15|Status_name.SILVER"):
 				this.IncreaseRank();
 				break;
 				
-			case 10:
+			case ("10| Status_name.BRONZE"):
 				this.IncreaseRank();
 				break;
 				
-			case 5:
+			case ("5|Status_name.REGULAR"):
 				this.IncreaseRank();	
+				break;
 			default:
 				break;
 			}

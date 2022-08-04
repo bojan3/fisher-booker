@@ -49,18 +49,36 @@ insert into account_role (account_id, role_id) values (10,3);
 insert into account_role (account_id, role_id) values (11,4);
 insert into account_role (account_id, role_id) values (12,5);
 
+--STATUS
+
+insert into status(name,points) values(4,1000000);
+insert into status(name,points) values(2,7);
+insert into status(name,points) values(3,13);
+insert into status(name,points) values(4,16);
+insert into status(name,points) values(4,20);
+insert into status(name,points) values(3,23);
+insert into status(name,points) values(4,13);
+insert into status(name,points) values(3,13);
+insert into status(name,points) values(2,3);
+insert into status(name,points) values(2,3);
+insert into status(name,points) values(0,0);
+insert into status(name,points) values(0,0);
+insert into status(name,points) values(0,0);
+
 --ACCOUNT STATUS
-
-
-
-
-
-
-
-
-
-
-
+insert into account_status(account_id,status_id)values(1,1);
+insert into account_status(account_id,status_id)values(2,2);
+insert into account_status(account_id,status_id)values(3,3);
+insert into account_status(account_id,status_id)values(4,4);
+insert into account_status(account_id,status_id)values(5,5);
+insert into account_status(account_id,status_id)values(6,6);
+insert into account_status(account_id,status_id)values(7,7);
+insert into account_status(account_id,status_id)values(8,8);
+insert into account_status(account_id,status_id)values(9,9);
+insert into account_status(account_id,status_id)values(10,10);
+insert into account_status(account_id,status_id)values(11,11);
+insert into account_status(account_id,status_id)values(12,12);
+insert into account_status(account_id,status_id)values(13,13);
 
 
 

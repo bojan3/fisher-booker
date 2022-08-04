@@ -19,6 +19,7 @@ import com.example.fisherbooker.model.Account;
 import com.example.fisherbooker.model.Address;
 import com.example.fisherbooker.model.Adventure;
 import com.example.fisherbooker.model.Role;
+import com.example.fisherbooker.model.Status;
 
 import net.bytebuddy.asm.Advice.This;
 
@@ -36,6 +37,7 @@ public class AccountDTO {
 		private Timestamp lastPasswordResetDate;
 		private String role;
 		public Address address;
+		public Status status;
 
 		public AccountDTO(){}
 
@@ -44,12 +46,12 @@ public class AccountDTO {
 			return "AccountDTO [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
 					+ ", name=" + name + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", enabled="
 					+ enabled + ", lastPasswordResetDate=" + lastPasswordResetDate + ", roles=" + role + ", address="
-					+ address + "]";
+					+ address +", "+status.toString()+"]";
 		}
 
 		public AccountDTO(Long id, String username, String email, String password, String name, String lastName,
 				String phoneNumber, boolean enabled, Timestamp lastPasswordResetDate, List<Role> roles,
-				Address address) {
+				Address address, Status status) {
 			super();
 			this.id = id;
 			this.username = username;
@@ -64,10 +66,11 @@ public class AccountDTO {
 			split[2] = split[2].replace("]", "");
 			this.role = split[2];
 			this.address = address;
+			this.status = status;
 		}
 		
 		public static AccountDTO createAccountDTO(Account account) {
-			return new AccountDTO(account.getId(), account.getUsername(), account.getEmail(), account.getPassword(), account.getName(), account.getLastName(), account.getPhoneNumber(), account.isEnabled(), account.getLastPasswordResetDate(), account.getRoles(), account.getAddress());
+			return new AccountDTO(account.getId(), account.getUsername(), account.getEmail(), account.getPassword(), account.getName(), account.getLastName(), account.getPhoneNumber(), account.isEnabled(), account.getLastPasswordResetDate(), account.getRoles(), account.getAddress(),account.getStatus());
 		}
 
 		public Long getId() {
@@ -84,6 +87,14 @@ public class AccountDTO {
 
 		public void setUsername(String username) {
 			this.username = username;
+		}
+		
+		public Status getStatus() {
+			return status;
+		}
+
+		public void setStatus(Status status) {
+			this.status = status;
 		}
 
 		public String getEmail() {
@@ -179,6 +190,7 @@ public class AccountDTO {
 			//this.lastPasswordResetDate = a.getLastPasswordResetDate();
 			//this.roles = a.getRoles();
 			this.address = a.address;
+			this.status = a.getStatus();
 		}
 
 
