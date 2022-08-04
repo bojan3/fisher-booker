@@ -51,7 +51,7 @@ public class Cottage {
 	public Set<CottageSuperDeal> cottageSuperDeals = new HashSet<CottageSuperDeal>();
 
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	public Set<AvailabilityPeriod> availabilityPeriods = new HashSet<AvailabilityPeriod>();
+	public Set<CottageAvailabilityPeriod> availabilityPeriods = new HashSet<CottageAvailabilityPeriod>();
 
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public Set<CottagePicture> cottagePictures = new HashSet<CottagePicture>();
@@ -151,14 +151,14 @@ public class Cottage {
 		this.cottageSuperDeals = cottageSuperDeals;
 	}
 
-	public Set<AvailabilityPeriod> getAvailabilityPeriods() {
+	public Set<CottageAvailabilityPeriod> getAvailabilityPeriods() {
 		return availabilityPeriods;
 	}
 
-	public void setAvailabilityPeriods(Set<AvailabilityPeriod> availabilityPeriods) {
-		for (AvailabilityPeriod ap : availabilityPeriods) {
+	public void setAvailabilityPeriods(Set<CottageAvailabilityPeriod> availabilityPeriods) {
+		for (CottageAvailabilityPeriod ap : availabilityPeriods) {
 			ap.setCottage(this);
-			this.availabilityPeriods.add(AvailabilityPeriod.toModel(ap));
+			this.availabilityPeriods.add(CottageAvailabilityPeriod.toModel(ap));
 		}
 	}
 

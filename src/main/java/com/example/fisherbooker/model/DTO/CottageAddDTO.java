@@ -6,7 +6,7 @@ import java.util.Set;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.fisherbooker.model.Address;
-import com.example.fisherbooker.model.AvailabilityPeriod;
+import com.example.fisherbooker.model.CottageAvailabilityPeriod;
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageOption;
 import com.example.fisherbooker.model.Room;
@@ -18,7 +18,7 @@ public class CottageAddDTO {
 	private Address address;
 	private Set<Room> rooms;
 	private Set<Rule> rules;
-	private Set<AvailabilityPeriod> availabilityPeriods;
+	private Set<CottageAvailabilityPeriod> availabilityPeriods;
 	private Set<CottageOption> cottageOptions;
 	private int pricePerDay;
 
@@ -66,11 +66,11 @@ public class CottageAddDTO {
 		this.rules = rules;
 	}
 
-	public Set<AvailabilityPeriod> getAvailabilityPeriods() {
+	public Set<CottageAvailabilityPeriod> getAvailabilityPeriods() {
 		return availabilityPeriods;
 	}
 
-	public void setAvailabilityPeriods(Set<AvailabilityPeriod> availabilityPeriods) {
+	public void setAvailabilityPeriods(Set<CottageAvailabilityPeriod> availabilityPeriods) {
 		this.availabilityPeriods = availabilityPeriods;
 	}
 

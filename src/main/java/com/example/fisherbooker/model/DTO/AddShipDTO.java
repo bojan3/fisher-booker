@@ -3,7 +3,7 @@ package com.example.fisherbooker.model.DTO;
 import java.util.Set;
 
 import com.example.fisherbooker.model.Address;
-import com.example.fisherbooker.model.AvailabilityPeriod;
+import com.example.fisherbooker.model.CottageAvailabilityPeriod;
 import com.example.fisherbooker.model.FishingEquipment;
 import com.example.fisherbooker.model.NavigationEquipment;
 import com.example.fisherbooker.model.Rule;

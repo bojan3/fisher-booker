@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class AvailabilityPeriod {
+public class CottageAvailabilityPeriod {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -27,7 +27,7 @@ public class AvailabilityPeriod {
 	@JoinColumn(name = "cottage_id")
 	private Cottage cottage;
 
-	public AvailabilityPeriod() {
+	public CottageAvailabilityPeriod() {
 		super();
 	}
 
@@ -63,8 +63,8 @@ public class AvailabilityPeriod {
 		this.cottage = cottage;
 	}
 	
-	public static AvailabilityPeriod toModel(AvailabilityPeriod newAp) {
-		AvailabilityPeriod ap = new AvailabilityPeriod();
+	public static CottageAvailabilityPeriod toModel(CottageAvailabilityPeriod newAp) {
+		CottageAvailabilityPeriod ap = new CottageAvailabilityPeriod();
 		newAp.setStartDate(ap.getStartDate());
 		newAp.setEndDate(ap.getEndDate());
 		newAp.setCottage(ap.getCottage());

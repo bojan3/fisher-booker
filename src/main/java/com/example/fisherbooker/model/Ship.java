@@ -65,7 +65,7 @@ public class Ship {
 	private Set<ShipSuperDeal> shipSuperDeals;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private AvailabilityPeriod availabilityPeriod;
+	private CottageAvailabilityPeriod availabilityPeriod;
 
 	@OneToMany(mappedBy = "ship", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<ShipAvailabilityPeriod> availabilityPeriods = new HashSet<ShipAvailabilityPeriod>();
@@ -208,11 +208,11 @@ public class Ship {
 		this.shipOwner = shipOwner;
 	}
 
-	public AvailabilityPeriod getAvailabilityPeriod() {
+	public CottageAvailabilityPeriod getAvailabilityPeriod() {
 		return availabilityPeriod;
 	}
 
-	public void setAvailabilityPeriod(AvailabilityPeriod availabilityPeriod) {
+	public void setAvailabilityPeriod(CottageAvailabilityPeriod availabilityPeriod) {
 		this.availabilityPeriod = availabilityPeriod;
 	}
 

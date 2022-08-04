@@ -122,10 +122,10 @@ insert into cottage (description, name, address_id, price_per_day, average_mark)
 --insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('u kotlini, brza voda tece', 'Villa Tamara', 1, 40, 4);
 --insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('Vikendica skrivena u sumi', 'Villa Zagorka', 5, 30, 5);
 
-insert into availability_period(start_date, end_date, cottage_id) values('2022-05-31', '2022-06-30', 1);
-insert into availability_period(start_date, end_date, cottage_id) values('2022-06-02', '2022-06-12', 1);
-insert into availability_period(start_date, end_date, cottage_id) values('2022-06-15', '2022-06-27', 2);
-insert into availability_period(start_date, end_date, cottage_id) values('2022-07-02', '2022-08-12', 3);
+insert into cottage_availability_period(start_date, end_date, cottage_id) values('2022-05-31', '2022-06-30', 1);
+insert into cottage_availability_period(start_date, end_date, cottage_id) values('2022-06-02', '2022-06-12', 1);
+insert into cottage_availability_period(start_date, end_date, cottage_id) values('2022-06-15', '2022-06-27', 2);
+insert into cottage_availability_period(start_date, end_date, cottage_id) values('2022-07-02', '2022-08-12', 3);
 
 
 insert into room(label, num_of_beds, cottage_id) values('A1', 2, 1);
