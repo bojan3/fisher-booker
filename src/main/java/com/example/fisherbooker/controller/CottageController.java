@@ -1,5 +1,7 @@
 package com.example.fisherbooker.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -119,28 +121,28 @@ public class CottageController {
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 	
-	@GetMapping("/all/date/{dateString}")
-	public ResponseEntity<List<CottageDTO>> getAllByDate(@PathVariable String dateString) {
-		
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = null;
-		try {
-			date = formatter.parse(dateString);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-				
-		System.out.println("datum: " + date);
-		List<Cottage> cottages = this.cottageService.getAllByDate(date);
-		
-		List<CottageDTO> cottagesDTOs = new ArrayList<CottageDTO>();
-		for (Cottage cottage : cottages) {
-			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
-			cottagesDTOs.add(cottageDTO);
-		}
-		return new ResponseEntity<>(cottagesDTOs, HttpStatus.OK);
-	}
+//	@GetMapping("/all/date/{dateString}")
+//	public ResponseEntity<List<CottageDTO>> getAllByDate(@PathVariable String dateString) {
+//		
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//		Date date = null;
+//		try {
+//			date = formatter.parse(dateString);
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//				
+//		System.out.println("datum: " + date);
+//		//List<Cottage> cottages = this.cottageService.getAllByDate(date);
+//		
+//		List<CottageDTO> cottagesDTOs = new ArrayList<CottageDTO>();
+//		for (Cottage cottage : cottages) {
+//			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
+//			cottagesDTOs.add(cottageDTO);
+//		}
+//		return new ResponseEntity<>(cottagesDTOs, HttpStatus.OK);
+//	}
 
 
 	@PostMapping("/uploadImage")

@@ -1,6 +1,7 @@
 package com.example.fisherbooker.service.impl;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -104,7 +105,7 @@ public class CottageServiceImpl implements CottageService {
 		return cottageRepository.findAll();
 	}
 
-	@Override
+	/*@Override
 	public List<Cottage> getAllByDate(Date date) {
 		List<Cottage> cottages = cottageRepository.findAll();
 		List<Cottage> returnList = new ArrayList<Cottage>();
@@ -120,7 +121,7 @@ public class CottageServiceImpl implements CottageService {
 		}
 		
 		return returnList;
-	}
+	}*/
 	
 	private boolean isFree(List<CottageReservation> cottageReservations, Date date) {
 		for(CottageReservation cottageReservation: cottageReservations) {
@@ -130,6 +131,7 @@ public class CottageServiceImpl implements CottageService {
 			}}
 		}
 		return true;
+	}
 	
 	public Boolean checkOwnership(Long id) {
 		Cottage cottage = this.cottageRepository.findById(id).orElse(null);
