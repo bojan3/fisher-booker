@@ -55,6 +55,20 @@ public class CottageController {
 		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
 	}
 
+	@GetMapping("/all/")
+	public ResponseEntity<List<CottageDTO>> getAllSorted(@RequestParam String type, @RequestParam String order) {
+
+		System.out.println("type: " + type);
+		System.out.println("order: " + order);
+//		List<Cottage> cottages = this.cottageService.getAllSorted(@PathVariable);
+//		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
+//		for (Cottage cottage : cottages) {
+//			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
+//			cottagesDTO.add(cottageDTO);
+//		}
+		return new ResponseEntity<>(null, HttpStatus.OK);
+	}
+	
 	@GetMapping("/all/name")
 	public ResponseEntity<List<CottageDTO>> getAllByName() {
 		List<Cottage> cottages = this.cottageService.getAllbyName();
