@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import com.example.fisherbooker.model.CottageAvailabilityPeriod;
@@ -137,6 +138,13 @@ public class CottageServiceImpl implements CottageService {
 		Cottage cottage = this.cottageRepository.findById(id).orElse(null);
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		return cottage.getCottageOwner().getAccount().getUsername().equals(username);
+	}
+
+	@Override
+	public List<Cottage> getAllSorted(String type, String order) {
+		if (order.equals("ASC"))
+			return cottageRepository.findAll(Sort.by(type).ascending());
+		return cottageRepository.findAll(Sort.by(type).descending());
 	}
 
 //	@Override

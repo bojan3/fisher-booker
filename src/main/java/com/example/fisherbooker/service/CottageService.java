@@ -37,6 +37,8 @@ public interface CottageService {
 	
 	public Boolean checkOwnership(Long id);
 
+	public List<Cottage> getAllSorted(String type, String order);
+
 //	public List<Cottage> getAllByDate(Date date);
 
 }

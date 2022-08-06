@@ -54,21 +54,7 @@ public class CottageController {
 
 	@GetMapping("/all/")
 	public ResponseEntity<List<CottageDTO>> getAllSorted(@RequestParam String type, @RequestParam String order) {
-
-		System.out.println("type: " + type);
-		System.out.println("order: " + order);
-//		List<Cottage> cottages = this.cottageService.getAllSorted(@PathVariable);
-//		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
-//		for (Cottage cottage : cottages) {
-//			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
-//			cottagesDTO.add(cottageDTO);
-//		}
-		return new ResponseEntity<>(null, HttpStatus.OK);
-	}
-	
-	@GetMapping("/all/name")
-	public ResponseEntity<List<CottageDTO>> getAllByName() {
-		List<Cottage> cottages = this.cottageService.getAllbyName();
+		List<Cottage> cottages = this.cottageService.getAllSorted(type, order);
 		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
 		for (Cottage cottage : cottages) {
 			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
@@ -81,28 +67,6 @@ public class CottageController {
 	public ResponseEntity<Cottage> getById(@PathVariable Long id) {
 		Cottage cottage = this.cottageService.getById(id);
 		return new ResponseEntity<>(cottage, HttpStatus.OK);
-	}
-
-	@GetMapping("/all/price")
-	public ResponseEntity<List<CottageDTO>> getAllbyPrice() {
-		List<Cottage> cottages = this.cottageService.getAllbyPrice();
-		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
-		for (Cottage cottage : cottages) {
-			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
-			cottagesDTO.add(cottageDTO);
-		}
-		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
-	}
-
-	@GetMapping("/all/rate")
-	public ResponseEntity<List<CottageDTO>> getAllByRate() {
-		List<Cottage> cottages = this.cottageService.getAllbyRate();
-		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
-		for (Cottage cottage : cottages) {
-			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
-			cottagesDTO.add(cottageDTO);
-		}
-		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
 	}
 
 	@PreAuthorize("hasRole('COTTAGE_OWNER')")
@@ -124,13 +88,13 @@ public class CottageController {
 		}
 		return new ResponseEntity<>(cottageDTOs, HttpStatus.OK);
 	}
-	
-	@PostMapping("/save")
-	public ResponseEntity<Boolean> save(@RequestBody Cottage cottage) {
-		this.cottageService.saveCottage(cottage);
-		return new ResponseEntity<>(true, HttpStatus.OK);
-	}
-	
+
+//	@PostMapping("/save")
+//	public ResponseEntity<Boolean> save(@RequestBody Cottage cottage) {
+//		this.cottageService.saveCottage(cottage);
+//		return new ResponseEntity<>(true, HttpStatus.OK);
+//	}
+
 //	@GetMapping("/all/date/{dateString}")
 //	public ResponseEntity<List<CottageDTO>> getAllByDate(@PathVariable String dateString) {
 //		
