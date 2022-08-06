@@ -1,32 +1,26 @@
 package com.example.fisherbooker.controller;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.Ship;
+import com.example.fisherbooker.model.ShipOption;
 import com.example.fisherbooker.model.DTO.AddShipDTO;
-import com.example.fisherbooker.model.DTO.CottageDTO;
 import com.example.fisherbooker.model.DTO.ShipDTO;
 import com.example.fisherbooker.service.ShipService;
-import com.example.fisherbooker.service.impl.ShipServiceImpl;
 
 @RestController
 @RequestMapping("/api/ship")
@@ -168,6 +162,11 @@ public class ShipController {
 		System.out.println(ship);
 		this.shipService.saveShip(ship);
 		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+	
+	@GetMapping("options/{id}")
+	public ResponseEntity<List<ShipOption>> getOptions(@PathVariable Long id) {
+		return new ResponseEntity<>(this.shipService.getOptions(id), HttpStatus.OK);
 	}
 
 }

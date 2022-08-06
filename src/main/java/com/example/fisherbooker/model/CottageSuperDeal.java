@@ -86,6 +86,15 @@ public class CottageSuperDeal {
 	public void setCottage(Cottage cottage) {
 		this.cottage = cottage;
 	}
+	
+	public void addOption(CottageOption newCottageOption) {
+		if (newCottageOption == null)
+			return;
+		if (this.options == null)
+			this.options = new java.util.HashSet<CottageOption>();
+		if (!this.options.contains(newCottageOption))
+			this.options.add(newCottageOption);
+	}
 
 	@Override
 	public String toString() {

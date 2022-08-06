@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.fisherbooker.model.Cottage;
+import com.example.fisherbooker.model.CottageOption;
 import com.example.fisherbooker.model.DTO.CottageAddDTO;
 import com.example.fisherbooker.model.DTO.CottageDTO;
 import com.example.fisherbooker.service.CottageService;
@@ -185,7 +186,12 @@ public class CottageController {
 
 	@GetMapping("ownership/{id}")
 	public ResponseEntity<Boolean> checkOwnership(@PathVariable Long id) {
-		return new ResponseEntity<>(true, HttpStatus.OK);
+		return new ResponseEntity<>(this.cottageService.checkOwnership(id), HttpStatus.OK);
+	}
+	
+	@GetMapping("options/{id}")
+	public ResponseEntity<List<CottageOption>> getOptions(@PathVariable Long id) {
+		return new ResponseEntity<>(this.cottageService.getOptions(id), HttpStatus.OK);
 	}
 
 }

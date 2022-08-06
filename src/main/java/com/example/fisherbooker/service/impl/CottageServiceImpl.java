@@ -6,13 +6,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import com.example.fisherbooker.model.CottageAvailabilityPeriod;
+import com.example.fisherbooker.model.AvailabilityPeriod;
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageOption;
 import com.example.fisherbooker.model.CottageOwner;
 import com.example.fisherbooker.model.CottageReservation;
 import com.example.fisherbooker.model.Room;
 import com.example.fisherbooker.model.DTO.CottageAddDTO;
+import com.example.fisherbooker.repository.CottageOptionRepository;
 import com.example.fisherbooker.repository.CottageOwnerRepository;
 import com.example.fisherbooker.repository.CottageRepository;
 import com.example.fisherbooker.repository.CottageReservationRepository;
@@ -27,13 +28,17 @@ public class CottageServiceImpl implements CottageService {
 	private CottageRepository cottageRepository;
 	private CottageReservationRepository cottageReservationRepository;
 	private CottageOwnerRepository cottageOwnerRepository;
+	private CottageOptionRepository cottageOptionRepository;
 
 	@Autowired
 	public CottageServiceImpl(CottageRepository cottageRepository,
-			CottageReservationRepository cottageReservationRepository, CottageOwnerRepository cottageOwnerRepository) {
+			CottageReservationRepository cottageReservationRepository,
+			CottageOwnerRepository cottageOwnerRepository, 
+			CottageOptionRepository cottageOptionRepository) {
 		this.cottageRepository = cottageRepository;
 		this.cottageReservationRepository = cottageReservationRepository;
 		this.cottageOwnerRepository = cottageOwnerRepository;
+		this.cottageOptionRepository = cottageOptionRepository;
 	}
 
 	public Boolean saveCottage(CottageAddDTO cottage) {
@@ -105,34 +110,33 @@ public class CottageServiceImpl implements CottageService {
 		return cottageRepository.findAll();
 	}
 
-	/*@Override
-	public List<Cottage> getAllByDate(Date date) {
-		List<Cottage> cottages = cottageRepository.findAll();
-		List<Cottage> returnList = new ArrayList<Cottage>();
-		for (Cottage cottage: cottages) {
-			if(date.after(cottage.availabilityPeriod.getStartDate()) && date.before(cottage.getAvailabilityPeriod().getEndDate())) {
-			
-				List<CottageReservation> cottageReservations = cottageReservationRepository.findByCottageId(cottage.getId());
-				if(isFree(cottageReservations, date)) {
-					returnList.add(cottage);
+	/*
+	 * @Override public List<Cottage> getAllByDate(Date date) { List<Cottage>
+	 * cottages = cottageRepository.findAll(); List<Cottage> returnList = new
+	 * ArrayList<Cottage>(); for (Cottage cottage: cottages) {
+	 * if(date.after(cottage.availabilityPeriod.getStartDate()) &&
+	 * date.before(cottage.getAvailabilityPeriod().getEndDate())) {
+	 * 
+	 * List<CottageReservation> cottageReservations =
+	 * cottageReservationRepository.findByCottageId(cottage.getId());
+	 * if(isFree(cottageReservations, date)) { returnList.add(cottage); } }
+	 * 
+	 * }
+	 * 
+	 * return returnList; }
+	 */
+
+	private boolean isFree(List<CottageReservation> cottageReservations, Date date) {
+		for (CottageReservation cottageReservation : cottageReservations) {
+			if (!cottageReservation.isDeleted()) {
+				if (date.after(cottageReservation.getStartDate()) && date.before(cottageReservation.getEndDate())) {
+					return false;
 				}
 			}
-			
-		}
-		
-		return returnList;
-	}*/
-	
-	private boolean isFree(List<CottageReservation> cottageReservations, Date date) {
-		for(CottageReservation cottageReservation: cottageReservations) {
-			if(!cottageReservation.isDeleted()) {
-			if (date.after(cottageReservation.getStartDate()) && date.before(cottageReservation.getEndDate())) {
-				return false;
-			}}
 		}
 		return true;
 	}
-	
+
 	public Boolean checkOwnership(Long id) {
 		Cottage cottage = this.cottageRepository.findById(id).orElse(null);
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -163,4 +167,8 @@ public class CottageServiceImpl implements CottageService {
 //		}
 //		return true;
 //	}
+
+	public List<CottageOption> getOptions(Long cottageId) {
+		return this.cottageOptionRepository.findByCottageId(cottageId);
+	}
 }
