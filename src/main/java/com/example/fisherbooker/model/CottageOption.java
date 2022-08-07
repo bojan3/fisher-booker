@@ -107,8 +107,7 @@ public class CottageOption {
 
 	@Override
 	public String toString() {
-		return "CottageOption [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
-				+ ", cottage=" + cottage + "]";
+		return this.name + " -- " + this.description + " -- " + this.price;
 	}
 
 }
