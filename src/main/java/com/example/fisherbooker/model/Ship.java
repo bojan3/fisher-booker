@@ -81,6 +81,11 @@ public class Ship {
 	public Ship() {
 		super();
 	}
+	
+	public Ship(Long id) {
+		super();
+		this.id = id;
+	}
 
 	public Long getId() {
 		return id;

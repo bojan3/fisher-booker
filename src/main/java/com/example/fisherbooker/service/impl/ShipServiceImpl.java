@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.NavigationEquipment;
 import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.ShipOption;
@@ -143,7 +144,6 @@ public class ShipServiceImpl implements ShipService {
 	public Boolean checkIfOwnerHasShip(String username, Long shipId) {
 		List<Ship> ships = this.shipRepository.findByShipOwnerAccountUsername(username);
 		for (Ship ship : ships) {
-			// System.out.println(ship.getShipOwner());
 			if (ship.getId().equals(shipId)) {
 				return true;
 			}
@@ -174,6 +174,12 @@ public class ShipServiceImpl implements ShipService {
 	public Boolean checkIfShipHasReservation(Long id) {
 		List<ShipReservation> reservations = this.shipReservationRepository.findByShipId(id);
 		return !reservations.isEmpty();
+	}
+	
+	public Boolean checkOwnership(Long id) {
+		Ship ship = this.shipRepository.findById(id).orElse(null);
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		return ship.getShipOwner().getAccount().getUsername().equals(username);
 	}
 	
 	public List<ShipOption> getOptions(Long shipId) {

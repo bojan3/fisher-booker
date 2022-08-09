@@ -164,6 +164,11 @@ public class ShipController {
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 	
+	@GetMapping("ownership/{id}")
+	public ResponseEntity<Boolean> checkOwnership(@PathVariable Long id) {
+		return new ResponseEntity<>(this.shipService.checkOwnership(id), HttpStatus.OK);
+	}
+	
 	@GetMapping("options/{id}")
 	public ResponseEntity<List<ShipOption>> getOptions(@PathVariable Long id) {
 		return new ResponseEntity<>(this.shipService.getOptions(id), HttpStatus.OK);

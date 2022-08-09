@@ -31,6 +31,8 @@ public interface ShipService {
 	public List<ShipDTO> deleteShipDTO(Long id);
 
 	public Boolean checkIfShipHasReservation(Long id);
-	
+
 	public List<ShipOption> getOptions(Long shipId);
+
+	public Boolean checkOwnership(Long id);
 }

@@ -7,11 +7,15 @@ import org.springframework.stereotype.Service;
 
 import com.example.fisherbooker.model.CottageOption;
 import com.example.fisherbooker.model.CottageSuperDeal;
+import com.example.fisherbooker.model.ShipOption;
+import com.example.fisherbooker.model.ShipSuperDeal;
 import com.example.fisherbooker.model.SuperDealNotificationEmailContext;
 import com.example.fisherbooker.model.DTO.AddSuperDealDTO;
 import com.example.fisherbooker.repository.ClientRepository;
 import com.example.fisherbooker.repository.CottageOptionRepository;
 import com.example.fisherbooker.repository.CottageSuperDealRepository;
+import com.example.fisherbooker.repository.ShipOptionRepository;
+import com.example.fisherbooker.repository.ShipSuperDealRepository;
 import com.example.fisherbooker.service.CottageSuperDealService;
 import com.example.fisherbooker.service.EmailService;
 
@@ -22,27 +26,48 @@ public class CottageSuperDealImpl implements CottageSuperDealService {
 	private EmailService emailService;
 
 	private CottageSuperDealRepository cottageSuperDealRepository;
+	private ShipSuperDealRepository shipSuperDealRepository;
 	private CottageOptionRepository cottageOptionRepository;
+	private ShipOptionRepository shipOptionRepository;
 	private ClientRepository clientRepository;
 
 	public CottageSuperDealImpl(CottageSuperDealRepository cottageSuperDealRepository,
-			CottageOptionRepository cottageOptionRepository, ClientRepository clientRepository) {
+			ShipSuperDealRepository shipSuperDealRepository, CottageOptionRepository cottageOptionRepository,
+			ShipOptionRepository shipOptionRepository, ClientRepository clientRepository) {
 		this.cottageSuperDealRepository = cottageSuperDealRepository;
 		this.cottageOptionRepository = cottageOptionRepository;
 		this.clientRepository = clientRepository;
+		this.shipSuperDealRepository = shipSuperDealRepository;
+		this.shipOptionRepository = shipOptionRepository;
 	}
 
 	public Boolean add(AddSuperDealDTO deal) {
-		CottageSuperDeal newDeal = deal.toModel();
-		for (Long i : deal.getOptions()) {
-			CottageOption option = this.cottageOptionRepository.findById(i).orElse(null);
-			System.out.println(i);
-			if (option != null) {
-				newDeal.addOption(option);
+		switch (deal.getType()) {
+		case SHIP: {
+			ShipSuperDeal newDeal = deal.toShipModel();
+			for (Long i : deal.getOptions()) {
+				ShipOption option = this.shipOptionRepository.findById(i).orElse(null);
+				if (option != null) {
+					newDeal.addOption(option);
+				}
 			}
+			this.shipSuperDealRepository.save(newDeal);
+			break;
 		}
-		this.cottageSuperDealRepository.save(newDeal);
-		this.sendNotification(deal.getRealEstateId(), newDeal);
+		case COTTAGE: {
+			CottageSuperDeal newDeal = deal.toCottageModel();
+			for (Long i : deal.getOptions()) {
+				CottageOption option = this.cottageOptionRepository.findById(i).orElse(null);
+				if (option != null) {
+					newDeal.addOption(option);
+				}
+			}
+			this.cottageSuperDealRepository.save(newDeal);
+			break;
+		}
+		}
+
+//		this.sendNotification(deal.getRealEstateId(), newDeal);
 		return true;
 	}
 
