@@ -1,24 +1,21 @@
 package com.example.fisherbooker.service.impl;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.example.fisherbooker.model.CottageOwner;
-import com.example.fisherbooker.model.FishingEquipment;
+import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.NavigationEquipment;
 import com.example.fisherbooker.model.Ship;
-import com.example.fisherbooker.model.DTO.AddShipDTO;
-import com.example.fisherbooker.model.DTO.ShipDTO;
 import com.example.fisherbooker.model.ShipOption;
 import com.example.fisherbooker.model.ShipOwner;
-import com.example.fisherbooker.model.ShipPicture;
 import com.example.fisherbooker.model.ShipReservation;
-import com.example.fisherbooker.model.ShipSuperDeal;
+import com.example.fisherbooker.model.DTO.AddShipDTO;
+import com.example.fisherbooker.model.DTO.ShipDTO;
+import com.example.fisherbooker.repository.ShipOptionRepository;
 import com.example.fisherbooker.repository.ShipOwnerRepository;
 import com.example.fisherbooker.repository.ShipRepository;
 import com.example.fisherbooker.repository.ShipReservationRepository;
@@ -30,14 +27,17 @@ public class ShipServiceImpl implements ShipService {
 	private ShipRepository shipRepository;
 	private ShipReservationRepository shipReservationRepository;
 	private ShipOwnerRepository shipOwnerRepository;
+	private ShipOptionRepository shipOptionRepository;
 
 	@Autowired
 	public ShipServiceImpl(ShipRepository shipRepository,
 			ShipReservationRepository shipReservationRepository,
-			ShipOwnerRepository shipOwnerRepository) {
+			ShipOwnerRepository shipOwnerRepository, 
+			ShipOptionRepository shipOptionRepository) {
 		this.shipRepository = shipRepository;
 		this.shipReservationRepository = shipReservationRepository;
 		this.shipOwnerRepository = shipOwnerRepository;
+		this.shipOptionRepository = shipOptionRepository;
 	}
 
 	public Boolean updateShip(Ship ship) {
@@ -144,7 +144,6 @@ public class ShipServiceImpl implements ShipService {
 	public Boolean checkIfOwnerHasShip(String username, Long shipId) {
 		List<Ship> ships = this.shipRepository.findByShipOwnerAccountUsername(username);
 		for (Ship ship : ships) {
-			// System.out.println(ship.getShipOwner());
 			if (ship.getId().equals(shipId)) {
 				return true;
 			}
@@ -175,5 +174,15 @@ public class ShipServiceImpl implements ShipService {
 	public Boolean checkIfShipHasReservation(Long id) {
 		List<ShipReservation> reservations = this.shipReservationRepository.findByShipId(id);
 		return !reservations.isEmpty();
+	}
+	
+	public Boolean checkOwnership(Long id) {
+		Ship ship = this.shipRepository.findById(id).orElse(null);
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		return ship.getShipOwner().getAccount().getUsername().equals(username);
+	}
+	
+	public List<ShipOption> getOptions(Long shipId) {
+		return this.shipOptionRepository.findByShipId(shipId);
 	}
 }

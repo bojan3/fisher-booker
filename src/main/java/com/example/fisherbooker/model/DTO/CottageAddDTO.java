@@ -6,7 +6,7 @@ import java.util.Set;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.fisherbooker.model.Address;
-import com.example.fisherbooker.model.CottageAvailabilityPeriod;
+import com.example.fisherbooker.model.AvailabilityPeriod;
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageOption;
 import com.example.fisherbooker.model.Room;
@@ -18,7 +18,7 @@ public class CottageAddDTO {
 	private Address address;
 	private Set<Room> rooms;
 	private Set<Rule> rules;
-	private Set<CottageAvailabilityPeriod> availabilityPeriods;
+	private AvailabilityPeriod availabilityPeriod;
 	private Set<CottageOption> cottageOptions;
 	private int pricePerDay;
 
@@ -66,12 +66,12 @@ public class CottageAddDTO {
 		this.rules = rules;
 	}
 
-	public Set<CottageAvailabilityPeriod> getAvailabilityPeriods() {
-		return availabilityPeriods;
+	public AvailabilityPeriod getAvailabilityPeriod() {
+		return availabilityPeriod;
 	}
 
-	public void setAvailabilityPeriods(Set<CottageAvailabilityPeriod> availabilityPeriods) {
-		this.availabilityPeriods = availabilityPeriods;
+	public void setAvailabilityPeriod(AvailabilityPeriod availabilityPeriod) {
+		this.availabilityPeriod = availabilityPeriod;
 	}
 
 	public Set<CottageOption> getCottageOptions() {
@@ -97,17 +97,10 @@ public class CottageAddDTO {
 		c.setAddress(this.address);
 		c.setPricePerDay(this.pricePerDay);
 		c.setRooms(this.rooms);
-		c.setAvailabilityPeriods(this.availabilityPeriods);
+		c.setAvailabilityPeriod(this.availabilityPeriod);
 		c.setCottageOptions(this.cottageOptions);
 		c.setRules(this.rules);
 		return c;
-	}
-
-	@Override
-	public String toString() {
-		return "CottageAddDTO [name=" + name + ", description=" + description + ", address=" + address + ", rooms="
-				+ rooms + ", rules=" + rules + ", availabilityPeriods=" + availabilityPeriods + ", cottageOptions="
-				+ cottageOptions + ", pricePerDay=" + pricePerDay + "]";
 	}
 
 }

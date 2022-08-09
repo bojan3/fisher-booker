@@ -1,11 +1,16 @@
 package com.example.fisherbooker.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,6 +30,10 @@ public class CottageOption {
 	@ManyToOne
 	@JoinColumn(name = "cottage_id")
 	private Cottage cottage;
+	
+	@JsonIgnore
+	@ManyToMany(fetch = FetchType.EAGER)
+	Set<CottageSuperDeal> superDeals = new HashSet<CottageSuperDeal>();
 
 	public CottageOption() {
 		super();
@@ -69,7 +78,7 @@ public class CottageOption {
 	public void setCottage(Cottage cottage) {
 		this.cottage = cottage;
 	}
-	
+
 	public static CottageOption toModel(CottageOption newOption) {
 		CottageOption option = new CottageOption();
 		option.setName(newOption.getName());
@@ -79,10 +88,26 @@ public class CottageOption {
 		return option;
 	}
 
+	public Set<CottageSuperDeal> getSuperDeals() {
+		return superDeals;
+	}
+
+	public void setSuperDeals(Set<CottageSuperDeal> superDeals) {
+		this.superDeals = superDeals;
+	}
+
+	public void addSuperDeal(CottageSuperDeal newdeal) {
+		if (newdeal == null)
+			return;
+		if (this.superDeals == null)
+			this.superDeals = new java.util.HashSet<CottageSuperDeal>();
+		if (!this.superDeals.contains(newdeal))
+			this.superDeals.add(newdeal);
+	}
+
 	@Override
 	public String toString() {
-		return "CottageOption [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
-				+ ", cottage=" + cottage + "]";
+		return this.name + " -- " + this.description + " -- " + this.price;
 	}
 
 }

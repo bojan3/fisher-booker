@@ -1,6 +1,5 @@
 package com.example.fisherbooker.model;
 
-import java.sql.Blob;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,14 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -35,7 +30,7 @@ public class Cottage {
 	@Column
 	private int pricePerDay;
 	private float averageMark;
-	
+
 	private String imagePath;
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -50,14 +45,14 @@ public class Cottage {
 	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	public Set<CottageSuperDeal> cottageSuperDeals = new HashSet<CottageSuperDeal>();
 
-	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	public Set<CottageAvailabilityPeriod> availabilityPeriods = new HashSet<CottageAvailabilityPeriod>();
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	public AvailabilityPeriod availabilityPeriod = new AvailabilityPeriod();
 
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public Set<CottagePicture> cottagePictures = new HashSet<CottagePicture>();
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true) 
+	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true)
 	public Set<CottageReservation> cottageReservations = new HashSet<CottageReservation>();
 
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
@@ -71,6 +66,13 @@ public class Cottage {
 	@JsonIgnore
 	@ManyToMany(mappedBy = "cottageSubscriptions")
 	private Set<Client> client;
+
+	public Cottage() {
+	}
+
+	public Cottage(Long id) {
+		this.id = id;
+	}
 
 	public void free() {
 		this.setCottageOptions(null);
@@ -152,15 +154,12 @@ public class Cottage {
 		this.cottageSuperDeals = cottageSuperDeals;
 	}
 
-	public Set<CottageAvailabilityPeriod> getAvailabilityPeriods() {
-		return availabilityPeriods;
+	public AvailabilityPeriod getAvailabilityPeriod() {
+		return availabilityPeriod;
 	}
 
-	public void setAvailabilityPeriods(Set<CottageAvailabilityPeriod> availabilityPeriods) {
-		for (CottageAvailabilityPeriod ap : availabilityPeriods) {
-			ap.setCottage(this);
-			this.availabilityPeriods.add(CottageAvailabilityPeriod.toModel(ap));
-		}
+	public void setAvailabilityPeriod(AvailabilityPeriod availabilityPeriod) {
+		this.availabilityPeriod = availabilityPeriod;
 	}
 
 	public Set<CottagePicture> getCottagePictures() {
@@ -210,7 +209,7 @@ public class Cottage {
 		return imagePath;
 	}
 
-	public void setImagePath(String imagePath) {	
+	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
 

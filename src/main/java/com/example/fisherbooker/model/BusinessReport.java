@@ -20,7 +20,7 @@ public class BusinessReport {
     private Long id;
 	
 	@ManyToOne
-	private CottageAvailabilityPeriod ap;
+	private AvailabilityPeriod ap;
 	
 	
 	

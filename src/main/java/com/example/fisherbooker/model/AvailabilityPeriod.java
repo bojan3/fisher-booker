@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class ShipAvailabilityPeriod {
+public class AvailabilityPeriod {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -22,12 +22,7 @@ public class ShipAvailabilityPeriod {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date endDate;
 
-	@JsonIgnore
-	@ManyToOne()
-	@JoinColumn(name = "ship_id")
-	private Ship ship;
-
-	public ShipAvailabilityPeriod() {
+	public AvailabilityPeriod() {
 		super();
 	}
 
@@ -54,27 +49,12 @@ public class ShipAvailabilityPeriod {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-
-	public Ship getShip() {
-		return ship;
-	}
-
-	public void setShip(Ship ship) {
-		this.ship = ship;
-	}
-
-	public static ShipAvailabilityPeriod toModel(ShipAvailabilityPeriod newAp) {
-		ShipAvailabilityPeriod ap = new ShipAvailabilityPeriod();
+	
+	public static AvailabilityPeriod toModel(AvailabilityPeriod newAp) {
+		AvailabilityPeriod ap = new AvailabilityPeriod();
 		newAp.setStartDate(ap.getStartDate());
 		newAp.setEndDate(ap.getEndDate());
-		newAp.setShip(ap.getShip());
 		return ap;
-	}
-
-	@Override
-	public String toString() {
-		return "ShipAvailabilityPeriod [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", ship="
-				+ ship + "]";
 	}
 
 }

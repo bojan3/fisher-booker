@@ -3,12 +3,11 @@ package com.example.fisherbooker.model.DTO;
 import java.util.Set;
 
 import com.example.fisherbooker.model.Address;
-import com.example.fisherbooker.model.CottageAvailabilityPeriod;
+import com.example.fisherbooker.model.AvailabilityPeriod;
 import com.example.fisherbooker.model.FishingEquipment;
 import com.example.fisherbooker.model.NavigationEquipment;
 import com.example.fisherbooker.model.Rule;
 import com.example.fisherbooker.model.Ship;
-import com.example.fisherbooker.model.ShipAvailabilityPeriod;
 import com.example.fisherbooker.model.ShipOption;
 import com.example.fisherbooker.model.ShipType;
 
@@ -25,7 +24,7 @@ public class AddShipDTO {
 	private int capacity;
 	private float cancelRate;
 	private Set<Rule> rules;
-	private Set<ShipAvailabilityPeriod> availabilityPeriods;
+	private AvailabilityPeriod availabilityPeriod;
 	private Set<ShipOption> shipOptions;
 	private Set<NavigationEquipment> navigationEquipments;
 	private Set<FishingEquipment> fishingEquipments;
@@ -130,12 +129,12 @@ public class AddShipDTO {
 		this.rules = rules;
 	}
 
-	public Set<ShipAvailabilityPeriod> getAvailabilityPeriods() {
-		return availabilityPeriods;
+	public AvailabilityPeriod getAvailabilityPeriod() {
+		return availabilityPeriod;
 	}
 
-	public void setAvailabilityPeriods(Set<ShipAvailabilityPeriod> availabilityPeriods) {
-		this.availabilityPeriods = availabilityPeriods;
+	public void setAvailabilityPeriods(AvailabilityPeriod availabilityPeriod) {
+		this.availabilityPeriod = availabilityPeriod;
 	}
 
 	public Set<ShipOption> getShipOptions() {
@@ -161,7 +160,7 @@ public class AddShipDTO {
 	public void setFishingEquipments(Set<FishingEquipment> fishingEquipments) {
 		this.fishingEquipments = fishingEquipments;
 	}
-	
+
 	public Ship toModel() {
 		Ship s = new Ship();
 		s.setName(this.name);
@@ -174,24 +173,14 @@ public class AddShipDTO {
 		s.setMaxSpeed(this.maxSpeed);
 		s.setRentPrice(this.rentPrice);
 		s.setType(this.type);
-		
+
 		s.setNavigationEquipments(this.navigationEquipments);
 		s.setFishingEquipments(this.fishingEquipments);
 		s.setShipOptions(this.shipOptions);
 		s.setRules(this.rules);
-		s.setAvailabilityPeriods(this.availabilityPeriods);
-		
-		return s;
-	}
+		s.setAvailabilityPeriod(this.availabilityPeriod);
 
-	@Override
-	public String toString() {
-		return "AddShipDTO [name=" + name + ", type=" + type + ", length=" + length + ", address=" + address
-				+ ", description=" + description + ", rentPrice=" + rentPrice + ", engineNumber=" + engineNumber
-				+ ", enginePower=" + enginePower + ", maxSpeed=" + maxSpeed + ", capacity=" + capacity + ", cancelRate="
-				+ cancelRate + ", rules=" + rules + ", availabilityPeriods=" + availabilityPeriods + ", shipOptions="
-				+ shipOptions + ", navigationEquipments=" + navigationEquipments + ", fishingEquipments="
-				+ fishingEquipments + "]";
+		return s;
 	}
 
 }

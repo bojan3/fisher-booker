@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,8 +32,8 @@ public class CottageSuperDeal {
 	@ManyToOne
 	@JoinColumn(name = "cottage_id", nullable = false)
 	public Cottage cottage;
-	
-	@ManyToMany
+
+	@ManyToMany(fetch = FetchType.EAGER)
 	Set<CottageOption> options = new HashSet<CottageOption>();
 
 	public CottageSuperDeal() {
@@ -85,6 +86,23 @@ public class CottageSuperDeal {
 
 	public void setCottage(Cottage cottage) {
 		this.cottage = cottage;
+	}
+
+	public void addOption(CottageOption newCottageOption) {
+		if (newCottageOption == null)
+			return;
+		if (this.options == null)
+			this.options = new java.util.HashSet<CottageOption>();
+		if (!this.options.contains(newCottageOption))
+			this.options.add(newCottageOption);
+	}
+
+	public Set<CottageOption> getOptions() {
+		return options;
+	}
+
+	public void setOptions(Set<CottageOption> options) {
+		this.options = options;
 	}
 
 	@Override

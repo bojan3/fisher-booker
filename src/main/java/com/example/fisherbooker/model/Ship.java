@@ -65,10 +65,7 @@ public class Ship {
 	private Set<ShipSuperDeal> shipSuperDeals;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private CottageAvailabilityPeriod availabilityPeriod;
-
-	@OneToMany(mappedBy = "ship", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	public Set<ShipAvailabilityPeriod> availabilityPeriods = new HashSet<ShipAvailabilityPeriod>();
+	private AvailabilityPeriod availabilityPeriod;
 
 	@OneToMany(mappedBy = "ship", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private Set<ShipOption> shipOptions = new HashSet<ShipOption>();
@@ -83,6 +80,11 @@ public class Ship {
 
 	public Ship() {
 		super();
+	}
+	
+	public Ship(Long id) {
+		super();
+		this.id = id;
 	}
 
 	public Long getId() {
@@ -208,11 +210,11 @@ public class Ship {
 		this.shipOwner = shipOwner;
 	}
 
-	public CottageAvailabilityPeriod getAvailabilityPeriod() {
+	public AvailabilityPeriod getAvailabilityPeriod() {
 		return availabilityPeriod;
 	}
 
-	public void setAvailabilityPeriod(CottageAvailabilityPeriod availabilityPeriod) {
+	public void setAvailabilityPeriod(AvailabilityPeriod availabilityPeriod) {
 		this.availabilityPeriod = availabilityPeriod;
 	}
 
@@ -278,17 +280,6 @@ public class Ship {
 
 	public void setClient(Set<Client> client) {
 		this.client = client;
-	}
-
-	public Set<ShipAvailabilityPeriod> getAvailabilityPeriods() {
-		return availabilityPeriods;
-	}
-
-	public void setAvailabilityPeriods(Set<ShipAvailabilityPeriod> availabilityPeriods) {
-		for (ShipAvailabilityPeriod ap : availabilityPeriods) {
-			ap.setShip(this);
-			this.availabilityPeriods.add(ShipAvailabilityPeriod.toModel(ap));
-		}
 	}
 
 	@Override

@@ -1,7 +1,5 @@
 package com.example.fisherbooker.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fisherbooker.model.Cottage;
+import com.example.fisherbooker.model.DTO.CottageAddDTO;
 import com.example.fisherbooker.model.DTO.CottageDTO;
 import com.example.fisherbooker.service.CottageService;
 
@@ -118,5 +117,49 @@ public class CottageController {
 //		}
 //		return new ResponseEntity<>(cottagesDTOs, HttpStatus.OK);
 //	}
+
+
+	@PostMapping("/uploadImage")
+	public ResponseEntity<Boolean> uploadImage(@RequestParam("image") MultipartFile file,
+			@RequestParam("cottage") String cottage) {
+		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+		System.out.println(cottage);
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+
+	@PostMapping("/all/date")
+	public ResponseEntity<List<CottageDTO>> getAllByDate(@RequestBody Date date) {
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//		Date date = null;
+//		try {
+//			date = formatter.parse(dateInput);
+//		} catch (ParseException e) {
+//			
+//			e.printStackTrace();
+//		}
+
+		System.out.println("datum: " + date);
+//		System.out.println("datum: " + date.toGMTString());
+//		
+//		List<Cottage> cottages = this.cottageService.getAllByDate(date);
+//		
+//		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
+//		for (Cottage cottage : cottages) {
+//			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
+//			cottagesDTO.add(cottageDTO);
+//		}
+
+		return new ResponseEntity<>(null, HttpStatus.OK);
+	}
+
+//	private String getDate(String dateString) {
+//		String[] part = dateString.split("T");
+//		return part[0];
+//	}
+
+	@GetMapping("ownership/{id}")
+	public ResponseEntity<Boolean> checkOwnership(@PathVariable Long id) {
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
 
 }
