@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fisherbooker.model.Cottage;
+import com.example.fisherbooker.model.CottageOption;
 import com.example.fisherbooker.model.DTO.CottageAddDTO;
 import com.example.fisherbooker.model.DTO.CottageDTO;
 import com.example.fisherbooker.service.CottageService;
@@ -119,13 +120,13 @@ public class CottageController {
 //	}
 
 
-	@PostMapping("/uploadImage")
-	public ResponseEntity<Boolean> uploadImage(@RequestParam("image") MultipartFile file,
-			@RequestParam("cottage") String cottage) {
-		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-		System.out.println(cottage);
-		return new ResponseEntity<>(true, HttpStatus.OK);
-	}
+//	@PostMapping("/uploadImage")
+//	public ResponseEntity<Boolean> uploadImage(@RequestParam("image") MultipartFile file,
+//			@RequestParam("cottage") String cottage) {
+//		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+//		System.out.println(cottage);
+//		return new ResponseEntity<>(true, HttpStatus.OK);
+//	}
 
 	@PostMapping("/all/date")
 	public ResponseEntity<List<CottageDTO>> getAllByDate(@RequestBody Date date) {
@@ -160,6 +161,11 @@ public class CottageController {
 	@GetMapping("ownership/{id}")
 	public ResponseEntity<Boolean> checkOwnership(@PathVariable Long id) {
 		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+	
+	@GetMapping("options/{id}")
+	public ResponseEntity<List<CottageOption>> getOptions(@PathVariable Long id) {
+		return new ResponseEntity<>(this.cottageService.getOptions(id), HttpStatus.OK);
 	}
 
 }
