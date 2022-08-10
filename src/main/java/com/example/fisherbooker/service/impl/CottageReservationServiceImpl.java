@@ -21,5 +21,9 @@ public class CottageReservationServiceImpl implements CottageReservationService 
 		System.out.println(year);
 		return this.cottageReservationRepository.yearlyStats(username, year);
 	}
+	
+	public List<Integer> getYears(String username){
+		return this.cottageReservationRepository.getYears(username);
+	}
 
 }

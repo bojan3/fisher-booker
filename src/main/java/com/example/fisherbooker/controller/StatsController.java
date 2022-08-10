@@ -28,5 +28,12 @@ public class StatsController {
 		List<Stats> stats = this.cottageReservationService.getYearlyStats(username, year);
 		return new ResponseEntity<>(stats, HttpStatus.OK);
 	}
+	
+	@GetMapping("/years")
+	public ResponseEntity<List<Integer>> getYears() {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		List<Integer> years = this.cottageReservationService.getYears(username);
+		return new ResponseEntity<>(years, HttpStatus.OK);
+	}
 
 }

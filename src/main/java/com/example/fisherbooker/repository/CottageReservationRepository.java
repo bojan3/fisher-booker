@@ -19,4 +19,10 @@ public interface CottageReservationRepository extends JpaRepository<CottageReser
 			+ "where cr.cottage_id = c.id and c.cottage_owner_id = co.id and co.account_id = a.id and a.username = :username and date_part('year', end_date) = :year \r\n"
 			+ "group by c.name, date_part('year', end_date)", nativeQuery = true)
 	public List<Stats> yearlyStats(@Param("username") String username, @Param("year") int year);
+
+	@Query(value = "select distinct date_part('year', end_date)\r\n"
+			+ "from cottage_reservation cr, cottage c, cottage_owner co, account a\r\n"
+			+ "where cr.cottage_id = c.id and c.cottage_owner_id = co.id and co.account_id = a.id and a.username = :username\r\n"
+			+ "group by c.name, date_part('year', end_date) order by date_part('year', end_date) desc", nativeQuery = true)
+	public List<Integer> getYears(String username);
 }

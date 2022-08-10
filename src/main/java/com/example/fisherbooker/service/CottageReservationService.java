@@ -6,4 +6,6 @@ import com.example.fisherbooker.model.Stats;
 
 public interface CottageReservationService {
 	public List<Stats> getYearlyStats(String username, int year);
+	
+	public List<Integer> getYears(String username);
 }
