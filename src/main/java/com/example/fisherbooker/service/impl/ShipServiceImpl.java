@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -175,8 +176,15 @@ public class ShipServiceImpl implements ShipService {
 		List<ShipReservation> reservations = this.shipReservationRepository.findByShipId(id);
 		return !reservations.isEmpty();
 	}
-	
-	public Boolean checkOwnership(Long id) {
+
+		@Override
+	public List<Ship> getAllSorted(String type, String order) {
+		if(order.equals("ASC"))
+			return this.shipRepository.findAll(Sort.by(type).ascending());
+		return this.shipRepository.findAll(Sort.by(type).descending());
+	}
+
+		public Boolean checkOwnership(Long id) {
 		Ship ship = this.shipRepository.findById(id).orElse(null);
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		return ship.getShipOwner().getAccount().getUsername().equals(username);

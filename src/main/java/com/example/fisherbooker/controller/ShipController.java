@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fisherbooker.model.Ship;
@@ -42,6 +43,17 @@ public class ShipController {
 	@GetMapping("/all")
 	public ResponseEntity<List<ShipDTO>> getAll() {
 		List<Ship> ships = this.shipService.getAll();
+		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
+		for (Ship ship : ships) {
+			ShipDTO shipDTO = ShipDTO.createShipDTO(ship);
+			shipsDTO.add(shipDTO);
+		}
+		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
+	}
+	
+	@GetMapping("/all/")
+	public ResponseEntity<List<ShipDTO>> getAllSorted(@RequestParam String type, @RequestParam String order) {
+		List<Ship> ships = this.shipService.getAllSorted(type, order);
 		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
 		for (Ship ship : ships) {
 			ShipDTO shipDTO = ShipDTO.createShipDTO(ship);
