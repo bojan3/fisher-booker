@@ -3,6 +3,7 @@ package com.example.fisherbooker.model;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,12 +26,12 @@ public class CottageReservation {
 	private int capacity;
 	private boolean deleted;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<CottageOption> cottageOption;
 
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "cottage_id", nullable = false)
+	@JoinColumn(name = "cottage_id")
 	public Cottage cottage;
 
 	@ManyToOne

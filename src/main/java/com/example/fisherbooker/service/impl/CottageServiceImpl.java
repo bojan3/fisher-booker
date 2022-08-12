@@ -50,6 +50,7 @@ public class CottageServiceImpl implements CottageService {
 	}
 
 	public void deleteCottage(Long id) {
+		//System.out.println(this.cottageRepository.getById(id));
 		this.cottageRepository.deleteById(id);
 	}
 
@@ -106,7 +107,7 @@ public class CottageServiceImpl implements CottageService {
 					returnList.add(cottage);
 				}
 			}
-			
+			 
 		}
 		
 		return returnList;

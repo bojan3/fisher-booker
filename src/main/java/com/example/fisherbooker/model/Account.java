@@ -97,7 +97,7 @@ public class Account implements UserDetails {
 	private Set<SecureToken> tokens;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "account")
+	@OneToMany(mappedBy = "account", cascade = CascadeType.REMOVE)
 	private Set<DeleteAccountRequest> deleteAccountRequests;
 
 	@OneToOne

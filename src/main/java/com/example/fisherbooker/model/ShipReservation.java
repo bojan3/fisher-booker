@@ -3,14 +3,17 @@ package com.example.fisherbooker.model;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,6 +27,11 @@ public class ShipReservation {
 	private int price;
 	private int capacity;
 	private boolean deleted;
+	
+	@OneToOne
+	(cascade = CascadeType.ALL)
+	@JoinTable(name = "shreservation_reservation_supportdata", joinColumns = @JoinColumn(name = "shreservation_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "suppdata_id2", referencedColumnName = "id"))
+	private ShipReservationSupportData reservationsd;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	public Set<ShipOption> shipOption;

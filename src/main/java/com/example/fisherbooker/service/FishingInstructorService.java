@@ -87,27 +87,28 @@ public class FishingInstructorService {
 	}
 
 	public void deleteOne(Long instructor_id) {
+		System.out.println("instructor service method deleteOne");
 		FishingInstructor fi =this.fishinginstructorrepository.findOneById(instructor_id).get();
-		System.out.println(fi);
+	//	System.out.println(fi);
 	//	long acc_id = fi.getAccount().getId();		
-		Account acc = fi.getAccount();
+	//	Account acc = fi.getAccount();
 	//	Set<Adventure> avanture = fi.getAdventure();
-		System.out.println("ulazak u iteracije");
-		System.out.println(fi);
-		fi.removeAllAdventure();
+	//	System.out.println("ulazak u iteracije");
+	//	System.out.println(fi);
+	//	fi.removeAllAdventure();
 		//for (Adventure a : fi.getAdventure()){		
 		//}
 		
-		acc.setAddress(null);
-		this.accountrepository.save(acc);  
-		fi.setAccount(null);
-		fi.setBiography(null);
+	//	acc.setAddress(null);
+	//	this.accountrepository.save(acc);  
+	//	fi.setAccount(null);
+		//fi.setBiography(null);
 		System.out.println(fi);
-		System.out.println(acc);
+	//	System.out.println(acc);
 
 		
-		this.fishinginstructorrepository.save(fi);
-    	this.accountrepository.delete(acc);    
+		//this.fishinginstructorrepository.save(fi);
+    	//this.accountrepository.delete(acc);    
 		this.fishinginstructorrepository.delete(fi);	
 	}
 }

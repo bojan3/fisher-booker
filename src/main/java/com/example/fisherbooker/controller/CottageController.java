@@ -90,6 +90,25 @@ public class CottageController {
 		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
 	}
 
+	//@PreAuthorize("hasRole('ADMIN')")
+	@DeleteMapping("/delete/{CottageId}")
+	public ResponseEntity<List<CottageDTO>> adelete(@PathVariable("CottageId") Long id)
+	{
+	
+		System.out.println("ulazak u kontroler");
+	    this.cottageService.deleteCottage(id);
+		
+		List<Cottage> ownersCottages = this.cottageService.getAll();
+		List<CottageDTO> cottageDTOs = new ArrayList<CottageDTO>();
+		for (Cottage cottage : ownersCottages) {
+			cottageDTOs.add(CottageDTO.createCottageDTO(cottage));
+			System.out.println(cottage);
+		}
+		return new ResponseEntity<>(cottageDTOs, HttpStatus.OK);
+		
+	}
+	
+	
 	@PreAuthorize("hasRole('COTTAGE_OWNER')")
 	@DeleteMapping("/delete/owner/{CottageId}")
 	public ResponseEntity<List<CottageDTO>> delete(@PathVariable("CottageId") Long id) {

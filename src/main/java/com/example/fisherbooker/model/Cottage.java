@@ -1,5 +1,6 @@
 package com.example.fisherbooker.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,6 +15,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -30,7 +34,7 @@ public class Cottage {
 	private int pricePerDay;
 	private float averageMark;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	public Address address;
 
 	@JsonIgnore
@@ -50,16 +54,17 @@ public class Cottage {
 	@JsonIgnore
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	public Set<CottagePicture> cottagePictures;
-
+	
 	@JsonIgnore
-	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true) 
-	public Set<CottageReservation> cottageReservations;
+    @OnDelete(action = OnDeleteAction.CASCADE)
+	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true) 
+	public Set<CottageReservation> cottageReservations = new HashSet<CottageReservation>();
 	
 	//@JsonIgnore
 	//@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	//public Set<CottageComplaint> cottageComplaints;
 
-	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	public Set<CottageOption> cottageOptions;
 
 	@ManyToOne

@@ -93,6 +93,7 @@ public class FishingInstructorController {
 	@DeleteMapping("/delete")
 	//@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
 	public ResponseEntity<Boolean> deleteInstructorByID(@RequestBody Long instructor_id){	
+		System.out.println("delete instructor with id:"+instructor_id);
 		this.FishingInstructorService.deleteOne(instructor_id);	
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}

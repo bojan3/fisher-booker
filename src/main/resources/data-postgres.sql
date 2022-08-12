@@ -104,11 +104,11 @@ insert into instructor_subscriptions (client_id, instructor_id) values (1, 2);
 
 --insert into fishing_instructor(account_id,biography) values(4,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Sasvim prirodno" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
 
-insert into client(account_id) values(8);
+--insert into client(account_id) values(8);
 insert into client(account_id) values(9);
 
-insert into fishing_instructor(account_id,biography) values(4,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Sasvim prirodno" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
-insert into fishing_instructor(account_id,biography) values(5,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Bear Grylls" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
+--insert into fishing_instructor(account_id,biography) values(4,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Sasvim prirodno" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
+--insert into fishing_instructor(account_id,biography) values(5,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Bear Grylls" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
 insert into fishing_instructor(account_id,biography) values(13,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Bear Grylls" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
 
 insert into ship_owner (account_id) values (6);
@@ -122,7 +122,7 @@ insert into adventure (instructor_id,name,description,capacity,price,cancel_rate
 insert into adventure (instructor_id,name,description,capacity,price,cancel_rate,address_id) values (2,'Pecanje u Ohridskom jezeru','Poslepodne se krece iz Beograda. Vozicemo se camcem Dunavom do Djerdapske klisure. Tamo cemo se zadrzati par sati dok obidjemo znamenita mesta. U povratku cemo svratiti u Vincu. Povratak se ocekuje predvece.',20,10,0.2,7);
 insert into adventure (instructor_id,name,description,capacity,price,cancel_rate,address_id) values (2,'Obedska bara','Iz Beograda se krece pre ponoci. Na odrediste stizemo oko pola 4. Odmah nakon dolaska krece se u osvajanje Rtnja. Nakon 2,3 sata borbe sa zimom dolazimo do vrha. Povratak se ocekuje predvece.',20,10,0.2,7);
 
-insert into adventure (instructor_id,name,description,capacity,price,cancel_rate,address_id) values (3,'Homoljske planine','Iz Beograda se krece pre ponoci. Na odrediste stizemo oko pola 4. Odmah nakon dolaska krece se u osvajanje Rtnja. Nakon 2,3 sata borbe sa zimom dolazimo do vrha. Povratak se ocekuje predvece.',20,10,0.2,7);
+--insert into adventure (instructor_id,name,description,capacity,price,cancel_rate,address_id) values (3,'Homoljske planine','Iz Beograda se krece pre ponoci. Na odrediste stizemo oko pola 4. Odmah nakon dolaska krece se u osvajanje Rtnja. Nakon 2,3 sata borbe sa zimom dolazimo do vrha. Povratak se ocekuje predvece.',20,10,0.2,7);
 
 
 insert into rule (description) values ('Drzati se grupe!');
@@ -236,15 +236,26 @@ insert into review(comment, grade, client_id, id_entity, r_entity, published) va
 insert into review(comment, grade, client_id, id_entity, r_entity, published) values ('Bolje da sam poveo nekog iz kafane da me nauci nesto nego ovaj covek. Na greskama se uci. :/', 1.0, 1,1, 0, false);
 
 
-
-
-
-
-
-
-
-
-
-
-
 insert into delete_account_request(description, account_id) values ('Dosta mi je svega', 4);
+
+insert into global_number(name,valuex) values('GLOBAL_INCOME_PRECENTAGE',0.2);
+
+insert into adventure_reservation_support_data(dtype,reservationdate,system_income) values('ADV','2022-08-12',0.1234);
+insert into adventure_reservation_support_data(dtype,reservationdate,system_income) values('ADV','2022-04-12',0.1234);
+
+insert into ship_reservation_support_data(dtype,reservationdate,system_income) values('SHP','2022-08-12',0.1234);
+insert into ship_reservation_support_data(dtype,reservationdate,system_income) values('SHP','2022-04-12',0.1234);
+
+
+insert into areservation_reservation_supportdata (areservation_id, suppdata_id1) values (1,1);
+insert into areservation_reservation_supportdata (areservation_id, suppdata_id1) values (2,2);
+
+insert into shreservation_reservation_supportdata (shreservation_id, suppdata_id2) values (1,1);
+insert into shreservation_reservation_supportdata (shreservation_id, suppdata_id2) values (2,2);
+
+
+
+
+
+
+

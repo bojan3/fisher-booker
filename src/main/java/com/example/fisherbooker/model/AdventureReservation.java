@@ -11,9 +11,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -30,7 +32,13 @@ public class AdventureReservation {
 	private float cancelRate;
 	private int duration;
 	private boolean deleted;
-
+	
+	@OneToOne
+	(cascade = CascadeType.ALL)
+	@JoinTable(name = "areservation_reservation_supportdata", joinColumns = @JoinColumn(name = "areservation_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "suppdata_id1", referencedColumnName = "id"))
+	private AdventureReservationSupportData reservationsd;
+	
+	
 	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "adventure_id", nullable = false)

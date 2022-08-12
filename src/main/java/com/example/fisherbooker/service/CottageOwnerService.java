@@ -56,29 +56,29 @@ public class CottageOwnerService {
 		CottageOwner co =this.cottageOwnerRepository.findById(cottageowner_id).get();
 		System.out.println(co);
 	//	long acc_id = fi.getAccount().getId();		
-		Account acc = co.getAccount();
+	//	Account acc = co.getAccount();
 	//	Set<Adventure> avanture = fi.getAdventure();
 		System.out.println("brisanje vikendica odavde");
 		System.out.println(co);
 
-		co.removeAllCottage();
+		//co.removeAllCottage();
 		//for (Adventure a : fi.getAdventure()){		
 		//}
 		System.out.println(co);
 	
 		System.out.println("skidanje adrese");
 		
-		acc.setAddress(null);
-		this.accrep.save(acc);  
+	//	acc.setAddress(null);
+	//	this.accrep.save(acc);  
 		
-		co.setAccount(null);
+	//	co.setAccount(null);
 		System.out.println("posle skinutog naloga");
 		System.out.println(co);
 		System.out.println("///////////////////////////////////////////////");
 		System.out.println("nalog koji se brise iz baze:");
-		System.out.println(acc);
-		
-		this.cottageOwnerRepository.save(co);
+	//	System.out.println(acc);
+		System.out.print(co.getCottages());
+	//	this.cottageOwnerRepository.save(co);
     	//this.accrep.delete(acc);    
 		this.cottageOwnerRepository.delete(co);	
 	}
