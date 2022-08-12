@@ -42,21 +42,19 @@ import com.example.fisherbooker.service.SecureTokenService;
 @Service
 @Transactional
 public class AccountServiceImpl {
-	
-	@Autowired 
+
+	@Autowired
 	private CottageOwnerRepository coRep;
-	
-	@Autowired 
+
+	@Autowired
 	private ShipOwnerRepository soRep;
-	
-	@Autowired 
+
+	@Autowired
 	private FishingInstructorRepository fiRep;
-	
+
 	@Autowired
 	private AdministratorRepository adminrepo;
-	
-	
-	
+
 	@Autowired
 	private AccountRepository accountRepository;
 
@@ -95,10 +93,8 @@ public class AccountServiceImpl {
 		account.setEmail(accountRequest.getEmail());
 		account.setAddress(accountRequest.getAddress());
 		account.setAdminVerified(false);
-		
-		
-		
-		if(accountRequest.getRole().equals("CLIENT"))
+
+		if (accountRequest.getRole().equals("CLIENT"))
 			account.setAdminVerified(true);
 
 		List<Role> roles = getRoles(accountRequest.getRole());
@@ -139,12 +135,11 @@ public class AccountServiceImpl {
 		return true;
 	}
 
-	public List<DeleteAccountRequest> deleteAccountRequests(){
-		
+	public List<DeleteAccountRequest> deleteAccountRequests() {
+
 		return this.deleteAccountRequestRepository.findAll();
 	}
-	
-	
+
 	private List<Role> getRoles(String roleType) {
 
 		switch (roleType) {
@@ -182,143 +177,129 @@ public class AccountServiceImpl {
 	}
 
 	public List<AccountDTO> getAllUnverified() {
-		
+
 		List<Account> accounts = this.getAll();
 		List<AccountDTO> accountsDTO = new ArrayList<AccountDTO>();
-		for(Account a : accounts) {
-			if(!a.isAdminVerified()) {
-			AccountDTO accountDTO = new AccountDTO();
-			accountDTO.setId(a.getId());
-			accountDTO.setAddress(a.getAddress());
-			accountDTO.setEmail(a.getEmail());
-			accountDTO.setLastName(a.getLastName());
-			accountDTO.setPhoneNumber(a.getPhoneNumber());
-			accountDTO.setUsername(a.getUsername());
-			accountDTO.setName(a.getName());
-			accountDTO.setPassword(a.getPassword());
-			accountDTO.setRole(a.getRoles().get(0).getName().toString());
-			accountDTO.setEnabled(a.isEnabled());
-			
-			accountsDTO.add(accountDTO);
+		for (Account a : accounts) {
+			if (!a.isAdminVerified()) {
+				AccountDTO accountDTO = new AccountDTO();
+				accountDTO.setId(a.getId());
+				accountDTO.setAddress(a.getAddress());
+				accountDTO.setEmail(a.getEmail());
+				accountDTO.setLastName(a.getLastName());
+				accountDTO.setPhoneNumber(a.getPhoneNumber());
+				accountDTO.setUsername(a.getUsername());
+				accountDTO.setName(a.getName());
+				accountDTO.setPassword(a.getPassword());
+				accountDTO.setRole(a.getRoles().get(0).getName().toString());
+				accountDTO.setEnabled(a.isEnabled());
+
+				accountsDTO.add(accountDTO);
 			}
 		}
-			
-		return accountsDTO;	
-		
+
+		return accountsDTO;
+
 	}
-	
-	
-	
-	
-	
-	
+
 	public boolean AdminVerifyUser(Long account_id) {
-		
+
 		Account account = accountRepository.findById(account_id).get();
-		
-		
-		
-		//	List<AccountDTO> accountsDTO = new ArrayList<AccountDTO>();
-				if(account.isAdminVerified()==false) {
-				
-					
-					System.out.println(account+"/n");
-					
-					System.out.println(account.getRoles()+"/n");
-					
-					if(account.getRoles().get(0).getName().equals(("ROLE_COTTAGE_OWNER"))) {
-						account.setAdminVerified(true);						
-						CottageOwner cottageowner = new CottageOwner();
-						cottageowner.setAccount(account);
-						this.accountRepository.save(account);
-						coRep.save(cottageowner);
-						return true;
-					}
-					
-					
-					if(account.getRoles().get(0).getName().equals("ROLE_SHIP_OWNER")) {
-						account.setAdminVerified(true);						
-						ShipOwner shipowner = new ShipOwner();
-						shipowner.setAccount(account);
-						this.accountRepository.save(account);
-						soRep.save(shipowner);
-						return true;
-					}
-					
-					if(account.getRoles().get(0).getName().equals("ROLE_INSTRUCTOR")) {
-						account.setAdminVerified(true);						
-						FishingInstructor fishinginstructor = new FishingInstructor();
-						fishinginstructor.setAccount(account);
-						this.accountRepository.save(account);
-						fiRep.save(fishinginstructor);
-						return true;
-					}				
-				}
-		
-		return false; 
+
+		// List<AccountDTO> accountsDTO = new ArrayList<AccountDTO>();
+		if (account.isAdminVerified() == false) {
+
+			System.out.println(account + "/n");
+
+			System.out.println(account.getRoles() + "/n");
+
+			if (account.getRoles().get(0).getName().equals(("ROLE_COTTAGE_OWNER"))) {
+				account.setAdminVerified(true);
+				CottageOwner cottageowner = new CottageOwner();
+				cottageowner.setAccount(account);
+				this.accountRepository.save(account);
+				coRep.save(cottageowner);
+				return true;
+			}
+
+			if (account.getRoles().get(0).getName().equals("ROLE_SHIP_OWNER")) {
+				account.setAdminVerified(true);
+				ShipOwner shipowner = new ShipOwner();
+				shipowner.setAccount(account);
+				this.accountRepository.save(account);
+				soRep.save(shipowner);
+				return true;
+			}
+
+			if (account.getRoles().get(0).getName().equals("ROLE_INSTRUCTOR")) {
+				account.setAdminVerified(true);
+				FishingInstructor fishinginstructor = new FishingInstructor();
+				fishinginstructor.setAccount(account);
+				this.accountRepository.save(account);
+				fiRep.save(fishinginstructor);
+				return true;
+			}
+		}
+
+		return false;
 	}
-	
-	
+
 	public void acceptdeleteAccountRequest(Long id) {
 		System.out.println(id);
 		DeleteAccountRequest dcc = this.deleteAccountRequestRepository.getById(id);
 		System.out.println(dcc);
-		Account acc=dcc.getAccount();
+		Account acc = dcc.getAccount();
 		System.out.println(acc.getRoles().get(0).toString());
-	
+
 		System.out.println(acc);
 		dcc.setAccount(null);
 		System.out.println(dcc);
 		System.out.println(1);
-		 switch (acc.getRoles().get(0).getName().toString()) {
-			case "ROLE_INSTRUCTOR":
-				FishingInstructor fi = this.fiRep.findByAccountUsername(acc.getUsername()).get();
-				System.out.println(fi);
-				this.fiRep.delete(fi);
-				break;
+		switch (acc.getRoles().get(0).getName().toString()) {
+		case "ROLE_INSTRUCTOR":
+			FishingInstructor fi = this.fiRep.findByAccountUsername(acc.getUsername()).get();
+			System.out.println(fi);
+			this.fiRep.delete(fi);
+			break;
 
-			case "ROLE_SHIP_OWNER":
-				ShipOwner sho = this.soRep.findOneByAccountUsername(acc.getUsername()).get();
-				System.out.println(sho);
-				this.soRep.delete(sho);
-				break;
+		case "ROLE_SHIP_OWNER":
+			ShipOwner sho = this.soRep.findOneByAccountUsername(acc.getUsername()).get();
+			System.out.println(sho);
+			this.soRep.delete(sho);
+			break;
 
-			case "ROLE_COTTAGE_OWNER":
-				CottageOwner co = this.coRep.findOneByAccountUsername(acc.getUsername()).get();
-				System.out.println(co);
-				this.coRep.delete(co);
-				break;
-				
-			default:
-				break;
-			}
-			 //brisanje u zavisnosti od uloge			
-			// acc.setAddress(null);
-		    // accountRepository.save(acc);
-			 
-			// accountRepository.deleteById(id);
-		
-		
-		
+		case "ROLE_COTTAGE_OWNER":
+			CottageOwner co = this.coRep.findOneByAccountUsername(acc.getUsername()).get();
+			System.out.println(co);
+			this.coRep.delete(co);
+			break;
+
+		default:
+			break;
+		}
+		// brisanje u zavisnosti od uloge
+		// acc.setAddress(null);
+		// accountRepository.save(acc);
+
+		// accountRepository.deleteById(id);
+
 		this.deleteAccountRequestRepository.save(dcc);
 		this.deleteAccountRequestRepository.delete(dcc);
 		System.out.println("return");
 	}
-	
+
 	public void denydeleteAccountRequest(Long id) {
-		DeleteAccountRequest dcc = this.deleteAccountRequestRepository.getById(id);		
+		DeleteAccountRequest dcc = this.deleteAccountRequestRepository.getById(id);
 		this.deleteAccountRequestRepository.delete(dcc);
 	}
-	
+
 	public void deleteAccountRequest(Long id) {
-		 Account account = this.accountRepository.getById(id);
-		 account.setAddress(null);
-	     accountRepository.save(account);		 
-		 this.accountRepository.deleteById(id);
+		Account account = this.accountRepository.getById(id);
+		account.setAddress(null);
+		accountRepository.save(account);
+		this.accountRepository.deleteById(id);
 	}
-	
-	
-	
+
 	public boolean verifyUser(String token) throws InvalidTokenException {
 		SecureToken secureToken = secureTokenService.findByToken(token);
 		System.out.println("Token iz baze: " + secureToken);
@@ -340,7 +321,7 @@ public class AccountServiceImpl {
 	public List<Account> getAll() {
 		return this.accountRepository.findAll();
 	}
-	
+
 	public Account newAdmin(AccountRequest accountRequest) {
 		System.out.println("улаз у сервис:");
 		Account account = new Account();
@@ -355,20 +336,19 @@ public class AccountServiceImpl {
 		account.setAdminVerified(true);
 		account.setEmailVerified(true);
 
-		//SA FRONTA CU POSLATI ADMIN ROLE
+		// SA FRONTA CU POSLATI ADMIN ROLE
 		List<Role> roles = new ArrayList<Role>();
 		Role role = this.roleService.findById((long) (2));
 		System.out.println("uloga:");
 		System.out.println(role);
-		//Set<Role> rolex = new HashSet<Role>();
+		// Set<Role> rolex = new HashSet<Role>();
 		roles.add(role);
 		account.setRoles(roles);
-		Account savedAccount = this.accountRepository.save(account);	
+		Account savedAccount = this.accountRepository.save(account);
 		Admin noviAdmin = new Admin();
 		noviAdmin.setAccount(savedAccount);
 		adminrepo.save(noviAdmin);
 		return savedAccount;
 	}
-	
-	
+
 }

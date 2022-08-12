@@ -1,31 +1,27 @@
 package com.example.fisherbooker.controller;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.Ship;
-import com.example.fisherbooker.model.DTO.CottageDTO;
+import com.example.fisherbooker.model.ShipOption;
+import com.example.fisherbooker.model.DTO.AddShipDTO;
 import com.example.fisherbooker.model.DTO.ShipDTO;
 import com.example.fisherbooker.service.ShipService;
-import com.example.fisherbooker.service.impl.ShipServiceImpl;
 
 @RestController
 @RequestMapping("/api/ship")
@@ -47,6 +43,17 @@ public class ShipController {
 	@GetMapping("/all")
 	public ResponseEntity<List<ShipDTO>> getAll() {
 		List<Ship> ships = this.shipService.getAll();
+		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
+		for (Ship ship : ships) {
+			ShipDTO shipDTO = ShipDTO.createShipDTO(ship);
+			shipsDTO.add(shipDTO);
+		}
+		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
+	}
+	
+	@GetMapping("/all/")
+	public ResponseEntity<List<ShipDTO>> getAllSorted(@RequestParam String type, @RequestParam String order) {
+		List<Ship> ships = this.shipService.getAllSorted(type, order);
 		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
 		for (Ship ship : ships) {
 			ShipDTO shipDTO = ShipDTO.createShipDTO(ship);
@@ -149,25 +156,34 @@ public class ShipController {
 		return new ResponseEntity<>(shipDTOs, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('SHIP_OWNER')")
-	@PutMapping("/update")
-	public ResponseEntity<Boolean> update(@RequestBody Ship ship) {
-		System.out.println(ship);
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		if (this.shipService.checkIfOwnerHasShip(username, ship.getId())) {
-			this.shipService.saveShip(ship);
-			return new ResponseEntity<>(true, HttpStatus.OK);
-		}
-		return new ResponseEntity<>(true, HttpStatus.UNAUTHORIZED);
-	}
+//	@PreAuthorize("hasRole('SHIP_OWNER')")
+//	@PutMapping("/update")
+//	public ResponseEntity<Boolean> update(@RequestBody Ship ship) {
+//		System.out.println(ship);
+//		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+//		if (this.shipService.checkIfOwnerHasShip(username, ship.getId())) {
+//			this.shipService.saveShip(ship);
+//			return new ResponseEntity<>(true, HttpStatus.OK);
+//		}
+//		return new ResponseEntity<>(true, HttpStatus.UNAUTHORIZED);
+//	}
 
 	@PreAuthorize("hasRole('SHIP_OWNER')")
 	@PostMapping("/save")
-	public ResponseEntity<Boolean> save(@RequestBody Ship ship) {
+	public ResponseEntity<Boolean> save(@RequestBody AddShipDTO ship) {
 		System.out.println(ship);
-		//String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		this.shipService.saveShip(ship);
 		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+	
+	@GetMapping("ownership/{id}")
+	public ResponseEntity<Boolean> checkOwnership(@PathVariable Long id) {
+		return new ResponseEntity<>(this.shipService.checkOwnership(id), HttpStatus.OK);
+	}
+	
+	@GetMapping("options/{id}")
+	public ResponseEntity<List<ShipOption>> getOptions(@PathVariable Long id) {
+		return new ResponseEntity<>(this.shipService.getOptions(id), HttpStatus.OK);
 	}
 
 }

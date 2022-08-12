@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.fisherbooker.model.Cottage;
+import com.example.fisherbooker.model.CottageOption;
 import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.ShipReservation;
 import com.example.fisherbooker.model.DTO.CottageAddDTO;
@@ -15,7 +16,7 @@ import com.example.fisherbooker.repository.CottageRepository;
 
 public interface CottageService {
 
-	public Boolean saveCottage(Cottage cottage);
+	public Boolean saveCottage(CottageAddDTO cottage);
 
 	public void deleteCottage(Long id);
 
@@ -34,7 +35,13 @@ public interface CottageService {
 	public Boolean checkIfCottageHasReservation(Long id);
 
 	public List<Cottage> getAll();
+	
+	public Boolean checkOwnership(Long id);
+	
+	public List<CottageOption> getOptions(Long cottageId);
 
-	public List<Cottage> getAllByDate(Date date);
+	public List<Cottage> getAllSorted(String type, String order);
+
+//	public List<Cottage> getAllByDate(Date date);
 
 }

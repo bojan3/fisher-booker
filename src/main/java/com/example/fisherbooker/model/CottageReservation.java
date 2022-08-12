@@ -34,37 +34,30 @@ public class CottageReservation {
 	@JoinColumn(name = "cottage_id")
 	public Cottage cottage;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "client_id", nullable = false)
 	public Client client;
-	
+
 	public CottageReservation() {
 		super();
 	}
-	
+
 	public boolean isDeleted() {
 		return deleted;
 	}
-
-
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
 
-
-
 	public Client getClient() {
 		return client;
 	}
 
-
-
 	public void setClient(Client client) {
 		this.client = client;
 	}
-
-
 
 	public Long getId() {
 		return id;
@@ -129,5 +122,4 @@ public class CottageReservation {
 				+ client + "]";
 	}
 
-	
 }

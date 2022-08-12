@@ -23,10 +23,15 @@ import com.example.fisherbooker.model.DTO.CottageReservationDTO;
 import com.example.fisherbooker.model.DTO.FishingInstructorDTO;
 import com.example.fisherbooker.model.DTO.ShipDTO;
 import com.example.fisherbooker.model.DTO.ShipReservationDTO;
+import com.example.fisherbooker.model.complaint.CottageComplaint;
+import com.example.fisherbooker.model.complaint.InstructorComplaint;
+import com.example.fisherbooker.model.complaint.ShipComplaint;
 import com.example.fisherbooker.repository.ClientRepository;
 import com.example.fisherbooker.repository.CottageComplaintRepository;
 import com.example.fisherbooker.repository.CottageRepository;
 import com.example.fisherbooker.repository.FishingInstructorRepository;
+import com.example.fisherbooker.repository.InstructorComplaintRepository;
+import com.example.fisherbooker.repository.ShipComplaintRepository;
 import com.example.fisherbooker.repository.ShipRepository;
 
 @Service
@@ -39,22 +44,26 @@ public class ClientService {
 	private FishingInstructorRepository fishingInstructorRepository;
 	private AdventureService adventureService;
 	private CottageComplaintRepository cottageComplaintRepository;
+	private InstructorComplaintRepository instructorComplaintRepository;
+	private ShipComplaintRepository shipComplaintRepository;
 
 	@Autowired
 	public ClientService(ClientRepository clientRepository, CottageRepository cotageRepository,
 			ShipRepository shipRepository, FishingInstructorRepository fishingInstructorRepository,
-			AdventureService adventureService, CottageComplaintRepository cottageComplaintRepository) {
+			AdventureService adventureService, CottageComplaintRepository cottageComplaintRepository,
+			InstructorComplaintRepository instructorComplaintRepository,
+			ShipComplaintRepository shipComplaintRepository) {
 		this.clientRepository = clientRepository;
 		this.cottageRepository = cotageRepository;
 		this.shipRepository = shipRepository;
 		this.fishingInstructorRepository = fishingInstructorRepository;
 		this.adventureService = adventureService;
 		this.cottageComplaintRepository = cottageComplaintRepository;
-
+		this.instructorComplaintRepository = instructorComplaintRepository;
+		this.shipComplaintRepository = shipComplaintRepository;
 	}
 
 	public List<Client> getAll() {
-		// TODO Auto-generated method stub
 		return this.clientRepository.findAll();
 	}
 
@@ -287,17 +296,31 @@ public class ClientService {
 		return null;
 	}
 
-
 	public void createCottageComplaint(Long cottageId, Long accountId, String text) {
 		Client client = clientRepository.findByAccountId(accountId);
 		Cottage cottage = cottageRepository.getOne(cottageId);
-		
-	//	CottageComplaint cottageComplaint = new CottageComplaint(cottage, client, text, "");
-		
-	//	this.cottageComplaintRepository.save(cottageComplaint);
+
+		CottageComplaint cottageComplaint = new CottageComplaint(client, cottage, text);
+
+		this.cottageComplaintRepository.save(cottageComplaint);
 	}
 
-	// public List<Client> getAll(){
-	// return clientRepository.getAll();
-	// }
+	public void createInstructorComplaint(Long adventureId, Long accountId, String text) {
+		Client client = clientRepository.findByAccountId(accountId);
+		FishingInstructor fishingInstructor = fishingInstructorRepository.getByAdventureId(adventureId);
+
+		InstructorComplaint instructorComplaint = new InstructorComplaint(client, fishingInstructor, text);
+
+		this.instructorComplaintRepository.save(instructorComplaint);
+	}
+
+	public void createShipComplaint(Long shipId, Long accountId, String text) {
+		Client client = clientRepository.findByAccountId(accountId);
+		Ship ship = shipRepository.getOne(shipId);
+
+		ShipComplaint shipComplaint = new ShipComplaint(client, ship, text);
+		
+		this.shipComplaintRepository.save(shipComplaint);
+	}
+
 }

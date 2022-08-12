@@ -51,7 +51,7 @@ public class AdventureReservationDTO {
 		this.adventureDTO = new AdventureDTO(adventureReservation.getAdventure());
 
 		Date nowDate = new Date();
-		if (adventureReservation.getStartDate().after(nowDate)) {
+		if (adventureReservation.getEndDate().after(nowDate)) {
 			this.isFinished = false;
 		} else {
 			this.isFinished = true;

@@ -1,5 +1,6 @@
 package com.example.fisherbooker.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -49,13 +50,13 @@ public class Ship {
 	private ShipOwner shipOwner;
 
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	public Set<Rule> rules;
+	public Set<Rule> rules = new HashSet<Rule>();
 
 	@OneToMany(mappedBy = "ship", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<NavigationEquipment> navigationEquipments;
+	private Set<NavigationEquipment> navigationEquipments = new HashSet<NavigationEquipment>();
 
 	@OneToMany(mappedBy = "ship", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<FishingEquipment> fishingEquipments;
+	private Set<FishingEquipment> fishingEquipments = new HashSet<FishingEquipment>();
 
 	@OneToMany(mappedBy = "ship", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<ShipPicture> shipPictures;
@@ -67,7 +68,7 @@ public class Ship {
 	private AvailabilityPeriod availabilityPeriod;
 
 	@OneToMany(mappedBy = "ship", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	private Set<ShipOption> shipOptions;
+	private Set<ShipOption> shipOptions = new HashSet<ShipOption>();
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "ship", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
@@ -79,6 +80,11 @@ public class Ship {
 
 	public Ship() {
 		super();
+	}
+	
+	public Ship(Long id) {
+		super();
+		this.id = id;
 	}
 
 	public Long getId() {
@@ -190,7 +196,10 @@ public class Ship {
 	}
 
 	public void setShipOptions(Set<ShipOption> shipOptions) {
-		this.shipOptions = shipOptions;
+		for (ShipOption so : shipOptions) {
+			so.setShip(this);
+			this.shipOptions.add(ShipOption.toModel(so));
+		}
 	}
 
 	public ShipOwner getShipOwner() {
@@ -214,7 +223,9 @@ public class Ship {
 	}
 
 	public void setRules(Set<Rule> rules) {
-		this.rules = rules;
+		for (Rule r : rules) {
+			this.rules.add(Rule.toModel(r));
+		}
 	}
 
 	public Set<NavigationEquipment> getNavigationEquipments() {
@@ -222,7 +233,10 @@ public class Ship {
 	}
 
 	public void setNavigationEquipments(Set<NavigationEquipment> navigationEquipments) {
-		this.navigationEquipments = navigationEquipments;
+		for (NavigationEquipment ne : navigationEquipments) {
+			ne.setShip(this);
+			this.navigationEquipments.add(NavigationEquipment.toModel(ne));
+		}
 	}
 
 	public Set<FishingEquipment> getFishingEquipments() {
@@ -230,7 +244,10 @@ public class Ship {
 	}
 
 	public void setFishingEquipments(Set<FishingEquipment> fishingEquipments) {
-		this.fishingEquipments = fishingEquipments;
+		for (FishingEquipment fe : fishingEquipments) {
+			fe.setShip(this);
+			this.fishingEquipments.add(FishingEquipment.toModel(fe));
+		}
 	}
 
 	public Set<ShipPicture> getShipPictures() {

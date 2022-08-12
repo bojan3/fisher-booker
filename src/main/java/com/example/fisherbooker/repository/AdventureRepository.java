@@ -37,7 +37,7 @@ public interface AdventureRepository extends JpaRepository<Adventure, Long> {
 	public List<Adventure> findByOrderByPrice();
 	public List<Adventure> findByOrderByCapacityDesc();
 	
-	@Query("FROM Adventure WHERE account = ?1")
+	@Query("FROM Adventure WHERE instructor_id = ?1")
 	public List<Adventure> findByInstructor(Long accountId);
 	
 	@Query("FROM Adventure WHERE account = ?1 ORDER BY name")

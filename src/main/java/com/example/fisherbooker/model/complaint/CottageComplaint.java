@@ -18,7 +18,7 @@ public class CottageComplaint {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "cottage_id", nullable = false)
@@ -28,39 +28,44 @@ public class CottageComplaint {
 	@ManyToOne
 	@JoinColumn(name = "client_id", nullable = false)
 	public Client client;
-	
+
 	private String text;
 	private String answer;
 	private Boolean answered;
-	
+
 	public CottageComplaint() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	public CottageComplaint(Client clientId, Cottage cottageId, String text, Boolean answered) {
+
+	public CottageComplaint(Client client, Cottage cottage, String text) {
 		super();
-		this.client = clientId;
-		this.cottage = cottageId;
+		this.client = client;
+		this.cottage = cottage;
 		this.text = text;
-		this.answered=answered;
+		this.answered = false;
 	}
-	
+
 	public Client getClientId() {
 		return client;
 	}
+
 	public void setClientId(Client clientId) {
 		this.client = clientId;
 	}
+
 	public Cottage getCottageId() {
 		return cottage;
 	}
+
 	public void setCottageId(Cottage cottageId) {
 		this.cottage = cottageId;
 	}
+
 	public String getText() {
 		return text;
 	}
+
 	public void setText(String text) {
 		this.text = text;
 	}
@@ -68,11 +73,9 @@ public class CottageComplaint {
 	public Boolean getAnswered() {
 		return answered;
 	}
+
 	public void setAnswered(Boolean answered) {
 		this.answered = answered;
 	}
-	
-	
-	
-	
+
 }

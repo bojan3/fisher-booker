@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -34,27 +36,26 @@ public class Cottage {
 	private int pricePerDay;
 	private float averageMark;
 
-	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-	public Address address;
-
-	@JsonIgnore
-	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	public Set<Room> rooms;
-
-	@JsonIgnore
-	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true)
-	public Set<Rule> rules;
-
-	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	public Set<CottageSuperDeal> cottageSuperDeals;
+	private String imagePath;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	public AvailabilityPeriod availabilityPeriod;
+	public Address address;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-	public Set<CottagePicture> cottagePictures;
-	
+	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval=true)
+	public Set<Room> rooms = new HashSet<Room>();
+
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	public Set<Rule> rules = new HashSet<Rule>();
+
+	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	public Set<CottageSuperDeal> cottageSuperDeals = new HashSet<CottageSuperDeal>();
+
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	public AvailabilityPeriod availabilityPeriod = new AvailabilityPeriod();
+
+	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	public Set<CottagePicture> cottagePictures = new HashSet<CottagePicture>();
+
 	@JsonIgnore
     @OnDelete(action = OnDeleteAction.CASCADE)
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true) 
@@ -64,8 +65,8 @@ public class Cottage {
 	//@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	//public Set<CottageComplaint> cottageComplaints;
 
-	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-	public Set<CottageOption> cottageOptions;
+	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	public Set<CottageOption> cottageOptions = new HashSet<CottageOption>();
 
 	@ManyToOne
 	@JsonIgnore
@@ -76,15 +77,17 @@ public class Cottage {
 	@ManyToMany(mappedBy = "cottageSubscriptions")
 	private Set<Client> client;
 
+	public Cottage() {
+	}
+
+	public Cottage(Long id) {
+		this.id = id;
+	}
+
 	public void free() {
-		this.setAvailabilityPeriod(null);
 		this.setCottageOptions(null);
 		this.setCottageReservations(null);
 		this.setCottageSuperDeals(null);
-	}
-
-	public Cottage() {
-		super();
 	}
 
 	public Long getId() {
@@ -148,7 +151,9 @@ public class Cottage {
 	}
 
 	public void setRules(Set<Rule> rules) {
-		this.rules = rules;
+		for (Rule r : rules) {
+			this.rules.add(Rule.toModel(r));
+		}
 	}
 
 	public Set<CottageSuperDeal> getCottageSuperDeals() {
@@ -188,7 +193,10 @@ public class Cottage {
 	}
 
 	public void setCottageOptions(Set<CottageOption> cottageOptions) {
-		this.cottageOptions = cottageOptions;
+		for (CottageOption co : cottageOptions) {
+			co.setCottage(this);
+			this.cottageOptions.add(CottageOption.toModel(co));
+		}
 	}
 
 	public CottageOwner getCottageOwner() {
@@ -206,7 +214,13 @@ public class Cottage {
 	public void setClient(Set<Client> client) {
 		this.client = client;
 	}
-	
-	
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
 
 }

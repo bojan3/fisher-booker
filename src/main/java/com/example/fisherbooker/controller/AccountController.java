@@ -50,17 +50,13 @@ public class AccountController {
 	private FishingInstructorService fishingservice;
 	private ShipOwnerService shipownerservice;
 	private RoleServiceImpl roleservice;
-	
-	
-	
-	
-	
-	
+
 	@PostMapping("/update")
 	@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
 	public boolean updateUser(@RequestBody AccountRequest accountRequest, UriComponentsBuilder ucBuilder) {
 		return accountService.updateUser(accountRequest);
 	}
+
 	// Брисање налога
 	@PostMapping("/delete")
 	@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
@@ -68,47 +64,45 @@ public class AccountController {
 		this.accountService.acceptdeleteAccountRequest(accountRequest.getId());
 		return true;
 	}
-	
 
 	@PostMapping("/newAdmin")
 //	@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')") *, UriComponentsBuilder ucBuilder
-	public boolean newAdmin(@RequestBody AccountRequest accountRequest, UriComponentsBuilder ucBuilder){
-			System.out.println("ulaz u kontoler:");
-			System.out.println(accountRequest);		
-			this.accountService.newAdmin(accountRequest);
-			
+	public boolean newAdmin(@RequestBody AccountRequest accountRequest, UriComponentsBuilder ucBuilder) {
+		System.out.println("ulaz u kontoler:");
+		System.out.println(accountRequest);
+		this.accountService.newAdmin(accountRequest);
+
 		return true;
 	}
-	
-	
-	
+
 	@GetMapping("/unverified")
-	public ResponseEntity<List<AccountDTO>> getUnverifiedAccounts(){
-	
+	public ResponseEntity<List<AccountDTO>> getUnverifiedAccounts() {
+
 		return new ResponseEntity<>(this.accountService.getAllUnverified(), HttpStatus.OK);
 	}
-	
+
 	@PutMapping("/verify")
-	public ResponseEntity<Boolean> AdminVerifyAccount(@RequestBody Long account_id){
-		
+	public ResponseEntity<Boolean> AdminVerifyAccount(@RequestBody Long account_id) {
+
 		return new ResponseEntity<>(this.accountService.AdminVerifyUser(account_id), HttpStatus.OK);
 	}
+
 	/// Брисање захтева за прављење налога
 	@DeleteMapping("/delete")
-	//@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
-	public boolean deleteAccountByID(@RequestBody Long account_id){	
-		this.accountService.deleteAccountRequest(account_id);	
+	// @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER',
+	// 'INSTRUCTOR')")
+	public boolean deleteAccountByID(@RequestBody Long account_id) {
+		this.accountService.deleteAccountRequest(account_id);
 		return true;
 	}
-	
-	
+
 	@GetMapping("/all")
-	public ResponseEntity<List<AccountDTO>> getAccounts(){
+	public ResponseEntity<List<AccountDTO>> getAccounts() {
 		List<Account> accounts = this.accountService.getAll();
 		System.out.println(accounts);
 		List<AccountDTO> accountsDTO = new ArrayList<AccountDTO>();
-		for(Account a : accounts) {
-		//	AccountDTO accountDTO =AccountDTO.createAccountDTO(a);
+		for (Account a : accounts) {
+			// AccountDTO accountDTO =AccountDTO.createAccountDTO(a);
 			AccountDTO accountDTO = new AccountDTO();
 			accountDTO.setId(a.getId());
 			accountDTO.setAddress(a.getAddress());
@@ -122,7 +116,7 @@ public class AccountController {
 			accountDTO.setEnabled(a.isEnabled());
 			accountDTO.setStatus(a.getStatus());
 			System.out.println(a.getStatus().toString());
-			
+
 			accountsDTO.add(accountDTO);
 		}
 		System.out.println(accountsDTO);
@@ -139,23 +133,25 @@ public class AccountController {
 	}
 
 	@GetMapping("/allDeleteRequests")
-	public List<DeleteAccountRequest> getAllDeleteAccountRequests(){
+	public List<DeleteAccountRequest> getAllDeleteAccountRequests() {
 		return this.accountService.deleteAccountRequests();
-		
+
 	}
-	
+
 	@DeleteMapping("/accepteddeleteAccountRequest/{deleteaccount_id}")
-	//@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
-	public boolean acceptdeleteAccountRequest(@PathVariable Long deleteaccount_id){	
-		this.accountService.acceptdeleteAccountRequest(deleteaccount_id);	
+	// @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER',
+	// 'INSTRUCTOR')")
+	public boolean acceptdeleteAccountRequest(@PathVariable Long deleteaccount_id) {
+		this.accountService.acceptdeleteAccountRequest(deleteaccount_id);
 		return true;
 	}
-	
+
 	@DeleteMapping("/denieddeleteAccountRequest/{deleteaccount_id}")
-	//@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
-	public boolean denydeleteAccountRequestByID(@PathVariable Long deleteaccount_id){	
-		this.accountService.denydeleteAccountRequest(deleteaccount_id);	
+	// @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER',
+	// 'INSTRUCTOR')")
+	public boolean denydeleteAccountRequestByID(@PathVariable Long deleteaccount_id) {
+		this.accountService.denydeleteAccountRequest(deleteaccount_id);
 		return true;
 	}
-	
+
 }

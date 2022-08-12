@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fisherbooker.model.Cottage;
+import com.example.fisherbooker.model.CottageOption;
+import com.example.fisherbooker.model.DTO.CottageAddDTO;
 import com.example.fisherbooker.model.DTO.CottageDTO;
 import com.example.fisherbooker.service.CottageService;
 
@@ -51,9 +54,9 @@ public class CottageController {
 		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
 	}
 
-	@GetMapping("/all/name")
-	public ResponseEntity<List<CottageDTO>> getAllByName() {
-		List<Cottage> cottages = this.cottageService.getAllbyName();
+	@GetMapping("/all/")
+	public ResponseEntity<List<CottageDTO>> getAllSorted(@RequestParam String type, @RequestParam String order) {
+		List<Cottage> cottages = this.cottageService.getAllSorted(type, order);
 		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
 		for (Cottage cottage : cottages) {
 			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
@@ -90,25 +93,6 @@ public class CottageController {
 		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
 	}
 
-	//@PreAuthorize("hasRole('ADMIN')")
-	@DeleteMapping("/delete/{CottageId}")
-	public ResponseEntity<List<CottageDTO>> adelete(@PathVariable("CottageId") Long id)
-	{
-	
-		System.out.println("ulazak u kontroler");
-	    this.cottageService.deleteCottage(id);
-		
-		List<Cottage> ownersCottages = this.cottageService.getAll();
-		List<CottageDTO> cottageDTOs = new ArrayList<CottageDTO>();
-		for (Cottage cottage : ownersCottages) {
-			cottageDTOs.add(CottageDTO.createCottageDTO(cottage));
-			System.out.println(cottage);
-		}
-		return new ResponseEntity<>(cottageDTOs, HttpStatus.OK);
-		
-	}
-	
-	
 	@PreAuthorize("hasRole('COTTAGE_OWNER')")
 	@DeleteMapping("/delete/owner/{CottageId}")
 	public ResponseEntity<List<CottageDTO>> delete(@PathVariable("CottageId") Long id) {
@@ -128,34 +112,84 @@ public class CottageController {
 		}
 		return new ResponseEntity<>(cottageDTOs, HttpStatus.OK);
 	}
-	
-	@PostMapping("/save")
-	public ResponseEntity<Boolean> save(@RequestBody Cottage cottage) {
-		this.cottageService.saveCottage(cottage);
+
+//	@PostMapping("/save")
+//	public ResponseEntity<Boolean> save(@RequestBody Cottage cottage) {
+//		this.cottageService.saveCottage(cottage);
+//		return new ResponseEntity<>(true, HttpStatus.OK);
+//	}
+
+//	@GetMapping("/all/date/{dateString}")
+//	public ResponseEntity<List<CottageDTO>> getAllByDate(@PathVariable String dateString) {
+//		
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//		Date date = null;
+//		try {
+//			date = formatter.parse(dateString);
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//				
+//		System.out.println("datum: " + date);
+//		// ovde je sad problem zbog liste valjda
+////		List<Cottage> cottages = this.cottageService.getAllByDate(date);
+//		
+//		List<CottageDTO> cottagesDTOs = new ArrayList<CottageDTO>();
+//		for (Cottage cottage : cottages) {
+//			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
+//			cottagesDTOs.add(cottageDTO);
+//		}
+//		return new ResponseEntity<>(cottagesDTOs, HttpStatus.OK);
+//	}
+
+
+//	@PostMapping("/uploadImage")
+//	public ResponseEntity<Boolean> uploadImage(@RequestParam("image") MultipartFile file,
+//			@RequestParam("cottage") String cottage) {
+//		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+//		System.out.println(cottage);
+//		return new ResponseEntity<>(true, HttpStatus.OK);
+//	}
+
+	@PostMapping("/all/date")
+	public ResponseEntity<List<CottageDTO>> getAllByDate(@RequestBody Date date) {
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//		Date date = null;
+//		try {
+//			date = formatter.parse(dateInput);
+//		} catch (ParseException e) {
+//			
+//			e.printStackTrace();
+//		}
+
+		System.out.println("datum: " + date);
+//		System.out.println("datum: " + date.toGMTString());
+//		
+//		List<Cottage> cottages = this.cottageService.getAllByDate(date);
+//		
+//		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
+//		for (Cottage cottage : cottages) {
+//			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
+//			cottagesDTO.add(cottageDTO);
+//		}
+
+		return new ResponseEntity<>(null, HttpStatus.OK);
+	}
+
+//	private String getDate(String dateString) {
+//		String[] part = dateString.split("T");
+//		return part[0];
+//	}
+
+	@GetMapping("ownership/{id}")
+	public ResponseEntity<Boolean> checkOwnership(@PathVariable Long id) {
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 	
-	@GetMapping("/all/date/{dateString}")
-	public ResponseEntity<List<CottageDTO>> getAllByDate(@PathVariable String dateString) {
-		
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = null;
-		try {
-			date = formatter.parse(dateString);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-				
-		System.out.println("datum: " + date);
-		List<Cottage> cottages = this.cottageService.getAllByDate(date);
-		
-		List<CottageDTO> cottagesDTOs = new ArrayList<CottageDTO>();
-		for (Cottage cottage : cottages) {
-			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
-			cottagesDTOs.add(cottageDTO);
-		}
-		return new ResponseEntity<>(cottagesDTOs, HttpStatus.OK);
+	@GetMapping("options/{id}")
+	public ResponseEntity<List<CottageOption>> getOptions(@PathVariable Long id) {
+		return new ResponseEntity<>(this.cottageService.getOptions(id), HttpStatus.OK);
 	}
 
 }
