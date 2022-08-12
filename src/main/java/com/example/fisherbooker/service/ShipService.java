@@ -31,4 +31,6 @@ public interface ShipService {
 	
 
 	public Boolean checkIfShipHasReservation(Long id);
+
+	public List<Ship> getAllSorted(String type, String order);
 }

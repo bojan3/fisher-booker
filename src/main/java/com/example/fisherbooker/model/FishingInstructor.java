@@ -69,7 +69,6 @@ public class FishingInstructor {
 
 	public FishingInstructor() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	
