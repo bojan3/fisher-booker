@@ -222,12 +222,16 @@ public class Client {
 		this.cottageReservation = cottageReservation;
 	}
 
+//	@Override
+//	public String toString() {
+//		return "Client [id=" + id + ", account=" + account + ", shipReservation=" + shipReservation
+//				+ ", cottageReservation=" + cottageReservation + ", adventureReservation=" + adventureReservation
+//				+ ", cottageSubscriptions=" + cottageSubscriptions + ", shipSubscriptions=" + shipSubscriptions
+//				+ ", instructorSubscriptions=" + instructorSubscriptions + "]";
+//	}
+	
 	@Override
 	public String toString() {
-		return "Client [id=" + id + ", account=" + account + ", shipReservation=" + shipReservation
-				+ ", cottageReservation=" + cottageReservation + ", adventureReservation=" + adventureReservation
-				+ ", cottageSubscriptions=" + cottageSubscriptions + ", shipSubscriptions=" + shipSubscriptions
-				+ ", instructorSubscriptions=" + instructorSubscriptions + "]";
+		return account.getName() + " " + account.getLastName() + " " + account.getEmail() + " " + account.getPhoneNumber();
 	}
-
 }
