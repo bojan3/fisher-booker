@@ -209,6 +209,15 @@ insert into adventure_reservation(start_date, end_date, adventure_id, capacity, 
 insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-05-31', '2022-06-10', 1, 2, 25, 1, FALSE);
 insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-06-25', '2022-06-30', 2, 3, 15, 1, FALSE);
 insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-05-31', '2022-06-10', 3, 5, 50, 1, FALSE);
+insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-04-27', '2022-04-30', 1, 2, 25, 1, FALSE);
+insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-02-09', '2022-02-15', 1, 3, 15, 1, FALSE);
+insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-07-02', '2022-07-06', 2, 5, 50, 1, FALSE);
+insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-03-22', '2022-03-26', 2, 2, 25, 1, FALSE);
+insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-02-25', '2022-02-28', 2, 3, 15, 1, FALSE);
+insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-05-16', '2022-05-19', 1, 5, 50, 1, FALSE);
+insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2021-12-20', '2021-12-22', 1, 3, 15, 2, FALSE);
+insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2021-12-11', '2021-12-15', 1, 5, 50, 2, FALSE);
+
 
 insert into ship_rules(ship_id, rules_id) values(1, 3);
 insert into ship_rules(ship_id, rules_id) values(1, 4);

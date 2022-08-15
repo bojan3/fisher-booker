@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.example.fisherbooker.model.DTO.ReservationDetailsDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -41,6 +42,11 @@ public class CottageReservation {
 
 	public CottageReservation() {
 		super();
+	}
+	
+	public CottageReservation(Long id) {
+		super();
+		this.id = id;
 	}
 
 	public boolean isDeleted() {
@@ -114,12 +120,24 @@ public class CottageReservation {
 	public void setCottage(Cottage cottage) {
 		this.cottage = cottage;
 	}
+	
+	public ReservationDetailsDTO toDTO() {
+		ReservationDetailsDTO dto = new ReservationDetailsDTO();
+		dto.setId(id);
+		dto.setCapacity(capacity);
+		dto.setName(cottage.getName());
+		dto.setEndDate(endDate);
+		dto.setStartDate(startDate);
+		dto.setPrice(price);
+		dto.setOptions(cottageOption.toString());
+		dto.setUserInfo(client.toString());
+		return dto; 
+	}
 
 	@Override
 	public String toString() {
 		return "CottageReservation [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", price=" + price
-				+ ", capacity=" + capacity + ", cottageOption=" + cottageOption + ", cottage=" + cottage + ", client="
-				+ client + "]";
+				+ ", capacity=" + capacity + "]";
 	}
 
 }
