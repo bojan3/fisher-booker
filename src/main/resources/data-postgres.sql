@@ -225,9 +225,9 @@ insert into navigation_equipment(name, ship_id) values ('radar', 1);
 insert into fishing_equipment(name, ship_id) values('Štapovi za pecanje', 1);
 insert into fishing_equipment(name, ship_id) values('Mamac', 1);
 
-insert into review(comment, grade, client_id, id_entity, r_entity, published) values ('Pravi profesionalac. Bilo mi je zadovoljstvo biti deo njegove ekipe. Jedva cekam sledecu avanturu. :D', 5.0, 1,1, 0, true);
-insert into review(comment, grade, client_id, id_entity, r_entity, published) values ('Nisam naucio mnogo toga na casu tamo. Ali pored toga moram priznati da je duhovit covek i to se ceni.', 3.5, 1,1, 0, true);
-insert into review(comment, grade, client_id, id_entity, r_entity, published) values ('Bolje da sam poveo nekog iz kafane da me nauci nesto nego ovaj covek. Na greskama se uci. :/', 1.0, 1,1, 0, false);
+-- insert into review(comment, grade, client_id, id_entity, r_entity, published) values ('Pravi profesionalac. Bilo mi je zadovoljstvo biti deo njegove ekipe. Jedva cekam sledecu avanturu. :D', 5.0, 1,1, 0, true);
+-- insert into review(comment, grade, client_id, id_entity, r_entity, published) values ('Nisam naucio mnogo toga na casu tamo. Ali pored toga moram priznati da je duhovit covek i to se ceni.', 3.5, 1,1, 0, true);
+-- insert into review(comment, grade, client_id, id_entity, r_entity, published) values ('Bolje da sam poveo nekog iz kafane da me nauci nesto nego ovaj covek. Na greskama se uci. :/', 1.0, 1,1, 0, false);
 
 insert into delete_account_request(description, account_id) values ('Dosta mi je svega', 4);
 
@@ -238,14 +238,17 @@ insert into adventure_reservation_support_data(dtype,reservationdate,system_inco
 
 insert into ship_reservation_support_data(dtype,reservationdate,system_income) values('SHP','2022-08-12',0.1234);
 insert into ship_reservation_support_data(dtype,reservationdate,system_income) values('SHP','2022-04-12',0.1234);
+
 insert into cottage_subscriptions(client_id, cottage_id) values (1, 1);
 insert into cottage_subscriptions(client_id, cottage_id) values (2, 1);
 
-insert into areservation_reservation_supportdata (areservation_id, suppdata_id1) values (1,1);
-insert into areservation_reservation_supportdata (areservation_id, suppdata_id1) values (2,2);
 
 insert into shreservation_reservation_supportdata (shreservation_id, suppdata_id2) values (1,1);
 insert into shreservation_reservation_supportdata (shreservation_id, suppdata_id2) values (2,2);
+
+
+
+
 
 
 

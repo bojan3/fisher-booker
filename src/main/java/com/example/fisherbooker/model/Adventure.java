@@ -84,6 +84,10 @@ public class Adventure {
 	@JoinColumn(name = "instructor_id", nullable = false)
 	public FishingInstructor fishingInstructor;
 
+	@JsonIgnore
+	@OneToMany(mappedBy = "adventure", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	public Set<AdventureReview> adventureReviews = new HashSet<AdventureReview>();
+	
 //	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 //	public List<Room> room;
 

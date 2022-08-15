@@ -78,6 +78,10 @@ public class Ship {
 	@ManyToMany(mappedBy = "shipSubscriptions", fetch = FetchType.EAGER)
 	private Set<Client> client;
 
+	@JsonIgnore
+	@OneToMany(mappedBy = "ship", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	private Set<ShipReview> shipReviews = new HashSet<ShipReview>();
+
 	public Ship() {
 		super();
 	}
