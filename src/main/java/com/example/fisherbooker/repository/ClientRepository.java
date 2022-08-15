@@ -21,4 +21,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 			nativeQuery = true)
 	public List<String> getEmails(@Param("cottageId") Long id);
 
+//	moras da najdes akaunt pa onda da nadjes klijenta preko akaunta
+	@Query("FROM Client WHERE account.username = ?1")
+	public Client findByName(String name);
 }

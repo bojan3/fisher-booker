@@ -1,8 +1,6 @@
 package com.example.fisherbooker.model;
 
-import java.util.HashSet;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,8 +14,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Client {
@@ -50,6 +46,8 @@ public class Client {
 	@JoinTable(name = "instructor_subscriptions", joinColumns = @JoinColumn(name = "client_id"), inverseJoinColumns = @JoinColumn(name = "instructor_id"))
 	Set<FishingInstructor> instructorSubscriptions;
 
+	@OneToMany(mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	public Set<Review> reviews;
 //	@JsonIgnore
 //	@OneToMany(mappedBy = "client", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 //	public Set<CottageComplaint> cottageComplaints;

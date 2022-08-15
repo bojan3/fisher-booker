@@ -19,58 +19,62 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fisherbooker.model.Review;
 import com.example.fisherbooker.model.Ship;
+import com.example.fisherbooker.model.DTO.CreateReviewDTO;
 import com.example.fisherbooker.model.DTO.ShipDTO;
 import com.example.fisherbooker.service.ReviewService;
 import com.example.fisherbooker.service.ShipService;
 
+@RestController
+@RequestMapping("/api/review")
+public class ReviewController {
 
-	@RestController
-	@RequestMapping("/api/review")
-	public class ReviewController {
+	private ReviewService reviewservice;
 
-		public ReviewService reviewservice;
-
-		@Autowired
-		public ReviewController(ReviewService reviewService) {
-			this.reviewservice = reviewService;
-		}
-
-
-		@GetMapping("/all/rating")
-		public ResponseEntity<List<Review>> getAllByAverageMark() {
-			List<Review> reviews = this.reviewservice.getAllByGrade();
-			return new ResponseEntity<>(reviews, HttpStatus.OK);
-		}
-		
-		@GetMapping("/all/unpublished")
-		public ResponseEntity<List<Review>> getAllUnpublished() {
-			List<Review> reviews = this.reviewservice.getAllUnpublished();
-			return new ResponseEntity<>(reviews, HttpStatus.OK);
-		}
-		
-		@PutMapping("/publish/{ReviewId}")
-		public ResponseEntity<Boolean> publishReview(@PathVariable("ReviewId") Long ReviewID) {
-		
-			this.reviewservice.publish(ReviewID);
-			
-			return new ResponseEntity<>(true, HttpStatus.OK);
-		}	
-		
-		@GetMapping("/delete/{ReviewId}")
-		public ResponseEntity<Boolean> deleteReview(@PathVariable("ReviewId") Long ReviewID) {
-				return new ResponseEntity<>(this.reviewservice.deleteReview(ReviewID), HttpStatus.OK);
-		}
-			
-
-		@PostMapping("/save")
-		public ResponseEntity<Boolean> save(@RequestBody Review review) {
-			String username = SecurityContextHolder.getContext().getAuthentication().getName();
-			if (this.reviewservice.checkIfClientHasEntity(username, review)) {
-				this.reviewservice.saveReview(review);
-				return new ResponseEntity<>(true, HttpStatus.OK);
-			}
-			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-		}
-
+	@Autowired
+	public ReviewController(ReviewService reviewService) {
+		this.reviewservice = reviewService;
 	}
 
+//	@GetMapping("/all/rating")
+//	public ResponseEntity<List<Review>> getAllByAverageMark() {
+//		List<Review> reviews = this.reviewservice.getAllByGrade();
+//		return new ResponseEntity<>(reviews, HttpStatus.OK);
+//	}
+
+//		@GetMapping("/all/unpublished")
+//		public ResponseEntity<List<Review>> getAllUnpublished() {
+//			List<Review> reviews = this.reviewservice.getAllUnpublished();
+//			return new ResponseEntity<>(reviews, HttpStatus.OK);
+//		}
+//		
+//		@PutMapping("/publish/{ReviewId}")
+//		public ResponseEntity<Boolean> publishReview(@PathVariable("ReviewId") Long ReviewID) {
+//		
+//			this.reviewservice.publish(ReviewID);
+//			
+//			return new ResponseEntity<>(true, HttpStatus.OK);
+//		}	
+
+//	@GetMapping("/delete/{ReviewId}")
+//	public ResponseEntity<Boolean> deleteReview(@PathVariable("ReviewId") Long ReviewID) {
+//		return new ResponseEntity<>(this.reviewservice.deleteReview(ReviewID), HttpStatus.OK);
+//	}
+
+	@PostMapping("/cottage/save")
+	public ResponseEntity<Boolean> saveCottageReview(@RequestBody CreateReviewDTO createReviewDTO) {
+		this.reviewservice.createCottageReview(createReviewDTO);
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+
+	@PostMapping("/ship/save")
+	public ResponseEntity<Boolean> saveShipReview(@RequestBody CreateReviewDTO createReviewDTO) {
+		this.reviewservice.createShipReview(createReviewDTO);
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+
+	@PostMapping("/adventure/save")
+	public ResponseEntity<Boolean> save(@RequestBody CreateReviewDTO createReviewDTO) {
+		this.reviewservice.createAdventureReview(createReviewDTO);
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+}

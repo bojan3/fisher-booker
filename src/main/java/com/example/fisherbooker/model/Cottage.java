@@ -58,6 +58,10 @@ public class Cottage {
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<CottageOption> cottageOptions = new HashSet<CottageOption>();
 
+	@JsonIgnore
+	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	public Set<CottageReview> cottageReviews = new HashSet<CottageReview>();
+	
 	@ManyToOne
 	@JsonIgnore
 	@JoinColumn(name = "cottage_owner_id")
