@@ -38,8 +38,8 @@ public class CottageController {
 	}
 
 	@PostMapping("/add/{ownerId}")
-	public ResponseEntity<Boolean> getAllByOwner(@RequestBody Cottage cottage) {
-		this.cottageService.saveCottage(cottage);
+	public ResponseEntity<Boolean> getAllByOwner(@RequestBody CottageAddDTO cottageAddDTO) {
+		this.cottageService.saveCottage(cottageAddDTO);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 
