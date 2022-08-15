@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.fisherbooker.model.CottageOwner;
 import com.example.fisherbooker.model.DTO.CottageDTO;
 import com.example.fisherbooker.model.DTO.CottageOwnerDTO;
-import com.example.fisherbooker.model.DTO.CottageReservationDetailsDTO;
+import com.example.fisherbooker.model.DTO.ReservationDetailsDTO;
 import com.example.fisherbooker.service.CottageOwnerService;
 import com.example.fisherbooker.service.CottageReservationService;
 
@@ -67,9 +67,9 @@ public class CottageOwnerController {
 	}
 
 	@GetMapping("/reservations")
-	public ResponseEntity<List<CottageReservationDetailsDTO>> getReservationsByCottageOwner() {
+	public ResponseEntity<List<ReservationDetailsDTO>> getReservationsByCottageOwner() {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		List<CottageReservationDetailsDTO> dtos = this.cottageReservationService.getReservationsByCottageOwner(username);
+		List<ReservationDetailsDTO> dtos = this.cottageReservationService.getReservationsByCottageOwner(username);
 		return new ResponseEntity<>(dtos, HttpStatus.OK);
 	}
 

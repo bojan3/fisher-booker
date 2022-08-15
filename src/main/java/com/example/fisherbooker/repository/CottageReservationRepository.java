@@ -38,6 +38,6 @@ public interface CottageReservationRepository extends JpaRepository<CottageReser
 			+ "where cottage_id = :id and start_date <= :date and end_date >= :date", nativeQuery = true)
 	public CottageReservation getReservationByDateAndCottage(@Param("id") Long id, @Param("date") Date date);
 
-	public List<CottageReservation> findByCottageCottageOwnerAccountUsername(String username);
+	public List<CottageReservation> findByCottageCottageOwnerAccountUsernameOrderByStartDateDesc(String username);
 
 }

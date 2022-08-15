@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
-import com.example.fisherbooker.model.DTO.CottageReservationDetailsDTO;
+import com.example.fisherbooker.model.DTO.ReservationDetailsDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -120,15 +120,15 @@ public class CottageReservation {
 		this.cottage = cottage;
 	}
 	
-	public CottageReservationDetailsDTO toDTO() {
-		CottageReservationDetailsDTO dto = new CottageReservationDetailsDTO();
+	public ReservationDetailsDTO toDTO() {
+		ReservationDetailsDTO dto = new ReservationDetailsDTO();
 		dto.setId(id);
 		dto.setCapacity(capacity);
-		dto.setCottageName(cottage.getName());
+		dto.setName(cottage.getName());
 		dto.setEndDate(endDate);
 		dto.setStartDate(startDate);
 		dto.setPrice(price);
-		dto.setCottageOptions(cottageOption.toString());
+		dto.setOptions(cottageOption.toString());
 		dto.setUserInfo(client.toString());
 		return dto; 
 	}

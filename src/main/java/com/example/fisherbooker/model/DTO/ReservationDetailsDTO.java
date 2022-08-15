@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class CottageReservationDetailsDTO {
+public class ReservationDetailsDTO {
 	private Long id;
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date startDate;
@@ -12,11 +12,11 @@ public class CottageReservationDetailsDTO {
 	private Date endDate;
 	private int price;
 	private int capacity;
-	private String cottageName;
-	private String cottageOptions;
+	private String name;
+	private String options;
 	private String userInfo;
 
-	public CottageReservationDetailsDTO() {
+	public ReservationDetailsDTO() {
 		super();
 	}
 
@@ -60,12 +60,20 @@ public class CottageReservationDetailsDTO {
 		this.capacity = capacity;
 	}
 
-	public String getCottageName() {
-		return cottageName;
+	public String getName() {
+		return name;
 	}
 
-	public void setCottageName(String cottageName) {
-		this.cottageName = cottageName;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getOptions() {
+		return options;
+	}
+
+	public void setOptions(String options) {
+		this.options = options;
 	}
 
 	public String getUserInfo() {
@@ -74,14 +82,6 @@ public class CottageReservationDetailsDTO {
 
 	public void setUserInfo(String userInfo) {
 		this.userInfo = userInfo;
-	}
-
-	public String getCottageOptions() {
-		return cottageOptions;
-	}
-
-	public void setCottageOptions(String cottageOptions) {
-		this.cottageOptions = cottageOptions;
 	}
 
 }

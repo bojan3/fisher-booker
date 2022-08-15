@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.example.fisherbooker.model.CottageReservation;
 import com.example.fisherbooker.model.Stats;
-import com.example.fisherbooker.model.DTO.CottageReservationDetailsDTO;
+import com.example.fisherbooker.model.DTO.ReservationDetailsDTO;
 import com.example.fisherbooker.model.DTO.DatePeriodDTO;
 
 public interface CottageReservationService {
@@ -14,5 +14,5 @@ public interface CottageReservationService {
 	
 	public List<DatePeriodDTO> getReservationDates(Long cottageId);
 	
-	public List<CottageReservationDetailsDTO> getReservationsByCottageOwner(String username);
+	public List<ReservationDetailsDTO> getReservationsByCottageOwner(String username);
 }

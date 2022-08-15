@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.fisherbooker.model.CottageReservation;
 import com.example.fisherbooker.model.Stats;
-import com.example.fisherbooker.model.DTO.CottageReservationDetailsDTO;
+import com.example.fisherbooker.model.DTO.ReservationDetailsDTO;
 import com.example.fisherbooker.model.DTO.DatePeriodDTO;
 import com.example.fisherbooker.repository.CottageReservationRepository;
 import com.example.fisherbooker.service.CottageReservationService;
@@ -36,9 +36,9 @@ public class CottageReservationServiceImpl implements CottageReservationService 
 		return this.cottageReservationRepository.getReservationByDateAndCottage(id, date);
 	}
 	
-	public List<CottageReservationDetailsDTO> getReservationsByCottageOwner(String username) {
-		List<CottageReservation> reservations = this.cottageReservationRepository.findByCottageCottageOwnerAccountUsername(username);
-		List<CottageReservationDetailsDTO> dtos = new ArrayList<CottageReservationDetailsDTO>();
+	public List<ReservationDetailsDTO> getReservationsByCottageOwner(String username) {
+		List<CottageReservation> reservations = this.cottageReservationRepository.findByCottageCottageOwnerAccountUsernameOrderByStartDateDesc(username);
+		List<ReservationDetailsDTO> dtos = new ArrayList<ReservationDetailsDTO>();
 		for(CottageReservation reservation: reservations) {
 			dtos.add(reservation.toDTO());
 		}
