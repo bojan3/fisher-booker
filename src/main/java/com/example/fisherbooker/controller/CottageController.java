@@ -40,11 +40,11 @@ public class CottageController {
 		this.cottageReservationService = cottageReservationService;
 	}
 
-	@PostMapping("/add/{ownerId}")
-	public ResponseEntity<Boolean> getAllByOwner(@RequestBody CottageAddDTO cottageAddDTO) {
-		this.cottageService.saveCottage(cottageAddDTO);
-		return new ResponseEntity<>(true, HttpStatus.OK);
-	}
+//	@PostMapping("/add/{ownerId}")
+//	public ResponseEntity<Boolean> getAllByOwner(@RequestBody CottageAddDTO cottageAddDTO) {
+//		this.cottageService.saveCottage(cottageAddDTO);
+//		return new ResponseEntity<>(true, HttpStatus.OK);
+//	}
 
 	@GetMapping("/all")
 	public ResponseEntity<List<CottageDTO>> getAll() {

@@ -42,6 +42,7 @@ public class CottageReservation {
 
 	public CottageReservation() {
 		super();
+		this.deleted = false;
 	}
 	
 	public CottageReservation(Long id) {
@@ -132,6 +133,15 @@ public class CottageReservation {
 		dto.setOptions(cottageOption.toString());
 		dto.setUserInfo(client.toString());
 		return dto; 
+	}
+	
+	public void addOption(CottageOption newCottageOption) {
+		if (newCottageOption == null)
+			return;
+		if (this.cottageOption == null)
+			this.cottageOption = new java.util.HashSet<CottageOption>();
+		if (!this.cottageOption.contains(newCottageOption))
+			this.cottageOption.add(newCottageOption);
 	}
 
 	@Override
