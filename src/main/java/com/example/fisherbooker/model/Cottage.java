@@ -20,9 +20,6 @@ import javax.persistence.Version;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -62,7 +59,7 @@ public class Cottage {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	public Set<CottageReservation> cottageReservations = new HashSet<CottageReservation>();
-
+	
 	// @JsonIgnore
 	// @OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch =
 	// FetchType.EAGER)
@@ -85,6 +82,7 @@ public class Cottage {
 	private Set<Client> client;
 
 	@Version
+	@Column(columnDefinition = "integer DEFAULT 0", nullable = false)
 	private Integer version;
 
 	public Cottage() {
@@ -233,13 +231,13 @@ public class Cottage {
 		this.imagePath = imagePath;
 	}
 
-	public Integer getVersion() {
-		return version;
-	}
-
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
+//	public Integer getVersion() {
+//		return version;
+//	}
+//
+//	public void setVersion(Integer version) {
+//		this.version = version;
+//	}
 	
 	public void addReservation(CottageReservation newReservation) {
 		if (newReservation == null)
@@ -251,3 +249,4 @@ public class Cottage {
 	}
 
 }
+

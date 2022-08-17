@@ -1,5 +1,10 @@
 package com.example.fisherbooker.service.impl;
 
+import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -7,6 +12,7 @@ import com.example.fisherbooker.model.Client;
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageOption;
 import com.example.fisherbooker.model.CottageReservation;
+import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.ShipOption;
 import com.example.fisherbooker.model.ShipReservation;
 import com.example.fisherbooker.model.DTO.AddReservationDTO;
@@ -21,29 +27,25 @@ import com.example.fisherbooker.service.ReservationService;
 @Service
 public class ReservationServiceImpl implements ReservationService {
 
-	private CottageRepository cottageRepository;
-	
-	private CottageReservationRepository cottageReservationRepository;
-	private ShipReservationRepository shipReservationRepository;
+	@PersistenceContext
+	EntityManager entityManager;
+
 	private CottageOptionRepository cottageOptionRepository;
 	private ShipOptionRepository shipOptionRepository;
 	private ClientRepository clientRepository;
 
-	public ReservationServiceImpl(CottageRepository cottageRepository, CottageReservationRepository cottageReservationRepository,
-			ShipReservationRepository shipReservationRepository, CottageOptionRepository cottageOptionRepository,
+	public ReservationServiceImpl(CottageOptionRepository cottageOptionRepository,
 			ShipOptionRepository shipOptionRepository, ClientRepository clientRepository) {
-		this.cottageReservationRepository = cottageReservationRepository;
 		this.cottageOptionRepository = cottageOptionRepository;
 		this.clientRepository = clientRepository;
-		this.shipReservationRepository = shipReservationRepository;
 		this.shipOptionRepository = shipOptionRepository;
-		this.cottageRepository = cottageRepository;
 	}
 
+	@Transactional()
 	public Boolean add(AddReservationDTO reservation) {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		Client c = this.clientRepository.findByAccountUsername(username);
-		
+
 		switch (reservation.getType()) {
 		case SHIP: {
 			ShipReservation newReservation = reservation.toShipModel();
@@ -54,8 +56,11 @@ public class ReservationServiceImpl implements ReservationService {
 				}
 			}
 			newReservation.setClient(c);
-			
-			this.shipReservationRepository.save(newReservation);
+			Ship ship = entityManager.find(Ship.class, reservation.getRealEstateId(),
+					LockModeType.OPTIMISTIC_FORCE_INCREMENT);
+			newReservation.setShip(ship);
+			ship.addReservation(newReservation);
+			entityManager.persist(ship);
 			break;
 		}
 		case COTTAGE: {
@@ -67,12 +72,11 @@ public class ReservationServiceImpl implements ReservationService {
 				}
 			}
 			newReservation.setClient(c);
-			
-//			Cottage cottage = this.cottageRepository.findById(reservation.getRealEstateId()).orElse(null);
-//			cottage.addReservation(newReservation);
-//			this.cottageRepository.save(cottage);
-
-			this.cottageReservationRepository.save(newReservation);
+			Cottage cottage = entityManager.find(Cottage.class, reservation.getRealEstateId(),
+					LockModeType.OPTIMISTIC_FORCE_INCREMENT);
+			newReservation.setCottage(cottage);
+			cottage.addReservation(newReservation);
+			entityManager.persist(cottage);
 			break;
 		}
 		}

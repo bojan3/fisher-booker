@@ -1,7 +1,5 @@
 package com.example.fisherbooker.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageOption;
+import com.example.fisherbooker.model.DTO.CottageAddDTO;
 import com.example.fisherbooker.model.DTO.CottageDTO;
 import com.example.fisherbooker.model.DTO.DatePeriodDTO;
 import com.example.fisherbooker.service.CottageReservationService;
@@ -116,11 +115,11 @@ public class CottageController {
 		return new ResponseEntity<>(cottageDTOs, HttpStatus.OK);
 	}
 
-//	@PostMapping("/save")
-//	public ResponseEntity<Boolean> save(@RequestBody Cottage cottage) {
-//		this.cottageService.saveCottage(cottage);
-//		return new ResponseEntity<>(true, HttpStatus.OK);
-//	}
+	@PostMapping("/save")
+	public ResponseEntity<Boolean> save(@RequestBody CottageAddDTO cottage) {
+		this.cottageService.saveCottage(cottage);
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
 
 //	@GetMapping("/all/date/{dateString}")
 //	public ResponseEntity<List<CottageDTO>> getAllByDate(@PathVariable String dateString) {
