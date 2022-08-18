@@ -1,54 +1,66 @@
 package com.example.fisherbooker.model;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+
+import com.example.fisherbooker.model.DTO.CreateReviewDTO;
 
 @Entity
-public class Review {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "review_type")
+public abstract class Review {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-		
-	@Column(length = 300)
+
+	@Column
 	private String comment;
-	
+
 	@Column
 	private int grade;
-	
-	@Column
-	//@JoinColumn(name="client_id", nullable=false)
-	Long client_id;
-	
-	@Column
-	Long id_entity;
-	
-	@Column
-	ReviewEntity r_entity;
-	
-	@Column 
-	Boolean published;
 
-	public Review(Long id, String comment, int grade, Long client, Long id_entity, ReviewEntity r_entity) {
+	@ManyToOne
+	@JoinColumn(name = "client_id", nullable = false)
+	private Client client;
+
+	@Column
+	private Boolean approved;
+
+	@Column
+	private Boolean forOwner;
+
+	public Review() {
 		super();
-		this.id = id;
+	}
+
+	public Review(CreateReviewDTO createReviewDTO, Client client) {
+		super();
+		this.comment = createReviewDTO.getComment();
+		this.grade = createReviewDTO.getGrade();
+		this.client = client;
+		this.approved = false;
+		this.forOwner = createReviewDTO.getForOwner();
+	}
+
+	
+	public Review(String comment, int grade, Client client, Boolean approved, Boolean forOwner) {
+		super();
 		this.comment = comment;
 		this.grade = grade;
-		this.client_id = client;
-		this.id_entity = id_entity;
-		this.r_entity = r_entity;
-		this.published = false;
+		this.client = client;
+		this.forOwner = forOwner;
+		this.approved = false;
 	}
-	
-	public Review() {}
-	
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -65,7 +77,7 @@ public class Review {
 		this.comment = comment;
 	}
 
-	public long getGrade() {
+	public int getGrade() {
 		return grade;
 	}
 
@@ -73,47 +85,28 @@ public class Review {
 		this.grade = grade;
 	}
 
-	public Long getClient() {
-		return client_id;
+	public Client getClient() {
+		return client;
 	}
 
-	public void setClient(Long client) {
-		this.client_id = client;
+	public void setClient(Client client) {
+		this.client = client;
 	}
 
-	public Long getId_entity() {
-		return id_entity;
+	public Boolean getApproved() {
+		return approved;
 	}
 
-	public void setId_entity(Long id_entity) {
-		this.id_entity = id_entity;
+	public void setApproved(Boolean approved) {
+		this.approved = approved;
 	}
 
-	
-
-	public ReviewEntity getR_entity() {
-		return r_entity;
+	public Boolean getForOwner() {
+		return forOwner;
 	}
 
-	public void setR_entity(ReviewEntity r_entity) {
-		this.r_entity = r_entity;
+	public void setForOwner(Boolean forOwner) {
+		this.forOwner = forOwner;
 	}
 
-	public Boolean getPublished() {
-		return published;
-	}
-
-	public void setPublished(Boolean published) {
-		this.published = published;
-	}
-
-	@Override
-	public String toString() {
-		return "Review [id=" + id + ", comment=" + comment + ", grade=" + grade + ", client=" + client_id + ", id_entity="
-				+ id_entity + ", r_entity=" + r_entity + ", published=" + published + "]";
-	}
-	
-
-	
-	
 }

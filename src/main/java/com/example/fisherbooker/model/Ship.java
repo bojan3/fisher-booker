@@ -78,6 +78,10 @@ public class Ship {
 	@ManyToMany(mappedBy = "shipSubscriptions", fetch = FetchType.EAGER)
 	private Set<Client> client;
 
+	@JsonIgnore
+	@OneToMany(mappedBy = "ship", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	private Set<ShipReview> shipReviews = new HashSet<ShipReview>();
+
 	public Ship() {
 		super();
 	}
@@ -280,6 +284,15 @@ public class Ship {
 
 	public void setClient(Set<Client> client) {
 		this.client = client;
+	}
+	
+	public void addReservation(ShipReservation newReservation) {
+		if (newReservation == null)
+			return;
+		if (this.shipReservations == null)
+			this.shipReservations = new java.util.HashSet<ShipReservation>();
+		if (!this.shipReservations.contains(newReservation))
+			this.shipReservations.add(newReservation);
 	}
 
 	@Override

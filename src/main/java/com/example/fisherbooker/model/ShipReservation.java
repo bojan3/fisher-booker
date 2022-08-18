@@ -27,9 +27,8 @@ public class ShipReservation {
 	private int price;
 	private int capacity;
 	private boolean deleted;
-	
-	@OneToOne
-	(cascade = CascadeType.ALL)
+
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinTable(name = "shreservation_reservation_supportdata", joinColumns = @JoinColumn(name = "shreservation_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "suppdata_id2", referencedColumnName = "id"))
 	private ShipReservationSupportData reservationsd;
 
@@ -47,6 +46,7 @@ public class ShipReservation {
 
 	public ShipReservation() {
 		super();
+		this.deleted = false;
 	}
 
 	public int getId() {
@@ -119,6 +119,15 @@ public class ShipReservation {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	public void addOption(ShipOption newShipOption) {
+		if (newShipOption == null)
+			return;
+		if (this.shipOption == null)
+			this.shipOption = new java.util.HashSet<ShipOption>();
+		if (!this.shipOption.contains(newShipOption))
+			this.shipOption.add(newShipOption);
 	}
 
 	@Override

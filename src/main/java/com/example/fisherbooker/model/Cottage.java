@@ -15,8 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import javax.persistence.Version;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -41,7 +40,7 @@ public class Cottage {
 	@OneToOne(cascade = CascadeType.ALL)
 	public Address address;
 
-	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	public Set<Room> rooms = new HashSet<Room>();
 
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
@@ -57,16 +56,21 @@ public class Cottage {
 	public Set<CottagePicture> cottagePictures = new HashSet<CottagePicture>();
 
 	@JsonIgnore
-    @OnDelete(action = OnDeleteAction.CASCADE)
-	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true) 
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	public Set<CottageReservation> cottageReservations = new HashSet<CottageReservation>();
 	
-	//@JsonIgnore
-	//@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	//public Set<CottageComplaint> cottageComplaints;
+	// @JsonIgnore
+	// @OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch =
+	// FetchType.EAGER)
+	// public Set<CottageComplaint> cottageComplaints;
 
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Set<CottageOption> cottageOptions = new HashSet<CottageOption>();
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	public Set<CottageReview> cottageReviews = new HashSet<CottageReview>();
 
 	@ManyToOne
 	@JsonIgnore
@@ -76,6 +80,10 @@ public class Cottage {
 	@JsonIgnore
 	@ManyToMany(mappedBy = "cottageSubscriptions")
 	private Set<Client> client;
+
+	@Version
+	@Column(columnDefinition = "integer DEFAULT 0", nullable = false)
+	private Integer version;
 
 	public Cottage() {
 	}
@@ -223,4 +231,22 @@ public class Cottage {
 		this.imagePath = imagePath;
 	}
 
+//	public Integer getVersion() {
+//		return version;
+//	}
+//
+//	public void setVersion(Integer version) {
+//		this.version = version;
+//	}
+	
+	public void addReservation(CottageReservation newReservation) {
+		if (newReservation == null)
+			return;
+		if (this.cottageReservations == null)
+			this.cottageReservations = new java.util.HashSet<CottageReservation>();
+		if (!this.cottageReservations.contains(newReservation))
+			this.cottageReservations.add(newReservation);
+	}
+
 }
+

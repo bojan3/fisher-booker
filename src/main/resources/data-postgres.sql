@@ -214,6 +214,15 @@ insert into adventure_reservation(start_date, end_date, adventure_id, capacity, 
 insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-05-31', '2022-06-10', 1, 2, 25, 1, FALSE);
 insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-06-25', '2022-06-30', 2, 3, 15, 1, FALSE);
 insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-05-31', '2022-06-10', 3, 5, 50, 1, FALSE);
+insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-04-27', '2022-04-30', 1, 2, 25, 1, FALSE);
+insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-02-09', '2022-02-15', 1, 3, 15, 1, FALSE);
+insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-07-02', '2022-07-06', 2, 5, 50, 1, FALSE);
+insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-03-22', '2022-03-26', 2, 2, 25, 1, FALSE);
+insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-02-25', '2022-02-28', 2, 3, 15, 1, FALSE);
+insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-05-16', '2022-05-19', 1, 5, 50, 1, FALSE);
+insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2021-12-20', '2021-12-22', 1, 3, 15, 2, FALSE);
+insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2021-12-11', '2021-12-15', 1, 5, 50, 2, FALSE);
+
 
 insert into ship_rules(ship_id, rules_id) values(1, 3);
 insert into ship_rules(ship_id, rules_id) values(1, 4);
@@ -230,9 +239,9 @@ insert into navigation_equipment(name, ship_id) values ('radar', 1);
 insert into fishing_equipment(name, ship_id) values('Štapovi za pecanje', 1);
 insert into fishing_equipment(name, ship_id) values('Mamac', 1);
 
-insert into review(comment, grade, client_id, id_entity, r_entity, published) values ('Pravi profesionalac. Bilo mi je zadovoljstvo biti deo njegove ekipe. Jedva cekam sledecu avanturu. :D', 5.0, 1,1, 0, true);
-insert into review(comment, grade, client_id, id_entity, r_entity, published) values ('Nisam naucio mnogo toga na casu tamo. Ali pored toga moram priznati da je duhovit covek i to se ceni.', 3.5, 1,1, 0, true);
-insert into review(comment, grade, client_id, id_entity, r_entity, published) values ('Bolje da sam poveo nekog iz kafane da me nauci nesto nego ovaj covek. Na greskama se uci. :/', 1.0, 1,1, 0, false);
+-- insert into review(comment, grade, client_id, id_entity, r_entity, published) values ('Pravi profesionalac. Bilo mi je zadovoljstvo biti deo njegove ekipe. Jedva cekam sledecu avanturu. :D', 5.0, 1,1, 0, true);
+-- insert into review(comment, grade, client_id, id_entity, r_entity, published) values ('Nisam naucio mnogo toga na casu tamo. Ali pored toga moram priznati da je duhovit covek i to se ceni.', 3.5, 1,1, 0, true);
+-- insert into review(comment, grade, client_id, id_entity, r_entity, published) values ('Bolje da sam poveo nekog iz kafane da me nauci nesto nego ovaj covek. Na greskama se uci. :/', 1.0, 1,1, 0, false);
 
 insert into delete_account_request(description, account_id) values ('Dosta mi je svega', 4);
 
@@ -250,16 +259,21 @@ insert into cottage_reservation_support_data(dtype,reservationdate,system_income
 insert into cottage_reservation_support_data(dtype,reservationdate,system_income, price) values('CTG','2022-05-22',0.23,80);
 
 
+insert into ship_reservation_support_data(dtype,reservationdate,system_income) values('SHP','2022-08-12',0.1234);
+insert into ship_reservation_support_data(dtype,reservationdate,system_income) values('SHP','2022-04-12',0.1234);
+
 insert into cottage_subscriptions(client_id, cottage_id) values (1, 1);
 insert into cottage_subscriptions(client_id, cottage_id) values (2, 1);
 
-insert into areservation_reservation_supportdata (areservation_id, suppdata_id1) values (1,1);
-insert into areservation_reservation_supportdata (areservation_id, suppdata_id1) values (2,2);
 
 insert into shreservation_reservation_supportdata (shreservation_id, suppdata_id2) values (1,1);
 insert into shreservation_reservation_supportdata (shreservation_id, suppdata_id2) values (2,2);
 
 insert into creservation_reservation_supportdata (creservation_id, suppdata_id3) values (1,1);
 insert into creservation_reservation_supportdata (creservation_id, suppdata_id3) values (2,2);
+
+
+
+
 
 
