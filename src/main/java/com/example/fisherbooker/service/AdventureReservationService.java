@@ -113,7 +113,17 @@ public List<AdventureReservation> getAllByInstructor(Long fishingInstructor) {
 	return neke;
 }
 
-
+public List<AdventureReservation> getAllByInstructorAccountUsername(String username) {
+	List<AdventureReservation> sve = arr.findAll();	
+	List<AdventureReservation> neke = new ArrayList<AdventureReservation>();
+	
+	for (AdventureReservation adventureReservation : sve) {
+		if (adventureReservation.getAdventure().getFishingInstructor().getAccount().getUsername().equals(username)) {
+			neke.add(adventureReservation);
+		}
+	}
+	return neke;
+}
 
 
 

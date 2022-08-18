@@ -19,25 +19,29 @@ public class ReservationSupportData {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column
-	private Date reservationdate;
+	private String reservationdate;
 	@Column
 	private float systemIncome;
+	
+	@Column
+	private int price;
 	
 	@Column
 	private String dtype;
 	
 	public ReservationSupportData() {
 		super();
-		this.reservationdate= new Date();
+	//	this.reservationdate= new Date();
 	//	GlobalNumberService gs  = new GlobalNumberService();
 	//	this.systemIncome=gs.GetByID((long) 1).getValuex();
 	}
 
-	public ReservationSupportData(Long id, Date reservationdate, float systemIncome) {
+	public ReservationSupportData(Long id, String reservationdate, float systemIncome, int price) {
 		super();
 		this.id = id;
 		this.reservationdate = reservationdate;
 		this.systemIncome = systemIncome;
+		this.price = price;
 	}
 
 	public Long getId() {
@@ -48,11 +52,11 @@ public class ReservationSupportData {
 		this.id = id;
 	}
 
-	public Date getReservationdate() {
+	public String getReservationdate() {
 		return reservationdate;
 	}
 
-	public void setReservationdate(Date reservationdate) {
+	public void setReservationdate(String reservationdate) {
 		this.reservationdate = reservationdate;
 	}
 
@@ -64,11 +68,27 @@ public class ReservationSupportData {
 		this.systemIncome = systemIncome;
 	}
 
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	
+	public String getDtype() {
+		return dtype;
+	}
+
+	public void setDtype(String dtype) {
+		this.dtype = dtype;
+	}
+	
 
 	@Override
 	public String toString() {
 		return "ReservationSupportData [id=" + id + ", reservationdate=" + reservationdate + ", systemIncome="
-				+ systemIncome + "  ]";
+				+ systemIncome + ""+ "price:"+ price + "]";
 	}
 	
 	

@@ -205,6 +205,11 @@ insert into ship_reservation(start_date, end_date, ship_id, capacity, price, cli
 insert into adventure_reservation(start_date, end_date, adventure_id, capacity, price, client_id, deleted, cancel_rate, duration) values ('2022-05-31', '2022-06-10', 1, 1, 20, 1, FALSE, 0.2, 12);
 insert into adventure_reservation(start_date, end_date, adventure_id, capacity, price, client_id, deleted, cancel_rate, duration) values ('2022-06-25', '2022-06-30', 2, 5, 70, 1, FALSE, 0.2, 12);
 insert into adventure_reservation(start_date, end_date, adventure_id, capacity, price, client_id, deleted, cancel_rate, duration) values ('2022-05-31', '2022-06-10', 3, 4, 40, 1, FALSE, 0.2, 12);
+insert into adventure_reservation(start_date, end_date, adventure_id, capacity, price, client_id, deleted, cancel_rate, duration) values ('2022-05-31', '2022-06-10', 4, 1, 20, 1, FALSE, 0.2, 12);
+insert into adventure_reservation(start_date, end_date, adventure_id, capacity, price, client_id, deleted, cancel_rate, duration) values ('2022-06-25', '2022-06-30', 5, 5, 70, 1, FALSE, 0.2, 12);
+insert into adventure_reservation(start_date, end_date, adventure_id, capacity, price, client_id, deleted, cancel_rate, duration) values ('2022-05-31', '2022-06-10', 6, 4, 40, 1, FALSE, 0.2, 12);
+
+
 
 insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-05-31', '2022-06-10', 1, 2, 25, 1, FALSE);
 insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-06-25', '2022-06-30', 2, 3, 15, 1, FALSE);
@@ -232,12 +237,19 @@ insert into review(comment, grade, client_id, id_entity, r_entity, published) va
 insert into delete_account_request(description, account_id) values ('Dosta mi je svega', 4);
 
 insert into global_number(name,valuex) values('GLOBAL_INCOME_PRECENTAGE',0.2);
+insert into global_number(name,valuex) values('TOTAL_INCOME',0);
 
-insert into adventure_reservation_support_data(dtype,reservationdate,system_income) values('ADV','2022-08-12',0.1234);
-insert into adventure_reservation_support_data(dtype,reservationdate,system_income) values('ADV','2022-04-12',0.1234);
 
-insert into ship_reservation_support_data(dtype,reservationdate,system_income) values('SHP','2022-08-12',0.1234);
-insert into ship_reservation_support_data(dtype,reservationdate,system_income) values('SHP','2022-04-12',0.1234);
+insert into adventure_reservation_support_data(dtype,reservationdate,system_income, price) values('ADV','2022-01-02',0.12,10);
+insert into adventure_reservation_support_data(dtype,reservationdate,system_income, price) values('ADV','2022-02-02',0.134,20);
+
+insert into ship_reservation_support_data(dtype,reservationdate,system_income, price) values('SHP','2022-03-22',0.14,60);
+insert into ship_reservation_support_data(dtype,reservationdate,system_income, price) values('SHP','2022-04-22',0.124,70);
+
+insert into cottage_reservation_support_data(dtype,reservationdate,system_income, price) values('CTG','2022-01-22',0.24,100);
+insert into cottage_reservation_support_data(dtype,reservationdate,system_income, price) values('CTG','2022-05-22',0.23,80);
+
+
 insert into cottage_subscriptions(client_id, cottage_id) values (1, 1);
 insert into cottage_subscriptions(client_id, cottage_id) values (2, 1);
 
@@ -247,5 +259,7 @@ insert into areservation_reservation_supportdata (areservation_id, suppdata_id1)
 insert into shreservation_reservation_supportdata (shreservation_id, suppdata_id2) values (1,1);
 insert into shreservation_reservation_supportdata (shreservation_id, suppdata_id2) values (2,2);
 
+insert into creservation_reservation_supportdata (creservation_id, suppdata_id3) values (1,1);
+insert into creservation_reservation_supportdata (creservation_id, suppdata_id3) values (2,2);
 
 
