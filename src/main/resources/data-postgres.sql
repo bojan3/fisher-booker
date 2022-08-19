@@ -241,8 +241,15 @@ insert into fishing_equipment(name, ship_id) values('Mamac', 1);
 
 -- insert into review(comment, grade, client_id, id_entity, r_entity, published) values ('Pravi profesionalac. Bilo mi je zadovoljstvo biti deo njegove ekipe. Jedva cekam sledecu avanturu. :D', 5.0, 1,1, 0, true);
 -- insert into review(comment, grade, client_id, id_entity, r_entity, published) values ('Nisam naucio mnogo toga na casu tamo. Ali pored toga moram priznati da je duhovit covek i to se ceni.', 3.5, 1,1, 0, true);
--- insert into review(comment, grade, client_id, id_entity, r_entity, published) values ('Bolje da sam poveo nekog iz kafane da me nauci nesto nego ovaj covek. Na greskama se uci. :/', 1.0, 1,1, 0, false);
+ insert into review(review_type, approved, comment, for_owner, grade, client_id, adventure_id, cottage_id, ship_id) 
+ values ('adventure_review', false,'Bolje da sam poveo nekog iz kafane da me nauci nesto nego ovaj covek. Na greskama se uci. :/', true, 1,1, 1, null,null);
 
+ insert into review(review_type, approved, comment, for_owner, grade, client_id, adventure_id, cottage_id, ship_id) 
+ values ('ship_review', false,'Ovaj brod je veoma dobar i kvalitetan', true, 5,1, null, null,1); 
+ 
+  insert into review(review_type, approved, comment, for_owner, grade, client_id, adventure_id, cottage_id, ship_id) 
+ values ('cottage_review', false,'Dobro ocuvana vikendica za ove pare', true, 3,1, null, 1,null);
+ 
 insert into delete_account_request(description, account_id) values ('Dosta mi je svega', 4);
 
 insert into global_number(name,valuex) values('GLOBAL_INCOME_PRECENTAGE',0.2);

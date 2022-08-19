@@ -14,9 +14,12 @@ import javax.persistence.ManyToOne;
 import com.example.fisherbooker.model.DTO.CreateReviewDTO;
 
 @Entity
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+
 @DiscriminatorColumn(name = "review_type")
-public abstract class Review {
+public class Review {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -108,5 +111,13 @@ public abstract class Review {
 	public void setForOwner(Boolean forOwner) {
 		this.forOwner = forOwner;
 	}
+
+	@Override
+	public String toString() {
+		return "Review [id=" + id + ", comment=" + comment + ", grade=" + grade + ", client=" + client + ", approved="
+				+ approved + ", forOwner=" + forOwner + "]";
+	}
+	
+	
 
 }

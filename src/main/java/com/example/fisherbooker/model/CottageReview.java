@@ -23,6 +23,21 @@ public class CottageReview extends Review{
 		super(createReviewDTO, client);
 		this.cottage = cottage;
 	}
+
+	public Cottage getCottage() {
+		return cottage;
+	}
+
+	public void setCottage(Cottage cottage) {
+		this.cottage = cottage;
+	}
+	
+	
+	public Long  getCottageId() {
+		return cottage.getId();
+	}
+
+
 	
 	
 	

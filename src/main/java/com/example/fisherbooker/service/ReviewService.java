@@ -1,5 +1,8 @@
 package com.example.fisherbooker.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -9,8 +12,10 @@ import com.example.fisherbooker.model.AdventureReview;
 import com.example.fisherbooker.model.Client;
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageReview;
+import com.example.fisherbooker.model.Review;
 import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.ShipReview;
+import com.example.fisherbooker.model.DTO.ApproveReviewDTO;
 import com.example.fisherbooker.model.DTO.CreateReviewDTO;
 import com.example.fisherbooker.repository.AdventureRepository;
 import com.example.fisherbooker.repository.ClientRepository;
@@ -21,16 +26,35 @@ import com.example.fisherbooker.repository.ShipRepository;
 @Service
 public class ReviewService {
 
-	private ReviewRepository reviewRepository;
+	@Autowired
+	private ReviewRepository<CottageReview> cottagereviewRepository;
+
+	@Autowired
+	private ReviewRepository<ShipReview> shipreviewRepository;
+
+	@Autowired
+	private ReviewRepository<AdventureReview> adventurereviewRepository;
+
+	@Autowired
 	private CottageRepository cottageRepository;
+
+	@Autowired
 	private ClientRepository clientRepository;
+
+	@Autowired
 	private ShipRepository shipRepository;
+
+	@Autowired
 	private AdventureRepository adventureRepository;
 
 	@Autowired
-	public ReviewService(ReviewRepository reviewRepository, CottageRepository cottageRepository,
+	public ReviewService(ReviewRepository<CottageReview> cottagereviewrepository,
+			ReviewRepository<ShipReview> shipreviewrepository,
+			ReviewRepository<AdventureReview> adventurereviewrepository, CottageRepository cottageRepository,
 			ClientRepository clientRepository, ShipRepository shipRepository, AdventureRepository adventureRepository) {
-		this.reviewRepository = reviewRepository;
+		this.adventurereviewRepository = adventurereviewrepository;
+		this.cottagereviewRepository = cottagereviewrepository;
+		this.shipreviewRepository = shipreviewrepository;
 		this.cottageRepository = cottageRepository;
 		this.clientRepository = clientRepository;
 		this.shipRepository = shipRepository;
@@ -41,7 +65,7 @@ public class ReviewService {
 		Cottage cottage = cottageRepository.getOne(createReviewDTO.getReviewEntityId());
 		Client client = getClient();
 		CottageReview cottageReview = new CottageReview(createReviewDTO, client, cottage);
-		this.reviewRepository.save(cottageReview);
+		this.cottagereviewRepository.save(cottageReview);
 	}
 
 	private Client getClient() {
@@ -61,33 +85,81 @@ public class ReviewService {
 		Ship ship = this.shipRepository.getOne(createReviewDTO.getReviewEntityId());
 		Client client = getClient();
 		ShipReview shipReview = new ShipReview(createReviewDTO, client, ship);
-		this.reviewRepository.save(shipReview);
+		this.shipreviewRepository.save(shipReview);
 	}
 
 	public void createAdventureReview(CreateReviewDTO createReviewDTO) {
 		Adventure adventure = this.adventureRepository.getOne(createReviewDTO.getReviewEntityId());
 		Client client = getClient();
 		AdventureReview adventureReview = new AdventureReview(createReviewDTO, client, adventure);
-		this.reviewRepository.save(adventureReview);
+		this.adventurereviewRepository.save(adventureReview);
 	}
 
-//	public void publish(Long reviewID) {
-//	Review r =	this.rr.findById(reviewID).get();
-//	r.setPublished(true);
-//	this.rr.save(r);
-//		
-//	}
-//
-//
-//	public List<Review> getAllUnpublished() {
-//		List<Review> sve = this.rr.findAll();
-//		List<Review> neobjavljene = new ArrayList<Review>();
-//		
-//		 for(Review r : sve){
-//			if(r.getPublished().equals(false)) 
-//				neobjavljene.add(r);
-//		 }	
-//		return neobjavljene;
-//	}
+	public void publish(Long reviewID) {
+	try {	
+		AdventureReview ar = this.adventurereviewRepository.findById(reviewID).get();
+		ar.setApproved(true);
+		this.adventurereviewRepository.save(ar);
+	}
+	
+	catch(Exception err) {
+		System.out.print("not a adventure");
+		System.out.println(err);
+	}
+	try {
+		CottageReview cr = this.cottagereviewRepository.findById(reviewID).get();
+		cr.setApproved(true);
+		this.cottagereviewRepository.save(cr);
+	}
+	catch(Exception err) {
+		System.out.print("not a cottage");
+		System.out.println(err);
+	}
+	
+	try {
+		
+		ShipReview shr = this.shipreviewRepository.findById(reviewID).get();
+		shr.setApproved(true);
+		this.shipreviewRepository.save(shr);
+	}
+	catch (Exception e) {
+		System.out.print("not ship");
+		System.out.println(e);
+	}
+	
+		
+
+	}
+
+	public List<ApproveReviewDTO> getAllUnpublished() {
+		List<CottageReview> cottagereviews = this.cottagereviewRepository.findAllCottages();
+		List<ShipReview> shipreviews = this.shipreviewRepository.findAllShips();
+		List<AdventureReview> adventurereviews = this.adventurereviewRepository.findAllAdventures();
+
+		List<ApproveReviewDTO> unapproved = new ArrayList<ApproveReviewDTO>();
+		List<ApproveReviewDTO> unapproved1 = new ArrayList<ApproveReviewDTO>();
+		List<ApproveReviewDTO> unapproved2 = new ArrayList<ApproveReviewDTO>();
+		List<ApproveReviewDTO> unapproved3 = new ArrayList<ApproveReviewDTO>();
+
+		for (CottageReview cr : cottagereviews) {
+			if (cr.getApproved().equals(false))
+				unapproved1.add(new ApproveReviewDTO(cr));
+		}
+
+		for (ShipReview shr : shipreviews) {
+			if (shr.getApproved().equals(false))
+				unapproved2.add(new ApproveReviewDTO(shr));
+		}
+
+		for (AdventureReview ar : adventurereviews) {
+			if (ar.getApproved().equals(false))
+				unapproved3.add(new ApproveReviewDTO(ar));
+		}
+
+		unapproved.addAll(unapproved1);
+		unapproved.addAll(unapproved2);
+		unapproved.addAll(unapproved3);
+		return unapproved;
+	}
 
 }

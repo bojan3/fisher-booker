@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fisherbooker.model.Review;
 import com.example.fisherbooker.model.Ship;
+import com.example.fisherbooker.model.DTO.ApproveReviewDTO;
 import com.example.fisherbooker.model.DTO.CreateReviewDTO;
 import com.example.fisherbooker.model.DTO.ShipDTO;
 import com.example.fisherbooker.service.ReviewService;
@@ -41,19 +42,19 @@ public class ReviewController {
 //		return new ResponseEntity<>(reviews, HttpStatus.OK);
 //	}
 
-//		@GetMapping("/all/unpublished")
-//		public ResponseEntity<List<Review>> getAllUnpublished() {
-//			List<Review> reviews = this.reviewservice.getAllUnpublished();
-//			return new ResponseEntity<>(reviews, HttpStatus.OK);
-//		}
-//		
-//		@PutMapping("/publish/{ReviewId}")
-//		public ResponseEntity<Boolean> publishReview(@PathVariable("ReviewId") Long ReviewID) {
-//		
-//			this.reviewservice.publish(ReviewID);
-//			
-//			return new ResponseEntity<>(true, HttpStatus.OK);
-//		}	
+	@GetMapping("/all/unpublished")
+	public ResponseEntity<List<ApproveReviewDTO>> getAllUnpublished() {
+		List<ApproveReviewDTO> reviews = this.reviewservice.getAllUnpublished();
+		return new ResponseEntity<>(reviews, HttpStatus.OK);
+	}
+
+	@PutMapping("/publish/{ReviewId}")
+	public ResponseEntity<Boolean> publishReview(@PathVariable("ReviewId") Long ReviewID) {
+
+		this.reviewservice.publish(ReviewID);
+
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
 
 //	@GetMapping("/delete/{ReviewId}")
 //	public ResponseEntity<Boolean> deleteReview(@PathVariable("ReviewId") Long ReviewID) {
