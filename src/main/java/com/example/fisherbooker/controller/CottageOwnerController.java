@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -66,11 +67,18 @@ public class CottageOwnerController {
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 
-	@GetMapping("/reservations")
-	public ResponseEntity<List<ReservationDetailsDTO>> getReservationsByCottageOwner() {
+	@GetMapping("/reservations/{page}")
+	public ResponseEntity<List<ReservationDetailsDTO>> getReservationsByCottageOwner(@PathVariable int page) {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		List<ReservationDetailsDTO> dtos = this.cottageReservationService.getReservationsByCottageOwner(username);
+		List<ReservationDetailsDTO> dtos = this.cottageReservationService.getReservationsByCottageOwner(username, page);
 		return new ResponseEntity<>(dtos, HttpStatus.OK);
+	}
+	
+	@GetMapping("reservationNum")
+	public ResponseEntity<Integer> getReservationNum() {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		int number = this.cottageReservationService.getNumberOfReservations(username);
+		return new ResponseEntity<>(number, HttpStatus.OK);
 	}
 
 }

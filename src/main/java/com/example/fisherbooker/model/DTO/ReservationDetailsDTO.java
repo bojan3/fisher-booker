@@ -15,6 +15,8 @@ public class ReservationDetailsDTO {
 	private String name;
 	private String options;
 	private String userInfo;
+	private Long clientId;
+	private Long realEstateId;
 
 	public ReservationDetailsDTO() {
 		super();
@@ -82,6 +84,22 @@ public class ReservationDetailsDTO {
 
 	public void setUserInfo(String userInfo) {
 		this.userInfo = userInfo;
+	}
+
+	public Long getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(Long clientId) {
+		this.clientId = clientId;
+	}
+
+	public Long getRealEstateId() {
+		return realEstateId;
+	}
+
+	public void setRealEstateId(Long realEstateId) {
+		this.realEstateId = realEstateId;
 	}
 
 }

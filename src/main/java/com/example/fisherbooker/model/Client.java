@@ -230,6 +230,6 @@ public class Client {
 	
 	@Override
 	public String toString() {
-		return account.getName() + " " + account.getLastName() + " " + account.getEmail() + " " + account.getPhoneNumber();
+		return account.getName() + " " + account.getLastName() + ", " + account.getEmail() + ", " + account.getPhoneNumber();
 	}
 }

@@ -247,6 +247,15 @@ public class Cottage {
 		if (!this.cottageReservations.contains(newReservation))
 			this.cottageReservations.add(newReservation);
 	}
+	
+	public void addSuperDeal(CottageSuperDeal newSuperDeal) {
+		if (newSuperDeal == null)
+			return;
+		if (this.cottageSuperDeals == null)
+			this.cottageSuperDeals = new java.util.HashSet<CottageSuperDeal>();
+		if (!this.cottageSuperDeals.contains(newSuperDeal))
+			this.cottageSuperDeals.add(newSuperDeal);
+	}
 
 }
 

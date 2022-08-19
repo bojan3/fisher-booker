@@ -17,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -82,10 +83,14 @@ public class Ship {
 	@OneToMany(mappedBy = "ship", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private Set<ShipReview> shipReviews = new HashSet<ShipReview>();
 
+	@Version
+	@Column(columnDefinition = "integer DEFAULT 0", nullable = false)
+	private Integer version;
+
 	public Ship() {
 		super();
 	}
-	
+
 	public Ship(Long id) {
 		super();
 		this.id = id;
@@ -285,7 +290,23 @@ public class Ship {
 	public void setClient(Set<Client> client) {
 		this.client = client;
 	}
-	
+
+	public Set<ShipReview> getShipReviews() {
+		return shipReviews;
+	}
+
+	public void setShipReviews(Set<ShipReview> shipReviews) {
+		this.shipReviews = shipReviews;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
 	public void addReservation(ShipReservation newReservation) {
 		if (newReservation == null)
 			return;
@@ -293,6 +314,15 @@ public class Ship {
 			this.shipReservations = new java.util.HashSet<ShipReservation>();
 		if (!this.shipReservations.contains(newReservation))
 			this.shipReservations.add(newReservation);
+	}
+
+	public void addSuperDeal(ShipSuperDeal newDeal) {
+		if (newDeal == null)
+			return;
+		if (this.shipSuperDeals == null)
+			this.shipSuperDeals = new java.util.HashSet<ShipSuperDeal>();
+		if (!this.shipSuperDeals.contains(newDeal))
+			this.shipSuperDeals.add(newDeal);
 	}
 
 	@Override

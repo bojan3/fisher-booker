@@ -139,6 +139,8 @@ public class CottageReservation {
 		dto.setPrice(price);
 		dto.setOptions(cottageOption.toString());
 		dto.setUserInfo(client.toString());
+		dto.setClientId(client.getId());
+		dto.setRealEstateId(cottage.getId());
 		return dto; 
 	}
 	
