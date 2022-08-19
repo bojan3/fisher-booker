@@ -18,6 +18,7 @@ public class AddReservationDTO {
 	private List<Long> options = new ArrayList<Long>();
 	private Long realEstateId;
 	private RealEstateType type;
+	private Long clientId;
 
 	public AddReservationDTO() {
 		super();
@@ -77,6 +78,14 @@ public class AddReservationDTO {
 
 	public void setType(RealEstateType type) {
 		this.type = type;
+	}
+
+	public Long getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(Long clientId) {
+		this.clientId = clientId;
 	}
 
 	public ShipReservation toShipModel() {

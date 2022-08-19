@@ -14,5 +14,7 @@ public interface CottageReservationService {
 	
 	public List<DatePeriodDTO> getReservationDates(Long cottageId);
 	
-	public List<ReservationDetailsDTO> getReservationsByCottageOwner(String username);
+	public List<ReservationDetailsDTO> getReservationsByCottageOwner(String username, int page);
+	
+	public int getNumberOfReservations(String username);
 }
