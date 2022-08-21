@@ -1,5 +1,6 @@
 package com.example.fisherbooker.repository;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -19,11 +20,23 @@ public interface CottageReservationRepository
 		extends JpaRepository<CottageReservation, Long>, PagingAndSortingRepository<CottageReservation, Long> {
 	public List<CottageReservation> findByCottageId(Long id);
 
-	@Query(value = "select c.name as cottageName, sum(capacity) as numOfPeople, sum(price) as income\r\n"
+	@Query(value = "select c.name as realEstate, sum(capacity) as numOfPeople, sum(price) as income\r\n"
 			+ "from cottage_reservation cr, cottage c, cottage_owner co, account a\r\n"
 			+ "where cr.cottage_id = c.id and c.cottage_owner_id = co.id and co.account_id = a.id and a.username = :username and date_part('year', end_date) = :year \r\n"
 			+ "group by c.name, date_part('year', end_date)", nativeQuery = true)
 	public List<Stats> yearlyStats(@Param("username") String username, @Param("year") int year);
+	
+	@Query(value = "select c.name as realEstate, sum(capacity) as numOfPeople, sum(price) as income\r\n"
+			+ "from cottage_reservation cr, cottage c, cottage_owner co, account a\r\n"
+			+ "where cr.cottage_id = c.id and c.cottage_owner_id = co.id and co.account_id = a.id and a.username = :username and date_part('year', end_date) = :year and date_part('month', end_date) = :month \r\n"
+			+ "group by c.name, date_part('year', end_date), date_part('month', end_date)", nativeQuery = true)
+	public List<Stats> monthlyStats(@Param("username") String username, @Param("year") int year, @Param("month") int month);
+	
+	@Query(value = "select c.name as realEstate, sum(capacity) as numOfPeople, sum(price) as income\r\n"
+			+ "from cottage_reservation cr, cottage c, cottage_owner co, account a\r\n"
+			+ "where cr.cottage_id = c.id and c.cottage_owner_id = co.id and co.account_id = a.id and a.username = :username and end_date >= :startDate and end_date <= :endDate \r\n"
+			+ "group by c.name", nativeQuery = true)
+	public List<Stats> arbitrarilyStats(@Param("username") String username, @Param("startDate") Timestamp startDate, @Param("endDate") Timestamp endDate);
 
 	@Query(value = "select distinct date_part('year', end_date)\r\n"
 			+ "from cottage_reservation cr, cottage c, cottage_owner co, account a\r\n"

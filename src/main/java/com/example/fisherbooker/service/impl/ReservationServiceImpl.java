@@ -62,13 +62,13 @@ public class ReservationServiceImpl implements ReservationService {
 		Client c = this.clientRepository.findByAccountUsername(username);
 		return this.addingProcedure(reservation, c);
 	}
-	
+
 	@Transactional
 	public Boolean addByOwner(AddReservationDTO reservation) {
 		Client c = this.clientRepository.findById(reservation.getClientId()).orElse(null);
 		return this.addingProcedure(reservation, c);
 	}
-	
+
 	public Boolean addingProcedure(AddReservationDTO reservation, Client c) {
 		switch (reservation.getType()) {
 		case SHIP: {

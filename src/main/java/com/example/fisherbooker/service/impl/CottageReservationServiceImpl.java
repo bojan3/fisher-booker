@@ -1,5 +1,6 @@
 package com.example.fisherbooker.service.impl;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,8 +12,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.fisherbooker.model.CottageReservation;
 import com.example.fisherbooker.model.Stats;
-import com.example.fisherbooker.model.DTO.ReservationDetailsDTO;
 import com.example.fisherbooker.model.DTO.DatePeriodDTO;
+import com.example.fisherbooker.model.DTO.ReservationDetailsDTO;
 import com.example.fisherbooker.repository.CottageReservationRepository;
 import com.example.fisherbooker.service.CottageReservationService;
 
@@ -26,6 +27,14 @@ public class CottageReservationServiceImpl implements CottageReservationService 
 
 	public List<Stats> getYearlyStats(String username, int year) {
 		return this.cottageReservationRepository.yearlyStats(username, year);
+	}
+	
+	public List<Stats> getMonthlyStats(String username, int year, int month) {
+		return this.cottageReservationRepository.monthlyStats(username, year, month);
+	}
+	
+	public List<Stats> getArbitrarilyStats(String username, Timestamp startDate, Timestamp endDate) {
+		return this.cottageReservationRepository.arbitrarilyStats(username, startDate, endDate);
 	}
 
 	public List<Integer> getYears(String username) {

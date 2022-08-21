@@ -1,7 +1,7 @@
 package com.example.fisherbooker.model;
 
 public interface Stats {
-	String getCottageName();
+	String getRealEstate();
 	int getIncome();
 	int getNumOfPeople();
 }
