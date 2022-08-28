@@ -53,13 +53,13 @@ public class Cottage {
 	public AvailabilityPeriod availabilityPeriod = new AvailabilityPeriod();
 
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	public Set<CottagePicture> cottagePictures = new HashSet<CottagePicture>();
+	public Set<CottageImage> cottageImages = new HashSet<CottageImage>();
 
 	@JsonIgnore
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	public Set<CottageReservation> cottageReservations = new HashSet<CottageReservation>();
-	
+
 	// @JsonIgnore
 	// @OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch =
 	// FetchType.EAGER)
@@ -180,12 +180,12 @@ public class Cottage {
 		this.availabilityPeriod = availabilityPeriod;
 	}
 
-	public Set<CottagePicture> getCottagePictures() {
-		return cottagePictures;
+	public Set<CottageImage> getCottageImages() {
+		return cottageImages;
 	}
 
-	public void setCottagePictures(Set<CottagePicture> cottagePictures) {
-		this.cottagePictures = cottagePictures;
+	public void setCottageImages(Set<CottageImage> cottageImages) {
+		this.cottageImages = cottageImages;
 	}
 
 	public Set<CottageReservation> getCottageReservations() {
@@ -238,7 +238,7 @@ public class Cottage {
 //	public void setVersion(Integer version) {
 //		this.version = version;
 //	}
-	
+
 	public void addReservation(CottageReservation newReservation) {
 		if (newReservation == null)
 			return;
@@ -247,7 +247,7 @@ public class Cottage {
 		if (!this.cottageReservations.contains(newReservation))
 			this.cottageReservations.add(newReservation);
 	}
-	
+
 	public void addSuperDeal(CottageSuperDeal newSuperDeal) {
 		if (newSuperDeal == null)
 			return;
@@ -256,6 +256,14 @@ public class Cottage {
 		if (!this.cottageSuperDeals.contains(newSuperDeal))
 			this.cottageSuperDeals.add(newSuperDeal);
 	}
+	
+	public void addImage(CottageImage newImage) {
+		if (newImage == null)
+			return;
+		if (this.cottageImages == null)
+			this.cottageImages = new java.util.HashSet<CottageImage>();
+		if (!this.cottageImages.contains(newImage))
+			this.cottageImages.add(newImage);
+	}
 
 }
-

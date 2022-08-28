@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageOption;
@@ -201,5 +202,24 @@ public class CottageController {
 	public ResponseEntity<List<DatePeriodDTO>> getReservationDates(@PathVariable Long id) {
 		return new ResponseEntity<>(this.cottageReservationService.getReservationDates(id), HttpStatus.OK);
 	}
+	
+    @PostMapping("/upload/{id}")
+    public ResponseEntity<Boolean> uplaodImage(@PathVariable Long id, @RequestParam("image") MultipartFile file)
+             {
+
+    	try {
+    		this.cottageService.uploadImage(id, file);
+    	} catch(Exception e) {
+    		System.out.println(e);
+    	}
+    	
+    	
+//        imageRepository.save(Image.builder()
+//                .name(file.getOriginalFilename())
+//                .type(file.getContentType())
+//                .image(ImageUtility.compressImage(file.getBytes())).build());
+        return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
 
 }

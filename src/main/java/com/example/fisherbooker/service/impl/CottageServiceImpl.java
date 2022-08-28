@@ -3,12 +3,15 @@ package com.example.fisherbooker.service.impl;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import com.example.fisherbooker.model.AvailabilityPeriod;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.example.fisherbooker.model.Cottage;
+import com.example.fisherbooker.model.CottageImage;
 import com.example.fisherbooker.model.CottageOption;
 import com.example.fisherbooker.model.CottageOwner;
 import com.example.fisherbooker.model.CottageReservation;
@@ -20,9 +23,7 @@ import com.example.fisherbooker.repository.CottageRepository;
 import com.example.fisherbooker.repository.CottageReservationRepository;
 import com.example.fisherbooker.service.CottageService;
 import com.example.fisherbooker.util.FileUploadUtil;
-
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
+import com.example.fisherbooker.util.ImageUtility;
 
 @Service
 public class CottageServiceImpl implements CottageService {
@@ -179,5 +180,17 @@ public class CottageServiceImpl implements CottageService {
 
 	public List<CottageOption> getOptions(Long cottageId) {
 		return this.cottageOptionRepository.findByCottageId(cottageId);
+	}
+	
+	public Boolean uploadImage(Long id, MultipartFile image) throws IOException {
+		CottageImage newImage = new CottageImage();
+		newImage.setName(image.getOriginalFilename());
+		newImage.setType(image.getContentType());
+		newImage.setImage(ImageUtility.compressImage(image.getBytes()));
+		Cottage c = this.getById(id);
+		newImage.setCottage(c);
+		c.addImage(newImage);
+		this.cottageRepository.save(c);
+		return true;
 	}
 }
