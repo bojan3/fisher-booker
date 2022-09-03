@@ -5,6 +5,7 @@ import java.util.List;
 import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.ShipOption;
 import com.example.fisherbooker.model.DTO.AddShipDTO;
+import com.example.fisherbooker.model.DTO.SearchFilter;
 import com.example.fisherbooker.model.DTO.ShipDTO;
 
 public interface ShipService {
@@ -37,4 +38,8 @@ public interface ShipService {
 	public List<ShipOption> getOptions(Long shipId);
 
 	public Boolean checkOwnership(Long id);
+
+	public List<Ship> searchShips(SearchFilter searchFilter);
+
+	public List<String> getShipLocations();
 }

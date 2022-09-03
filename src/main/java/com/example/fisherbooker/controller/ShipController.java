@@ -1,6 +1,9 @@
 package com.example.fisherbooker.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.ShipOption;
 import com.example.fisherbooker.model.DTO.AddShipDTO;
+import com.example.fisherbooker.model.DTO.CottageDTO;
+import com.example.fisherbooker.model.DTO.SearchFilter;
 import com.example.fisherbooker.model.DTO.ShipDTO;
 import com.example.fisherbooker.service.ShipService;
 
@@ -50,7 +56,7 @@ public class ShipController {
 		}
 		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/all/")
 	public ResponseEntity<List<ShipDTO>> getAllSorted(@RequestParam String type, @RequestParam String order) {
 		List<Ship> ships = this.shipService.getAllSorted(type, order);
@@ -109,17 +115,16 @@ public class ShipController {
 	@GetMapping("/delete/{ShipId}")
 	public ResponseEntity<List<ShipDTO>> deleteShip(@PathVariable("ShipId") Long ShipId) {
 		List<ShipDTO> shipsDTO = this.shipService.deleteShipDTO(ShipId);
-		
-		if (shipsDTO != new ArrayList<ShipDTO>())
-		{
-		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);	
+
+		if (shipsDTO != new ArrayList<ShipDTO>()) {
+			return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
 		}
-		
-		else 
+
+		else
 			return new ResponseEntity<>(shipsDTO, HttpStatus.BAD_REQUEST);
 	}
-		
-	//@PreAuthorize("hasRole('ADMIN')")
+
+	// @PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/delete1/{ShipId}")
 	public ResponseEntity<List<ShipDTO>> deleteShip1(@PathVariable("ShipId") Long ShipId) {
 		List<Ship> ships = this.shipService.getAll();
@@ -175,15 +180,48 @@ public class ShipController {
 		this.shipService.saveShip(ship);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("ownership/{id}")
 	public ResponseEntity<Boolean> checkOwnership(@PathVariable Long id) {
 		return new ResponseEntity<>(this.shipService.checkOwnership(id), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("options/{id}")
 	public ResponseEntity<List<ShipOption>> getOptions(@PathVariable Long id) {
 		return new ResponseEntity<>(this.shipService.getOptions(id), HttpStatus.OK);
 	}
 
+	@GetMapping("/locations")
+	public ResponseEntity<List<String>> getShipLocations() {
+		List<String> locations = this.shipService.getShipLocations();
+		return new ResponseEntity<>(locations, HttpStatus.OK);
+	}
+
+	@GetMapping("search/filter/")
+	public ResponseEntity<List<ShipDTO>> searchCottages(@RequestParam String startDate, @RequestParam String endDate,
+			@RequestParam String locationCity, @RequestParam String minGrade) {
+
+		Date startDate1 = null;
+		Date endDate1 = null;
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			startDate1 = formatter.parse(startDate);
+			endDate1 = formatter.parse(endDate);
+		} catch (ParseException e) {
+
+			e.printStackTrace();
+		}
+		SearchFilter searchFilter = new SearchFilter(startDate1, endDate1, locationCity, minGrade, "null");
+//		System.out.println(searchFilter);
+		List<Ship> ships = shipService.searchShips(searchFilter);
+		return new ResponseEntity<>(toDTOs(ships), HttpStatus.OK);
+	}
+
+	private List<ShipDTO> toDTOs(List<Ship> ships) {
+		List<ShipDTO> shipDTOs = new ArrayList<ShipDTO>();
+		for (Ship ship : ships) {
+			shipDTOs.add(ShipDTO.createShipDTO(ship));
+		}
+		return shipDTOs;
+	}
 }

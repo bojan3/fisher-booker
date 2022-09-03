@@ -2,6 +2,7 @@ package com.example.fisherbooker.service.impl;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.Iterator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -14,6 +15,7 @@ import com.example.fisherbooker.model.CottageOwner;
 import com.example.fisherbooker.model.CottageReservation;
 import com.example.fisherbooker.model.Room;
 import com.example.fisherbooker.model.DTO.CottageAddDTO;
+import com.example.fisherbooker.model.DTO.SearchFilter;
 import com.example.fisherbooker.repository.CottageOptionRepository;
 import com.example.fisherbooker.repository.CottageOwnerRepository;
 import com.example.fisherbooker.repository.CottageRepository;
@@ -33,8 +35,7 @@ public class CottageServiceImpl implements CottageService {
 
 	@Autowired
 	public CottageServiceImpl(CottageRepository cottageRepository,
-			CottageReservationRepository cottageReservationRepository,
-			CottageOwnerRepository cottageOwnerRepository, 
+			CottageReservationRepository cottageReservationRepository, CottageOwnerRepository cottageOwnerRepository,
 			CottageOptionRepository cottageOptionRepository) {
 		this.cottageRepository = cottageRepository;
 		this.cottageReservationRepository = cottageReservationRepository;
@@ -67,7 +68,7 @@ public class CottageServiceImpl implements CottageService {
 	}
 
 	public void deleteCottage(Long id) {
-		//System.out.println(this.cottageRepository.getById(id));
+		// System.out.println(this.cottageRepository.getById(id));
 		this.cottageRepository.deleteById(id);
 	}
 
@@ -179,5 +180,37 @@ public class CottageServiceImpl implements CottageService {
 
 	public List<CottageOption> getOptions(Long cottageId) {
 		return this.cottageOptionRepository.findByCottageId(cottageId);
+	}
+
+	@Override
+	public List<String> getCottageLocations() {
+		return this.cottageRepository.getCottageLocations();
+	}
+
+	@Override
+	public List<Cottage> searchCottages(SearchFilter searchFilter) {
+		List<Cottage> cottages = this.cottageRepository.getAllAvalible(searchFilter.getStartDate(),
+				searchFilter.getEndDate());
+
+		if (searchFilter.getMinGrade() != null) {
+			Iterator<Cottage> it = cottages.iterator();
+			while (it.hasNext()) {
+				if (it.next().getAverageMark() < searchFilter.getMinGrade()) {
+					it.remove();
+				}
+			}
+
+		}
+
+		if (searchFilter.getLocationCity() != null) {
+			Iterator<Cottage> it = cottages.iterator();
+			while (it.hasNext()) {
+				if (!it.next().getAddress().getCity().equals(searchFilter.getLocationCity())) {
+					it.remove();
+				}
+			}
+		}
+
+		return cottages;
 	}
 }

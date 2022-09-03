@@ -24,6 +24,7 @@ import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageOption;
 import com.example.fisherbooker.model.DTO.CottageAddDTO;
 import com.example.fisherbooker.model.DTO.CottageDTO;
+import com.example.fisherbooker.model.DTO.SearchFilter;
 import com.example.fisherbooker.service.CottageService;
 
 @RestController
@@ -71,27 +72,27 @@ public class CottageController {
 		return new ResponseEntity<>(cottage, HttpStatus.OK);
 	}
 
-	@GetMapping("/all/price")
-	public ResponseEntity<List<CottageDTO>> getAllbyPrice() {
-		List<Cottage> cottages = this.cottageService.getAllbyPrice();
-		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
-		for (Cottage cottage : cottages) {
-			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
-			cottagesDTO.add(cottageDTO);
-		}
-		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
-	}
-
-	@GetMapping("/all/rate")
-	public ResponseEntity<List<CottageDTO>> getAllByRate() {
-		List<Cottage> cottages = this.cottageService.getAllbyRate();
-		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
-		for (Cottage cottage : cottages) {
-			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
-			cottagesDTO.add(cottageDTO);
-		}
-		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
-	}
+//	@GetMapping("/all/price")
+//	public ResponseEntity<List<CottageDTO>> getAllbyPrice() {
+//		List<Cottage> cottages = this.cottageService.getAllbyPrice();
+//		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
+//		for (Cottage cottage : cottages) {
+//			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
+//			cottagesDTO.add(cottageDTO);
+//		}
+//		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
+//	}
+//
+//	@GetMapping("/all/rate")
+//	public ResponseEntity<List<CottageDTO>> getAllByRate() {
+//		List<Cottage> cottages = this.cottageService.getAllbyRate();
+//		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
+//		for (Cottage cottage : cottages) {
+//			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
+//			cottagesDTO.add(cottageDTO);
+//		}
+//		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
+//	}
 
 	@PreAuthorize("hasRole('COTTAGE_OWNER')")
 	@DeleteMapping("/delete/owner/{CottageId}")
@@ -111,6 +112,12 @@ public class CottageController {
 			cottageDTOs.add(CottageDTO.createCottageDTO(cottage));
 		}
 		return new ResponseEntity<>(cottageDTOs, HttpStatus.OK);
+	}
+
+	@GetMapping("/locations")
+	public ResponseEntity<List<String>> getCottageLocations() {
+		List<String> locations = this.cottageService.getCottageLocations();
+		return new ResponseEntity<>(locations, HttpStatus.OK);
 	}
 
 //	@PostMapping("/save")
@@ -143,7 +150,6 @@ public class CottageController {
 //		return new ResponseEntity<>(cottagesDTOs, HttpStatus.OK);
 //	}
 
-
 //	@PostMapping("/uploadImage")
 //	public ResponseEntity<Boolean> uploadImage(@RequestParam("image") MultipartFile file,
 //			@RequestParam("cottage") String cottage) {
@@ -152,30 +158,31 @@ public class CottageController {
 //		return new ResponseEntity<>(true, HttpStatus.OK);
 //	}
 
-	@PostMapping("/all/date")
-	public ResponseEntity<List<CottageDTO>> getAllByDate(@RequestBody Date date) {
-//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//		Date date = null;
-//		try {
-//			date = formatter.parse(dateInput);
-//		} catch (ParseException e) {
-//			
-//			e.printStackTrace();
-//		}
-
-		System.out.println("datum: " + date);
-//		System.out.println("datum: " + date.toGMTString());
-//		
-//		List<Cottage> cottages = this.cottageService.getAllByDate(date);
-//		
-//		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
-//		for (Cottage cottage : cottages) {
-//			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
-//			cottagesDTO.add(cottageDTO);
-//		}
-
-		return new ResponseEntity<>(null, HttpStatus.OK);
-	}
+// visak je ovo valjda
+//	@PostMapping("/all/date")
+//	public ResponseEntity<List<CottageDTO>> getAllByDate(@RequestBody Date date) {
+////		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+////		Date date = null;
+////		try {
+////			date = formatter.parse(dateInput);
+////		} catch (ParseException e) {
+////			
+////			e.printStackTrace();
+////		}
+//
+//		System.out.println("datum: " + date);
+////		System.out.println("datum: " + date.toGMTString());
+////		
+////		List<Cottage> cottages = this.cottageService.getAllByDate(date);
+////		
+////		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
+////		for (Cottage cottage : cottages) {
+////			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
+////			cottagesDTO.add(cottageDTO);
+////		}
+//
+//		return new ResponseEntity<>(null, HttpStatus.OK);
+//	}
 
 //	private String getDate(String dateString) {
 //		String[] part = dateString.split("T");
@@ -186,10 +193,38 @@ public class CottageController {
 	public ResponseEntity<Boolean> checkOwnership(@PathVariable Long id) {
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("options/{id}")
 	public ResponseEntity<List<CottageOption>> getOptions(@PathVariable Long id) {
 		return new ResponseEntity<>(this.cottageService.getOptions(id), HttpStatus.OK);
+	}
+
+	@GetMapping("search/filter/")
+	public ResponseEntity<List<CottageDTO>> searchCottages(@RequestParam String startDate, @RequestParam String endDate,
+			@RequestParam String locationCity, @RequestParam String minGrade) {
+
+		Date startDate1 = null;
+		Date endDate1 = null;
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			startDate1 = formatter.parse(startDate);
+			endDate1 = formatter.parse(endDate);
+		} catch (ParseException e) {
+
+			e.printStackTrace();
+		}
+		SearchFilter searchFilter = new SearchFilter(startDate1, endDate1, locationCity, minGrade, "null");
+//		System.out.println(searchFilter);
+		List<Cottage> cottages = cottageService.searchCottages(searchFilter);
+		return new ResponseEntity<>(toDTOs(cottages), HttpStatus.OK);
+	}
+
+	private List<CottageDTO> toDTOs(List<Cottage> cottages) {
+		List<CottageDTO> cottageDTOs = new ArrayList<CottageDTO>();
+		for (Cottage cottage : cottages) {
+			cottageDTOs.add(CottageDTO.createCottageDTO(cottage));
+		}
+		return cottageDTOs;
 	}
 
 }

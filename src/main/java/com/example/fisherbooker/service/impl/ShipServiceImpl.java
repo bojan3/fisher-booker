@@ -1,6 +1,7 @@
 package com.example.fisherbooker.service.impl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.example.fisherbooker.model.ShipOption;
 import com.example.fisherbooker.model.ShipOwner;
 import com.example.fisherbooker.model.ShipReservation;
 import com.example.fisherbooker.model.DTO.AddShipDTO;
+import com.example.fisherbooker.model.DTO.SearchFilter;
 import com.example.fisherbooker.model.DTO.ShipDTO;
 import com.example.fisherbooker.repository.ShipOptionRepository;
 import com.example.fisherbooker.repository.ShipOwnerRepository;
@@ -192,5 +194,37 @@ public class ShipServiceImpl implements ShipService {
 	
 	public List<ShipOption> getOptions(Long shipId) {
 		return this.shipOptionRepository.findByShipId(shipId);
+	}
+
+	@Override
+	public List<Ship> searchShips(SearchFilter searchFilter) {
+		List<Ship> ships = this.shipRepository.getAllAvalible(searchFilter.getStartDate(),
+				searchFilter.getEndDate());
+
+		if (searchFilter.getMinGrade() != null) {
+			Iterator<Ship> it = ships.iterator();
+			while (it.hasNext()) {
+				if (it.next().getAverageMark() < searchFilter.getMinGrade()) {
+					it.remove();
+				}
+			}
+
+		}
+
+		if (searchFilter.getLocationCity() != null) {
+			Iterator<Ship> it = ships.iterator();
+			while (it.hasNext()) {
+				if (!it.next().getAddress().getCity().equals(searchFilter.getLocationCity())) {
+					it.remove();
+				}
+			}
+		}
+
+		return ships;
+	}
+
+	@Override
+	public List<String> getShipLocations() {
+		return this.shipRepository.getCottageLocations();
 	}
 }
