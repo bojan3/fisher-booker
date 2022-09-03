@@ -11,7 +11,7 @@ import com.example.fisherbooker.model.ShipReservation;
 
 public class ShipReservationDTO {
 
-	private int id;
+	private Long id;
 	private String startDate;
 	private String endDate;
 	private int capacity;
@@ -19,10 +19,10 @@ public class ShipReservationDTO {
 	public Set<ShipOption> shipOption;
 	public ShipDTO shipDTO;
 	private boolean canCancel;
-	private boolean isFinished;	
-	
-	public ShipReservationDTO(int id, String startDate, String endDate, int capacity, int price, Set<ShipOption> shipOption,
-			ShipDTO shipDTO, boolean canCancel, boolean isFinished) {
+	private boolean isFinished;
+
+	public ShipReservationDTO(Long id, String startDate, String endDate, int capacity, int price,
+			Set<ShipOption> shipOption, ShipDTO shipDTO, boolean canCancel, boolean isFinished) {
 		super();
 		this.id = id;
 		this.startDate = startDate;
@@ -48,66 +48,80 @@ public class ShipReservationDTO {
 		Date nowDate = new Date();
 		if (shipReservation.getEndDate().after(nowDate)) {
 			this.isFinished = false;
-		}else {
+		} else {
 			this.isFinished = true;
 		}
-		
+
 		Date lastCancellationDate = this.addDays(shipReservation.getStartDate(), 3);
 		if (nowDate.after(lastCancellationDate)) {
 			this.canCancel = false;
-		}else {
+		} else {
 			this.canCancel = true;
 		}
 	}
-	
+
 	private Date addDays(Date nowDate, int days) {
 		LocalDateTime localDateTime = nowDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 		localDateTime = localDateTime.plusDays(days);
 		return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
 	}
-	
-	public int getId() {
+
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+
+	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getStartDate() {
 		return startDate;
 	}
+
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
+
 	public String getEndDate() {
 		return endDate;
 	}
+
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
+
 	public Set<ShipOption> getShipOption() {
 		return shipOption;
 	}
+
 	public void setShipOption(Set<ShipOption> shipOption) {
 		this.shipOption = shipOption;
 	}
+
 	public ShipDTO getShipDTO() {
 		return shipDTO;
 	}
+
 	public void setShipDTO(ShipDTO shipDTO) {
 		this.shipDTO = shipDTO;
 	}
+
 	public boolean isCanCancel() {
 		return canCancel;
 	}
+
 	public void setCanCancel(boolean canCancel) {
 		this.canCancel = canCancel;
 	}
+
 	public boolean isFinished() {
 		return isFinished;
 	}
+
 	public void setFinished(boolean isFinished) {
 		this.isFinished = isFinished;
 	}
+
 	@Override
 	public String toString() {
 		return "ShipReservationDTO [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", capacity="
@@ -130,6 +144,5 @@ public class ShipReservationDTO {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	
-	
+
 }

@@ -4,22 +4,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.fisherbooker.model.DTO.ReservationReviewDTO;
-import com.example.fisherbooker.repository.CottageReservationReviewRepository;
+import com.example.fisherbooker.repository.ReservationReviewRepository;
 import com.example.fisherbooker.service.ReservationReviewService;
 
 @Service
 public class ReservationReviewServiceImpl implements ReservationReviewService {
 
 	@Autowired
-	private CottageReservationReviewRepository cottageReviewRepository;
+	private ReservationReviewRepository reservationReviewRepository;
 
 	public Boolean create(ReservationReviewDTO review) {
 		switch (review.getType()) {
 		case COTTAGE: {
-			this.cottageReviewRepository.save(review.toCottageReview());
+			this.reservationReviewRepository.save(review.toCottageReview());
 			break;
 		}
 		case SHIP: {
+			this.reservationReviewRepository.save(review.toShipReview());
 			break;
 		}
 		case ADVENTURE: {

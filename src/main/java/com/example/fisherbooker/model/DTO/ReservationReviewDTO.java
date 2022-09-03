@@ -3,6 +3,8 @@ package com.example.fisherbooker.model.DTO;
 import com.example.fisherbooker.model.CottageReservation;
 import com.example.fisherbooker.model.CottageReservationReview;
 import com.example.fisherbooker.model.ReservationType;
+import com.example.fisherbooker.model.ShipReservation;
+import com.example.fisherbooker.model.ShipReservationReview;
 
 public class ReservationReviewDTO {
 	private String content;
@@ -61,6 +63,15 @@ public class ReservationReviewDTO {
 		review.setContent(content);
 		review.setDidntAppear(didntAppear);
 		review.setCottageReservation(new CottageReservation(reservationId));
+		return review;
+	}
+	
+	public ShipReservationReview toShipReview() {
+		ShipReservationReview review = new ShipReservationReview();
+		review.setBadReview(badReview);
+		review.setContent(content);
+		review.setDidntAppear(didntAppear);
+		review.setShipReservation(new ShipReservation(reservationId));
 		return review;
 	}
 
