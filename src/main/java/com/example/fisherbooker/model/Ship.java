@@ -59,8 +59,8 @@ public class Ship {
 	@OneToMany(mappedBy = "ship", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<FishingEquipment> fishingEquipments = new HashSet<FishingEquipment>();
 
-	@OneToMany(mappedBy = "ship", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<ShipPicture> shipPictures;
+	@OneToMany(mappedBy = "ship", fetch = FetchType.EAGER)
+	public Set<ShipImage> shipImages = new HashSet<ShipImage>();
 
 	@OneToMany(mappedBy = "ship", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<ShipSuperDeal> shipSuperDeals;
@@ -259,12 +259,12 @@ public class Ship {
 		}
 	}
 
-	public Set<ShipPicture> getShipPictures() {
-		return shipPictures;
+	public Set<ShipImage> getShipImages() {
+		return shipImages;
 	}
 
-	public void setShipPictures(Set<ShipPicture> shipPictures) {
-		this.shipPictures = shipPictures;
+	public void setShipImages(Set<ShipImage> shipImages) {
+		this.shipImages = shipImages;
 	}
 
 	public Set<ShipSuperDeal> getShipSuperDeals() {
@@ -325,15 +325,25 @@ public class Ship {
 			this.shipSuperDeals.add(newDeal);
 	}
 
+	public void addImage(ShipImage newImage) {
+		if (newImage == null)
+			return;
+		if (this.shipImages == null)
+			this.shipImages = new java.util.HashSet<ShipImage>();
+		if (!this.shipImages.contains(newImage))
+			this.shipImages.add(newImage);
+	}
+
 	@Override
 	public String toString() {
 		return "Ship [id=" + id + ", name=" + name + ", type=" + type + ", length=" + length + ", description="
 				+ description + ", averageMark=" + averageMark + ", rentPrice=" + rentPrice + ", engineNumber="
 				+ engineNumber + ", enginePower=" + enginePower + ", maxSpeed=" + maxSpeed + ", capacity=" + capacity
-				+ ", cancelRate=" + cancelRate + ", address=" + address + ", rules=" + rules + ", navigationEquipments="
-				+ navigationEquipments + ", fishingEquipments=" + fishingEquipments + ", shipPictures=" + shipPictures
-				+ ", shipSuperDeals=" + shipSuperDeals + ", availabilityPeriod=" + availabilityPeriod + ", shipOptions="
-				+ shipOptions + "]";
+				+ ", cancelRate=" + cancelRate + ", address=" + address + ", shipOwner=" + shipOwner + ", rules="
+				+ rules + ", navigationEquipments=" + navigationEquipments + ", fishingEquipments=" + fishingEquipments
+				+ ", shipImages=" + shipImages + ", shipSuperDeals=" + shipSuperDeals + ", availabilityPeriod="
+				+ availabilityPeriod + ", shipOptions=" + shipOptions + ", shipReservations=" + shipReservations
+				+ ", client=" + client + ", shipReviews=" + shipReviews + ", version=" + version + "]";
 	}
 
 }

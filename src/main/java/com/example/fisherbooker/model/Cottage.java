@@ -35,8 +35,6 @@ public class Cottage {
 	private int pricePerDay;
 	private float averageMark;
 
-	private String imagePath;
-
 	@OneToOne(cascade = CascadeType.ALL)
 	public Address address;
 
@@ -52,7 +50,7 @@ public class Cottage {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public AvailabilityPeriod availabilityPeriod = new AvailabilityPeriod();
 
-	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER)
 	public Set<CottageImage> cottageImages = new HashSet<CottageImage>();
 
 	@JsonIgnore
@@ -223,14 +221,6 @@ public class Cottage {
 		this.client = client;
 	}
 
-	public String getImagePath() {
-		return imagePath;
-	}
-
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}
-
 //	public Integer getVersion() {
 //		return version;
 //	}
@@ -256,7 +246,7 @@ public class Cottage {
 		if (!this.cottageSuperDeals.contains(newSuperDeal))
 			this.cottageSuperDeals.add(newSuperDeal);
 	}
-	
+
 	public void addImage(CottageImage newImage) {
 		if (newImage == null)
 			return;

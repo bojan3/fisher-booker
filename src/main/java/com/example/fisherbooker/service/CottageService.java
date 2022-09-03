@@ -40,5 +40,7 @@ public interface CottageService {
 //	public List<Cottage> getAllByDate(Date date);
 	
 	public Boolean uploadImage(Long id, MultipartFile image) throws IOException;
+	
+	public Boolean deleteImage(Long id);
 
 }

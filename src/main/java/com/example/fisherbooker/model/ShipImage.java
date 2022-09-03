@@ -8,24 +8,23 @@ import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@DiscriminatorValue("COTTAGE")
-public class CottageImage extends Image {
-
+@DiscriminatorValue("SHIP")
+public class ShipImage extends Image {
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "cottage_id")
-	private Cottage cottage;
+	@JoinColumn(name = "ship_id")
+	private Ship ship;
 
-	public CottageImage() {
+	public ShipImage() {
 		super();
 	}
 
-	public Cottage getCottage() {
-		return cottage;
+	public Ship getShip() {
+		return ship;
 	}
 
-	public void setCottage(Cottage cottage) {
-		this.cottage = cottage;
+	public void setShip(Ship ship) {
+		this.ship = ship;
 	}
 
 }

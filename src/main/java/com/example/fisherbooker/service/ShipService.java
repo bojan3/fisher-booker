@@ -1,6 +1,9 @@
 package com.example.fisherbooker.service;
 
+import java.io.IOException;
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.ShipOption;
@@ -37,4 +40,8 @@ public interface ShipService {
 	public List<ShipOption> getOptions(Long shipId);
 
 	public Boolean checkOwnership(Long id);
+	
+	public Boolean uploadImage(Long id, MultipartFile image) throws IOException;
+	
+	public Boolean deleteImage(Long id);
 }

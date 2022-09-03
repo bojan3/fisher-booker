@@ -21,9 +21,9 @@ import com.example.fisherbooker.repository.CottageOptionRepository;
 import com.example.fisherbooker.repository.CottageOwnerRepository;
 import com.example.fisherbooker.repository.CottageRepository;
 import com.example.fisherbooker.repository.CottageReservationRepository;
+import com.example.fisherbooker.repository.ImageRepository;
 import com.example.fisherbooker.service.CottageService;
 import com.example.fisherbooker.util.FileUploadUtil;
-import com.example.fisherbooker.util.ImageUtility;
 
 @Service
 public class CottageServiceImpl implements CottageService {
@@ -31,16 +31,17 @@ public class CottageServiceImpl implements CottageService {
 	private CottageReservationRepository cottageReservationRepository;
 	private CottageOwnerRepository cottageOwnerRepository;
 	private CottageOptionRepository cottageOptionRepository;
+	private ImageRepository imageRepository;
 
 	@Autowired
 	public CottageServiceImpl(CottageRepository cottageRepository,
-			CottageReservationRepository cottageReservationRepository,
-			CottageOwnerRepository cottageOwnerRepository, 
-			CottageOptionRepository cottageOptionRepository) {
+			CottageReservationRepository cottageReservationRepository, CottageOwnerRepository cottageOwnerRepository,
+			CottageOptionRepository cottageOptionRepository, ImageRepository cottageImageRepository) {
 		this.cottageRepository = cottageRepository;
 		this.cottageReservationRepository = cottageReservationRepository;
 		this.cottageOwnerRepository = cottageOwnerRepository;
 		this.cottageOptionRepository = cottageOptionRepository;
+		this.imageRepository = cottageImageRepository;
 	}
 
 	public Boolean saveCottage(CottageAddDTO cottage) {
@@ -68,7 +69,7 @@ public class CottageServiceImpl implements CottageService {
 	}
 
 	public void deleteCottage(Long id) {
-		//System.out.println(this.cottageRepository.getById(id));
+		// System.out.println(this.cottageRepository.getById(id));
 		this.cottageRepository.deleteById(id);
 	}
 
@@ -181,16 +182,22 @@ public class CottageServiceImpl implements CottageService {
 	public List<CottageOption> getOptions(Long cottageId) {
 		return this.cottageOptionRepository.findByCottageId(cottageId);
 	}
-	
+
 	public Boolean uploadImage(Long id, MultipartFile image) throws IOException {
 		CottageImage newImage = new CottageImage();
 		newImage.setName(image.getOriginalFilename());
 		newImage.setType(image.getContentType());
-		newImage.setImage(ImageUtility.compressImage(image.getBytes()));
+		newImage.setImage(image.getBytes());
 		Cottage c = this.getById(id);
 		newImage.setCottage(c);
 		c.addImage(newImage);
-		this.cottageRepository.save(c);
+		this.imageRepository.save(newImage);
 		return true;
 	}
+
+	public Boolean deleteImage(Long id) {
+		this.imageRepository.deleteById(id);
+		return true;
+	}
+
 }
