@@ -1,5 +1,6 @@
 package com.example.fisherbooker.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
@@ -24,5 +25,10 @@ public interface ShipReservationRepository extends JpaRepository<ShipReservation
 			Pageable pageable);
 	
 	public List<ShipReservation> findByShipShipOwnerAccountUsernameOrderByStartDateDesc(String username);
+	
+	@Query(value = "select *\r\n"
+			+ "from ship_reservation\r\n"
+			+ "where cottage_id = :id and (start_date >= :startDate and start_date <= :endDate) or (end_date >= :startDate and end_date <= :endDate)", nativeQuery = true)
+	public List<CottageReservation> getReservationsInPeriod(@Param("id") Long id, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
 }

@@ -1,17 +1,17 @@
 package com.example.fisherbooker.service.impl;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
+import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 
 import com.example.fisherbooker.model.Client;
 import com.example.fisherbooker.model.Cottage;
@@ -57,19 +57,19 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Transactional
-	public Boolean addByClient(AddReservationDTO reservation) {
+	public Boolean addByClient(AddReservationDTO reservation) throws OptimisticLockException {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		Client c = this.clientRepository.findByAccountUsername(username);
 		return this.addingProcedure(reservation, c);
 	}
 
 	@Transactional
-	public Boolean addByOwner(AddReservationDTO reservation) {
+	public Boolean addByOwner(AddReservationDTO reservation) throws OptimisticLockException {
 		Client c = this.clientRepository.findById(reservation.getClientId()).orElse(null);
 		return this.addingProcedure(reservation, c);
 	}
 
-	public Boolean addingProcedure(AddReservationDTO reservation, Client c) {
+	public Boolean addingProcedure(AddReservationDTO reservation, Client c) throws OptimisticLockException {
 		switch (reservation.getType()) {
 		case SHIP: {
 			ShipReservation newReservation = reservation.toShipModel();
@@ -82,6 +82,9 @@ public class ReservationServiceImpl implements ReservationService {
 			newReservation.setClient(c);
 			Ship ship = entityManager.find(Ship.class, reservation.getRealEstateId(),
 					LockModeType.OPTIMISTIC_FORCE_INCREMENT);
+			if(this.shipIsReserved(reservation.getRealEstateId(), reservation.getStartDate(), reservation.getEndDate())) {
+				return false;
+			}
 			newReservation.setShip(ship);
 			ship.addReservation(newReservation);
 			entityManager.persist(ship);
@@ -98,6 +101,9 @@ public class ReservationServiceImpl implements ReservationService {
 			newReservation.setClient(c);
 			Cottage cottage = entityManager.find(Cottage.class, reservation.getRealEstateId(),
 					LockModeType.OPTIMISTIC_FORCE_INCREMENT);
+			if(this.cottageIsReserved(reservation.getRealEstateId(), reservation.getStartDate(), reservation.getEndDate())) {
+				return false;
+			}
 			newReservation.setCottage(cottage);
 			cottage.addReservation(newReservation);
 			entityManager.persist(cottage);
@@ -105,6 +111,14 @@ public class ReservationServiceImpl implements ReservationService {
 		}
 		}
 		return true;
+	}
+	
+	private Boolean cottageIsReserved(Long id, Date stardDate, Date endDate) {
+		return this.cottageReservationRepository.getReservationsInPeriod(id, stardDate, endDate).size() != 0;
+	}
+	
+	private Boolean shipIsReserved(Long id, Date stardDate, Date endDate) {
+		return this.shipReservationRepository.getReservationsInPeriod(id, stardDate, endDate).size() != 0;
 	}
 
 	public List<DatePeriodDTO> getDates(RealEstateType type, Long id) {

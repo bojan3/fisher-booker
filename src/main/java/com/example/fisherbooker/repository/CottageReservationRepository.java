@@ -60,4 +60,10 @@ public interface CottageReservationRepository
 	@Query(value = "select start_date as startDate, end_date as endDate\r\n" + "from cottage_reservation\r\n"
 			+ "where cottage_id = :id", nativeQuery = true)
 	public List<DatePeriodDTO> getDates(@Param("id") Long id);
+	
+	@Query(value = "select *\r\n"
+			+ "from cottage_reservation\r\n"
+			+ "where cottage_id = :id and (start_date >= :startDate and start_date <= :endDate) or (end_date >= :startDate and end_date <= :endDate)", nativeQuery = true)
+	public List<CottageReservation> getReservationsInPeriod(@Param("id") Long id, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
+	
 }

@@ -2,6 +2,8 @@ package com.example.fisherbooker.controller;
 
 import java.util.List;
 
+import javax.persistence.OptimisticLockException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,14 +31,22 @@ public class ReservationController {
 	@PreAuthorize("hasRole('CLIENT')")
 	@PostMapping("/createByClient")
 	public ResponseEntity<Boolean> createByClient(@RequestBody AddReservationDTO reservation) {
-		this.reservationSerivce.addByClient(reservation);
+		try {
+			this.reservationSerivce.addByClient(reservation);
+		} catch (OptimisticLockException e) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
-	
+
 	@PreAuthorize("hasAnyRole('COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
 	@PostMapping("/createByOwner")
 	public ResponseEntity<Boolean> createByOwner(@RequestBody AddReservationDTO reservation) {
-		this.reservationSerivce.addByOwner(reservation);
+		try {
+			this.reservationSerivce.addByOwner(reservation);
+		} catch (OptimisticLockException e) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 
