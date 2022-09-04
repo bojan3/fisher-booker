@@ -4,12 +4,12 @@ import java.util.Set;
 
 import com.example.fisherbooker.model.Address;
 import com.example.fisherbooker.model.AvailabilityPeriod;
-import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageOption;
 import com.example.fisherbooker.model.Room;
 import com.example.fisherbooker.model.Rule;
 
-public class CottageAddDTO {
+public class EditCottageDTO {
+	private Long id;
 	private String name;
 	private String description;
 	private Address address;
@@ -19,8 +19,16 @@ public class CottageAddDTO {
 	private Set<CottageOption> cottageOptions;
 	private int pricePerDay;
 
-	public CottageAddDTO() {
+	public EditCottageDTO() {
 		super();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -85,19 +93,6 @@ public class CottageAddDTO {
 
 	public void setPricePerDay(int pricePerDay) {
 		this.pricePerDay = pricePerDay;
-	}
-
-	public Cottage toModel() {
-		Cottage c = new Cottage();
-		c.setName(this.name);
-		c.setDescription(this.description);
-		c.setAddress(this.address);
-		c.setPricePerDay(this.pricePerDay);
-		c.setRooms(this.rooms);
-		c.setAvailabilityPeriod(this.availabilityPeriod);
-		c.setCottageOptions(this.cottageOptions);
-		c.setRules(this.rules);
-		return c;
 	}
 
 }

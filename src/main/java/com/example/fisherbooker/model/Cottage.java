@@ -42,7 +42,7 @@ public class Cottage {
 	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	public Set<Room> rooms = new HashSet<Room>();
 
-	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	public Set<Rule> rules = new HashSet<Rule>();
 
 	@OneToMany(mappedBy = "cottage", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -64,7 +64,7 @@ public class Cottage {
 	// FetchType.EAGER)
 	// public Set<CottageComplaint> cottageComplaints;
 
-	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	public Set<CottageOption> cottageOptions = new HashSet<CottageOption>();
 
 	@JsonIgnore
@@ -150,7 +150,11 @@ public class Cottage {
 	}
 
 	public void setRooms(Set<Room> rooms) {
-		this.rooms = rooms;
+		this.rooms.clear();
+		for (Room r : rooms) {
+			r.setCottage(this);
+			this.rooms.add(r);
+		}
 	}
 
 	public Set<Rule> getRules() {
@@ -158,6 +162,7 @@ public class Cottage {
 	}
 
 	public void setRules(Set<Rule> rules) {
+		this.rules.clear();
 		for (Rule r : rules) {
 			this.rules.add(Rule.toModel(r));
 		}
@@ -200,6 +205,7 @@ public class Cottage {
 	}
 
 	public void setCottageOptions(Set<CottageOption> cottageOptions) {
+		this.cottageOptions.clear();
 		for (CottageOption co : cottageOptions) {
 			co.setCottage(this);
 			this.cottageOptions.add(CottageOption.toModel(co));

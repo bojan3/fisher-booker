@@ -5,6 +5,12 @@ import java.sql.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
+import javax.persistence.OptimisticLockException;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +24,7 @@ import com.example.fisherbooker.model.CottageOwner;
 import com.example.fisherbooker.model.CottageReservation;
 import com.example.fisherbooker.model.Room;
 import com.example.fisherbooker.model.DTO.CottageAddDTO;
+import com.example.fisherbooker.model.DTO.EditCottageDTO;
 import com.example.fisherbooker.model.DTO.SearchFilter;
 import com.example.fisherbooker.repository.CottageOptionRepository;
 import com.example.fisherbooker.repository.CottageOwnerRepository;
@@ -25,10 +32,10 @@ import com.example.fisherbooker.repository.CottageRepository;
 import com.example.fisherbooker.repository.CottageReservationRepository;
 import com.example.fisherbooker.repository.ImageRepository;
 import com.example.fisherbooker.service.CottageService;
-import com.example.fisherbooker.util.FileUploadUtil;
 
 @Service
 public class CottageServiceImpl implements CottageService {
+	
 	private CottageRepository cottageRepository;
 	private CottageReservationRepository cottageReservationRepository;
 	private CottageOwnerRepository cottageOwnerRepository;
@@ -64,10 +71,23 @@ public class CottageServiceImpl implements CottageService {
 		this.cottageRepository.save(newCottage);
 		return true;
 	}
-
-	private void saveImageToDisk(String fileName, MultipartFile file) throws IOException {
-		String uploadDir = "src/main/resources/images";
-		FileUploadUtil.saveFile(uploadDir, fileName, file);
+	
+	@Transactional
+	public Boolean updateCottage(EditCottageDTO cottage) throws OptimisticLockException {
+		Cottage oldCottage = this.cottageRepository.findById(cottage.getId()).orElse(null);
+		if(checkIfCottageHasReservation(cottage.getId())) {
+			return false;
+		}
+		oldCottage.setName(cottage.getName());
+		oldCottage.setAddress(cottage.getAddress());
+		oldCottage.setAvailabilityPeriod(cottage.getAvailabilityPeriod());
+		oldCottage.setDescription(cottage.getDescription());
+		oldCottage.setPricePerDay(cottage.getPricePerDay());
+		oldCottage.setRooms(cottage.getRooms());
+		oldCottage.setRules(cottage.getRules());
+		oldCottage.setCottageOptions(cottage.getCottageOptions());
+		this.cottageRepository.save(oldCottage);
+		return true;
 	}
 
 	public void deleteCottage(Long id) {
@@ -106,7 +126,7 @@ public class CottageServiceImpl implements CottageService {
 	}
 
 	public Boolean checkIfCottageHasReservation(Long id) {
-		List<CottageReservation> reservations = this.cottageReservationRepository.findByCottageId(id);
+		List<CottageReservation> reservations = this.cottageReservationRepository.isCottageReserved(id);
 		System.out.println(reservations);
 		return !reservations.isEmpty();
 	}

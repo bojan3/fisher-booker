@@ -73,10 +73,13 @@ public class ShipOption {
 	
 	public static ShipOption toModel(ShipOption option) {
 		ShipOption newOption = new ShipOption();
-		option.setName(newOption.getName());
-		option.setDescription(newOption.getDescription());
-		option.setPrice(newOption.getPrice());
-		option.setShip(newOption.getShip());
+		if(option.getId() != 0) {
+			newOption.setId(option.getId());
+		}
+		newOption.setName(option.getName());
+		newOption.setDescription(option.getDescription());
+		newOption.setPrice(option.getPrice());
+		newOption.setShip(option.getShip());
 		return newOption;
 	}
 

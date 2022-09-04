@@ -211,7 +211,7 @@ insert into adventure_reservation(start_date, end_date, adventure_id, capacity, 
 
 
 
-insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-05-31', '2022-06-10', 1, 2, 25, 1, FALSE);
+insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-07-31', '2022-09-15', 1, 2, 25, 1, FALSE);
 insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-06-25', '2022-06-30', 2, 3, 15, 1, FALSE);
 insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-05-31', '2022-06-10', 3, 5, 50, 1, FALSE);
 insert into cottage_reservation(start_date, end_date, cottage_id, capacity, price, client_id, deleted) values ('2022-04-27', '2022-04-30', 1, 2, 25, 1, FALSE);

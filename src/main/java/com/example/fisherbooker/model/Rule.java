@@ -44,6 +44,9 @@ public class Rule {
 	
 	public static Rule toModel(Rule newRule) {
 		Rule rule = new Rule();
+		if(newRule.getId() != 0) {
+			rule.setId(newRule.getId());
+		}
 		rule.setDescription(newRule.getDescription());
 		return rule;
 	}

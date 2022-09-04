@@ -18,7 +18,11 @@ import com.example.fisherbooker.model.DTO.DatePeriodDTO;
 @Repository
 public interface CottageReservationRepository
 		extends JpaRepository<CottageReservation, Long>, PagingAndSortingRepository<CottageReservation, Long> {
-	public List<CottageReservation> findByCottageId(Long id);
+	
+	@Query(value = "select * \r\n"
+			+ "from cottage_reservation\r\n"
+			+ "where cottage_id = :id and end_date >= CURRENT_DATE", nativeQuery = true)
+	public List<CottageReservation> isCottageReserved(@Param("id") Long id);
 
 	@Query(value = "select c.name as realEstate, sum(capacity) as numOfPeople, sum(price) as income\r\n"
 			+ "from cottage_reservation cr, cottage c, cottage_owner co, account a\r\n"
