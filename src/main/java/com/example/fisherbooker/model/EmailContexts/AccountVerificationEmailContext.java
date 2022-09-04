@@ -1,6 +1,8 @@
-package com.example.fisherbooker.model;
+package com.example.fisherbooker.model.EmailContexts;
 
 import org.springframework.web.util.UriComponentsBuilder;
+
+import com.example.fisherbooker.model.Account;
 
 public class AccountVerificationEmailContext extends EmailContext {
 

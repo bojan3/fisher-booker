@@ -129,6 +129,14 @@ public class ShipReservation {
 		if (!this.shipOption.contains(newShipOption))
 			this.shipOption.add(newShipOption);
 	}
+	
+	public ShipReservationSupportData getReservationsd() {
+		return reservationsd;
+	}
+
+	public void setReservationsd(ShipReservationSupportData reservationsd) {
+		this.reservationsd = reservationsd;
+	}
 
 	@Override
 	public String toString() {

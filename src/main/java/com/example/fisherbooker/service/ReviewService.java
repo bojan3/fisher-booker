@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.example.fisherbooker.model.Account;
 import com.example.fisherbooker.model.Adventure;
 import com.example.fisherbooker.model.AdventureReview;
 import com.example.fisherbooker.model.Client;
@@ -17,11 +22,15 @@ import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.ShipReview;
 import com.example.fisherbooker.model.DTO.ApproveReviewDTO;
 import com.example.fisherbooker.model.DTO.CreateReviewDTO;
+import com.example.fisherbooker.model.EmailContexts.AccountVerificationEmailContext;
+import com.example.fisherbooker.model.EmailContexts.NewReviewEmailContext;
 import com.example.fisherbooker.repository.AdventureRepository;
 import com.example.fisherbooker.repository.ClientRepository;
 import com.example.fisherbooker.repository.CottageRepository;
 import com.example.fisherbooker.repository.ReviewRepository;
+import com.example.fisherbooker.repository.SecureTokenRepository;
 import com.example.fisherbooker.repository.ShipRepository;
+import com.example.fisherbooker.security.auth.SecureToken;
 
 @Service
 public class ReviewService {
@@ -46,6 +55,19 @@ public class ReviewService {
 
 	@Autowired
 	private AdventureRepository adventureRepository;
+
+	@Value("${site.base.url.https}")
+	private String baseURL;
+
+	@Autowired
+	private EmailService emailService;
+
+	@Autowired
+	private SecureTokenService secureTokenService;
+	// sad dal treba naglasiti koji implementira ili ce sam da skonta
+
+	@Autowired
+	private SecureTokenRepository secureTokenRepository;
 
 	@Autowired
 	public ReviewService(ReviewRepository<CottageReview> cottagereviewrepository,
@@ -72,10 +94,40 @@ public class ReviewService {
 		String clinetName = SecurityContextHolder.getContext().getAuthentication().getName();
 		return this.clientRepository.findByName(clinetName);
 	}
-//	public Boolean deleteReview(Long review_id) {
-//		this.rr.deleteById(review_id);
-//		return true;
-//	}
+
+	public Boolean deleteReview(Long review_id) {
+		Boolean response = false;
+		try {
+			this.adventurereviewRepository.deleteById(review_id);
+			response = true;
+
+		}
+
+		catch (Exception err) {
+			System.out.print("not an adventure");
+			System.out.println(err);
+		}
+		try {
+			this.cottagereviewRepository.deleteById(review_id);
+			response = true;
+
+		} catch (Exception err) {
+			System.out.print("not a cottage");
+			System.out.println(err);
+		}
+
+		try {
+
+			this.shipreviewRepository.deleteById(review_id);
+			response = true;
+		} catch (Exception e) {
+			System.out.print("not ship");
+			System.out.println(e);
+		} finally {
+			return response;
+		}
+
+	}
 //
 //	public List<Review> getAllByGrade() {
 //		return this.rr.findByOrderByGrade();
@@ -95,39 +147,102 @@ public class ReviewService {
 		this.adventurereviewRepository.save(adventureReview);
 	}
 
-	public void publish(Long reviewID) {
-	try {	
-		AdventureReview ar = this.adventurereviewRepository.findById(reviewID).get();
-		ar.setApproved(true);
-		this.adventurereviewRepository.save(ar);
-	}
-	
-	catch(Exception err) {
-		System.out.print("not a adventure");
-		System.out.println(err);
-	}
-	try {
+	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED) // ,
+																												// rollbackFor
+																												// =
+																												// Throwable.class)
+	public CottageReview getCottageReview(Long reviewID) throws Exception {
 		CottageReview cr = this.cottagereviewRepository.findById(reviewID).get();
 		cr.setApproved(true);
 		this.cottagereviewRepository.save(cr);
+		return cr;
 	}
-	catch(Exception err) {
-		System.out.print("not a cottage");
-		System.out.println(err);
-	}
-	
-	try {
-		
+
+	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED) // ,
+																												// rollbackFor
+																												// =
+																												// Throwable.class)
+	public ShipReview getShipReview(Long reviewID) throws Exception {
 		ShipReview shr = this.shipreviewRepository.findById(reviewID).get();
 		shr.setApproved(true);
 		this.shipreviewRepository.save(shr);
+		return shr;
 	}
-	catch (Exception e) {
-		System.out.print("not ship");
-		System.out.println(e);
+
+	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED) // ,
+																												// rollbackFor
+																												// =
+																												// Throwable.class)
+	public AdventureReview getAdventureReview(Long reviewID) throws Exception {
+		AdventureReview ar = this.adventurereviewRepository.findById(reviewID).get();
+		ar.setApproved(true);
+		this.adventurereviewRepository.save(ar);
+		return ar;
 	}
-	
-		
+
+	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED) // ,
+																												// rollbackFor
+																												// =
+																												// Throwable.class)
+	public void publish(Long reviewID) {
+		Account acc = new Account();
+		try {
+			AdventureReview ar = this.adventurereviewRepository.findById(reviewID).get();
+			ar.setApproved(true);
+			this.adventurereviewRepository.save(ar);
+			acc = ar.getAdventure().getFishingInstructor().getAccount();
+			this.sendNewReviewEmail(acc, ar);
+
+		}
+
+		catch (Exception err) {
+			System.out.print("not a adventure");
+			System.out.println(err);
+		}
+		try {
+			CottageReview cr = this.cottagereviewRepository.findById(reviewID).get();
+			cr.setApproved(true);
+			this.cottagereviewRepository.save(cr);
+			acc = cr.getCottage().getCottageOwner().getAccount();
+			this.sendNewReviewEmail(acc, cr);
+
+		} catch (Exception err) {
+			System.out.print("not a cottage");
+			System.out.println(err);
+		}
+
+		try {
+
+			ShipReview shr = this.shipreviewRepository.findById(reviewID).get();
+			shr.setApproved(true);
+			this.shipreviewRepository.save(shr);
+			acc = shr.getShip().getShipOwner().getAccount();
+			this.sendNewReviewEmail(acc, shr);
+
+		} catch (Exception e) {
+			System.out.print("not ship");
+			System.out.println(e);
+		} finally {
+
+		}
+
+	}
+
+	public void sendNewReviewEmail(Account account, Review review) {
+		SecureToken secureToken = secureTokenService.createSecureToken();
+		secureToken.setAccount(account);
+		secureTokenRepository.save(secureToken);
+
+		NewReviewEmailContext emailContext = new NewReviewEmailContext();
+		emailContext.init(account, review);
+		emailContext.setToken(secureToken.getToken());
+		// emailContext.buildVerificationUrl("http://localhost:4200",
+		// secureToken.getToken());
+		try {
+			emailService.sendMail(emailContext);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

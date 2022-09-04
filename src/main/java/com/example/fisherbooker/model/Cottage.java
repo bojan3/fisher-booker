@@ -36,6 +36,8 @@ public class Cottage {
 	private float averageMark;
 
 	private String imagePath;
+	
+	private Boolean isDeleted = false;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	public Address address;
@@ -86,10 +88,13 @@ public class Cottage {
 	private Integer version;
 
 	public Cottage() {
+		this.isDeleted=false;
 	}
 
 	public Cottage(Long id) {
 		this.id = id;
+		this.isDeleted=false;
+
 	}
 
 	public void free() {
@@ -248,5 +253,26 @@ public class Cottage {
 			this.cottageReservations.add(newReservation);
 	}
 
+	@Override
+	public String toString() {
+		return "Cottage [id=" + id + ", name=" + name + ", description=" + description + ", pricePerDay=" + pricePerDay
+				+ ", averageMark=" + averageMark + ", cottageOwner=" + cottageOwner + ", client=" + client
+				+ ", version=" + version + "]";
+	}
+
+	public boolean Deleted() {
+		return this.isDeleted;
+	}
+
+	public boolean isOwnerDeleted() {
+			return this.getCottageOwner().getAccount().isDeleted();
+	}
+
+	public void setIsDeleted(boolean b) {
+			this.isDeleted = b;
+		
+	}
+	
+	
 }
 

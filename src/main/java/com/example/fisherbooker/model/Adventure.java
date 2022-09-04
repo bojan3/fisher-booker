@@ -51,6 +51,9 @@ public class Adventure {
 
 	@Column
 	private float cancelRate;
+	
+	private Boolean isDeleted = false;
+
 
 	@OneToMany(mappedBy = "adventure", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	// @JoinTable(name = "adventure_adventure_option",
@@ -250,5 +253,14 @@ public class Adventure {
 			adventureReservation = new java.util.HashSet<AdventureReservation>();
 		return adventureReservation.iterator();
 	}
+
+	public boolean getIsDeleted() {
+		return this.isDeleted;
+	}
+	
+	public void setIsDeleted(Boolean b) {
+			this.isDeleted = b;
+	}
+	
 
 }

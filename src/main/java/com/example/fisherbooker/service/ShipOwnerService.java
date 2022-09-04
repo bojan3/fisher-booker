@@ -1,5 +1,6 @@
 package com.example.fisherbooker.service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,16 +18,20 @@ import com.example.fisherbooker.model.DTO.CottageDTO;
 import com.example.fisherbooker.model.DTO.ShipDTO;
 import com.example.fisherbooker.repository.AccountRepository;
 import com.example.fisherbooker.repository.ShipOwnerRepository;
+import com.example.fisherbooker.repository.ShipRepository;
 
 
 @Service
 public class ShipOwnerService {
 	public ShipOwnerRepository shipOwnerRepository;
 	public AccountRepository accountrepository;
+	public ShipRepository shipRepository;
 
 	@Autowired
-	public ShipOwnerService(ShipOwnerRepository shipOwnerRepository) {
+	public ShipOwnerService(ShipOwnerRepository shipOwnerRepository, AccountRepository accountRepository, ShipRepository shr) {
 		this.shipOwnerRepository = shipOwnerRepository;
+		this.accountrepository = accountRepository;
+		this.shipRepository = shr;
 	}
 	
 	public Set<ShipDTO> getAllShipsByOwner(String username){
@@ -43,15 +48,23 @@ public class ShipOwnerService {
 	}
 	
 	public List<ShipOwner> getAll() {
-		// TODO Auto-generated method stub
-		return this.shipOwnerRepository.findAll();
+
+		List<ShipOwner> response = new ArrayList<ShipOwner>();
+		List <ShipOwner> svi  = this.shipOwnerRepository.findAll();
+		
+		for(ShipOwner sho : svi)
+			if(!sho.getAccount().isDeleted())
+				response.add(sho);
+		 
+		 return response;
+		
 	}
 
 	public void save(ShipOwner shipowner) {
 		this.shipOwnerRepository.save(shipowner);		
 	}
 	
-	public void deleteOne(Long instructor_id) {
+	public void deleteOne2(Long instructor_id) {
 		ShipOwner sho =this.shipOwnerRepository.getById(instructor_id);
 		System.out.println(sho);
 	//	long acc_id = fi.getAccount().getId();		
@@ -70,7 +83,17 @@ public class ShipOwnerService {
 		this.shipOwnerRepository.delete(sho);	
 	}
 	
-	
+	public void deleteOne(Long owner_id) {
+		ShipOwner sho = this.shipOwnerRepository.findById(owner_id).get();
+		Set<Ship> ships = sho.getShips();
+		for(Ship sh : ships) {
+			sh.setIsDeleted(true);
+			this.shipRepository.save(sh);
+	}
+		Account acc = sho.getAccount();
+		acc.setDeleted(true);
+		this.accountrepository.save(acc);
+	}
 	
 	
 }

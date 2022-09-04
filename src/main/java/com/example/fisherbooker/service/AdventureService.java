@@ -110,4 +110,10 @@ public class AdventureService {
 		return false;
 	}
 
+	public void delete(Long adventure_id) {
+		Adventure adv =this.adventureRepository.findById(adventure_id).get();
+		adv.setIsDeleted(true);
+		this.adventureRepository.save(adv);		
+	}
+
 }

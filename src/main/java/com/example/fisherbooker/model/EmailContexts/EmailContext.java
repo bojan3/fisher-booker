@@ -1,4 +1,4 @@
-package com.example.fisherbooker.model;
+package com.example.fisherbooker.model.EmailContexts;
 
 import java.util.HashMap;
 import java.util.Map;

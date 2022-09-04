@@ -41,6 +41,9 @@ public class Ship {
 	private int capacity;
 	private float cancelRate;
 
+	private Boolean isDeleted = false;
+
+	
 	@OneToOne(cascade = CascadeType.ALL)
 	public Address address;
 
@@ -306,4 +309,12 @@ public class Ship {
 				+ shipOptions + "]";
 	}
 
+	public void setIsDeleted(boolean b) {
+			this.isDeleted=b;		
+	}
+
+	public boolean getIsDeleted() {
+		return this.isDeleted;
+	}
+	
 }

@@ -61,8 +61,8 @@ public class CottageOwnerController {
 	}
 
 	@DeleteMapping("/delete")
-	public ResponseEntity<Boolean> deleteInstructorByID(@RequestBody Long instructor_id) {
-		this.cottageOwnerService.deleteOne(instructor_id);
+	public ResponseEntity<Boolean> deleteOwnerByID(@RequestBody Long owner_id) {
+		this.cottageOwnerService.deleteOne(owner_id);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 

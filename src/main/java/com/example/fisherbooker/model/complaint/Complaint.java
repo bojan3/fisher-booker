@@ -1,35 +1,42 @@
 package com.example.fisherbooker.model.complaint;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Version;
 
 import com.example.fisherbooker.model.Client;
 import com.example.fisherbooker.model.Cottage;
-import com.example.fisherbooker.model.Ship;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class ShipComplaint extends Complaint {
+public class Complaint {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	protected Long id;
 
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "ship_id")
-	public Ship ship;
+	@JoinColumn(name = "client_id", nullable = false)
+	protected Client client;
+	protected String text;
+	protected String answer;
+	protected Boolean answered;
+	
+	@Version
+	protected Long version;
 
-	public ShipComplaint() {
+	public Complaint() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public ShipComplaint(Client client, Ship ship, String text) {
+	public Complaint(Client client, String text) {
 		super();
 		this.client = client;
-		this.ship = ship;
 		this.text = text;
 		this.answered = false;
 	}
@@ -42,13 +49,6 @@ public class ShipComplaint extends Complaint {
 		this.client = clientId;
 	}
 
-	public Ship getShipId() {
-		return ship;
-	}
-
-	public void setCottageId(Ship cottageId) {
-		this.ship = cottageId;
-	}
 
 	public String getText() {
 		return text;
@@ -81,7 +81,10 @@ public class ShipComplaint extends Complaint {
 
 	@Override
 	public String toString() {
-		return super.toString() + "Ship:" + this.ship;
+		return "Complaint [id=" + id + ", client=" + client + ", text=" + text + ", answer=" + answer + ", answered="
+				+ answered + "]";
 	}
+	
+	 
 
 }

@@ -54,11 +54,31 @@ public class CottageController {
 		List<Cottage> cottages = this.cottageService.getAll();
 		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
 		for (Cottage cottage : cottages) {
-			CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
-			cottagesDTO.add(cottageDTO);
-		}
+			if(!cottage.Deleted())
+			{
+				CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
+				cottagesDTO.add(cottageDTO);
+			}
+										}
 		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
 	}
+	
+	@DeleteMapping("/admin/delete")
+		public ResponseEntity<List<CottageDTO>> deleteCottage(@RequestBody Long cottage_id) {
+			this.cottageService.deleteCottage(cottage_id);
+			List<Cottage> cottages = this.cottageService.getAll();
+			List<CottageDTO> cottageDTOs = new ArrayList<CottageDTO>();
+			for (Cottage cottage : cottages) {
+				if(!cottage.Deleted())
+				{
+					CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
+					cottageDTOs.add(cottageDTO);
+				}
+			}
+			return new ResponseEntity<>(cottageDTOs, HttpStatus.OK);
+		}
+	
+	
 
 	@GetMapping("/all/")
 	public ResponseEntity<List<CottageDTO>> getAllSorted(@RequestParam String type, @RequestParam String order) {

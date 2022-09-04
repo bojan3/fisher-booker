@@ -7,8 +7,12 @@ import java.util.List;
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageReservation;
 import com.example.fisherbooker.model.RealEstateType;
+import com.example.fisherbooker.model.ReservationSupportData;
 import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.ShipReservation;
+import com.example.fisherbooker.model.ShipReservationSupportData;
+import com.example.fisherbooker.model.GlobalNumber;
+
 
 public class AddReservationDTO {
 	private Date startDate;
@@ -81,11 +85,17 @@ public class AddReservationDTO {
 
 	public ShipReservation toShipModel() {
 		ShipReservation newReservation = new ShipReservation();
+
+		
 		newReservation.setCapacity(this.capacity);
 		newReservation.setPrice(this.price);
 		newReservation.setStartDate(this.startDate);
 		newReservation.setEndDate(this.endDate);
 		newReservation.setShip(new Ship(this.realEstateId));
+		
+		ShipReservationSupportData suppdata = (ShipReservationSupportData) new ReservationSupportData(new Long(newReservation.getId()),  new String(), 2,  newReservation.getPrice());
+		newReservation.setReservationsd(suppdata);
+		
 		return newReservation;
 	}
 

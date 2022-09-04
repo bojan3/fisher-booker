@@ -65,9 +65,11 @@ public class FishingInstructorController {
 		List<FishingInstructor> fishinginstructors = this.FishingInstructorService.getAll();
 		List<FishingInstructorDTO> FishingInstructorsDTO = new ArrayList<FishingInstructorDTO>();
 		for(FishingInstructor fishinginstructor : fishinginstructors) {
+			if(!fishinginstructor.getAccount().isDeleted()) {
 			FishingInstructorDTO fishinginstructorDTO = FishingInstructorDTO.createFishingInstructorDTO(fishinginstructor);
 			FishingInstructorsDTO.add(fishinginstructorDTO);
-		}
+			}
+			}
 		return new ResponseEntity<>(FishingInstructorsDTO, HttpStatus.OK);
 	}
 	

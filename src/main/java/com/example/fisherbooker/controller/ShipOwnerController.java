@@ -12,8 +12,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fisherbooker.model.CottageOwner;
@@ -52,6 +54,7 @@ public class ShipOwnerController {
 			//ShipOwnerDTO shipownerDTO = ShipOwnerDTO.createShipOwnerDTO(shipowner);
 			ShipOwnerDTO shipownerDTO = new  ShipOwnerDTO();
 			shipownerDTO.account = shipowner.getAccount();
+			shipownerDTO.id = shipowner.getId();
 			shipownersDTO.add(shipownerDTO);
 		}
 		return new ResponseEntity<>(shipownersDTO, HttpStatus.OK);
@@ -59,8 +62,8 @@ public class ShipOwnerController {
 	
 	@DeleteMapping("/delete")
 	//@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
-	public ResponseEntity<Boolean> deleteInstructorByID(@RequestBody Long instructor_id){	
-		this.shipOwnerService.deleteOne(instructor_id);	
+	public ResponseEntity<Boolean> deleteShipOwnerByID(@RequestBody Long owner_id){	
+		this.shipOwnerService.deleteOne(owner_id);	
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 	

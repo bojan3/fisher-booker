@@ -17,17 +17,17 @@ public class ReservationSupportData {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	protected Long id;
 	@Column
-	private String reservationdate;
+	protected String reservationdate;
 	@Column
-	private float systemIncome;
+	protected float systemIncome;
 	
 	@Column
-	private int price;
+	protected int price;
 	
 	@Column
-	private String dtype;
+	protected String dtype;
 	
 	public ReservationSupportData() {
 		super();

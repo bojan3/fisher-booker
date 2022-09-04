@@ -76,6 +76,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 								.antMatchers("/api/verify/**").permitAll()
 								.antMatchers("/api/registration/**").permitAll()
 								.antMatchers("/api/review/**").permitAll()
+								.antMatchers("/api/complaint/**").permitAll()
+
 							
 
 				// ukoliko ne zelimo da koristimo @PreAuthorize anotacije nad metodama

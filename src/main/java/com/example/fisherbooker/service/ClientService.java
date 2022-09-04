@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.fisherbooker.model.Account;
 import com.example.fisherbooker.model.AdventureReservation;
 import com.example.fisherbooker.model.Client;
 import com.example.fisherbooker.model.Cottage;
@@ -26,6 +27,7 @@ import com.example.fisherbooker.model.DTO.ShipReservationDTO;
 import com.example.fisherbooker.model.complaint.CottageComplaint;
 import com.example.fisherbooker.model.complaint.InstructorComplaint;
 import com.example.fisherbooker.model.complaint.ShipComplaint;
+import com.example.fisherbooker.repository.AccountRepository;
 import com.example.fisherbooker.repository.ClientRepository;
 import com.example.fisherbooker.repository.CottageComplaintRepository;
 import com.example.fisherbooker.repository.CottageRepository;
@@ -46,13 +48,14 @@ public class ClientService {
 	private CottageComplaintRepository cottageComplaintRepository;
 	private InstructorComplaintRepository instructorComplaintRepository;
 	private ShipComplaintRepository shipComplaintRepository;
+	private AccountRepository accrepository;
 
 	@Autowired
 	public ClientService(ClientRepository clientRepository, CottageRepository cotageRepository,
 			ShipRepository shipRepository, FishingInstructorRepository fishingInstructorRepository,
 			AdventureService adventureService, CottageComplaintRepository cottageComplaintRepository,
 			InstructorComplaintRepository instructorComplaintRepository,
-			ShipComplaintRepository shipComplaintRepository) {
+			ShipComplaintRepository shipComplaintRepository, AccountRepository accrep) {
 		this.clientRepository = clientRepository;
 		this.cottageRepository = cotageRepository;
 		this.shipRepository = shipRepository;
@@ -61,10 +64,23 @@ public class ClientService {
 		this.cottageComplaintRepository = cottageComplaintRepository;
 		this.instructorComplaintRepository = instructorComplaintRepository;
 		this.shipComplaintRepository = shipComplaintRepository;
+		this.accrepository = accrep;
 	}
 
 	public List<Client> getAll() {
-		return this.clientRepository.findAll();
+		 List<Client> allclients = this.clientRepository.findAll();
+		 List <Client> notdeleted = new ArrayList<Client>();
+		 for(Client c:allclients)
+			 {if(!c.getAccount().isDeleted())
+				 notdeleted.add(c);}
+		 return notdeleted;
+	}
+	
+	public void deleteOne(Long client_id) {
+		Client c =this.clientRepository.findById(client_id).get();
+		Account acc = c.getAccount();
+		acc.setDeleted(true);
+		this.accrepository.save(acc);
 	}
 
 	public void subscribeToCottage(Long cottageId, Long accountId) {

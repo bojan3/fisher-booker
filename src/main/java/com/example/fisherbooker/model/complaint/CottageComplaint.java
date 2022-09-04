@@ -13,25 +13,13 @@ import com.example.fisherbooker.model.FishingInstructor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class CottageComplaint {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+public class CottageComplaint extends Complaint {
 
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "cottage_id", nullable = false)
+	@JoinColumn(name = "cottage_id")
 	public Cottage cottage;
 
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name = "client_id", nullable = false)
-	public Client client;
-
-	private String text;
-	private String answer;
-	private Boolean answered;
 
 	public CottageComplaint() {
 		super();
@@ -78,4 +66,22 @@ public class CottageComplaint {
 		this.answered = answered;
 	}
 
+	public Long getId() {
+		// TODO Auto-generated method stub
+		return this.id;
+	}
+
+	public String getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString()+"Cottage:"+this.cottage;
+	}
+	
 }

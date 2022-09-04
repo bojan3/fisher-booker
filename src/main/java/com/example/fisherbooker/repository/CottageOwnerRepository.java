@@ -12,7 +12,10 @@ import java.util.List;
 @Repository
 public interface CottageOwnerRepository extends JpaRepository<CottageOwner, Long>{
 	
-	public Optional<CottageOwner> findOneByAccountUsername(String username);
+	
+	
+	 Optional<CottageOwner> findOneByAccountUsername(String username);
+	
 	
 	 List<CottageOwner> findAll();
 	 

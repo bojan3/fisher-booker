@@ -64,7 +64,7 @@ public class FishingInstructor {
 
 	@Override
 	public String toString() {
-		return "FishingInstructor [id=" + id + ", account=" + account + ", biography=" + biography + "adventure:"+ adventure+"]";
+		return "FishingInstructor [id=" + id + ", account=" + account + ", biography=" + biography +"]"; //"adventure:"+ adventure+"]";
 	}
 
 	public FishingInstructor() {

@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.ShipOption;
 import com.example.fisherbooker.model.DTO.AddShipDTO;
+import com.example.fisherbooker.model.DTO.CottageDTO;
 import com.example.fisherbooker.model.DTO.ShipDTO;
 import com.example.fisherbooker.service.ShipService;
 
@@ -33,6 +35,39 @@ public class ShipController {
 	public ShipController(ShipService shipService) {
 		this.shipService = shipService;
 	}
+	
+	
+	
+	
+	@GetMapping("/all")
+	public ResponseEntity<List<ShipDTO>> getAlll() {
+		List<Ship> ships = this.shipService.getAll();
+		List<ShipDTO>shipsDTO = new ArrayList<ShipDTO>();
+		for (Ship ship : ships) {
+			if(!ship.getIsDeleted())
+			{
+				ShipDTO shipDTO = ShipDTO.createShipDTO(ship);
+				shipDTO.setId(ship.getId());
+				shipsDTO.add(shipDTO);
+			}
+										}
+		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/admin/delete")
+		public ResponseEntity<List<ShipDTO>> deleteAship(@RequestBody Long ship_id) {
+			this.shipService.delete(ship_id);
+			List<Ship> ships = this.shipService.getAll();
+			List<ShipDTO> shipDTOs = new ArrayList<ShipDTO>();
+			for (Ship ship : ships) {
+				if(!ship.getIsDeleted())
+				{
+					ShipDTO shipDTO = ShipDTO.createShipDTO(ship);
+					shipDTOs.add(shipDTO);
+				}
+			}
+			return new ResponseEntity<>(shipDTOs, HttpStatus.OK);
+		}
 
 	@GetMapping("/page/{id}")
 	public ResponseEntity<Ship> getById(@PathVariable Long id) {
@@ -40,16 +75,19 @@ public class ShipController {
 		return new ResponseEntity<>(ship, HttpStatus.OK);
 	}
 
-	@GetMapping("/all")
-	public ResponseEntity<List<ShipDTO>> getAll() {
-		List<Ship> ships = this.shipService.getAll();
-		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
-		for (Ship ship : ships) {
-			ShipDTO shipDTO = ShipDTO.createShipDTO(ship);
-			shipsDTO.add(shipDTO);
-		}
-		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
-	}
+	
+	
+	
+//	@GetMapping("/all")
+//	public ResponseEntity<List<ShipDTO>> getAll() {
+//		List<Ship> ships = this.shipService.getAll();
+//		List<ShipDTO> shipsDTO = new ArrayList<ShipDTO>();
+//		for (Ship ship : ships) {
+//			ShipDTO shipDTO = ShipDTO.createShipDTO(ship);
+//			shipsDTO.add(shipDTO);
+//		}
+//		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
+//	}
 	
 	@GetMapping("/all/")
 	public ResponseEntity<List<ShipDTO>> getAllSorted(@RequestParam String type, @RequestParam String order) {
