@@ -1,6 +1,9 @@
 package com.example.fisherbooker.service;
 
+import java.io.IOException;
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageOption;
@@ -41,5 +44,9 @@ public interface CottageService {
 	public List<Cottage> searchCottages(SearchFilter searchFilter);
 	
 //	public List<Cottage> getAllByDate(Date date);
+	
+	public Boolean uploadImage(Long id, MultipartFile image) throws IOException;
+	
+	public Boolean deleteImage(Long id);
 
 }

@@ -10,9 +10,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
+import com.example.fisherbooker.model.DTO.ReservationDetailsDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -26,6 +29,11 @@ public class CottageReservation {
 	private int capacity;
 	private boolean deleted;
 
+	@OneToOne
+	(cascade = CascadeType.ALL)
+	@JoinTable(name = "creservation_reservation_supportdata", joinColumns = @JoinColumn(name = "creservation_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "suppdata_id3", referencedColumnName = "id"))
+	private CottageReservationSupportData reservationsd;
+	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<CottageOption> cottageOption;
 
@@ -41,6 +49,12 @@ public class CottageReservation {
 
 	public CottageReservation() {
 		super();
+		this.deleted = false;
+	}
+	
+	public CottageReservation(Long id) {
+		super();
+		this.id = id;
 	}
 
 	public boolean isDeleted() {
@@ -114,12 +128,35 @@ public class CottageReservation {
 	public void setCottage(Cottage cottage) {
 		this.cottage = cottage;
 	}
+	
+	public ReservationDetailsDTO toDTO() {
+		ReservationDetailsDTO dto = new ReservationDetailsDTO();
+		dto.setId(id);
+		dto.setCapacity(capacity);
+		dto.setName(cottage.getName());
+		dto.setEndDate(endDate);
+		dto.setStartDate(startDate);
+		dto.setPrice(price);
+		dto.setOptions(cottageOption.toString());
+		dto.setUserInfo(client.toString());
+		dto.setClientId(client.getId());
+		dto.setRealEstateId(cottage.getId());
+		return dto; 
+	}
+	
+	public void addOption(CottageOption newCottageOption) {
+		if (newCottageOption == null)
+			return;
+		if (this.cottageOption == null)
+			this.cottageOption = new java.util.HashSet<CottageOption>();
+		if (!this.cottageOption.contains(newCottageOption))
+			this.cottageOption.add(newCottageOption);
+	}
 
 	@Override
 	public String toString() {
 		return "CottageReservation [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", price=" + price
-				+ ", capacity=" + capacity + ", cottageOption=" + cottageOption + ", cottage=" + cottage + ", client="
-				+ client + "]";
+				+ ", capacity=" + capacity + "]";
 	}
 
 }

@@ -82,7 +82,7 @@ public class ShipOption {
 
 	@Override
 	public String toString() {
-		return "ShipOption [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + "]";
+		return this.name + " -- " + this.description + " -- " + this.price;
 	}
 
 }

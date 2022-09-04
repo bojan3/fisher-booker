@@ -8,19 +8,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.fisherbooker.model.DTO.AddSuperDealDTO;
-import com.example.fisherbooker.service.CottageSuperDealService;
+import com.example.fisherbooker.model.DTO.ReservationReviewDTO;
+import com.example.fisherbooker.service.ReservationReviewService;
 
 @RestController
-@RequestMapping("/api/cottageSuperDeal")
-public class CottageSuperDealController {
-	
+@RequestMapping("api/reservationReview")
+public class ReservationReviewController {
+
 	@Autowired
-	private CottageSuperDealService cottageSuperDealService;
+	private ReservationReviewService reservationReviewService;
 	
-	@PostMapping("/add")
-	public ResponseEntity<Boolean> add(@RequestBody AddSuperDealDTO deal) {
-		this.cottageSuperDealService.add(deal);
+	@PostMapping("/create")
+	public ResponseEntity<Boolean> create(@RequestBody ReservationReviewDTO review) {
+		this.reservationReviewService.create(review);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
+
 }

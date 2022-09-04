@@ -15,21 +15,21 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.example.fisherbooker.model.DTO.ReservationDetailsDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class ShipReservation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	private Date startDate;
 	private Date endDate;
 	private int price;
 	private int capacity;
 	private boolean deleted;
-	
-	@OneToOne
-	(cascade = CascadeType.ALL)
+
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinTable(name = "shreservation_reservation_supportdata", joinColumns = @JoinColumn(name = "shreservation_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "suppdata_id2", referencedColumnName = "id"))
 	private ShipReservationSupportData reservationsd;
 
@@ -47,14 +47,28 @@ public class ShipReservation {
 
 	public ShipReservation() {
 		super();
+		this.deleted = false;
+	}
+	
+	public ShipReservation(Long id) {
+		super();
+		this.id = id;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public ShipReservationSupportData getReservationsd() {
+		return reservationsd;
+	}
+
+	public void setReservationsd(ShipReservationSupportData reservationsd) {
+		this.reservationsd = reservationsd;
 	}
 
 	public Date getStartDate() {
@@ -119,6 +133,30 @@ public class ShipReservation {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	public ReservationDetailsDTO toDTO() {
+		ReservationDetailsDTO dto = new ReservationDetailsDTO();
+		dto.setId(id);
+		dto.setCapacity(capacity);
+		dto.setName(ship.getName());
+		dto.setEndDate(endDate);
+		dto.setStartDate(startDate);
+		dto.setPrice(price);
+		dto.setOptions(shipOption.toString());
+		dto.setUserInfo(client.toString());
+		dto.setClientId(client.getId());
+		dto.setRealEstateId(ship.getId());
+		return dto;
+	}
+
+	public void addOption(ShipOption newShipOption) {
+		if (newShipOption == null)
+			return;
+		if (this.shipOption == null)
+			this.shipOption = new java.util.HashSet<ShipOption>();
+		if (!this.shipOption.contains(newShipOption))
+			this.shipOption.add(newShipOption);
 	}
 
 	@Override

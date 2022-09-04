@@ -24,4 +24,6 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 //	moras da najdes akaunt pa onda da nadjes klijenta preko akaunta
 	@Query("FROM Client WHERE account.username = ?1")
 	public Client findByName(String name);
+	
+	public Client findByAccountUsername(String username);
 }

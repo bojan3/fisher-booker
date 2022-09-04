@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.Ship;
@@ -189,6 +190,25 @@ public class ShipController {
 	@GetMapping("options/{id}")
 	public ResponseEntity<List<ShipOption>> getOptions(@PathVariable Long id) {
 		return new ResponseEntity<>(this.shipService.getOptions(id), HttpStatus.OK);
+	}
+	
+	@PostMapping("/upload/{id}")
+	public ResponseEntity<Boolean> uplaodImage(@PathVariable Long id, @RequestParam("image") MultipartFile file) {
+
+		try {
+			this.shipService.uploadImage(id, file);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('SHIP_OWNER')")
+	@DeleteMapping("/delete/image/{id}")
+	public ResponseEntity<Boolean> deleteImage(@PathVariable("id") Long id) {
+		this.shipService.deleteImage(id);
+		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 
 	@GetMapping("/locations")

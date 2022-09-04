@@ -17,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -58,8 +59,8 @@ public class Ship {
 	@OneToMany(mappedBy = "ship", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<FishingEquipment> fishingEquipments = new HashSet<FishingEquipment>();
 
-	@OneToMany(mappedBy = "ship", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<ShipPicture> shipPictures;
+	@OneToMany(mappedBy = "ship", fetch = FetchType.EAGER)
+	public Set<ShipImage> shipImages = new HashSet<ShipImage>();
 
 	@OneToMany(mappedBy = "ship", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<ShipSuperDeal> shipSuperDeals;
@@ -82,10 +83,14 @@ public class Ship {
 	@OneToMany(mappedBy = "ship", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private Set<ShipReview> shipReviews = new HashSet<ShipReview>();
 
+	@Version
+	@Column(columnDefinition = "integer DEFAULT 0", nullable = false)
+	private Integer version;
+
 	public Ship() {
 		super();
 	}
-	
+
 	public Ship(Long id) {
 		super();
 		this.id = id;
@@ -254,12 +259,12 @@ public class Ship {
 		}
 	}
 
-	public Set<ShipPicture> getShipPictures() {
-		return shipPictures;
+	public Set<ShipImage> getShipImages() {
+		return shipImages;
 	}
 
-	public void setShipPictures(Set<ShipPicture> shipPictures) {
-		this.shipPictures = shipPictures;
+	public void setShipImages(Set<ShipImage> shipImages) {
+		this.shipImages = shipImages;
 	}
 
 	public Set<ShipSuperDeal> getShipSuperDeals() {
@@ -286,15 +291,59 @@ public class Ship {
 		this.client = client;
 	}
 
+	public Set<ShipReview> getShipReviews() {
+		return shipReviews;
+	}
+
+	public void setShipReviews(Set<ShipReview> shipReviews) {
+		this.shipReviews = shipReviews;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	public void addReservation(ShipReservation newReservation) {
+		if (newReservation == null)
+			return;
+		if (this.shipReservations == null)
+			this.shipReservations = new java.util.HashSet<ShipReservation>();
+		if (!this.shipReservations.contains(newReservation))
+			this.shipReservations.add(newReservation);
+	}
+
+	public void addSuperDeal(ShipSuperDeal newDeal) {
+		if (newDeal == null)
+			return;
+		if (this.shipSuperDeals == null)
+			this.shipSuperDeals = new java.util.HashSet<ShipSuperDeal>();
+		if (!this.shipSuperDeals.contains(newDeal))
+			this.shipSuperDeals.add(newDeal);
+	}
+
+	public void addImage(ShipImage newImage) {
+		if (newImage == null)
+			return;
+		if (this.shipImages == null)
+			this.shipImages = new java.util.HashSet<ShipImage>();
+		if (!this.shipImages.contains(newImage))
+			this.shipImages.add(newImage);
+	}
+
 	@Override
 	public String toString() {
 		return "Ship [id=" + id + ", name=" + name + ", type=" + type + ", length=" + length + ", description="
 				+ description + ", averageMark=" + averageMark + ", rentPrice=" + rentPrice + ", engineNumber="
 				+ engineNumber + ", enginePower=" + enginePower + ", maxSpeed=" + maxSpeed + ", capacity=" + capacity
-				+ ", cancelRate=" + cancelRate + ", address=" + address + ", rules=" + rules + ", navigationEquipments="
-				+ navigationEquipments + ", fishingEquipments=" + fishingEquipments + ", shipPictures=" + shipPictures
-				+ ", shipSuperDeals=" + shipSuperDeals + ", availabilityPeriod=" + availabilityPeriod + ", shipOptions="
-				+ shipOptions + "]";
+				+ ", cancelRate=" + cancelRate + ", address=" + address + ", shipOwner=" + shipOwner + ", rules="
+				+ rules + ", navigationEquipments=" + navigationEquipments + ", fishingEquipments=" + fishingEquipments
+				+ ", shipImages=" + shipImages + ", shipSuperDeals=" + shipSuperDeals + ", availabilityPeriod="
+				+ availabilityPeriod + ", shipOptions=" + shipOptions + ", shipReservations=" + shipReservations
+				+ ", client=" + client + ", shipReviews=" + shipReviews + ", version=" + version + "]";
 	}
 
 }

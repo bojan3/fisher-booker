@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.Iterator;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import com.example.fisherbooker.model.AvailabilityPeriod;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.example.fisherbooker.model.Cottage;
+import com.example.fisherbooker.model.CottageImage;
 import com.example.fisherbooker.model.CottageOption;
 import com.example.fisherbooker.model.CottageOwner;
 import com.example.fisherbooker.model.CottageReservation;
@@ -20,11 +23,9 @@ import com.example.fisherbooker.repository.CottageOptionRepository;
 import com.example.fisherbooker.repository.CottageOwnerRepository;
 import com.example.fisherbooker.repository.CottageRepository;
 import com.example.fisherbooker.repository.CottageReservationRepository;
+import com.example.fisherbooker.repository.ImageRepository;
 import com.example.fisherbooker.service.CottageService;
 import com.example.fisherbooker.util.FileUploadUtil;
-
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class CottageServiceImpl implements CottageService {
@@ -32,15 +33,17 @@ public class CottageServiceImpl implements CottageService {
 	private CottageReservationRepository cottageReservationRepository;
 	private CottageOwnerRepository cottageOwnerRepository;
 	private CottageOptionRepository cottageOptionRepository;
+	private ImageRepository imageRepository;
 
 	@Autowired
 	public CottageServiceImpl(CottageRepository cottageRepository,
 			CottageReservationRepository cottageReservationRepository, CottageOwnerRepository cottageOwnerRepository,
-			CottageOptionRepository cottageOptionRepository) {
+			CottageOptionRepository cottageOptionRepository, ImageRepository cottageImageRepository) {
 		this.cottageRepository = cottageRepository;
 		this.cottageReservationRepository = cottageReservationRepository;
 		this.cottageOwnerRepository = cottageOwnerRepository;
 		this.cottageOptionRepository = cottageOptionRepository;
+		this.imageRepository = cottageImageRepository;
 	}
 
 	public Boolean saveCottage(CottageAddDTO cottage) {
@@ -213,4 +216,22 @@ public class CottageServiceImpl implements CottageService {
 
 		return cottages;
 	}
+
+	public Boolean uploadImage(Long id, MultipartFile image) throws IOException {
+		CottageImage newImage = new CottageImage();
+		newImage.setName(image.getOriginalFilename());
+		newImage.setType(image.getContentType());
+		newImage.setImage(image.getBytes());
+		Cottage c = this.getById(id);
+		newImage.setCottage(c);
+		c.addImage(newImage);
+		this.imageRepository.save(newImage);
+		return true;
+	}
+
+	public Boolean deleteImage(Long id) {
+		this.imageRepository.deleteById(id);
+		return true;
+	}
+
 }

@@ -1,7 +1,5 @@
 package com.example.fisherbooker.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,16 +13,20 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageOption;
 import com.example.fisherbooker.model.DTO.CottageAddDTO;
 import com.example.fisherbooker.model.DTO.CottageDTO;
 import com.example.fisherbooker.model.DTO.SearchFilter;
+import com.example.fisherbooker.model.DTO.DatePeriodDTO;
+import com.example.fisherbooker.service.CottageReservationService;
 import com.example.fisherbooker.service.CottageService;
 
 @RestController
@@ -32,17 +34,23 @@ import com.example.fisherbooker.service.CottageService;
 public class CottageController {
 
 	public CottageService cottageService;
+	public CottageReservationService cottageReservationService;
 
 	@Autowired
-	public CottageController(CottageService cottageService) {
+	public CottageController(CottageService cottageService, CottageReservationService cottageReservationService) {
 		this.cottageService = cottageService;
+		this.cottageReservationService = cottageReservationService;
 	}
 
-	@PostMapping("/add/{ownerId}")
-	public ResponseEntity<Boolean> getAllByOwner(@RequestBody CottageAddDTO cottageAddDTO) {
-		this.cottageService.saveCottage(cottageAddDTO);
-		return new ResponseEntity<>(true, HttpStatus.OK);
-	}
+//	@PostMapping("/add/{ownerId}")
+
+//	public ResponseEntity<Boolean> getAllByOwner(@RequestBody Cottage cottage) {
+//		this.cottageService.saveCottage(cottage);
+
+//	public ResponseEntity<Boolean> getAllByOwner(@RequestBody CottageAddDTO cottageAddDTO) {
+//		this.cottageService.saveCottage(cottageAddDTO);
+//		return new ResponseEntity<>(true, HttpStatus.OK);
+//	}
 
 	@GetMapping("/all")
 	public ResponseEntity<List<CottageDTO>> getAll() {
@@ -120,11 +128,11 @@ public class CottageController {
 		return new ResponseEntity<>(locations, HttpStatus.OK);
 	}
 
-//	@PostMapping("/save")
-//	public ResponseEntity<Boolean> save(@RequestBody Cottage cottage) {
-//		this.cottageService.saveCottage(cottage);
-//		return new ResponseEntity<>(true, HttpStatus.OK);
-//	}
+	@PostMapping("/save")
+	public ResponseEntity<Boolean> save(@RequestBody CottageAddDTO cottage) {
+		this.cottageService.saveCottage(cottage);
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
 
 //	@GetMapping("/all/date/{dateString}")
 //	public ResponseEntity<List<CottageDTO>> getAllByDate(@PathVariable String dateString) {
@@ -225,6 +233,30 @@ public class CottageController {
 			cottageDTOs.add(CottageDTO.createCottageDTO(cottage));
 		}
 		return cottageDTOs;
+	}
+
+	@GetMapping("dates/{id}")
+	public ResponseEntity<List<DatePeriodDTO>> getReservationDates(@PathVariable Long id) {
+		return new ResponseEntity<>(this.cottageReservationService.getReservationDates(id), HttpStatus.OK);
+	}
+
+	@PostMapping("/upload/{id}")
+	public ResponseEntity<Boolean> uplaodImage(@PathVariable Long id, @RequestParam("image") MultipartFile file) {
+
+		try {
+			this.cottageService.uploadImage(id, file);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+
+	@PreAuthorize("hasRole('COTTAGE_OWNER')")
+	@DeleteMapping("/delete/image/{id}")
+	public ResponseEntity<Boolean> deleteImage(@PathVariable("id") Long id) {
+		this.cottageService.deleteImage(id);
+		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.example.fisherbooker.service.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -8,16 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.NavigationEquipment;
 import com.example.fisherbooker.model.Ship;
+import com.example.fisherbooker.model.ShipImage;
 import com.example.fisherbooker.model.ShipOption;
 import com.example.fisherbooker.model.ShipOwner;
 import com.example.fisherbooker.model.ShipReservation;
 import com.example.fisherbooker.model.DTO.AddShipDTO;
 import com.example.fisherbooker.model.DTO.SearchFilter;
 import com.example.fisherbooker.model.DTO.ShipDTO;
+import com.example.fisherbooker.repository.ImageRepository;
 import com.example.fisherbooker.repository.ShipOptionRepository;
 import com.example.fisherbooker.repository.ShipOwnerRepository;
 import com.example.fisherbooker.repository.ShipRepository;
@@ -31,16 +35,19 @@ public class ShipServiceImpl implements ShipService {
 	private ShipReservationRepository shipReservationRepository;
 	private ShipOwnerRepository shipOwnerRepository;
 	private ShipOptionRepository shipOptionRepository;
+	private ImageRepository imageRepository;
 
 	@Autowired
 	public ShipServiceImpl(ShipRepository shipRepository,
 			ShipReservationRepository shipReservationRepository,
 			ShipOwnerRepository shipOwnerRepository, 
-			ShipOptionRepository shipOptionRepository) {
+			ShipOptionRepository shipOptionRepository,
+			ImageRepository imageRepository) {
 		this.shipRepository = shipRepository;
 		this.shipReservationRepository = shipReservationRepository;
 		this.shipOwnerRepository = shipOwnerRepository;
 		this.shipOptionRepository = shipOptionRepository;
+		this.imageRepository = imageRepository;
 	}
 
 	public Boolean updateShip(Ship ship) {
@@ -226,5 +233,22 @@ public class ShipServiceImpl implements ShipService {
 	@Override
 	public List<String> getShipLocations() {
 		return this.shipRepository.getCottageLocations();
+	}
+	
+	public Boolean uploadImage(Long id, MultipartFile image) throws IOException {
+		ShipImage newImage = new ShipImage();
+		newImage.setName(image.getOriginalFilename());
+		newImage.setType(image.getContentType());
+		newImage.setImage(image.getBytes());
+		Ship s = this.getById(id);
+		newImage.setShip(s);
+		s.addImage(newImage);
+		this.imageRepository.save(newImage);
+		return true;
+	}
+
+	public Boolean deleteImage(Long id) {
+		this.imageRepository.deleteById(id);
+		return true;
 	}
 }

@@ -24,4 +24,19 @@ public class AdventureReview extends Review{
 		super(createReviewDTO, client);
 		this.adventure = adventure;
 	}
+	
+	public Adventure getAdventure() {
+		return adventure;
+	}
+
+	public void setAdventure(Adventure adventure) {
+		this.adventure = adventure;
+	}
+	
+	
+	public Long  getAdventureId() {
+		return adventure.getId();
+	}
+	
+	
 }

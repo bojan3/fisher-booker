@@ -99,24 +99,30 @@ import com.example.fisherbooker.service.FishingInstructorService;
 			}
 			
 			
-			@GetMapping("/all/instructor/{instructor_id}")
+			@GetMapping("/all/instructor_id/{instructor_id}")
 			public ResponseEntity<List<AdventureReservationDTO>> getAllByInstructorID(@PathVariable Long instructor_id){		
-			//	FishingInstructor fs = this.fishinginstructorservice.findOneById(instructor_id).get();
 				
 				List<AdventureReservation> adventures = this.adventurereservationservice.getAllByInstructor(instructor_id);
 				List<AdventureReservationDTO> adventuresDTO = new ArrayList<AdventureReservationDTO>();
-				
-							
-		//		List<AdventureReservation> adventures = this.adventurereservationservice.getAllByInstructor(this.adventureservice.);
-		//		List<AdventureReservationDTO> adventuresDTO = new ArrayList<AdventureReservationDTO>();
+		
 				for(AdventureReservation a : adventures) {
-					//AdventureReservationDTO adventureDTO =AdventureReservationDTO.createAdventureReservationDTO(a);
 					AdventureReservationDTO adventureDTO = new AdventureReservationDTO(a);					
 					adventuresDTO.add(adventureDTO);
 				}
-				return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
+				return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);	
+			}
 			
+			@GetMapping("/all/instructor_username/{instructor_username}")
+			public ResponseEntity<List<AdventureReservationDTO>> getAllByInstructorUsername(@PathVariable String instructor_username){		
 				
+				List<AdventureReservation> adventures = this.adventurereservationservice.getAllByInstructorAccountUsername(instructor_username);
+				List<AdventureReservationDTO> adventuresDTO = new ArrayList<AdventureReservationDTO>();
+		
+				for(AdventureReservation a : adventures) {
+					AdventureReservationDTO adventureDTO = new AdventureReservationDTO(a);					
+					adventuresDTO.add(adventureDTO);
+				}
+				return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);	
 			}
 			
 			
