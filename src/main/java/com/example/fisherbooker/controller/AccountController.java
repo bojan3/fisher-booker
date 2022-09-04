@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,6 +33,7 @@ import com.example.fisherbooker.model.DeleteAccountRequest;
 import com.example.fisherbooker.model.DTO.AccountDTO;
 import com.example.fisherbooker.model.DTO.AccountRequest;
 import com.example.fisherbooker.model.DTO.AdventureDTO;
+import com.example.fisherbooker.model.DTO.DeleteAccountEmailContextDTO;
 import com.example.fisherbooker.service.CottageOwnerService;
 import com.example.fisherbooker.service.CottageService;
 import com.example.fisherbooker.service.FishingInstructorService;
@@ -61,7 +63,7 @@ public class AccountController {
 	@PostMapping("/delete")
 	@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
 	public boolean deleteUser(@RequestBody AccountRequest accountRequest, UriComponentsBuilder ucBuilder) {
-		this.accountService.acceptdeleteAccountRequest(accountRequest.getId());
+		this.accountService.deleteAccount(accountRequest.getId());
 		return true;
 	}
 
@@ -135,23 +137,60 @@ public class AccountController {
 	@GetMapping("/allDeleteRequests")
 	public List<DeleteAccountRequest> getAllDeleteAccountRequests() {
 		return this.accountService.deleteAccountRequests();
-
 	}
 
-	@DeleteMapping("/accepteddeleteAccountRequest/{deleteaccount_id}")
+	@DeleteMapping("/accepteddeleteAccountRequest/{deleteaccount_id}/{answer}")
 	// @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER',
 	// 'INSTRUCTOR')")
-	public boolean acceptdeleteAccountRequest(@PathVariable Long deleteaccount_id) {
-		this.accountService.acceptdeleteAccountRequest(deleteaccount_id);
-		return true;
+	public ResponseEntity<Boolean> acceptdeleteAccountRequest2(@PathVariable Long deleteaccount_id, @PathVariable String answer) throws Exception {
+ 		Boolean response = false;
+		
+		try {
+			DeleteAccountEmailContextDTO d = this.accountService.acceptdeleteAccount(deleteaccount_id, answer);
+			accountService.sendDeleteAccountResponseEmail(d);
+			response = true;
+		} catch (Exception e) {
+			System.out.println("Ne moze!");
+			//e.printStackTrace();
+		}	
+		
+		finally {
+			System.out.println(response);
+			return new ResponseEntity<Boolean>(response, HttpStatus.OK);
+
+		}
+		
 	}
 
-	@DeleteMapping("/denieddeleteAccountRequest/{deleteaccount_id}")
+	@DeleteMapping("/denieddeleteAccountRequest/{deleteaccount_id}/{answer}")
 	// @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER',
 	// 'INSTRUCTOR')")
-	public boolean denydeleteAccountRequestByID(@PathVariable Long deleteaccount_id) {
-		this.accountService.denydeleteAccountRequest(deleteaccount_id);
-		return true;
+	public ResponseEntity<Boolean> denydeleteAccountRequestByID(@PathVariable Long deleteaccount_id, @PathVariable String answer) throws Exception {
+		Boolean response = false;
+		
+		try {
+			DeleteAccountEmailContextDTO d = this.accountService.denydeleteAccountRequest(deleteaccount_id, answer);
+			accountService.sendDeleteAccountResponseEmail(d);
+			response = true;
+		} catch (Exception e) {
+			System.out.println("Ne moze!");
+		}	
+		
+		finally {
+			System.out.println(response);
+			return new ResponseEntity<Boolean>(response, HttpStatus.OK);
+
+		}
+		
+	}
+
+	@GetMapping("/test/{deleteaccount_id}")
+	public ResponseEntity<Boolean> testdenydeleteAccountRequestByID(@PathVariable Long deleteaccount_id, @PathVariable String answer) {
+		System.out.println(deleteaccount_id);
+		System.out.println(answer);
+
+		// this.accountService.denydeleteAccountRequest(deleteaccount_id);
+		return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 	}
 
 }

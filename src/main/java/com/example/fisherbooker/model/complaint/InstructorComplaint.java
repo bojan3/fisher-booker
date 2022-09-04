@@ -13,66 +13,75 @@ import com.example.fisherbooker.model.Ship;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class InstructorComplaint {
+public class InstructorComplaint extends Complaint {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
+
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "instructor_id", nullable = false)
+	@JoinColumn(name = "instructor_id")
 	public FishingInstructor instructor;
 
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name = "client_id", nullable = false)
-	public Client client;
-	
-	private String text;
-	private String answer;
-	private Boolean answered;
-	
-	
 	public InstructorComplaint() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public InstructorComplaint(Client client, FishingInstructor instructor, String text) {
 		super();
 		this.client = client;
 		this.instructor = instructor;
 		this.text = text;
-		this.answered=false;
+		this.answered = false;
 	}
-	
+
 	public Client getClientId() {
 		return client;
 	}
+
 	public void setClientId(Client clientId) {
 		this.client = clientId;
 	}
+
 	public FishingInstructor getInstructorId() {
 		return instructor;
 	}
+
 	public void setInstructor(FishingInstructor instructorId) {
 		this.instructor = instructorId;
 	}
+
 	public String getText() {
 		return text;
 	}
+
 	public void setText(String text) {
 		this.text = text;
 	}
-	
+
 	public Boolean getAnswered() {
 		return answered;
 	}
+
 	public void setAnswered(Boolean answered) {
 		this.answered = answered;
 	}
 
-	
+	public Long getId() {
+		// TODO Auto-generated method stub
+		return this.id;
+	}
+
+	public String getAnswer() {
+		return this.answer;
+	}
+
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString()+"Instructor:"+this.instructor.getAccount().getUsername();
+	}
 	
 }

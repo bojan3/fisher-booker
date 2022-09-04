@@ -6,27 +6,36 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.transaction.Transactional;
-
+import javax.mail.MessagingException;
+import org.springframework.transaction.annotation.Transactional;
 import org.apache.commons.lang3.StringUtils;
+import org.aspectj.lang.annotation.After;
+import org.hibernate.StaleStateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 
 import com.example.fisherbooker.exception.InvalidTokenException;
 import com.example.fisherbooker.model.Account;
-import com.example.fisherbooker.model.AccountVerificationEmailContext;
 import com.example.fisherbooker.model.Admin;
 import com.example.fisherbooker.model.CottageOwner;
 import com.example.fisherbooker.model.FishingInstructor;
+import com.example.fisherbooker.model.Review;
 import com.example.fisherbooker.model.DeleteAccountRequest;
 import com.example.fisherbooker.model.Role;
 import com.example.fisherbooker.model.ShipOwner;
+import com.example.fisherbooker.model.Status;
 import com.example.fisherbooker.model.DTO.AccountDTO;
 import com.example.fisherbooker.model.DTO.AccountRequest;
+import com.example.fisherbooker.model.DTO.DeleteAccountEmailContextDTO;
+import com.example.fisherbooker.model.EmailContexts.AccountVerificationEmailContext;
+import com.example.fisherbooker.model.EmailContexts.DeleteAccountEmailContext;
+import com.example.fisherbooker.model.EmailContexts.NewReviewEmailContext;
 import com.example.fisherbooker.repository.AccountRepository;
 import com.example.fisherbooker.repository.AdministratorRepository;
 import com.example.fisherbooker.repository.CottageOwnerRepository;
@@ -39,8 +48,9 @@ import com.example.fisherbooker.service.EmailService;
 import com.example.fisherbooker.service.RoleService;
 import com.example.fisherbooker.service.SecureTokenService;
 
+
 @Service
-@Transactional
+//@Transactional
 public class AccountServiceImpl {
 
 	@Autowired
@@ -240,57 +250,62 @@ public class AccountServiceImpl {
 				return true;
 			}
 		}
-
 		return false;
 	}
-
-	public void acceptdeleteAccountRequest(Long id) {
-		System.out.println(id);
-		DeleteAccountRequest dcc = this.deleteAccountRequestRepository.getById(id);
-		System.out.println(dcc);
-		Account acc = dcc.getAccount();
-		System.out.println(acc.getRoles().get(0).toString());
-
-		System.out.println(acc);
-		dcc.setAccount(null);
-		System.out.println(dcc);
-		System.out.println(1);
-		switch (acc.getRoles().get(0).getName().toString()) {
-		case "ROLE_INSTRUCTOR":
-			FishingInstructor fi = this.fiRep.findByAccountUsername(acc.getUsername()).get();
-			System.out.println(fi);
-			this.fiRep.delete(fi);
-			break;
-
-		case "ROLE_SHIP_OWNER":
-			ShipOwner sho = this.soRep.findOneByAccountUsername(acc.getUsername()).get();
-			System.out.println(sho);
-			this.soRep.delete(sho);
-			break;
-
-		case "ROLE_COTTAGE_OWNER":
-			CottageOwner co = this.coRep.findOneByAccountUsername(acc.getUsername()).get();
-			System.out.println(co);
-			this.coRep.delete(co);
-			break;
-
-		default:
-			break;
+	//@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+	public void sendDeleteAccountResponseEmail(DeleteAccountEmailContextDTO daec) throws InterruptedException {
+		Thread.sleep(5000);
+		System.out.print(daec);
+		DeleteAccountEmailContext emailContext = new DeleteAccountEmailContext();
+		emailContext.init(daec);
+		try {
+			emailService.sendMail(emailContext);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		// brisanje u zavisnosti od uloge
-		// acc.setAddress(null);
-		// accountRepository.save(acc);
 
-		// accountRepository.deleteById(id);
-
-		this.deleteAccountRequestRepository.save(dcc);
-		this.deleteAccountRequestRepository.delete(dcc);
-		System.out.println("return");
 	}
-
-	public void denydeleteAccountRequest(Long id) {
+	
+	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)//, rollbackFor = Throwable.class)
+	public DeleteAccountEmailContextDTO acceptdeleteAccount(Long id, String answer) throws Exception {
+		try {
 		DeleteAccountRequest dcc = this.deleteAccountRequestRepository.getById(id);
+		System.out.println(dcc);
+		Account acc = 	dcc.getAccount();//.accountRepository.findById(id).get();	
+		acc.setDeleted(true);
+		this.accountRepository.save(acc);
 		this.deleteAccountRequestRepository.delete(dcc);
+
+		DeleteAccountEmailContextDTO daecDTO = new DeleteAccountEmailContextDTO();	
+		daecDTO.setAccount(acc);
+		daecDTO.setAnswer(answer);
+		return daecDTO;	
+		} 
+		catch (Exception e) {
+			System.out.println("ne postoji zahtev za brisanje naloga sa ID:"+id);
+			throw e;
+		}
+	}
+	
+	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED)//, rollbackFor = Throwable.class)
+	public DeleteAccountEmailContextDTO denydeleteAccountRequest(Long id, String answer) throws Exception {
+		try {	
+		DeleteAccountRequest dcc = this.deleteAccountRequestRepository.getById(id);
+		System.out.println(dcc);
+		this.deleteAccountRequestRepository.delete(dcc);
+        
+		DeleteAccountEmailContextDTO daecDTO = new DeleteAccountEmailContextDTO();
+		daecDTO.setAccount(dcc.getAccount());
+		daecDTO.setAnswer(answer);
+		return daecDTO;
+		//this.sendDeleteAccountResponseEmail(daecDTO);
+		}
+	
+		catch(Exception e){
+			System.out.println("ne postoji zahtev za brisanje naloga sa ID:"+id);
+			throw e;
+		}
+		
 	}
 
 	public void deleteAccountRequest(Long id) {
@@ -338,17 +353,26 @@ public class AccountServiceImpl {
 
 		// SA FRONTA CU POSLATI ADMIN ROLE
 		List<Role> roles = new ArrayList<Role>();
-		Role role = this.roleService.findById((long) (2));
+		Role role = this.roleService.findById((long) (1));
 		System.out.println("uloga:");
 		System.out.println(role);
 		// Set<Role> rolex = new HashSet<Role>();
 		roles.add(role);
 		account.setRoles(roles);
+		Status novi = new Status();
+		account.setStatus(novi);
+		
 		Account savedAccount = this.accountRepository.save(account);
 		Admin noviAdmin = new Admin();
 		noviAdmin.setAccount(savedAccount);
 		adminrepo.save(noviAdmin);
 		return savedAccount;
+	}
+
+	public void deleteAccount(Long id) {
+		Account acc = 	this.accountRepository.findById(id).get();		
+		acc.setDeleted(true);	
+		this.accountRepository.save(acc);
 	}
 
 }

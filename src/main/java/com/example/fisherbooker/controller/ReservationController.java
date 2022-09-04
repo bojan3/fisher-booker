@@ -36,6 +36,11 @@ public class ReservationController {
 		} catch (OptimisticLockException e) {
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
+	
+	@PostMapping("/create")
+	public ResponseEntity<Boolean> create(@RequestBody AddReservationDTO reservation) {
+		this.reservationSerivce.add(reservation);
+		
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 

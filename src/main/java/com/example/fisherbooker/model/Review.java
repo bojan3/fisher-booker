@@ -10,6 +10,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Version;
 
 import com.example.fisherbooker.model.DTO.CreateReviewDTO;
 
@@ -40,6 +41,10 @@ public class Review {
 
 	@Column
 	private Boolean forOwner;
+	
+	@Version
+	private Long version;
+	
 
 	public Review() {
 		super();

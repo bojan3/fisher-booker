@@ -19,7 +19,7 @@ import com.example.fisherbooker.model.RealEstateType;
 import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.ShipOption;
 import com.example.fisherbooker.model.ShipSuperDeal;
-import com.example.fisherbooker.model.SuperDealNotificationEmailContext;
+import com.example.fisherbooker.model.EmailContexts.SuperDealNotificationEmailContext;
 import com.example.fisherbooker.model.DTO.AddSuperDealDTO;
 import com.example.fisherbooker.model.DTO.DatePeriodDTO;
 import com.example.fisherbooker.repository.ClientRepository;

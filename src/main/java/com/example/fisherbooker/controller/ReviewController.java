@@ -15,6 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fisherbooker.model.DTO.ApproveReviewDTO;
 import com.example.fisherbooker.model.DTO.CreateReviewDTO;
+import com.example.fisherbooker.model.Account;
+import com.example.fisherbooker.model.AdventureReview;
+import com.example.fisherbooker.model.CottageReview;
+import com.example.fisherbooker.model.Review;
+import com.example.fisherbooker.model.Ship;
+import com.example.fisherbooker.model.ShipReview;
+import com.example.fisherbooker.model.DTO.ApproveReviewDTO;
+import com.example.fisherbooker.model.DTO.CreateReviewDTO;
+import com.example.fisherbooker.model.DTO.ShipDTO;
+import com.example.fisherbooker.service.EmailService;
 import com.example.fisherbooker.service.ReviewService;
 
 @RestController
@@ -23,6 +33,9 @@ public class ReviewController {
 
 	private ReviewService reviewservice;
 
+	@Autowired
+	private EmailService emailservice;
+	
 	@Autowired
 	public ReviewController(ReviewService reviewService) {
 		this.reviewservice = reviewService;
@@ -43,15 +56,60 @@ public class ReviewController {
 	@PutMapping("/publish/{ReviewId}")
 	public ResponseEntity<Boolean> publishReview(@PathVariable("ReviewId") Long ReviewID) {
 
-		this.reviewservice.publish(ReviewID);
+		Boolean response = false;
+		
+		try {	
+			AdventureReview ar = this.reviewservice.getAdventureReview(ReviewID);
+			Account acc = ar.getAdventure().getFishingInstructor().getAccount();
+			this.reviewservice.sendNewReviewEmail(acc,ar);
+			response = true;
 
-		return new ResponseEntity<>(true, HttpStatus.OK);
+		}
+		
+		catch(Exception err) {
+			System.out.print("not an adventure");
+			System.out.println(err);
+		}
+		try {
+			ShipReview ar = this.reviewservice.getShipReview(ReviewID);
+			Account acc = ar.getShip().getShipOwner().getAccount();
+			this.reviewservice.sendNewReviewEmail(acc,ar);
+			response = true;
+
+
+		}
+		catch(Exception err) {
+			System.out.print("not a ship");
+			System.out.println(err);
+		}
+		
+		try {
+			
+			CottageReview cr = this.reviewservice.getCottageReview(ReviewID);
+			Account acc = cr.getCottage().getCottageOwner().getAccount();
+			this.reviewservice.sendNewReviewEmail(acc,cr);
+			response = true;
+
+
+		}
+		catch (Exception e) {
+			System.out.print("not a cottage");
+			System.out.println(e);
+		}
+		finally {
+			
+			return new ResponseEntity<>(response, HttpStatus.OK);
+
+		}
+		
+		
+		
 	}
 
-//	@GetMapping("/delete/{ReviewId}")
-//	public ResponseEntity<Boolean> deleteReview(@PathVariable("ReviewId") Long ReviewID) {
-//		return new ResponseEntity<>(this.reviewservice.deleteReview(ReviewID), HttpStatus.OK);
-//	}
+	@GetMapping("/delete/{ReviewId}")
+	public ResponseEntity<Boolean> deleteReview(@PathVariable("ReviewId") Long ReviewID) {
+		return new ResponseEntity<>(this.reviewservice.deleteReview(ReviewID), HttpStatus.OK);
+	}
 
 	@PostMapping("/cottage/save")
 	public ResponseEntity<Boolean> saveCottageReview(@RequestBody CreateReviewDTO createReviewDTO) {

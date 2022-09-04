@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Version;
 
 @Entity
 public class GlobalNumber {
@@ -15,8 +16,12 @@ public class GlobalNumber {
 	
 	@Column
 	private String name;
+	
 	@Column
 	private Float valuex;
+	
+	@Version
+	protected Long version;
 	
 	public GlobalNumber() {
 		super();

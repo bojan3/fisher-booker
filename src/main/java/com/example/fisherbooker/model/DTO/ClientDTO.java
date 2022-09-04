@@ -14,6 +14,7 @@ import com.example.fisherbooker.model.ShipReservation;
 
 public class ClientDTO {
 
+	private Long id;
 	private Account account;
 	private Set<ShipReservation> shipReservation;
 	private Set<CottageReservation> cottageReservation;
@@ -32,6 +33,7 @@ public class ClientDTO {
 		this.cottageSubscriptions = client.getCottageSubscriptions();
 		this.shipSubscriptions = client.getShipSubscriptions();
 		this.instructorSubscriptions = client.getInstructorSubscriptions();
+		this.id=client.getId();
 	}
 	
 	
@@ -97,7 +99,10 @@ public class ClientDTO {
 	}
 
 	public static ClientDTO createClientDTO(Client client) {
-		return new ClientDTO(client.getAccount());
+		ClientDTO clien = new ClientDTO(client.getAccount());
+		clien.setId(client.getId());
+		return clien;
+		
 	}
 
 	
@@ -108,5 +113,15 @@ public class ClientDTO {
 	public void setAccount(Account account) {
 		this.account = account;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	
 	
 }

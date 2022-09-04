@@ -2,7 +2,7 @@ package com.example.fisherbooker.service;
 
 import javax.mail.MessagingException;
 
-import com.example.fisherbooker.model.EmailContext;
+import com.example.fisherbooker.model.EmailContexts.EmailContext;
 
 public interface EmailService {
 

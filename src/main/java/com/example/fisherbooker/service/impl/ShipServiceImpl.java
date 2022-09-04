@@ -50,6 +50,14 @@ public class ShipServiceImpl implements ShipService {
 		this.imageRepository = imageRepository;
 	}
 
+	public void delete(Long id) {
+		//System.out.println(this.cottageRepository.getById(id));
+		Ship ship = this.shipRepository.findById(id).get();
+		ship.setIsDeleted(true);
+		this.shipRepository.save(ship);
+	}
+	
+	
 	public Boolean updateShip(Ship ship) {
 //		Ship oldShip = this.shipRepository.findById(ship.getId()).orElse(null);
 //		oldShip.setName(ship.getName());

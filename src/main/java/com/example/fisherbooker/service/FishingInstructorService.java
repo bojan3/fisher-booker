@@ -15,6 +15,7 @@ import com.example.fisherbooker.model.AdventureReservation;
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageOwner;
 import com.example.fisherbooker.model.FishingInstructor;
+import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.DTO.AdventureDTO;
 import com.example.fisherbooker.model.DTO.CottageDTO;
 import com.example.fisherbooker.repository.AccountRepository;
@@ -85,8 +86,21 @@ public class FishingInstructorService {
 	public void save(FishingInstructor fishinginstructor) {
 		this.fishinginstructorrepository.save(fishinginstructor);		
 	}
-
+	
 	public void deleteOne(Long instructor_id) {
+		FishingInstructor fi =this.fishinginstructorrepository.findById(instructor_id).get();
+		Set<Adventure> adventures = fi.getAdventure();
+		for(Adventure ad : adventures) {
+			ad.setIsDeleted(true);
+			this.adventurerepository.save(ad);
+	}
+		
+		Account acc = fi.getAccount();
+		acc.setDeleted(true);
+		this.accountrepository.save(acc);
+	}
+
+	public void deleteOne2(Long instructor_id) {
 		System.out.println("instructor service method deleteOne");
 		FishingInstructor fi =this.fishinginstructorrepository.findOneById(instructor_id).get();
 	//	System.out.println(fi);

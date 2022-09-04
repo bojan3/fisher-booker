@@ -43,6 +43,7 @@ public class ReservationServiceImpl implements ReservationService {
 	private CottageOptionRepository cottageOptionRepository;
 	private ShipOptionRepository shipOptionRepository;
 	private ClientRepository clientRepository;
+	
 
 	public ReservationServiceImpl(CottageOptionRepository cottageOptionRepository,
 			ShipOptionRepository shipOptionRepository, ClientRepository clientRepository,
@@ -110,6 +111,10 @@ public class ReservationServiceImpl implements ReservationService {
 			break;
 		}
 		}
+		
+		c.getAccount().getStatus().increasePoints();
+		this.clientRepository.save(c);
+		
 		return true;
 	}
 	

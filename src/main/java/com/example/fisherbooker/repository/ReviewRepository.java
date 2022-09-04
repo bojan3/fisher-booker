@@ -15,14 +15,6 @@ import com.example.fisherbooker.model.ShipReview;
 @Repository
 public interface ReviewRepository<T extends Review> extends JpaRepository<T, Long> {
 
-//	public List<Review> findByOrderByGrade();
-
-	// public List<CottageReview> findAllCottageReview();
-	// public List<ShipReview> findAllShipReview();
-	// public List<AdventureReview> findAllAdventureReview();
-
- //List<T> findAll();
-
 	@Query(value = "SELECT * FROM REVIEW r WHERE r.review_type = 'cottage_review'", 
 			  nativeQuery = true)
 	List<T> findAllCottages();
@@ -35,6 +27,5 @@ public interface ReviewRepository<T extends Review> extends JpaRepository<T, Lon
 
 	@Query(value = "SELECT * FROM REVIEW r where r.id = :#{#id}", nativeQuery = true)
 	Review findReviewByReviewID(@Param("id") Long id);
-	
 	
 }

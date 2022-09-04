@@ -15,6 +15,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.example.fisherbooker.model.DTO.ReservationDetailsDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,8 +32,10 @@ public class CottageReservation {
 	private int capacity;
 	private boolean deleted;
 
+	
+    //@OnDelete(action = OnDeleteAction.CASCADE)
 	@OneToOne
-	(cascade = CascadeType.ALL)
+	(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	@JoinTable(name = "creservation_reservation_supportdata", joinColumns = @JoinColumn(name = "creservation_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "suppdata_id3", referencedColumnName = "id"))
 	private CottageReservationSupportData reservationsd;
 	
@@ -129,6 +134,18 @@ public class CottageReservation {
 		this.cottage = cottage;
 	}
 	
+	public void setCottageSupportData(CottageReservationSupportData child) {
+	    if (child == null) {
+	        if (this.reservationsd != null) {
+	            this.reservationsd.setCottageReservation(null);
+	        }
+	    }
+	    else {
+	        child.setCottageReservation(this);
+	    }
+	    this.reservationsd = child;
+	}
+	
 	public ReservationDetailsDTO toDTO() {
 		ReservationDetailsDTO dto = new ReservationDetailsDTO();
 		dto.setId(id);
@@ -153,6 +170,12 @@ public class CottageReservation {
 			this.cottageOption.add(newCottageOption);
 	}
 
+	public void finalize() throws Throwable {
+		this.setCottageSupportData(null);
+		System.gc();
+	} 
+	
+	
 	@Override
 	public String toString() {
 		return "CottageReservation [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", price=" + price

@@ -1,4 +1,7 @@
-package com.example.fisherbooker.model;
+package com.example.fisherbooker.model.EmailContexts;
+
+import com.example.fisherbooker.model.CottageSuperDeal;
+import com.example.fisherbooker.model.EmailContexts.EmailContext;
 
 public class SuperDealNotificationEmailContext extends EmailContext {
 

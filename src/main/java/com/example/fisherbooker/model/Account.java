@@ -1,5 +1,6 @@
 package com.example.fisherbooker.model;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Version;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -60,7 +62,31 @@ public class Account implements UserDetails {
 
 	private boolean adminVerified;
 
+	private boolean isDeleted = false;
 	
+	private Date resetpassworddate = null;
+	
+	@Version
+	private Long version;
+
+
+	public Date getResetPasswordDate() {
+		return resetpassworddate;
+	}
+
+	public void setResetPasswordDate(Date new_date) {
+		this.resetpassworddate = new_date;
+	}
+	
+	
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
 	public boolean isAdminVerified() {
 		return adminVerified;
 	}

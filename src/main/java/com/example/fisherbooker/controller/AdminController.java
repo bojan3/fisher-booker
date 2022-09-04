@@ -33,7 +33,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @RequestMapping("api/admin")
 public class AdminController {
 
-//	@Autowired
+//	@Autowired 
 	private AdminService adminservice;
 	private GlobalNumberService gns;
 	private SupportDataService sds;

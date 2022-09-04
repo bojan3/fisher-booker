@@ -39,17 +39,28 @@ public class ClientController {
 		super();
 		this.clientService = clientService;
 	}
-
-	@GetMapping("/all")
+	//@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping("/allClients")
 	public ResponseEntity<List<ClientDTO>> getAll() {
 		List<Client> clients = this.clientService.getAll();
 		List<ClientDTO> clientsDTO = new ArrayList<ClientDTO>();
 		for (Client client : clients) {
+			//ClientDTO clientDTO = new ClientDTO(client); //ClientDTO.createClientDTO(client);
 			ClientDTO clientDTO = ClientDTO.createClientDTO(client);
 			clientsDTO.add(clientDTO);
 		}
 		return new ResponseEntity<>(clientsDTO, HttpStatus.OK);
 	}
+	
+	@DeleteMapping("/delete")
+	//@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
+	public ResponseEntity<Boolean> deleteClientByID(@RequestBody Long client_id){	
+		System.out.println("delete instructor with id:"+client_id);
+		this.clientService.deleteOne(client_id);	
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+	
+	
 
 	@PreAuthorize("hasRole('CLIENT')")
 	@PutMapping("subscribe/cottage/{cottageId}")

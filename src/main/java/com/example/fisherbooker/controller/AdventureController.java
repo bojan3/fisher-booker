@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fisherbooker.model.Adventure;
 import com.example.fisherbooker.model.Cottage;
+import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.DTO.AdventureDTO;
 import com.example.fisherbooker.model.DTO.CottageDTO;
+import com.example.fisherbooker.model.DTO.ShipDTO;
 import com.example.fisherbooker.service.AdventureService;
 import com.example.fisherbooker.service.FishingInstructorService;
 
@@ -36,6 +38,39 @@ public class AdventureController {
 		this.adventureService = adventureService;
 		this.fishinginstructorservice = fis;
 	}
+	
+	
+	@GetMapping("/all")
+	public ResponseEntity<List<AdventureDTO>> getAlll() {
+		List<Adventure> adventures = this.adventureService.getAll();
+		List<AdventureDTO>adventuresDTO = new ArrayList<AdventureDTO>();
+		for (Adventure adventure : adventures) {
+			if(!adventure.getIsDeleted())
+			{
+				AdventureDTO adventureDTO = AdventureDTO.createAdventureDTO(adventure);
+				adventureDTO.setId(adventure.getId());
+				adventuresDTO.add(adventureDTO);
+			}
+										}
+		return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/admin/delete")
+		public ResponseEntity<List<AdventureDTO>> deleteAadventure(@RequestBody Long adventure_id) {
+			this.adventureService.delete(adventure_id);
+			List<Adventure> adventures = this.adventureService.getAll();
+			List<AdventureDTO> adventureDTOs = new ArrayList<AdventureDTO>();
+			for (Adventure adventure : adventures) {
+				if(!adventure.getIsDeleted())
+				{
+					AdventureDTO adventureDTO = AdventureDTO.createAdventureDTO(adventure);
+					adventureDTO.setId(adventure.getId());
+					adventureDTOs.add(adventureDTO);
+				}
+											}
+			return new ResponseEntity<>(adventureDTOs, HttpStatus.OK);
+		}
+	
 
 	// ownerId ce drugacije da se dobavlja jednom kada dodamo spring security
 	@PostMapping("/add/{InstructorId}")
@@ -53,18 +88,18 @@ public class AdventureController {
 //			adventuresDTO.add(adventureDTO);
 //		}
 
-	@GetMapping("/all")
-	public ResponseEntity<List<AdventureDTO>> getAll() {
-		List<Adventure> adventures = this.adventureService.getAll();
-		List<AdventureDTO> adventuresDTO = new ArrayList<AdventureDTO>();
-		for (Adventure a : adventures) {
-			AdventureDTO adventureDTO = AdventureDTO.createAdventureDTO(a);
-			adventuresDTO.add(adventureDTO);
-		}
-		System.out.println("Broj avantura: " + adventuresDTO.size());
-		System.out.println("Avature: " + adventuresDTO);
-		return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
-	}
+//	@GetMapping("/all")
+//	public ResponseEntity<List<AdventureDTO>> getAll() {
+//		List<Adventure> adventures = this.adventureService.getAll();
+//		List<AdventureDTO> adventuresDTO = new ArrayList<AdventureDTO>();
+//		for (Adventure a : adventures) {
+//			AdventureDTO adventureDTO = AdventureDTO.createAdventureDTO(a);
+//			adventuresDTO.add(adventureDTO);
+//		}
+//		System.out.println("Broj avantura: " + adventuresDTO.size());
+//		System.out.println("Avature: " + adventuresDTO);
+//		return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
+//	}
 
 	@GetMapping("/one/{id}")
 	public ResponseEntity<AdventureDTO> GetOne(@PathVariable Long id) {

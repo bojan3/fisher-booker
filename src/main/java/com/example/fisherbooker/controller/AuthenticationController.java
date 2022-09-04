@@ -56,6 +56,12 @@ public class AuthenticationController {
 
 		// Kreiraj token za tog korisnika
 		Account account = (Account) authentication.getPrincipal();
+		
+		//Ako je nalog obrisan nece moci da se prijavi!
+		if(account.isDeleted())
+			return (ResponseEntity<UserTokenState>) ResponseEntity.notFound();
+
+		
 		String jwt = tokenUtils.generateToken(account.getUsername());
 		int expiresIn = tokenUtils.getExpiredIn();
 

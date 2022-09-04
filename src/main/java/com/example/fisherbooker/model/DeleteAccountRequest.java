@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Version;
 
 @Entity
 public class DeleteAccountRequest {
@@ -21,6 +22,11 @@ public class DeleteAccountRequest {
 	@ManyToOne
 	@JoinColumn(name = "account_id")
 	private Account account;
+	
+	//@Version
+	//private Integer version;
+
+	
 
 	public DeleteAccountRequest() {
 		super();
