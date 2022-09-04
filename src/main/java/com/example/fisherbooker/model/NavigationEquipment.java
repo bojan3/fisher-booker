@@ -53,6 +53,9 @@ public class NavigationEquipment {
 
 	public static NavigationEquipment toModel(NavigationEquipment equipment) {
 		NavigationEquipment newEquipment = new NavigationEquipment();
+		if(equipment.getId() != 0) {
+			newEquipment.setId(equipment.getId());
+		}
 		newEquipment.setName(equipment.getName());
 		newEquipment.setShip(equipment.getShip());
 		return newEquipment;

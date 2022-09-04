@@ -5,20 +5,24 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.OptimisticLockException;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.fisherbooker.model.Cottage;
-import com.example.fisherbooker.model.NavigationEquipment;
 import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.ShipImage;
 import com.example.fisherbooker.model.ShipOption;
 import com.example.fisherbooker.model.ShipOwner;
 import com.example.fisherbooker.model.ShipReservation;
 import com.example.fisherbooker.model.DTO.AddShipDTO;
+import com.example.fisherbooker.model.DTO.EditShipDTO;
 import com.example.fisherbooker.model.DTO.SearchFilter;
 import com.example.fisherbooker.model.DTO.ShipDTO;
 import com.example.fisherbooker.repository.ImageRepository;
@@ -31,6 +35,9 @@ import com.example.fisherbooker.service.ShipService;
 @Service
 public class ShipServiceImpl implements ShipService {
 
+	@PersistenceContext
+	EntityManager entityManager;
+
 	private ShipRepository shipRepository;
 	private ShipReservationRepository shipReservationRepository;
 	private ShipOwnerRepository shipOwnerRepository;
@@ -38,10 +45,8 @@ public class ShipServiceImpl implements ShipService {
 	private ImageRepository imageRepository;
 
 	@Autowired
-	public ShipServiceImpl(ShipRepository shipRepository,
-			ShipReservationRepository shipReservationRepository,
-			ShipOwnerRepository shipOwnerRepository, 
-			ShipOptionRepository shipOptionRepository,
+	public ShipServiceImpl(ShipRepository shipRepository, ShipReservationRepository shipReservationRepository,
+			ShipOwnerRepository shipOwnerRepository, ShipOptionRepository shipOptionRepository,
 			ImageRepository imageRepository) {
 		this.shipRepository = shipRepository;
 		this.shipReservationRepository = shipReservationRepository;
@@ -58,57 +63,29 @@ public class ShipServiceImpl implements ShipService {
 	}
 	
 	
-	public Boolean updateShip(Ship ship) {
-//		Ship oldShip = this.shipRepository.findById(ship.getId()).orElse(null);
-//		oldShip.setName(ship.getName());
-//		oldShip.setType(ship.getType());
-//		oldShip.setLength(ship.getLength());
-//		oldShip.setDescription(ship.getDescription());
-//		oldShip.setRentPrice(ship.getRentPrice());
-//		oldShip.setEngineNumber(ship.getEngineNumber());
-//		oldShip.setEnginePower(ship.getEnginePower());
-//		oldShip.setMaxSpeed(ship.getMaxSpeed());
-//		oldShip.setCapacity(ship.getCapacity());
-//		oldShip.setCancelRate(ship.getCancelRate());
-//		oldShip.setAddress(ship.getAddress());
-//		oldShip.setAvailabilityPeriod(ship.getAvailabilityPeriod());
-//		oldShip.setRules(ship.getRules());
-//
-//		Iterator<NavigationEquipment> itrNav = ship.getNavigationEquipments().iterator();
-//		for(NavigationEquipment ne : oldShip.getNavigationEquipments()) {
-//			ne.setName(itrNav.next().getName());
-//		}
-//		
-//		Iterator<FishingEquipment> itrFish = ship.getFishingEquipments().iterator();
-//		for(FishingEquipment fe : oldShip.getFishingEquipments()) {
-//			fe.setName(itrFish.next().getName());
-//		}
-//		
-////		Iterator<ShipPicture> itrPic = ship.getShipPictures().iterator();
-////		for(ShipPicture sp : oldShip.getShipPictures()) {
-////			sp.setShip(ship);
-////		}
-//		
-//		Iterator<ShipOption> itrOp = ship.getShipOptions().iterator();
-//		for(ShipOption so : oldShip.getShipOptions()) {
-//			so.setName(itrOp.next().getName());
-//			so.setPrice(itrOp.next().getPrice());
-//			so.setDescription(itrOp.next().getDescription());
-//		}
-//		
-//		/*Iterator<ShipSuperDeal> itrSuper = ship.getShipSuperDeals().iterator();
-//		for(ShipSuperDeal ssd : oldShip.getShipSuperDeals()) {
-//			ssd.setStartDate(itrSuper.next().getStartDate());
-//			ssd.setEndDate(itrSuper.next().getEndDate());
-//			ssd.setDiscountedPrice(itrSuper.next().getDiscountedPrice());
-//			ssd.setCapacity(itrSuper.next().getCapacity());
-//		}*/
-//		
-//		oldShip.setRules(ship.getRules());
-		for (NavigationEquipment ne : ship.getNavigationEquipments()) {
-			ne.setShip(ship);
+	@Transactional
+	public Boolean updateShip(EditShipDTO ship) throws OptimisticLockException {
+		Ship oldShip = this.shipRepository.findById(ship.getId()).orElse(null);
+		if(checkIfShipHasReservation(ship.getId())) {
+			return false;
 		}
-		this.shipRepository.save(ship);
+		oldShip.setName(ship.getName());
+		oldShip.setType(ship.getType());
+		oldShip.setLength(ship.getLength());
+		oldShip.setDescription(ship.getDescription());
+		oldShip.setRentPrice(ship.getRentPrice());
+		oldShip.setEngineNumber(ship.getEngineNumber());
+		oldShip.setEnginePower(ship.getEnginePower());
+		oldShip.setMaxSpeed(ship.getMaxSpeed());
+		oldShip.setCapacity(ship.getCapacity());
+		oldShip.setCancelRate(ship.getCancelRate());
+		oldShip.setAddress(ship.getAddress());
+		oldShip.setAvailabilityPeriod(ship.getAvailabilityPeriod());
+		oldShip.setRules(ship.getRules());
+		oldShip.setFishingEquipments(ship.getFishingEquipments());
+		oldShip.setNavigationEquipments(ship.getNavigationEquipments());
+		oldShip.setShipOptions(ship.getShipOptions());
+		this.shipRepository.save(oldShip);
 		return true;
 	}
 
@@ -190,31 +167,30 @@ public class ShipServiceImpl implements ShipService {
 	}
 
 	public Boolean checkIfShipHasReservation(Long id) {
-		List<ShipReservation> reservations = this.shipReservationRepository.findByShipId(id);
+		List<ShipReservation> reservations = this.shipReservationRepository.isShipReserved(id);
 		return !reservations.isEmpty();
 	}
 
-		@Override
+	@Override
 	public List<Ship> getAllSorted(String type, String order) {
-		if(order.equals("ASC"))
+		if (order.equals("ASC"))
 			return this.shipRepository.findAll(Sort.by(type).ascending());
 		return this.shipRepository.findAll(Sort.by(type).descending());
 	}
 
-		public Boolean checkOwnership(Long id) {
+	public Boolean checkOwnership(Long id) {
 		Ship ship = this.shipRepository.findById(id).orElse(null);
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		return ship.getShipOwner().getAccount().getUsername().equals(username);
 	}
-	
+
 	public List<ShipOption> getOptions(Long shipId) {
 		return this.shipOptionRepository.findByShipId(shipId);
 	}
 
 	@Override
 	public List<Ship> searchShips(SearchFilter searchFilter) {
-		List<Ship> ships = this.shipRepository.getAllAvalible(searchFilter.getStartDate(),
-				searchFilter.getEndDate());
+		List<Ship> ships = this.shipRepository.getAllAvalible(searchFilter.getStartDate(), searchFilter.getEndDate());
 
 		if (searchFilter.getMinGrade() != null) {
 			Iterator<Ship> it = ships.iterator();
@@ -242,7 +218,7 @@ public class ShipServiceImpl implements ShipService {
 	public List<String> getShipLocations() {
 		return this.shipRepository.getCottageLocations();
 	}
-	
+
 	public Boolean uploadImage(Long id, MultipartFile image) throws IOException {
 		ShipImage newImage = new ShipImage();
 		newImage.setName(image.getOriginalFilename());

@@ -31,28 +31,25 @@ public class ReservationController {
 	@PreAuthorize("hasRole('CLIENT')")
 	@PostMapping("/createByClient")
 	public ResponseEntity<Boolean> createByClient(@RequestBody AddReservationDTO reservation) {
+		Boolean response = false;
 		try {
-			this.reservationSerivce.addByClient(reservation);
+			response = this.reservationSerivce.addByClient(reservation);
 		} catch (OptimisticLockException e) {
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
-	
-	@PostMapping("/create")
-	public ResponseEntity<Boolean> create(@RequestBody AddReservationDTO reservation) {
-		this.reservationSerivce.add(reservation);
-		
-		return new ResponseEntity<>(true, HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	@PreAuthorize("hasAnyRole('COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
 	@PostMapping("/createByOwner")
 	public ResponseEntity<Boolean> createByOwner(@RequestBody AddReservationDTO reservation) {
+		Boolean response = false;
 		try {
-			this.reservationSerivce.addByOwner(reservation);
+			response = this.reservationSerivce.addByOwner(reservation);
 		} catch (OptimisticLockException e) {
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<>(true, HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	@GetMapping("/dates/{type}/{id}")

@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.ShipOption;
 import com.example.fisherbooker.model.DTO.AddShipDTO;
+import com.example.fisherbooker.model.DTO.EditShipDTO;
 import com.example.fisherbooker.model.DTO.SearchFilter;
 import com.example.fisherbooker.model.DTO.ShipDTO;
 
@@ -51,4 +52,6 @@ public interface ShipService {
 	public List<Ship> searchShips(SearchFilter searchFilter);
 
 	public List<String> getShipLocations();
+	
+	public Boolean updateShip(EditShipDTO ship);
 }

@@ -53,6 +53,9 @@ public class FishingEquipment {
 
 	public static FishingEquipment toModel(FishingEquipment equipment) {
 		FishingEquipment newEquipment = new FishingEquipment();
+		if(equipment.getId() != 0) {
+			newEquipment.setId(equipment.getId());
+		}
 		newEquipment.setName(equipment.getName());
 		newEquipment.setShip(equipment.getShip());
 		return newEquipment;

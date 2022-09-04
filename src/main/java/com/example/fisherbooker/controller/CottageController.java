@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.OptimisticLockException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +29,7 @@ import com.example.fisherbooker.model.CottageOption;
 import com.example.fisherbooker.model.DTO.CottageAddDTO;
 import com.example.fisherbooker.model.DTO.CottageDTO;
 import com.example.fisherbooker.model.DTO.DatePeriodDTO;
+import com.example.fisherbooker.model.DTO.EditCottageDTO;
 import com.example.fisherbooker.model.DTO.SearchFilter;
 import com.example.fisherbooker.service.CottageReservationService;
 import com.example.fisherbooker.service.CottageService;
@@ -153,6 +157,19 @@ public class CottageController {
 	public ResponseEntity<Boolean> save(@RequestBody CottageAddDTO cottage) {
 		this.cottageService.saveCottage(cottage);
 		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+
+	@PreAuthorize("hasRole('COTTAGE_OWNER')")
+	@PutMapping("/update")
+	public ResponseEntity<Boolean> update(@RequestBody EditCottageDTO cottage) {
+		Boolean response = false;
+		try {
+			response = this.cottageService.updateCottage(cottage);
+		} catch (OptimisticLockException e) {
+			return new ResponseEntity<>(true, HttpStatus.CONFLICT);
+		}
+
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 //	@GetMapping("/all/date/{dateString}")

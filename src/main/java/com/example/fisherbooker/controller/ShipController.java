@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.OptimisticLockException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,17 +17,17 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.ShipOption;
 import com.example.fisherbooker.model.DTO.AddShipDTO;
-import com.example.fisherbooker.model.DTO.CottageDTO;
+import com.example.fisherbooker.model.DTO.EditShipDTO;
 import com.example.fisherbooker.model.DTO.SearchFilter;
 import com.example.fisherbooker.model.DTO.ShipDTO;
 import com.example.fisherbooker.service.ShipService;
@@ -76,6 +78,12 @@ public class ShipController {
 
 	@GetMapping("/page/{id}")
 	public ResponseEntity<Ship> getById(@PathVariable Long id) {
+		Ship ship = this.shipService.getById(id);
+		return new ResponseEntity<>(ship, HttpStatus.OK);
+	}
+
+	@GetMapping("/edit/{id}")
+	public ResponseEntity<Ship> getEditDtoById(@PathVariable Long id) {
 		Ship ship = this.shipService.getById(id);
 		return new ResponseEntity<>(ship, HttpStatus.OK);
 	}
@@ -229,6 +237,17 @@ public class ShipController {
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasRole('SHIP_OWNER')")
+	@PutMapping("/update")
+	public ResponseEntity<Boolean> update(@RequestBody EditShipDTO ship) {
+		try {
+			this.shipService.updateShip(ship);
+		} catch (OptimisticLockException e) {
+			return new ResponseEntity<>(true, HttpStatus.CONFLICT);
+		}
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+
 	@GetMapping("ownership/{id}")
 	public ResponseEntity<Boolean> checkOwnership(@PathVariable Long id) {
 		return new ResponseEntity<>(this.shipService.checkOwnership(id), HttpStatus.OK);
@@ -238,7 +257,7 @@ public class ShipController {
 	public ResponseEntity<List<ShipOption>> getOptions(@PathVariable Long id) {
 		return new ResponseEntity<>(this.shipService.getOptions(id), HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/upload/{id}")
 	public ResponseEntity<Boolean> uplaodImage(@PathVariable Long id, @RequestParam("image") MultipartFile file) {
 
@@ -250,7 +269,7 @@ public class ShipController {
 
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
-	
+
 	@PreAuthorize("hasRole('SHIP_OWNER')")
 	@DeleteMapping("/delete/image/{id}")
 	public ResponseEntity<Boolean> deleteImage(@PathVariable("id") Long id) {
@@ -265,7 +284,7 @@ public class ShipController {
 	}
 
 	@GetMapping("search/filter/")
-	public ResponseEntity<List<ShipDTO>> searchCottages(@RequestParam String startDate, @RequestParam String endDate,
+	public ResponseEntity<List<ShipDTO>> searchShips(@RequestParam String startDate, @RequestParam String endDate,
 			@RequestParam String locationCity, @RequestParam String minGrade) {
 
 		Date startDate1 = null;

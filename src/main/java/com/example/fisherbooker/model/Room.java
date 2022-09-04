@@ -13,13 +13,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "room")
 public class Room {
 	@Id
-	@Column(length=10)
+	@Column(length = 10)
 	private String label;
 	private int numOfBeds;
-	
+
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name="cottage_id")
+	@JoinColumn(name = "cottage_id")
 	private Cottage cottage;
 
 	public Room() {
@@ -47,7 +47,7 @@ public class Room {
 	public void setNumOfBeds(int numOfBeds) {
 		this.numOfBeds = numOfBeds;
 	}
-	
+
 	public Cottage getCottage() {
 		return cottage;
 	}
@@ -60,5 +60,5 @@ public class Room {
 	public String toString() {
 		return "Room [label=" + label + ", numOfBeds=" + numOfBeds + "]";
 	}
-	
+
 }

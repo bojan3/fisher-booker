@@ -9,6 +9,7 @@ import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageOption;
 import com.example.fisherbooker.model.DTO.CottageAddDTO;
 import com.example.fisherbooker.model.DTO.CottageDTO;
+import com.example.fisherbooker.model.DTO.EditCottageDTO;
 import com.example.fisherbooker.model.DTO.SearchFilter;
 
 public interface CottageService {
@@ -48,5 +49,7 @@ public interface CottageService {
 	public Boolean uploadImage(Long id, MultipartFile image) throws IOException;
 	
 	public Boolean deleteImage(Long id);
+	
+	public Boolean updateCottage(EditCottageDTO cottage);
 
 }

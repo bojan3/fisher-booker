@@ -81,6 +81,9 @@ public class CottageOption {
 
 	public static CottageOption toModel(CottageOption newOption) {
 		CottageOption option = new CottageOption();
+		if(newOption.getId() != 0) {
+			option.setId(newOption.getId());
+		}
 		option.setName(newOption.getName());
 		option.setDescription(newOption.getDescription());
 		option.setPrice(newOption.getPrice());

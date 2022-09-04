@@ -83,7 +83,8 @@ public class ReservationServiceImpl implements ReservationService {
 			newReservation.setClient(c);
 			Ship ship = entityManager.find(Ship.class, reservation.getRealEstateId(),
 					LockModeType.OPTIMISTIC_FORCE_INCREMENT);
-			if(this.shipIsReserved(reservation.getRealEstateId(), reservation.getStartDate(), reservation.getEndDate())) {
+			if (this.shipIsReserved(reservation.getRealEstateId(), reservation.getStartDate(),
+					reservation.getEndDate())) {
 				return false;
 			}
 			newReservation.setShip(ship);
@@ -102,7 +103,8 @@ public class ReservationServiceImpl implements ReservationService {
 			newReservation.setClient(c);
 			Cottage cottage = entityManager.find(Cottage.class, reservation.getRealEstateId(),
 					LockModeType.OPTIMISTIC_FORCE_INCREMENT);
-			if(this.cottageIsReserved(reservation.getRealEstateId(), reservation.getStartDate(), reservation.getEndDate())) {
+			if (this.cottageIsReserved(reservation.getRealEstateId(), reservation.getStartDate(),
+					reservation.getEndDate())) {
 				return false;
 			}
 			newReservation.setCottage(cottage);
@@ -117,11 +119,11 @@ public class ReservationServiceImpl implements ReservationService {
 		
 		return true;
 	}
-	
+
 	private Boolean cottageIsReserved(Long id, Date stardDate, Date endDate) {
 		return this.cottageReservationRepository.getReservationsInPeriod(id, stardDate, endDate).size() != 0;
 	}
-	
+
 	private Boolean shipIsReserved(Long id, Date stardDate, Date endDate) {
 		return this.shipReservationRepository.getReservationsInPeriod(id, stardDate, endDate).size() != 0;
 	}

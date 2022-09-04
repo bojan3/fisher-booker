@@ -15,7 +15,11 @@ import com.example.fisherbooker.model.DTO.DatePeriodDTO;
 
 @Repository
 public interface ShipReservationRepository extends JpaRepository<ShipReservation, Long> {
-	public List<ShipReservation> findByShipId(Long id);
+	
+	@Query(value = "select * \r\n"
+			+ "from ship_reservation\r\n"
+			+ "where ship_id = :id and end_date >= CURRENT_DATE", nativeQuery = true)
+	public List<ShipReservation> isShipReserved(@Param("id") Long id);
 
 	@Query(value = "select start_date as startDate, end_date as endDate\r\n" + "from ship_reservation\r\n"
 			+ "where ship_id = :id", nativeQuery = true)
