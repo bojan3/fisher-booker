@@ -159,14 +159,6 @@ public class ShipReservation {
 			this.shipOption.add(newShipOption);
 	}
 	
-	public ShipReservationSupportData getReservationsd() {
-		return reservationsd;
-	}
-
-	public void setReservationsd(ShipReservationSupportData reservationsd) {
-		this.reservationsd = reservationsd;
-	}
-
 	@Override
 	public String toString() {
 		return "ShipReservation [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", price=" + price

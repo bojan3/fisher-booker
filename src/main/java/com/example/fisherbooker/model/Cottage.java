@@ -21,6 +21,7 @@ import javax.persistence.Version;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.example.fisherbooker.model.complaint.CottageComplaint;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -63,10 +64,10 @@ public class Cottage {
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	public Set<CottageReservation> cottageReservations = new HashSet<CottageReservation>();
 
-	// @JsonIgnore
-	// @OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch =
-	// FetchType.EAGER)
-	// public Set<CottageComplaint> cottageComplaints;
+	 @JsonIgnore
+	 @OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch =
+	 FetchType.EAGER)
+	 public Set<CottageComplaint> cottageComplaints;
 
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	public Set<CottageOption> cottageOptions = new HashSet<CottageOption>();
@@ -279,9 +280,6 @@ public class Cottage {
 			this.isDeleted = b;
 		
 	}
-	
-	
-}
 
 	public void addImage(CottageImage newImage) {
 		if (newImage == null)

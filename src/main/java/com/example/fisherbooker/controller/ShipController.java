@@ -46,20 +46,20 @@ public class ShipController {
 	
 	
 	
-	@GetMapping("/all")
-	public ResponseEntity<List<ShipDTO>> getAlll() {
-		List<Ship> ships = this.shipService.getAll();
-		List<ShipDTO>shipsDTO = new ArrayList<ShipDTO>();
-		for (Ship ship : ships) {
-			if(!ship.getIsDeleted())
-			{
-				ShipDTO shipDTO = ShipDTO.createShipDTO(ship);
-				shipDTO.setId(ship.getId());
-				shipsDTO.add(shipDTO);
-			}
-										}
-		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
-	}
+//	@GetMapping("/all")
+//	public ResponseEntity<List<ShipDTO>> getAlll() {
+//		List<Ship> ships = this.shipService.getAll();
+//		List<ShipDTO>shipsDTO = new ArrayList<ShipDTO>();
+//		for (Ship ship : ships) {
+//			if(!ship.getIsDeleted())
+//			{
+//				ShipDTO shipDTO = ShipDTO.createShipDTO(ship);
+//				shipDTO.setId(ship.getId());
+//				shipsDTO.add(shipDTO);
+//			}
+//										}
+//		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
+//	}
 	
 	@DeleteMapping("/admin/delete")
 		public ResponseEntity<List<ShipDTO>> deleteAship(@RequestBody Long ship_id) {
