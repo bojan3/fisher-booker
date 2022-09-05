@@ -160,8 +160,8 @@ insert into adventure_option(name,description,price) values('Pecanje','Nakon pau
 --insert into cottage (description, name, address_id, price_per_day, average_mark) values ('Visoko u panini, zubori reka u blizini', 'Villa Smilja', 6,70, 3);
 --insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark, cottage_owner_id) values ('u kotlini, brza voda tece', 'Villa Tamara', 1, 40, 4);
 --insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark, cottage_owner_id) values ('Vikendica skrivena u sumi', 'Villa Zagorka', 5, 30, 5);
-insert into availability_period(start_date, end_date) values('2022-05-31', '2022-06-30');
-insert into availability_period(start_date, end_date) values('2022-06-02', '2022-06-12');
+insert into availability_period(start_date, end_date) values('2022-08-31', '2022-09-30');
+insert into	availability_period(start_date, end_date) values('2022-06-02', '2022-06-12');
 insert into availability_period(start_date, end_date) values('2022-06-15', '2022-06-27');
 insert into availability_period(start_date, end_date) values('2022-07-02', '2022-08-12');
 insert into availability_period(start_date, end_date) values('2022-07-02', '2022-08-12');
@@ -207,8 +207,8 @@ insert into ship_reservation(start_date, end_date, ship_id, capacity, price, cli
 insert into ship_reservation(start_date, end_date, ship_id, capacity, price, client_id, deleted) values ('2022-06-25', '2022-06-30', 2, 3, 15, 1, FALSE);
 insert into ship_reservation(start_date, end_date, ship_id, capacity, price, client_id, deleted) values ('2022-05-31', '2022-06-10', 3, 4, 40, 1, FALSE);
 
-insert into adventure_reservation(start_date, end_date, adventure_id, capacity, price, client_id, deleted, cancel_rate, duration) values ('2022-05-31', '2022-06-10', 1, 1, 20, 1, FALSE, 0.2, 12);
-insert into adventure_reservation(start_date, end_date, adventure_id, capacity, price, client_id, deleted, cancel_rate, duration) values ('2022-06-25', '2022-06-30', 2, 5, 70, 1, FALSE, 0.2, 12);
+insert into adventure_reservation(start_date, end_date, adventure_id, capacity, price, client_id, deleted, cancel_rate, duration) values ('2022-09-30', '2022-10-10', 1, 1, 20, 1, FALSE, 0.2, 12);
+insert into adventure_reservation(start_date, end_date, adventure_id, capacity, price, client_id, deleted, cancel_rate, duration) values ('2022-10-25', '2022-10-30', 2, 5, 70, 1, FALSE, 0.2, 12);
 insert into adventure_reservation(start_date, end_date, adventure_id, capacity, price, client_id, deleted, cancel_rate, duration) values ('2022-05-31', '2022-06-10', 3, 4, 40, 1, FALSE, 0.2, 12);
 insert into adventure_reservation(start_date, end_date, adventure_id, capacity, price, client_id, deleted, cancel_rate, duration) values ('2022-05-31', '2022-06-10', 4, 1, 20, 1, FALSE, 0.2, 12);
 insert into adventure_reservation(start_date, end_date, adventure_id, capacity, price, client_id, deleted, cancel_rate, duration) values ('2022-06-25', '2022-06-30', 5, 5, 70, 1, FALSE, 0.2, 12);

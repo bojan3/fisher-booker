@@ -38,7 +38,7 @@ public class CottageReservation {
 	(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	@JoinTable(name = "creservation_reservation_supportdata", joinColumns = @JoinColumn(name = "creservation_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "suppdata_id3", referencedColumnName = "id"))
 	private CottageReservationSupportData reservationsd;
-	
+
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<CottageOption> cottageOption;
 
@@ -55,6 +55,19 @@ public class CottageReservation {
 	public CottageReservation() {
 		super();
 		this.deleted = false;
+	}
+
+	public CottageReservation(CottageSuperDeal cottageSuperDeal, Client client) {
+		super();
+		this.startDate = cottageSuperDeal.getStartDate();
+		this.endDate = cottageSuperDeal.getEndDate();
+		this.price = cottageSuperDeal.getDiscountedPrice();
+		this.capacity = cottageSuperDeal.getCapacity();
+		this.deleted = false;
+		this.cottage = cottageSuperDeal.getCottage();
+		this.client = client;
+		this.cottageOption = cottageSuperDeal.getOptionsCopy();
+		this.reservationsd = new CottageReservationSupportData();
 	}
 	
 	public CottageReservation(Long id) {
@@ -158,9 +171,9 @@ public class CottageReservation {
 		dto.setUserInfo(client.toString());
 		dto.setClientId(client.getId());
 		dto.setRealEstateId(cottage.getId());
-		return dto; 
+		return dto;
 	}
-	
+
 	public void addOption(CottageOption newCottageOption) {
 		if (newCottageOption == null)
 			return;
