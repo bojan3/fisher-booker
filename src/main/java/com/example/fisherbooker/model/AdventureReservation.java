@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.example.fisherbooker.model.DTO.ReservationDetailsDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -139,4 +140,26 @@ public class AdventureReservation {
 		return this.getAdventure().getAddress();
 	}
 
+	public ReservationDetailsDTO toDTO() {
+		ReservationDetailsDTO dto = new ReservationDetailsDTO();
+		dto.setId(id);
+		dto.setCapacity(capacity);
+		dto.setName(adventure.getName());
+		dto.setEndDate(endDate);
+		dto.setStartDate(startDate);
+		dto.setPrice(price);
+		dto.setOptions(adventureOption.toString());
+		dto.setUserInfo(client.toString());
+		dto.setClientId(client.getId());
+		dto.setRealEstateId(adventure.getId());
+		return dto; 
+	}
+
+	public AdventureReservation(Long id) {
+		super();
+		this.id = id;
+	}
+	
+	
+	
 }

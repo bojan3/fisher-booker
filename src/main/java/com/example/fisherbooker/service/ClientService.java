@@ -339,4 +339,12 @@ public class ClientService {
 		this.shipComplaintRepository.save(shipComplaint);
 	}
 
+	public boolean penal(String clientUsername) {
+		Client client = this.clientRepository.findByAccountUsername(clientUsername);
+		client.setPenals(client.getPenals()+1);
+		this.clientRepository.save(client);
+		return true;
+	}
+	
+
 }

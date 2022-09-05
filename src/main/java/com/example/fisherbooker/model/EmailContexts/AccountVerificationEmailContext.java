@@ -16,7 +16,7 @@ public class AccountVerificationEmailContext extends EmailContext {
 		put("firstName", account.getName());
 		setTemplateLocation("email-verification");
 		setSubject("Complete your registration");
-		setFrom("isa.projekat333@gmail.com");
+		setFrom("potuc3@gmail.com");
 		setTo(account.getEmail());
 	}
 

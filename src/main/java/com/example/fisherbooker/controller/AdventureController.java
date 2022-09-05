@@ -1,12 +1,16 @@
 package com.example.fisherbooker.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,14 +21,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.fisherbooker.model.Adventure;
 import com.example.fisherbooker.model.Cottage;
+import com.example.fisherbooker.model.CottageOption;
 import com.example.fisherbooker.model.Ship;
+import com.example.fisherbooker.model.DTO.AdventureAddDTO;
 import com.example.fisherbooker.model.DTO.AdventureDTO;
+import com.example.fisherbooker.model.DTO.CottageAddDTO;
 import com.example.fisherbooker.model.DTO.CottageDTO;
+import com.example.fisherbooker.model.DTO.DatePeriodDTO;
+import com.example.fisherbooker.model.DTO.SearchFilter;
 import com.example.fisherbooker.model.DTO.ShipDTO;
+import com.example.fisherbooker.service.AdventureReservationService;
 import com.example.fisherbooker.service.AdventureService;
+import com.example.fisherbooker.service.CottageReservationService;
 import com.example.fisherbooker.service.FishingInstructorService;
 
 @RestController
@@ -32,6 +44,8 @@ import com.example.fisherbooker.service.FishingInstructorService;
 public class AdventureController {
 	public AdventureService adventureService;
 	public FishingInstructorService fishinginstructorservice;
+	public AdventureReservationService adventureReservationService;
+
 
 	@Autowired
 	public AdventureController(AdventureService adventureService, FishingInstructorService fis) {
@@ -55,6 +69,46 @@ public class AdventureController {
 		return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
 	}
 	
+	
+	@GetMapping("/all/")
+	public ResponseEntity<List<AdventureDTO>> getAllSorted(@RequestParam String type, @RequestParam String order) {
+		List<Adventure> adventures = this.adventureService.getAllSorted(type, order);
+		List<AdventureDTO> adventuresDTO = new ArrayList<AdventureDTO>();
+		for (Adventure adventure : adventures) {
+			AdventureDTO adventureDTO = AdventureDTO.createAdventureDTO(adventure);
+			adventuresDTO.add(adventureDTO);
+		}
+		return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/page/{id}")
+	public ResponseEntity<Adventure> getById(@PathVariable Long id) {
+		Adventure adventure = this.adventureService.getById(id);
+		return new ResponseEntity<>(adventure, HttpStatus.OK);
+	}
+	
+	
+	@PreAuthorize("hasRole('FISHING_INSTRUCTOR')")
+	@DeleteMapping("/delete/owner/{AdventureId}")
+	public ResponseEntity<List<AdventureDTO>> delete(@PathVariable("AdventureId") Long id) {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		if (this.adventureService.checkIfOwnerHasAdventure(username, id)) {
+
+			if (!this.adventureService.checkIfAdventureHasReservation(id)) {
+				this.adventureService.delete(id);
+			} else {
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			}
+		}
+		List<Adventure> ownersAdventures = this.adventureService.getAllByOwnerUsername(username);
+		List<AdventureDTO> adventureDTOs = new ArrayList<AdventureDTO>();
+		for (Adventure adventure : ownersAdventures) {
+			adventureDTOs.add(AdventureDTO.createAdventureDTO(adventure));
+		}
+		return new ResponseEntity<>(adventureDTOs, HttpStatus.OK);
+	}
+	
 	@DeleteMapping("/admin/delete")
 		public ResponseEntity<List<AdventureDTO>> deleteAadventure(@RequestBody Long adventure_id) {
 			this.adventureService.delete(adventure_id);
@@ -74,56 +128,28 @@ public class AdventureController {
 
 	// ownerId ce drugacije da se dobavlja jednom kada dodamo spring security
 	@PostMapping("/add/{InstructorId}")
-	public ResponseEntity<Boolean> getAllByOwner(@RequestBody Adventure adventure) {
+	public ResponseEntity<Boolean> getAllByOwner(@RequestBody AdventureAddDTO adventure) {
 		this.adventureService.saveAdventure(adventure);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 
-//	@GetMapping("/all/name")
-//	public ResponseEntity<List<AdventureDTO>> getAllByName() {
-//		List<Adventure> adventures = this.adventureService.getAllByName();
-//		List<AdventureDTO> adventuresDTO = new ArrayList<AdventureDTO>();
-//		for (Adventure a : adventures) {
-//			AdventureDTO adventureDTO = AdventureDTO.createAdventureDTO(a);
-//			adventuresDTO.add(adventureDTO);
-//		}
 
-//	@GetMapping("/all")
-//	public ResponseEntity<List<AdventureDTO>> getAll() {
-//		List<Adventure> adventures = this.adventureService.getAll();
-//		List<AdventureDTO> adventuresDTO = new ArrayList<AdventureDTO>();
-//		for (Adventure a : adventures) {
-//			AdventureDTO adventureDTO = AdventureDTO.createAdventureDTO(a);
-//			adventuresDTO.add(adventureDTO);
-//		}
-//		System.out.println("Broj avantura: " + adventuresDTO.size());
-//		System.out.println("Avature: " + adventuresDTO);
-//		return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
-//	}
 
 	@GetMapping("/one/{id}")
 	public ResponseEntity<AdventureDTO> GetOne(@PathVariable Long id) {
 
-		Optional<Adventure> adventure = this.adventureService.findOneById(id);
+		Adventure adventure = this.adventureService.findOneById(id);
+		
+		AdventureDTO response = new AdventureDTO(adventure);
 
-		// adventure.get();
-		// -- AdventureDTO adventureDTO = new AdventureDTO(adventure.get());
-//			adventureDTO.setId(adventureDTO.getId());
-//			adventureDTO.setAddress(adventureDTO.getAddress());
-//			adventureDTO.setCancelRate(adventureDTO.getCancelRate());
-//			adventureDTO.setDescription(adventureDTO.getDescription());
-//			adventureDTO.setCapacity(adventureDTO.getCapacity());
-//			adventureDTO.setName(adventureDTO.getName());
-//			adventureDTO.setPrice(adventureDTO.getPrice());
-
-		return new ResponseEntity<>(new AdventureDTO(adventure.get()), HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	@PutMapping("/update/{AdventureID}")
 	public ResponseEntity<Boolean> updateAdventure(@PathVariable Long AdventureID, @RequestBody Adventure adventure) {
 		this.adventureService.deleteById(AdventureID);
 
-		Adventure nova = this.adventureService.findOneById(AdventureID).get();
+		Adventure nova = this.adventureService.findOneById(AdventureID);
 		System.out.println("dobavljena avantura");
 
 		if (adventure.getAddress() != null)
@@ -157,21 +183,21 @@ public class AdventureController {
 		adventureService.deleteById(id);
 	}
 
-	@PostMapping("/new/{instructor_id}")
-	public ResponseEntity<Boolean> SaveAdventure(@RequestBody Adventure adventure, @PathVariable Long instructor_id) {
-		Adventure nova = new Adventure();
+//	@PostMapping("/new/{instructor_id}")
+//	public ResponseEntity<Boolean> SaveAdventure(@RequestBody Adventure adventure, @PathVariable Long instructor_id) {
+//		Adventure nova = new Adventure();
 
-		nova.setAddress(adventure.getAddress());
-		nova.setCancelRate(adventure.getCancelRate());
-		nova.setCapacity(adventure.getCapacity());
-		nova.setName(adventure.getName());
-		nova.setPrice(adventure.getPrice());
+//		nova.setAddress(adventure.getAddress());
+//		nova.setCancelRate(adventure.getCancelRate());
+//		nova.setCapacity(adventure.getCapacity());
+//		nova.setName(adventure.getName());
+//		nova.setPrice(adventure.getPrice());
 
-		nova.fishingInstructor = this.fishinginstructorservice.getById(instructor_id);
+//		nova.fishingInstructor = this.fishinginstructorservice.getById(instructor_id);
 
-		adventureService.saveAdventure(nova);
-		return new ResponseEntity<>(true, HttpStatus.OK);
-	}
+//		adventureService.saveAdventure(nova);
+//		return new ResponseEntity<>(true, HttpStatus.OK);
+//	}
 
 	@GetMapping("/all/name")
 	public ResponseEntity<List<AdventureDTO>> getAllByName() {
@@ -234,7 +260,7 @@ public class AdventureController {
 	 */
 
 	@PostMapping("/save")
-	public ResponseEntity<Boolean> save(@RequestBody Adventure adventure) {
+	public ResponseEntity<Boolean> save(@RequestBody AdventureAddDTO adventure) {
 		// String username =
 		// SecurityContextHolder.getContext().getAuthentication().getName();
 		// if (this.adventureService.checkIfOwnerHasAdventure(username,
@@ -242,30 +268,68 @@ public class AdventureController {
 		this.adventureService.saveAdventure(adventure);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
-	// return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-	// }
+	
+	@GetMapping("/locations")
+	public ResponseEntity<List<String>> getAdventureLocations() {
+		List<String> locations = this.adventureService.getAdventureLocations();
+		return new ResponseEntity<>(locations, HttpStatus.OK);
+	}
 
-//	@GetMapping("/all/price")
-//	public ResponseEntity<List<AdventureDTO>> getAllByPrice() {
-//		List<Adventure> adventures = this.adventureService.getAllByPrice();
-//		List<AdventureDTO> adventuresDTO = new ArrayList<AdventureDTO>();
-//		for (Adventure a : adventures) {
-//			AdventureDTO adventureDTO = AdventureDTO.createAdventureDTO(a);
-//			adventuresDTO.add(adventureDTO);
-//		}
-//		return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
-//	}
+	
+	@GetMapping("ownership/{id}")
+	public ResponseEntity<Boolean> checkOwnership(@PathVariable Long id) {
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
 
-//	@GetMapping("/all/capacity")
-//	public ResponseEntity<List<AdventureDTO>> getAllByCapacity() {
-//		List<Adventure> adventures = this.adventureService.getAllByCapacity();
-//		List<AdventureDTO> adventuresDTO = new ArrayList<AdventureDTO>();
-//		for (Adventure a : adventures) {
-//			AdventureDTO adventureDTO = AdventureDTO.createAdventureDTO(a);
-//			adventuresDTO.add(adventureDTO);
-//		}
-//		return new ResponseEntity<>(adventuresDTO, HttpStatus.OK);
-//	}
+	@GetMapping("options/{id}")
+	public ResponseEntity<List<CottageOption>> getOptions(@PathVariable Long id) {
+		return new ResponseEntity<>(this.adventureService.getOptions(id), HttpStatus.OK);
+	}
+
+	@GetMapping("search/filter/")
+	public ResponseEntity<List<AdventureDTO>> searchAdventures(@RequestParam String startDate, @RequestParam String endDate,
+			@RequestParam String locationCity, @RequestParam String minGrade) {
+
+		Date startDate1 = null;
+		Date endDate1 = null;
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			startDate1 = formatter.parse(startDate);
+			endDate1 = formatter.parse(endDate);
+		} catch (ParseException e) {
+
+			e.printStackTrace();
+		}
+		SearchFilter searchFilter = new SearchFilter(startDate1, endDate1, locationCity, minGrade, "null");
+//		System.out.println(searchFilter);
+		List<Adventure> adventures = adventureService.searchAdventures(searchFilter);
+		return new ResponseEntity<>(toDTOs(adventures), HttpStatus.OK);
+	}
+
+	private List<AdventureDTO> toDTOs(List<Adventure> adventures) {
+		List<AdventureDTO> adventureDTOs = new ArrayList<AdventureDTO>();
+		for (Adventure adventure : adventures) {
+			adventureDTOs.add(AdventureDTO.createAdventureDTO(adventure));
+		}
+		return adventureDTOs;
+	}
+
+	@GetMapping("dates/{id}")
+	public ResponseEntity<List<DatePeriodDTO>> getReservationDates(@PathVariable Long id) {
+		return new ResponseEntity<>(this.adventureReservationService.getReservationDates(id), HttpStatus.OK);
+	}
+
+	@PostMapping("/upload/{id}")
+	public ResponseEntity<Boolean> uplaodImage(@PathVariable Long id, @RequestParam("image") MultipartFile file) {
+
+		try {
+			this.adventureService.uploadImage(id, file);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
 
 	@GetMapping("/all/instructor/{instructorId}")
 	public ResponseEntity<List<AdventureDTO>> getAllByInstructorId(@PathVariable Long instructorId) {
@@ -324,10 +388,5 @@ public class AdventureController {
 //		adventureService.deleteById(id);
 //	}
 
-	@PostMapping("/new")
-	public ResponseEntity<Boolean> SaveAdventure(@RequestBody Adventure adventure) {
-		adventureService.saveAdventure(adventure);
-		return new ResponseEntity<>(true, HttpStatus.OK);
-	}
 
 }

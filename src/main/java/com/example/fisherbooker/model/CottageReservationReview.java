@@ -26,4 +26,14 @@ public class CottageReservationReview extends ReservationReview {
 		this.cottageReservation = cottageReservation;
 	}
 
+	@Override
+	public String toString() {
+		return "CottageReservationReview [cottageReservation=" + cottageReservation + ", id=" + id + ", content="
+				+ content + ", badReview=" + badReview + ", didntAppear=" + didntAppear + ", answered=" + answered
+				+ "]";
+	}
+
+	
+	
+	
 }

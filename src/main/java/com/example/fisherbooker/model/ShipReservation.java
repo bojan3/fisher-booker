@@ -158,6 +158,8 @@ public class ShipReservation {
 		if (!this.shipOption.contains(newShipOption))
 			this.shipOption.add(newShipOption);
 	}
+	
+
 
 	@Override
 	public String toString() {

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.example.fisherbooker.model.Adventure;
+import com.example.fisherbooker.model.DTO.AdventureAddDTO;
 import com.example.fisherbooker.model.DTO.AdventureDTO;
 
 public interface AdventureRepository extends JpaRepository<Adventure, Long> {
@@ -17,11 +18,11 @@ public interface AdventureRepository extends JpaRepository<Adventure, Long> {
 	
 	Adventure getById(Long id);
 	
-	Optional<Adventure> findOneById(Long id);
+	Optional<Adventure> findById(Long id);
 	
 //	Boolean update(Adventure adventure);
 	
-	Adventure save(Adventure adventure);
+	Adventure save(AdventureAddDTO adventure);
 
 
 //	List<Adventure> findByOrderByName();

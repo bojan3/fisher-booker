@@ -38,7 +38,15 @@ public class ReservationController {
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
 		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
+
+		}
+	
+//	@PostMapping("/create")
+//	public ResponseEntity<Boolean> create(@RequestBody AddReservationDTO reservation) {
+//		this.reservationSerivce.addByOwner(reservation);
+		
+//		return new ResponseEntity<>(true, HttpStatus.OK);
+	//}
 
 	@PreAuthorize("hasAnyRole('COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
 	@PostMapping("/createByOwner")

@@ -48,12 +48,17 @@ public class Client {
 
 	@OneToMany(mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	public Set<Review> reviews;
+	
+	private int penals;
+	
+	
 //	@JsonIgnore
 //	@OneToMany(mappedBy = "client", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 //	public Set<CottageComplaint> cottageComplaints;
 	
 	public Client() {
 		super();
+		this.penals = 0;
 	}
 
 	public java.util.Set<ShipReservation> getShipReservation() {
@@ -219,6 +224,15 @@ public class Client {
 	public void setCottageReservation(Set<CottageReservation> cottageReservation) {
 		this.cottageReservation = cottageReservation;
 	}
+	
+	public int getPenals() {
+		return this.penals;
+	}
+	public void setPenals(int penals) {
+		this.penals=penals;
+	}
+	
+	
 
 //	@Override
 //	public String toString() {
