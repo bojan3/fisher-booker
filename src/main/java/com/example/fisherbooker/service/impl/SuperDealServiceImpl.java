@@ -12,8 +12,10 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.fisherbooker.model.Client;
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageOption;
+import com.example.fisherbooker.model.CottageReservation;
 import com.example.fisherbooker.model.CottageSuperDeal;
 import com.example.fisherbooker.model.RealEstateType;
 import com.example.fisherbooker.model.Ship;
@@ -21,6 +23,7 @@ import com.example.fisherbooker.model.ShipOption;
 import com.example.fisherbooker.model.ShipSuperDeal;
 import com.example.fisherbooker.model.SuperDealNotificationEmailContext;
 import com.example.fisherbooker.model.DTO.AddSuperDealDTO;
+import com.example.fisherbooker.model.DTO.CreateSuperDealReservation;
 import com.example.fisherbooker.model.DTO.DatePeriodDTO;
 import com.example.fisherbooker.repository.ClientRepository;
 import com.example.fisherbooker.repository.CottageOptionRepository;
@@ -33,6 +36,7 @@ import com.example.fisherbooker.service.EmailService;
 import com.example.fisherbooker.service.SuperDealService;
 
 @Service
+@Transactional
 public class SuperDealServiceImpl implements SuperDealService {
 
 	@Autowired
@@ -68,6 +72,7 @@ public class SuperDealServiceImpl implements SuperDealService {
 		switch (deal.getType()) {
 		case SHIP: {
 			ShipSuperDeal newDeal = deal.toShipModel();
+			System.out.println(newDeal);			
 			for (Long i : deal.getOptions()) {
 				ShipOption option = this.shipOptionRepository.findById(i).orElse(null);
 				if (option != null) {
@@ -143,6 +148,15 @@ public class SuperDealServiceImpl implements SuperDealService {
 		}
 		}
 		return dates;
+	}
+	
+	public Boolean makeCottageReservation(CreateSuperDealReservation superDealReservation) {
+		CottageSuperDeal cottageSuperDeal = this.cottageSuperDealRepository.getOne(superDealReservation.getSuperDealId());
+		Client client = this.clientRepository.findByAccountId(superDealReservation.getAccountId());
+		CottageReservation cottageReservation = new CottageReservation(cottageSuperDeal, client);
+//		client.getCottageReservation().add(cottageReservation);
+		this.cottageReservationRepository.save(cottageReservation);
+		return true;
 	}
 
 }
