@@ -118,4 +118,11 @@ public class AddReservationDTO {
 		return newReservation;
 	}
 
+	@Override
+	public String toString() {
+		return "AddReservationDTO [startDate=" + startDate + ", endDate=" + endDate + ", price=" + price + ", capacity="
+				+ capacity + ", options=" + options + ", realEstateId=" + realEstateId + ", type=" + type
+				+ ", clientId=" + clientId + "]";
+	}
+
 }

@@ -2,6 +2,7 @@ package com.example.fisherbooker.model;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -99,6 +100,15 @@ public class CottageSuperDeal {
 
 	public Set<CottageOption> getOptions() {
 		return options;
+	}
+
+	public Set<CottageOption> getOptionsCopy() {
+		Set<CottageOption> cottageOptions = new HashSet<>();
+		Iterator<CottageOption> it = this.options.iterator();
+		while(it.hasNext()) {
+			cottageOptions.add(it.next());
+		}
+		return cottageOptions;
 	}
 
 	public void setOptions(Set<CottageOption> options) {

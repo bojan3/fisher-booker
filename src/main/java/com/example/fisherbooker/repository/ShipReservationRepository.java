@@ -32,7 +32,7 @@ public interface ShipReservationRepository extends JpaRepository<ShipReservation
 	
 	@Query(value = "select *\r\n"
 			+ "from ship_reservation\r\n"
-			+ "where cottage_id = :id and (start_date >= :startDate and start_date <= :endDate) or (end_date >= :startDate and end_date <= :endDate)", nativeQuery = true)
+			+ "where ship_id = :id and (start_date >= :startDate and start_date <= :endDate) or (end_date >= :startDate and end_date <= :endDate)", nativeQuery = true)
 	public List<CottageReservation> getReservationsInPeriod(@Param("id") Long id, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
 }

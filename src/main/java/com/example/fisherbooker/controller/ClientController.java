@@ -24,20 +24,25 @@ import com.example.fisherbooker.model.DTO.AdventureReservationDTO;
 import com.example.fisherbooker.model.DTO.ClientDTO;
 import com.example.fisherbooker.model.DTO.CottageDTO;
 import com.example.fisherbooker.model.DTO.CottageReservationDTO;
+import com.example.fisherbooker.model.DTO.CreateSuperDealReservation;
 import com.example.fisherbooker.model.DTO.FishingInstructorDTO;
 import com.example.fisherbooker.model.DTO.ShipDTO;
 import com.example.fisherbooker.model.DTO.ShipReservationDTO;
 import com.example.fisherbooker.service.ClientService;
+import com.example.fisherbooker.service.impl.SuperDealServiceImpl;
 
 @RestController
 @RequestMapping("/api/client")
 public class ClientController {
+	
 	public ClientService clientService;
-
+	private SuperDealServiceImpl superDealServiceImpl;
+	
 	@Autowired
-	public ClientController(ClientService clientService) {
+	public ClientController(ClientService clientService, SuperDealServiceImpl superDealServiceImpl) {
 		super();
 		this.clientService = clientService;
+		this.superDealServiceImpl = superDealServiceImpl;
 	}
 	//@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/allClients")
@@ -228,6 +233,10 @@ public class ClientController {
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 	
-//	@PostMapping("cottage/superdeal")
-//	public ResponseEntity<Boolean> makeReservationFromCottageSuperDeal(@PathVariable Long superDeadId)
+	@PostMapping("cottage/superdeal/reservation")
+	public ResponseEntity<Boolean> makeCottageSuperDealReservation(@RequestBody CreateSuperDealReservation superDealReservation){
+	 	Boolean done = this.superDealServiceImpl.makeCottageReservation(superDealReservation);
+		return new ResponseEntity<>(done, HttpStatus.OK);
+	}
+
 }
