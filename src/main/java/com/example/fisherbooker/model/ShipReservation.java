@@ -49,7 +49,7 @@ public class ShipReservation {
 		super();
 		this.deleted = false;
 	}
-	
+
 	public ShipReservation(Long id) {
 		super();
 		this.id = id;
@@ -157,14 +157,6 @@ public class ShipReservation {
 			this.shipOption = new java.util.HashSet<ShipOption>();
 		if (!this.shipOption.contains(newShipOption))
 			this.shipOption.add(newShipOption);
-	}
-	
-	public ShipReservationSupportData getReservationsd() {
-		return reservationsd;
-	}
-
-	public void setReservationsd(ShipReservationSupportData reservationsd) {
-		this.reservationsd = reservationsd;
 	}
 
 	@Override
