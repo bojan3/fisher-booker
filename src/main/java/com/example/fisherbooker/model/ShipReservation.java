@@ -159,6 +159,8 @@ public class ShipReservation {
 			this.shipOption.add(newShipOption);
 	}
 	
+
+
 	@Override
 	public String toString() {
 		return "ShipReservation [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", price=" + price

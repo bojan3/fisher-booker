@@ -197,7 +197,7 @@ public class AccountDTO {
 		
 		public static AdventureDTO createAdventureDTO(Adventure a) {
 			
-			return new AdventureDTO(a.getId(), a.getName(), a.getDescription(),a.getPrice(),a.getCancelRate(),a.getCapacity(),a.getFishingInstructor().getId(),a.getAddress());
+			return new AdventureDTO(a.getId(), a.getName(), a.getDescription(),a.getPrice(),a.getCancelRate(),a.getCapacity(),a.getFishingInstructor().getId(),a.getAddress(),a.getRule());
 		}
 		
 		

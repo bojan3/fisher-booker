@@ -24,7 +24,7 @@ public class NewReviewEmailContext extends EmailContext {
 
 		setTemplateLocation("new-review");
 		setSubject("New review");
-		setFrom("isa.projekat333@gmail.com");
+		setFrom("potuc3@gmail.com");
 		setTo(account.getEmail());
 	}
 

@@ -90,7 +90,7 @@ insert into account_status(account_id,status_id)values(13,13);
 insert into cottage_owner (account_id) values (4);
 insert into cottage_owner (account_id) values (8);
 
-insert into client(account_id) values(2);
+insert into client(account_id, penals) values(2, 2);
 
 insert into fishing_instructor(account_id,biography) values(3,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Sasvim prirodno" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
 insert into fishing_instructor(account_id,biography) values(6,'Dve reci smeker prejak. Poznat po televizijskom serijalu pod nazivom "Bear Grylls" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
@@ -109,7 +109,7 @@ insert into instructor_subscriptions (client_id, instructor_id) values (1, 2);
 --insert into fishing_instructor(account_id,biography) values(4,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Sasvim prirodno" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
 
 --insert into client(account_id) values(8);
-insert into client(account_id) values(9);
+insert into client(account_id, penals) values(9, 0);
 
 --insert into fishing_instructor(account_id,biography) values(4,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Sasvim prirodno" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
 --insert into fishing_instructor(account_id,biography) values(5,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Bear Grylls" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
@@ -132,6 +132,9 @@ insert into rule (description) values ('Drzati se grupe!');
 insert into rule (description) values ('Poneti kupaci!');
 insert into rule (description) values ('Poneti satore!');
 insert into rule (description) values ('Postovati satnicu dogadjaja!');
+
+insert into adventure_rule(adventure_id, rule_id) values(1, 3);
+insert into adventure_rule(adventure_id, rule_id) values(1, 4);
 
 --insert into adventure_rule (adventure_id, rule_id) values (1,1);
 insert into adventure_option(name,description,price) values('Voznja motorima','Nakon pauze pre povratka nazad, obilazi se jedna staza na kojoj je moguce provozati motore',10);
@@ -292,6 +295,12 @@ values ('CottageComplaint', null, false, 'Ovo je daleko od onoga sto ste naveli 
 
 insert into complaint(dtype, answer, answered, text, client_id, cottage_id, instructor_id, ship_id, version) 
 values ('InstructorComplaint', null, false, 'Ovo je daleko od onoga sto ste naveli u opisu', 1,null,1,null, 0);
+
+
+
+
+
+
 
 
 

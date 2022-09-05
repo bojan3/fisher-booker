@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.fisherbooker.model.RealEstateType;
 import com.example.fisherbooker.model.Stats;
 import com.example.fisherbooker.model.DTO.DatePeriodDTO;
+import com.example.fisherbooker.service.AdventureReservationService;
 import com.example.fisherbooker.service.CottageReservationService;
+import com.example.fisherbooker.service.ShipReservationService;
 
 @RestController
 @RequestMapping(value = "/api/stats", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -24,6 +26,12 @@ public class StatsController {
 
 	@Autowired
 	private CottageReservationService cottageReservationService;
+	
+	@Autowired
+	private AdventureReservationService adventureReservationService;
+	
+	@Autowired
+	private ShipReservationService shipReservationService;
 
 	@GetMapping("/{type}/yearly/{year}")
 	public ResponseEntity<List<Stats>> getYearlyStats(@PathVariable RealEstateType type, @PathVariable int year) {
@@ -48,8 +56,15 @@ public class StatsController {
 	
 	@GetMapping("/years")
 	public ResponseEntity<List<Integer>> getYears() {
+		Boolean isCottageOwner = SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("");
+		Boolean isShipOwner = SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("");
+		Boolean isFishingInstructor = SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("");
+		
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		
 		List<Integer> years = this.cottageReservationService.getYears(username);
+		
+		
 		return new ResponseEntity<>(years, HttpStatus.OK);
 	}
 

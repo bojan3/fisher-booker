@@ -24,6 +24,8 @@ import com.example.fisherbooker.model.FishingInstructor;
 import com.example.fisherbooker.model.DTO.AdventureDTO;
 import com.example.fisherbooker.model.DTO.CottageDTO;
 import com.example.fisherbooker.model.DTO.FishingInstructorDTO;
+import com.example.fisherbooker.model.DTO.ReservationDetailsDTO;
+import com.example.fisherbooker.service.AdventureReservationService;
 import com.example.fisherbooker.service.CottageService;
 import com.example.fisherbooker.service.FishingInstructorService;
 
@@ -32,6 +34,9 @@ import com.example.fisherbooker.service.FishingInstructorService;
 public class FishingInstructorController {
 
 	private FishingInstructorService FishingInstructorService;
+	@Autowired
+	private AdventureReservationService adventureReservationService;
+	
 
 	@Autowired
 	public FishingInstructorController(FishingInstructorService FishingInstructorService) {
@@ -98,6 +103,28 @@ public class FishingInstructorController {
 		System.out.println("delete instructor with id:"+instructor_id);
 		this.FishingInstructorService.deleteOne(instructor_id);	
 		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/reservations/{page}")
+	public ResponseEntity<List<ReservationDetailsDTO>> getReservationsByInstructor(@PathVariable int page) {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		System.out.println(username);
+		
+		List<ReservationDetailsDTO> dtos = adventureReservationService.getReservationsByCottageOwner(username, page);
+		
+		System.out.println(dtos);
+		
+		
+		
+		return new ResponseEntity<>(dtos, HttpStatus.OK);
+	}
+	
+	@GetMapping("/reservationNum")
+	public ResponseEntity<Integer> getReservationNum() {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		int number = adventureReservationService.getNumberOfReservations(username);
+		return new ResponseEntity<>(number, HttpStatus.OK);
 	}
 	
 	

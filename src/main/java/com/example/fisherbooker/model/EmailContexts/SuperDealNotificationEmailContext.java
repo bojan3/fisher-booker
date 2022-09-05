@@ -10,7 +10,7 @@ public class SuperDealNotificationEmailContext extends EmailContext {
 		String email = (String) context;
 		setTemplateLocation("new-super-deal");
 		setSubject("NOVA PONUDA");
-		setFrom("isa.projekat333@gmail.com");
+		setFrom("potuc3@gmail.com");
 		setTo(email);
 	}
 

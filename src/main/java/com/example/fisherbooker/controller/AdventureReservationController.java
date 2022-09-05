@@ -50,7 +50,7 @@ import com.example.fisherbooker.service.FishingInstructorService;
 			@PostMapping("/add/{AdventureId}")
 			public ResponseEntity<Boolean> getAllByAdventure(@RequestParam Long AdventureId, @RequestParam Long client_id){
 				
-				Adventure a = this.adventureservice.findOneById(AdventureId).get();
+				Adventure a = this.adventureservice.findOneById(AdventureId);
 
 				if(a.adventureReservation.size()>=a.getCapacity()) {
 					
@@ -66,7 +66,7 @@ import com.example.fisherbooker.service.FishingInstructorService;
 				//arr.setCapacity(a.getCapacity());
 				arr.setPrice(a.getPrice());
 				
-				this.adventurereservationservice.arr.save(arr);		
+				this.adventurereservationservice.adventureReservationRepository.save(arr);		
 				return new ResponseEntity<>(true, HttpStatus.OK);
 			}
 			

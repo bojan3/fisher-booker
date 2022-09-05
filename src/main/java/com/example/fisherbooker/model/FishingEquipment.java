@@ -22,6 +22,11 @@ public class FishingEquipment {
 	@ManyToOne
 	@JoinColumn(name = "ship_id")
 	private Ship ship;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "adventure_id")
+	private Adventure adventure;
 
 	public FishingEquipment() {
 		super();
@@ -50,6 +55,14 @@ public class FishingEquipment {
 	public void setShip(Ship ship) {
 		this.ship = ship;
 	}
+	
+	public Adventure getAdventure() {
+		return adventure;
+	}
+
+	public void setAdventure(Adventure adventure) {
+		this.adventure = adventure;
+	}
 
 	public static FishingEquipment toModel(FishingEquipment equipment) {
 		FishingEquipment newEquipment = new FishingEquipment();
@@ -58,6 +71,7 @@ public class FishingEquipment {
 		}
 		newEquipment.setName(equipment.getName());
 		newEquipment.setShip(equipment.getShip());
+		newEquipment.setAdventure(equipment.getAdventure());
 		return newEquipment;
 	}
 	

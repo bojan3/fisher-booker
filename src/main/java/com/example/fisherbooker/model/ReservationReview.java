@@ -15,10 +15,12 @@ import javax.persistence.InheritanceType;
 public class ReservationReview {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String content;
-	private Boolean badReview;
-	private Boolean didntAppear;
+	protected Long id;
+	protected String content;
+	protected Boolean badReview;
+	protected Boolean didntAppear;
+	protected Boolean answered = false;
+	
 
 	public ReservationReview() {
 		super();
@@ -54,6 +56,14 @@ public class ReservationReview {
 
 	public void setDidntAppear(Boolean didntAppear) {
 		this.didntAppear = didntAppear;
+	}
+	
+	public Boolean getAnswered() {
+		return answered;
+	}
+
+	public void setAnswered(Boolean answred) {
+		this.answered = answered;
 	}
 
 }

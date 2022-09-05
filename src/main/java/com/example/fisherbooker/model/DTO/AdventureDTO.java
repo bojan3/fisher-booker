@@ -1,9 +1,14 @@
 package com.example.fisherbooker.model.DTO;
 
+import java.util.Set;
+
 import javax.persistence.Column;
+
+import org.apache.tomcat.util.digester.Rules;
 
 import com.example.fisherbooker.model.Address;
 import com.example.fisherbooker.model.Adventure;
+import com.example.fisherbooker.model.Rule;
 
 public class AdventureDTO {
 	
@@ -16,11 +21,12 @@ public class AdventureDTO {
 	private int price;
 	private float cancelRate;
 	private Long instructor_id;
+	private Set<Rule> rules;
 	
 	public AdventureDTO() {}
 	
 	
-	public AdventureDTO(Long id, String name, String description,int price,float cancelrate,int capacity,Long instructor_id,Address address) {
+	public AdventureDTO(Long id, String name, String description,int price,float cancelrate,int capacity,Long instructor_id,Address address, Set<Rule>rules) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -30,7 +36,8 @@ public class AdventureDTO {
 		this.capacity=capacity;
 		this.instructor_id=instructor_id;
 		this.address=address;
-}
+		this.rules = rules;
+	}
 	
 	
 	
@@ -43,14 +50,15 @@ public class AdventureDTO {
 	this.capacity=a.getCapacity();
 	this.cancelRate=a.getCancelRate();
     this.instructor_id=a.getFishingInstructor().getId();
-	
+	this.rules = rules;
+
     
 	}
 
 	
 	public static AdventureDTO createAdventureDTO(Adventure a) {
 		
-		return new AdventureDTO(a.getId(), a.getName(), a.getDescription(),a.getPrice(),a.getCancelRate(),a.getCapacity(),a.getFishingInstructor().getId(),a.getAddress());
+		return new AdventureDTO(a.getId(), a.getName(), a.getDescription(),a.getPrice(),a.getCancelRate(),a.getCapacity(),a.getFishingInstructor().getId(),a.getAddress(), a.getRule());
 	}
 
 

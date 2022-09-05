@@ -52,17 +52,18 @@ public class Adventure {
 	@Column
 	private float cancelRate;
 	
+	private String imagePath;
+
+	
 	private Boolean isDeleted = false;
 
+	
+	@OneToMany(mappedBy = "adventure", fetch = FetchType.EAGER)
+	public Set<AdventureImage> adventureImages = new HashSet<AdventureImage>();
 
 	@OneToMany(mappedBy = "adventure", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	// @JoinTable(name = "adventure_adventure_option",
-	// joinColumns = @JoinColumn(name = "adventure_id", referencedColumnName =
-	// "id"),
-	// inverseJoinColumns = @JoinColumn(name = "adventure_option_id",
-	// referencedColumnName = "id"))
-	public Set<AdventureOption> adventureOption;
-
+	public Set<AdventureOption> adventureOption = new HashSet<AdventureOption>();
+	
 	@ManyToOne
 	public Address address;
 
@@ -91,26 +92,10 @@ public class Adventure {
 	@OneToMany(mappedBy = "adventure", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public Set<AdventureReview> adventureReviews = new HashSet<AdventureReview>();
 	
-//	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-//	public List<Room> room;
-
-//	@OneToMany(mappedBy="cottage",cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
-//	public Set<CottageSuperDeal> cottageSuperDeal;
-
-//	@OneToOne(cascade=CascadeType.ALL)
-//	public AvailabilityPeriod availabilityPeriod;
-
-//	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-//	public Set<CottagePicture> cottagePicture;
-
-//	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
-//	public Set<CottageReservation> cottageReservation;
-
-//	@ManyToMany(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
-//	public Set<CottageOption> cottageOptions;
-
-//	@ManyToOne
-//	private CottageOwner cottageOwner;
+	@JsonIgnore
+	@OneToMany(mappedBy = "adventure", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+	public Set<FishingEquipment> fishingEqupiment = new HashSet<FishingEquipment>();
+	
 
 	public Long getId() {
 		return id;
@@ -192,13 +177,22 @@ public class Adventure {
 //		this.adventureFastReservation = adventureFastReservation;
 //	}
 
-//	public Set<Rule> getRule() {
-//		return rule;
-//	}
+	
+	public Set<FishingEquipment> getEquipment() {
+		return fishingEqupiment;
+	}
 
-//	public void setRule(Set<Rule> rule) {
-//		this.rule = rule;
-//	}
+	public void setEquipment(Set<FishingEquipment> fie) {
+		this.fishingEqupiment = fie;
+	}
+	
+	public Set<Rule> getRule() {
+		return rule;
+	}
+
+	public void setRule(Set<Rule> rule) {
+		this.rule = rule;
+	}
 
 	public Set<AdventureReservation> getAdventureReservation() {
 		return adventureReservation;
@@ -261,6 +255,13 @@ public class Adventure {
 	public void setIsDeleted(Boolean b) {
 			this.isDeleted = b;
 	}
+
+	public void addImage(AdventureImage newImage) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 	
 
 }

@@ -9,6 +9,7 @@ import com.example.fisherbooker.repository.CottageRepository;
 @Service
 public class AdministratorService {
 	public AdministratorRepository adminRepository;
+	
 
 	@Autowired
 	public AdministratorService(AdministratorRepository adminRepository) {

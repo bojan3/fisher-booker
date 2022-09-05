@@ -1,5 +1,7 @@
 package com.example.fisherbooker.model.DTO;
 
+import com.example.fisherbooker.model.AdventureReservation;
+import com.example.fisherbooker.model.AdventureReservationReview;
 import com.example.fisherbooker.model.CottageReservation;
 import com.example.fisherbooker.model.CottageReservationReview;
 import com.example.fisherbooker.model.ReservationType;
@@ -72,6 +74,15 @@ public class ReservationReviewDTO {
 		review.setContent(content);
 		review.setDidntAppear(didntAppear);
 		review.setShipReservation(new ShipReservation(reservationId));
+		return review;
+	}
+
+	public AdventureReservationReview toAdventureReview() {
+		AdventureReservationReview review = new AdventureReservationReview();
+		review.setBadReview(badReview);
+		review.setContent(content);
+		review.setDidntAppear(didntAppear);
+		review.setAdventureReservation(new AdventureReservation(reservationId));
 		return review;
 	}
 
