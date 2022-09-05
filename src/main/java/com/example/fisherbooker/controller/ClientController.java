@@ -34,38 +34,39 @@ import com.example.fisherbooker.service.impl.SuperDealServiceImpl;
 @RestController
 @RequestMapping("/api/client")
 public class ClientController {
-	
+
 	public ClientService clientService;
 	private SuperDealServiceImpl superDealServiceImpl;
-	
+
 	@Autowired
 	public ClientController(ClientService clientService, SuperDealServiceImpl superDealServiceImpl) {
 		super();
 		this.clientService = clientService;
 		this.superDealServiceImpl = superDealServiceImpl;
 	}
-	//@PreAuthorize("hasRole('ADMIN')")
+
+	// @PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/allClients")
 	public ResponseEntity<List<ClientDTO>> getAll() {
 		List<Client> clients = this.clientService.getAll();
 		List<ClientDTO> clientsDTO = new ArrayList<ClientDTO>();
 		for (Client client : clients) {
-			//ClientDTO clientDTO = new ClientDTO(client); //ClientDTO.createClientDTO(client);
+			// ClientDTO clientDTO = new ClientDTO(client);
+			// //ClientDTO.createClientDTO(client);
 			ClientDTO clientDTO = ClientDTO.createClientDTO(client);
 			clientsDTO.add(clientDTO);
 		}
 		return new ResponseEntity<>(clientsDTO, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/delete")
-	//@PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
-	public ResponseEntity<Boolean> deleteClientByID(@RequestBody Long client_id){	
-		System.out.println("delete instructor with id:"+client_id);
-		this.clientService.deleteOne(client_id);	
+	// @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'COTTAGE_OWNER', 'SHIP_OWNER',
+	// 'INSTRUCTOR')")
+	public ResponseEntity<Boolean> deleteClientByID(@RequestBody Long client_id) {
+		System.out.println("delete instructor with id:" + client_id);
+		this.clientService.deleteOne(client_id);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
-	
-	
 
 	@PreAuthorize("hasRole('CLIENT')")
 	@PutMapping("subscribe/cottage/{cottageId}")
@@ -219,24 +220,18 @@ public class ClientController {
 
 	@PreAuthorize("hasRole('CLIENT')")
 	@PutMapping("instructorcomplaint/{adventureId}/{accountId}")
-	public ResponseEntity<Boolean> createInstructorComplaint(@PathVariable Long adventureId, @PathVariable Long accountId,
-			@RequestBody String text) {
+	public ResponseEntity<Boolean> createInstructorComplaint(@PathVariable Long adventureId,
+			@PathVariable Long accountId, @RequestBody String text) {
 		this.clientService.createInstructorComplaint(adventureId, accountId, text);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('CLIENT')")	
+	@PreAuthorize("hasRole('CLIENT')")
 	@PutMapping("shipcomplaint/{shipId}/{accountId}")
 	public ResponseEntity<Boolean> createShipComplaint(@PathVariable Long shipId, @PathVariable Long accountId,
 			@RequestBody String text) {
 		this.clientService.createShipComplaint(shipId, accountId, text);
 		return new ResponseEntity<>(true, HttpStatus.OK);
-	}
-	
-	@PostMapping("cottage/superdeal/reservation")
-	public ResponseEntity<Boolean> makeCottageSuperDealReservation(@RequestBody CreateSuperDealReservation superDealReservation){
-	 	Boolean done = this.superDealServiceImpl.makeCottageReservation(superDealReservation);
-		return new ResponseEntity<>(done, HttpStatus.OK);
 	}
 
 }

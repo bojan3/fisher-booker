@@ -159,4 +159,8 @@ public class SuperDealServiceImpl implements SuperDealService {
 		return true;
 	}
 
+	public CottageSuperDeal getCottageSuperDeal(Long id) {
+		return this.cottageSuperDealRepository.getOne(id);
+	}
+	
 }
