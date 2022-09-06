@@ -55,7 +55,7 @@ insert into account_role (account_id, role_id) values (12,5);
 --STATUS
 
 insert into status(name,points) values(4,1000000);
-insert into status(name,points) values(2,7);
+insert into status(name,points) values(2,14);
 insert into status(name,points) values(3,13);
 insert into status(name,points) values(4,16);
 insert into status(name,points) values(4,20);
