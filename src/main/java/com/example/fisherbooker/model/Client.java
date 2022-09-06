@@ -15,6 +15,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.example.fisherbooker.model.complaint.CottageComplaint;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Client {
 
@@ -48,14 +51,13 @@ public class Client {
 
 	@OneToMany(mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	public Set<Review> reviews;
-	
+
 	private int penals;
-	
-	
-//	@JsonIgnore
-//	@OneToMany(mappedBy = "client", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-//	public Set<CottageComplaint> cottageComplaints;
-	
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "client", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	public Set<CottageComplaint> cottageComplaints;
+
 	public Client() {
 		super();
 		this.penals = 0;
@@ -224,15 +226,14 @@ public class Client {
 	public void setCottageReservation(Set<CottageReservation> cottageReservation) {
 		this.cottageReservation = cottageReservation;
 	}
-	
+
 	public int getPenals() {
 		return this.penals;
 	}
+
 	public void setPenals(int penals) {
-		this.penals=penals;
+		this.penals = penals;
 	}
-	
-	
 
 //	@Override
 //	public String toString() {
@@ -241,9 +242,10 @@ public class Client {
 //				+ ", cottageSubscriptions=" + cottageSubscriptions + ", shipSubscriptions=" + shipSubscriptions
 //				+ ", instructorSubscriptions=" + instructorSubscriptions + "]";
 //	}
-	
+
 	@Override
 	public String toString() {
-		return account.getName() + " " + account.getLastName() + ", " + account.getEmail() + ", " + account.getPhoneNumber();
+		return account.getName() + " " + account.getLastName() + ", " + account.getEmail() + ", "
+				+ account.getPhoneNumber();
 	}
 }
