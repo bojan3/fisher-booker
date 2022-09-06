@@ -1,6 +1,5 @@
 package com.example.fisherbooker.service.impl;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +20,11 @@ import com.example.fisherbooker.model.RealEstateType;
 import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.ShipOption;
 import com.example.fisherbooker.model.ShipSuperDeal;
-import com.example.fisherbooker.model.EmailContexts.SuperDealNotificationEmailContext;
 import com.example.fisherbooker.model.DTO.AddSuperDealDTO;
 import com.example.fisherbooker.model.DTO.CreateSuperDealReservation;
 import com.example.fisherbooker.model.DTO.DatePeriodDTO;
+import com.example.fisherbooker.model.EmailContexts.ShipSuperDealNotificationEmailContext;
+import com.example.fisherbooker.model.EmailContexts.SuperDealNotificationEmailContext;
 import com.example.fisherbooker.repository.ClientRepository;
 import com.example.fisherbooker.repository.CottageOptionRepository;
 import com.example.fisherbooker.repository.CottageReservationRepository;
@@ -84,6 +84,7 @@ public class SuperDealServiceImpl implements SuperDealService {
 			newDeal.setShip(ship);
 			ship.addSuperDeal(newDeal);
 			entityManager.persist(ship);
+			this.sendNotificationForShip(deal.getRealEstateId(), newDeal);
 			break;
 		}
 		case COTTAGE: {
@@ -99,21 +100,36 @@ public class SuperDealServiceImpl implements SuperDealService {
 			newDeal.setCottage(cottage);
 			cottage.addSuperDeal(newDeal);
 			entityManager.persist(cottage);
+			this.sendNotificationForCottage(deal.getRealEstateId(), newDeal);
 			break;
 		}
 		}
 
-//		this.sendNotification(deal.getRealEstateId(), newDeal);
+		
 		return true;
 	}
 	
 
-	public void sendNotification(Long id, CottageSuperDeal superDeal) {
+	public void sendNotificationForCottage(Long id, CottageSuperDeal superDeal) {
 		List<String> emails = this.clientRepository.getEmails(id);
 		for (String email : emails) {
 			SuperDealNotificationEmailContext dealContext = new SuperDealNotificationEmailContext();
 			dealContext.init(email);
-			dealContext.setSuperDealInfo(superDeal);
+			dealContext.setCottageSuperDealInfo(superDeal);
+			try {
+				emailService.sendMail(dealContext);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void sendNotificationForShip(Long id, ShipSuperDeal superDeal) {
+		List<String> emails = this.clientRepository.getEmails(id);
+		for (String email : emails) {
+			ShipSuperDealNotificationEmailContext dealContext = new ShipSuperDealNotificationEmailContext();
+			dealContext.init(email);
+			dealContext.setShipSuperDealInfo(superDeal);
 			try {
 				emailService.sendMail(dealContext);
 			} catch (Exception e) {

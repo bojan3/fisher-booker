@@ -15,6 +15,11 @@ public class AdventureReservationReview extends ReservationReview {
 		super();
 	}
 
+	//public AdventureReservationReview(ReservationReview rr) {
+	//	this.answered = rr.getAnswered();
+	//	this.
+	//}
+
 	public AdventureReservation getAdventureReservation() {
 		return adventureReservation;
 	}

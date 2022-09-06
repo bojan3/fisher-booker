@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Version;
 
 import com.example.fisherbooker.model.complaint.CottageComplaint;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -51,7 +52,10 @@ public class Client {
 
 	@OneToMany(mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	public Set<Review> reviews;
-
+	
+	@Version
+	private Long version;
+	
 	private int penals;
 
 	@JsonIgnore

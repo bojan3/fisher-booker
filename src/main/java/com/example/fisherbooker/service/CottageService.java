@@ -50,6 +50,6 @@ public interface CottageService {
 	
 	public Boolean deleteImage(Long id);
 	
-	public Boolean updateCottage(EditCottageDTO cottage);
+	public Boolean edit(EditCottageDTO cottage);
 
 }

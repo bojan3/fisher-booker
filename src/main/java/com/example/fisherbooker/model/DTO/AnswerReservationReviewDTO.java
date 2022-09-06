@@ -2,9 +2,13 @@ package com.example.fisherbooker.model.DTO;
 
 import javax.persistence.GeneratedValue;
 
+import com.example.fisherbooker.model.AdventureReservation;
 import com.example.fisherbooker.model.AdventureReservationReview;
+import com.example.fisherbooker.model.CottageReservation;
 import com.example.fisherbooker.model.CottageReservationReview;
+import com.example.fisherbooker.model.ReservationReview;
 import com.example.fisherbooker.model.ReservationType;
+import com.example.fisherbooker.model.ShipReservation;
 import com.example.fisherbooker.model.ShipReservationReview;
 
 public class AnswerReservationReviewDTO {
@@ -141,6 +145,36 @@ public class AnswerReservationReviewDTO {
 				+ didntAppear + ", type=" + type + ", reservationId=" + reservationId + "clientusername:"+clientusername
 				+"clientemail:"+clientemail+"ownerusername:"+ownerusername+"owneremail:"+owneremail
 				+ "]";
+	}
+
+	public CottageReservationReview toCottageReview() {
+		CottageReservationReview review = new CottageReservationReview();
+		review.setBadReview(badReview);
+		review.setContent(content);
+		review.setDidntAppear(didntAppear);
+		review.setCottageReservation(new CottageReservation(reservationId));
+		review.setAnswered(true);
+		return review;
+	}
+
+	public ShipReservationReview toShipReview() {
+		ShipReservationReview review = new ShipReservationReview();
+		review.setBadReview(badReview);
+		review.setContent(content);
+		review.setDidntAppear(didntAppear);
+		review.setShipReservation(new ShipReservation(reservationId));
+		review.setAnswered(true);
+		return review;
+	}
+
+	public AdventureReservationReview toAdventureReview() {
+		AdventureReservationReview review = new AdventureReservationReview();
+		review.setBadReview(badReview);
+		review.setContent(content);
+		review.setDidntAppear(didntAppear);
+		review.setAdventureReservation(new AdventureReservation(reservationId));
+		review.setAnswered(true);
+		return review;
 	}
 
 	

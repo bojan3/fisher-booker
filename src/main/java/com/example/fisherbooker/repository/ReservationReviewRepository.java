@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.example.fisherbooker.model.AdventureReservation;
 import com.example.fisherbooker.model.ReservationReview;
 import com.example.fisherbooker.model.Review;
 
@@ -21,12 +22,22 @@ public interface ReservationReviewRepository<T extends ReservationReview> extend
 
 	@Query(value = "SELECT * FROM RESERVATION_REVIEWS r WHERE r.image_type = 'SHIP'", nativeQuery = true)
 	 List<T> findAllShips();
+	
+	@Query(value = "SELECT * FROM RESERVATION_REVIEWS r WHERE r.image_type = 'COTTAGE' and r.cottage_reservation_id = :#{#reservation_id} ", 
+			nativeQuery = true)
+	T findOneCottageReservationReview(@Param("reservation_id") Long reservation_id);
+	
+	@Query(value = "SELECT * FROM RESERVATION_REVIEWS r WHERE r.image_type = 'ADVENTURE' and r.adventure_reservation_id = :#{#reservation_id} ", 
+			nativeQuery = true)
+	T findOneAdventureReservationReview(@Param("reservation_id") Long reservation_id);
+	
+	@Query(value = "SELECT * FROM RESERVATION_REVIEWS r WHERE r.image_type = 'SHIP' and r.ship_id = :#{#reservation_id} ", 
+			nativeQuery = true)
+	T findOneShipReservationReview(@Param("reservation_id") Long reservation_id);
 
-	@Query(value = "SELECT * FROM REVIEW r where r.id = :#{#id}", nativeQuery = true)
-	Review findReviewByReviewID(@Param("id") Long id);
+//	void save(T reservationReview);
 	
-	
-	
+
 	
 	
 }

@@ -58,7 +58,7 @@ public class Status {
 	}
 	
 	public void increasePoints(){
-		this.points++;
+		this.points = points+1;
 		this.ScalePoinsts();
 		
 	}

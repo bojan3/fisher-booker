@@ -73,7 +73,7 @@ public class CottageServiceImpl implements CottageService {
 	}
 	
 	@Transactional
-	public Boolean updateCottage(EditCottageDTO cottage) throws OptimisticLockException {
+	public Boolean edit(EditCottageDTO cottage) throws OptimisticLockException {
 		Cottage oldCottage = this.cottageRepository.findById(cottage.getId()).orElse(null);
 		if(checkIfCottageHasReservation(cottage.getId())) {
 			return false;
