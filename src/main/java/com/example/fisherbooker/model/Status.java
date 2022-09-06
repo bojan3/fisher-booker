@@ -59,32 +59,60 @@ public class Status {
 	
 	public void increasePoints(){
 		this.points = points+1;
-		this.ScalePoinsts();
+		this.ScalePoints();
 		
 	}
 	
-	public void ScalePoinsts() {
-		switch(this.points+"|"+this.name) {
-			case ("20|Status_name.GOLD"):
-				this.IncreaseRank();
-				break;
-				
-		    case ("15|Status_name.SILVER"):
-				this.IncreaseRank();
-				break;
-				
-			case ("10| Status_name.BRONZE"):
-				this.IncreaseRank();
-				break;
-				
-			case ("5|Status_name.REGULAR"):
-				this.IncreaseRank();	
-				break;
-			default:
-				break;
-			}
-		}
+//	public void ScalePoinsts() {
+//		switch(this.points+"|"+this.name) {
+//			case ("20|Status_name.GOLD"):
+//				this.IncreaseRank();
+//				break;
+//				
+//		    case ("15|Status_name.SILVER"):
+//				this.IncreaseRank();
+//				break;
+//				
+//			case ("10| Status_name.BRONZE"):
+//				this.IncreaseRank();
+//				break;
+//				
+//			case ("5|Status_name.REGULAR"):
+//				this.IncreaseRank();	
+//				break;
+//			default:
+//				break;
+//			}
+//		}
 
+	public void ScalePoints() {
+		switch(this.name) {
+		case GOLD:
+			if(this.points==20)
+				this.IncreaseRank();
+		break;
+		
+		case SILVER:
+			if(this.points==15)
+				this.IncreaseRank();
+		break;
+		
+		case BRONZE:
+			if(this.points==10)
+				this.IncreaseRank();
+		break;
+		
+		case REGULAR:
+			if(this.points==5)
+				this.IncreaseRank();
+		break;
+		case DIAMOND:
+			break;
+		
+		}
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "Status [id=" + id + ", name=" + name + ", points=" + points + "]";
