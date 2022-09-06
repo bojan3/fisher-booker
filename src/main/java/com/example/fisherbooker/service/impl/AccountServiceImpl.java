@@ -47,7 +47,7 @@ import com.example.fisherbooker.service.SecureTokenService;
 
 
 @Service
-//@Transactional
+@Transactional
 public class AccountServiceImpl {
 
 	@PersistenceContext
@@ -175,14 +175,14 @@ public class AccountServiceImpl {
 
 	public boolean updateUser(AccountRequest account) {
 		Account oldAccount = accountRepository.getOne(account.getId());
-//		System.out.println("Stari akaunt: " + oldAccount);
+		System.out.println("Stari akaunt: " + oldAccount);
 		oldAccount.setUsername(account.getUsername());
 		oldAccount.setPassword(account.getPassword());
 		oldAccount.setName(account.getName());
 		oldAccount.setPhoneNumber(account.getPhoneNumber());
 		oldAccount.setAddress(oldAccount.getAddress());
 		System.out.println("Updated account:");
-//		System.out.println(oldAccount);
+		System.out.println(oldAccount);
 		accountRepository.save(oldAccount);
 		return true;
 	}
