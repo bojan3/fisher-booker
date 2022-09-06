@@ -57,8 +57,8 @@ public class ShipController {
 		return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/admin/delete")
-	public ResponseEntity<List<ShipDTO>> deleteAship(@RequestBody Long ship_id) {
+	@DeleteMapping("/admin/delete/{ship_id}")
+	public ResponseEntity<List<ShipDTO>> deleteAship(@PathVariable Long ship_id) {
 		this.shipService.delete(ship_id);
 		List<Ship> ships = this.shipService.getAll();
 		List<ShipDTO> shipDTOs = new ArrayList<ShipDTO>();
@@ -196,7 +196,7 @@ public class ShipController {
 		if (this.shipService.checkIfOwnerHasShip(username, ShipId)) {
 
 			if (!this.shipService.checkIfShipHasReservation(ShipId)) {
-				this.shipService.deleteShip(ShipId);
+				this.shipService.delete(ShipId);
 			} else {
 				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 			}
