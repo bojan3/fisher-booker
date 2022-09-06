@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -317,10 +318,16 @@ public class ClientService {
 
 	public void createCottageComplaint(Long cottageId, Long accountId, String text) {
 		Client client = clientRepository.findByAccountId(accountId);
-		Cottage cottage = cottageRepository.getOne(cottageId);
+		Cottage cottage = cottageRepository.findById(cottageId).orElse(null);
 
+		System.out.println("usao sam u servis za cottage complaint");
+		
 		CottageComplaint cottageComplaint = new CottageComplaint(client, cottage, text);
-
+		
+		System.out.println(cottageComplaint.getClientId().getId());
+		System.out.println(cottageComplaint.getCottageId().getId());
+		
+		
 		this.cottageComplaintRepository.save(cottageComplaint);
 	}
 
@@ -355,6 +362,12 @@ public class ClientService {
 			throw e;
 		}
 		finally {return response;}
+	}
+
+	public Integer getPenals() {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		Client client = this.clientRepository.findByAccountUsername(username);
+		return client.getPenals();
 	}
 	
 

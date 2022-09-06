@@ -32,4 +32,11 @@ public interface ReviewRepository<T extends Review> extends JpaRepository<T, Lon
 			  nativeQuery = true)
 	List<CottageReview> findAllCottagesByCottageId(@Param("cottageId") Long cottageId);
 	
+	@Query(value = "SELECT * FROM REVIEW r WHERE r.review_type = 'ship_review' AND SHIP_ID = :shipId", 
+			  nativeQuery = true)
+	List<ShipReview> findAllShipsByShipId(@Param("shipId") Long shipId);
+	
+	@Query(value = "SELECT * FROM REVIEW r WHERE r.review_type = 'adventure_review' AND ADVENTURE_ID = :adventureId", 
+			  nativeQuery = true)
+	List<ShipReview> findAllAdvByAdvId(@Param("adventureId") Long adventureId);
 }

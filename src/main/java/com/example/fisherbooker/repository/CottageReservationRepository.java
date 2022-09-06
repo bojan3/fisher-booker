@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.example.fisherbooker.model.CottageReservation;
 import com.example.fisherbooker.model.Stats;
 import com.example.fisherbooker.model.DTO.DatePeriodDTO;
+import com.example.fisherbooker.model.DTO.RatingDTO;
 
 @Repository
 public interface CottageReservationRepository
@@ -69,5 +70,10 @@ public interface CottageReservationRepository
 			+ "from cottage_reservation\r\n"
 			+ "where cottage_id = :id and (start_date >= :startDate and start_date <= :endDate) or (end_date >= :startDate and end_date <= :endDate)", nativeQuery = true)
 	public List<CottageReservation> getReservationsInPeriod(@Param("id") Long id, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
+	
+	@Query(value = "select c.name as name, average_mark as averageRating\r\n"
+			+ "from cottage c, cottage_owner co, account a\r\n"
+			+ "where c.cottage_owner_id = co.id and co.account_id = a.id and a.username = :username", nativeQuery = true)
+	public List<RatingDTO> getRatings(@Param("username") String username);
 	
 }

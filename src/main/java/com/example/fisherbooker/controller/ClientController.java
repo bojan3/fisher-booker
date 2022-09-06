@@ -234,4 +234,12 @@ public class ClientController {
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasRole('CLIENT')")
+	@GetMapping("penals")
+	public ResponseEntity<Integer> getNumOfPenals(){
+		Integer penals = this.clientService.getPenals();
+		System.out.println("Broj penala: " + penals);
+		return new ResponseEntity<>(penals, HttpStatus.OK);
+	}
+
 }

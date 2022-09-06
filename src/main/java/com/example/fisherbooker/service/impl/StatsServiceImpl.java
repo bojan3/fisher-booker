@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.fisherbooker.model.RealEstateType;
 import com.example.fisherbooker.model.Stats;
 import com.example.fisherbooker.model.DTO.DatePeriod;
+import com.example.fisherbooker.model.DTO.RatingDTO;
 import com.example.fisherbooker.repository.CottageReservationRepository;
 import com.example.fisherbooker.repository.ShipReservationRepository;
 
@@ -72,7 +73,19 @@ public class StatsServiceImpl {
 		}
 		}
 		return null;
-		
+
+	}
+
+	public List<RatingDTO> getRatings(String username, RealEstateType type) {
+		switch (type) {
+		case COTTAGE: {
+			return this.cottageReservationRepository.getRatings(username);
+		}
+		case SHIP: {
+			return this.shipReservationRepository.getRatings(username);
+		}
+		}
+		return null;
 	}
 
 }

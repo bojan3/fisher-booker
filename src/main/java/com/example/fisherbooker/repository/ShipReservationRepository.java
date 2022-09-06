@@ -14,6 +14,7 @@ import com.example.fisherbooker.model.CottageReservation;
 import com.example.fisherbooker.model.ShipReservation;
 import com.example.fisherbooker.model.Stats;
 import com.example.fisherbooker.model.DTO.DatePeriodDTO;
+import com.example.fisherbooker.model.DTO.RatingDTO;
 
 @Repository
 public interface ShipReservationRepository extends JpaRepository<ShipReservation, Long> {
@@ -62,4 +63,9 @@ public interface ShipReservationRepository extends JpaRepository<ShipReservation
 			+ "where sr.ship_id = s.id and s.ship_owner_id = so.id and so.account_id = a.id and a.username = :username\r\n"
 			+ "group by s.name, date_part('year', end_date) order by date_part('year', end_date) desc", nativeQuery = true)
 	public List<Integer> getYears(String username);
+	
+	@Query(value = "select s.name as name, average_mark as averageRating\r\n"
+			+ "from ship s, ship_owner so, account a\r\n"
+			+ "where s.ship_owner_id = so.id and so.account_id = a.id and a.username = :username", nativeQuery = true)
+	public List<RatingDTO> getRatings(@Param("username") String username);
 }

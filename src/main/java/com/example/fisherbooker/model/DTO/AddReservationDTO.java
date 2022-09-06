@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import com.example.fisherbooker.model.Adventure;
+import com.example.fisherbooker.model.AdventureReservation;
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageOption;
 import com.example.fisherbooker.model.CottageReservation;
@@ -164,6 +166,16 @@ public class AddReservationDTO {
 		return "AddReservationDTO [startDate=" + startDate + ", endDate=" + endDate + ", price=" + price + ", capacity="
 				+ capacity + ", options=" + options + ", realEstateId=" + realEstateId + ", type=" + type
 				+ ", clientId=" + clientId + "]";
+	}
+
+	public AdventureReservation toAdventureModel() {
+		AdventureReservation newReservation = new AdventureReservation();
+		newReservation.setCapacity(this.capacity);
+		newReservation.setPrice(this.price);
+		newReservation.setStartDate(this.startDate);
+		newReservation.setEndDate(this.endDate);
+		newReservation.setAdventure(new Adventure(this.realEstateId));
+		return newReservation;
 	}
 
 }
