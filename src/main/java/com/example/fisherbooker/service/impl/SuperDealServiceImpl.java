@@ -81,9 +81,6 @@ public class SuperDealServiceImpl implements SuperDealService {
 			}
 			Ship ship = entityManager.find(Ship.class, deal.getRealEstateId(),
 					LockModeType.OPTIMISTIC_FORCE_INCREMENT);
-			if(this.shipIsReserved(deal.getRealEstateId(), deal.getStartDate(), deal.getEndDate())) {
-				return false;
-			}
 			newDeal.setShip(ship);
 			ship.addSuperDeal(newDeal);
 			entityManager.persist(ship);
@@ -99,9 +96,6 @@ public class SuperDealServiceImpl implements SuperDealService {
 			}
 			Cottage cottage = entityManager.find(Cottage.class, deal.getRealEstateId(),
 					LockModeType.OPTIMISTIC_FORCE_INCREMENT);
-			if(this.cottageIsReserved(deal.getRealEstateId(), deal.getStartDate(), deal.getEndDate())) {
-				return false;
-			}
 			newDeal.setCottage(cottage);
 			cottage.addSuperDeal(newDeal);
 			entityManager.persist(cottage);
@@ -113,13 +107,6 @@ public class SuperDealServiceImpl implements SuperDealService {
 		return true;
 	}
 	
-	private Boolean cottageIsReserved(Long id, Date stardDate, Date endDate) {
-		return this.cottageReservationRepository.getReservationsInPeriod(id, stardDate, endDate).size() != 0;
-	}
-	
-	private Boolean shipIsReserved(Long id, Date stardDate, Date endDate) {
-		return this.shipReservationRepository.getReservationsInPeriod(id, stardDate, endDate).size() != 0;
-	}
 
 	public void sendNotification(Long id, CottageSuperDeal superDeal) {
 		List<String> emails = this.clientRepository.getEmails(id);

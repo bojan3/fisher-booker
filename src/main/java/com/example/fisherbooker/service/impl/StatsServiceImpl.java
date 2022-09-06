@@ -35,9 +35,9 @@ public class StatsServiceImpl {
 		}
 		return null;
 	}
-	
+
 	public List<Stats> getMonthlyStats(String username, int year, int month, RealEstateType type) {
-		switch(type ) {
+		switch (type) {
 		case COTTAGE: {
 			return this.cottageReservationRepository.monthlyStats(username, year, month);
 		}
@@ -47,23 +47,32 @@ public class StatsServiceImpl {
 		}
 		return null;
 	}
-	
+
 	public List<Stats> getArbitrarilyStats(String username, DatePeriod period, RealEstateType type) {
-		System.out.println("start " + period.getStartDate());
-		System.out.println("end " + period.getEndDate());
-		switch(type ) {
+		switch (type) {
 		case COTTAGE: {
-			return this.cottageReservationRepository.arbitrarilyStats(username, period.getStartDate(), period.getEndDate());
+			return this.cottageReservationRepository.arbitrarilyStats(username, period.getStartDate(),
+					period.getEndDate());
 		}
 		case SHIP: {
-			return this.shipReservationRepository.arbitrarilyStats(username, period.getStartDate(), period.getEndDate());
+			return this.shipReservationRepository.arbitrarilyStats(username, period.getStartDate(),
+					period.getEndDate());
 		}
 		}
 		return null;
 	}
-	
-	public List<Integer> getYears(String username) {
-		return this.cottageReservationRepository.getYears(username);
+
+	public List<Integer> getYears(String username, RealEstateType type) {
+		switch (type) {
+		case COTTAGE: {
+			return this.cottageReservationRepository.getYears(username);
+		}
+		case SHIP: {
+			return this.shipReservationRepository.getYears(username);
+		}
+		}
+		return null;
+		
 	}
 
 }

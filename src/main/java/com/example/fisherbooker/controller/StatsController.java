@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.fisherbooker.model.RealEstateType;
 import com.example.fisherbooker.model.Stats;
 import com.example.fisherbooker.model.DTO.DatePeriod;
+import com.example.fisherbooker.service.AdventureReservationService;
+import com.example.fisherbooker.service.ShipReservationService;
 import com.example.fisherbooker.service.impl.StatsServiceImpl;
 
 @RestController
@@ -54,16 +56,16 @@ public class StatsController {
 		return new ResponseEntity<>(stats, HttpStatus.OK);
 	}
 	
-	@GetMapping("/years")
-	public ResponseEntity<List<Integer>> getYears() {
+	@GetMapping("{type}/years")
+	public ResponseEntity<List<Integer>> getYears(@PathVariable RealEstateType type) {
 		Boolean isCottageOwner = SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("");
 		Boolean isShipOwner = SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("");
 		Boolean isFishingInstructor = SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("");
 		
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		
-		List<Integer> years = this.cottageReservationService.getYears(username);
-		
+//		List<Integer> years = this.cottageReservationService.getYears(username);
+		List<Integer> years = this.statsService.getYears(username, type);
 		
 		return new ResponseEntity<>(years, HttpStatus.OK);
 	}

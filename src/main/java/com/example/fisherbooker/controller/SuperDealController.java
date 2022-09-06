@@ -26,6 +26,7 @@ public class SuperDealController {
 	
 	@PostMapping("/add")
 	public ResponseEntity<Boolean> add(@RequestBody AddSuperDealDTO deal) {
+		System.out.println(deal);
 		this.cottageSuperDealService.add(deal);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
