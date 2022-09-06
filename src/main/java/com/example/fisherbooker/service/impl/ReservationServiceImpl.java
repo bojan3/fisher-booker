@@ -14,6 +14,9 @@ import javax.transaction.Transactional;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.example.fisherbooker.model.Adventure;
+import com.example.fisherbooker.model.AdventureOption;
+import com.example.fisherbooker.model.AdventureReservation;
 import com.example.fisherbooker.model.Client;
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageOption;
@@ -27,6 +30,7 @@ import com.example.fisherbooker.model.ShipSuperDeal;
 import com.example.fisherbooker.model.DTO.AddReservationDTO;
 import com.example.fisherbooker.model.DTO.CreateSuperDealReservation;
 import com.example.fisherbooker.model.DTO.DatePeriodDTO;
+import com.example.fisherbooker.repository.AdventureOptionsRepository;
 import com.example.fisherbooker.repository.ClientRepository;
 import com.example.fisherbooker.repository.CottageOptionRepository;
 import com.example.fisherbooker.repository.CottageReservationRepository;
@@ -49,12 +53,13 @@ public class ReservationServiceImpl implements ReservationService {
 	private ClientRepository clientRepository;
 	private CottageSuperDealRepository cottageSuperDealRepository;
 	private ShipSuperDealRepository shipSuperDealRepository;
+	private AdventureOptionsRepository adventureOptionsRepository;
 
 	public ReservationServiceImpl(CottageOptionRepository cottageOptionRepository,
 			ShipOptionRepository shipOptionRepository, ClientRepository clientRepository,
 			CottageReservationRepository cottageReservationRepository,
 			ShipReservationRepository shipReservationRepository, CottageSuperDealRepository cottageSuperDealRepository,
-			ShipSuperDealRepository shipSuperDealRepository) {
+			ShipSuperDealRepository shipSuperDealRepository, AdventureOptionsRepository adventureOptionsRepository) {
 		this.cottageOptionRepository = cottageOptionRepository;
 		this.clientRepository = clientRepository;
 		this.shipOptionRepository = shipOptionRepository;
@@ -62,6 +67,7 @@ public class ReservationServiceImpl implements ReservationService {
 		this.shipReservationRepository = shipReservationRepository;
 		this.cottageSuperDealRepository = cottageSuperDealRepository;
 		this.shipSuperDealRepository = shipSuperDealRepository;
+		this.adventureOptionsRepository = adventureOptionsRepository;
 	}
 
 	@Transactional
@@ -140,6 +146,25 @@ public class ReservationServiceImpl implements ReservationService {
 			entityManager.persist(cottage);
 			break;
 		}
+		case ADVENTURE:
+			AdventureReservation newReservation = reservation.toAdventureModel();
+			for (Long i : reservation.getOptions()) {
+				AdventureOption option = this.adventureOptionsRepository.findById(i).orElse(null);
+				if (option != null) {
+					newReservation.addOption(option);
+				}
+			}
+			newReservation.setClient(c);
+			Adventure adventure = entityManager.find(Adventure.class, reservation.getRealEstateId(),
+					LockModeType.OPTIMISTIC_FORCE_INCREMENT);
+			if (this.cottageIsReserved(reservation.getRealEstateId(), reservation.getStartDate(),
+					reservation.getEndDate())) {
+				return false;
+			}
+			newReservation.setAdventure(adventure);
+			adventure.addReservation(newReservation);
+			entityManager.persist(adventure);
+			break;
 		}
 
 		c.getAccount().getStatus().increasePoints();

@@ -33,13 +33,11 @@ public class AdventureReservation {
 	private float cancelRate;
 	private int duration;
 	private boolean deleted;
-	
-	@OneToOne
-	(cascade = CascadeType.ALL)
+
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinTable(name = "areservation_reservation_supportdata", joinColumns = @JoinColumn(name = "areservation_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "suppdata_id1", referencedColumnName = "id"))
 	private AdventureReservationSupportData reservationsd;
-	
-	
+
 	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "adventure_id", nullable = false)
@@ -54,6 +52,10 @@ public class AdventureReservation {
 
 	public AdventureReservation() {
 		super();
+	}
+
+	public boolean add(AdventureOption e) {
+		return adventureOption.add(e);
 	}
 
 	public Long getId() {
@@ -120,6 +122,30 @@ public class AdventureReservation {
 		this.client = client;
 	}
 
+	public float getCancelRate() {
+		return cancelRate;
+	}
+
+	public void setCancelRate(float cancelRate) {
+		this.cancelRate = cancelRate;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+
+	public AdventureReservationSupportData getReservationsd() {
+		return reservationsd;
+	}
+
+	public void setReservationsd(AdventureReservationSupportData reservationsd) {
+		this.reservationsd = reservationsd;
+	}
+
 	public boolean isDeleted() {
 		return deleted;
 	}
@@ -152,14 +178,21 @@ public class AdventureReservation {
 		dto.setUserInfo(client.toString());
 		dto.setClientId(client.getId());
 		dto.setRealEstateId(adventure.getId());
-		return dto; 
+		return dto;
 	}
 
 	public AdventureReservation(Long id) {
 		super();
 		this.id = id;
 	}
-	
-	
-	
+
+	public void addOption(AdventureOption option) {
+		if (option == null)
+			return;
+		if (this.adventureOption == null)
+			this.adventureOption = new java.util.HashSet<AdventureOption>();
+		if (!this.adventureOption.contains(option))
+			this.adventureOption.add(option);
+	}
+
 }

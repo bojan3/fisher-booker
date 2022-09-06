@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -30,6 +31,11 @@ public class Adventure {
 
 	public Adventure(String name, String adress, String description, AdventurePicture pic, int capacity,
 			AdventureFastReservation afr, Rule rule, FishingEquipment fe, AdventureOption ao, float CancelRate) {
+	}
+
+	public Adventure(Long realEstateId) {
+		this.id = id;
+		this.isDeleted = false;
 	}
 
 	@Id
@@ -96,7 +102,10 @@ public class Adventure {
 	@OneToMany(mappedBy = "adventure", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	public Set<FishingEquipment> fishingEqupiment = new HashSet<FishingEquipment>();
 	
-
+	@Version
+	@Column(columnDefinition = "integer DEFAULT 0", nullable = false)
+	private Integer version;
+	
 	public Long getId() {
 		return id;
 	}
@@ -258,6 +267,16 @@ public class Adventure {
 
 	public void addImage(AdventureImage newImage) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	public void addReservation(AdventureReservation newReservation) {
+		if (newReservation == null)
+			return;
+		if (this.adventureReservation == null)
+			this.adventureReservation = new java.util.HashSet<AdventureReservation>();
+		if (!this.adventureReservation.contains(newReservation))
+			this.adventureReservation.add(newReservation);
 		
 	}
 
