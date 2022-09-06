@@ -369,6 +369,12 @@ public class ClientService {
 		Client client = this.clientRepository.findByAccountUsername(username);
 		return client.getPenals();
 	}
+
+	public Client getClient() {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		Client c = this.clientRepository.findByAccountUsername(username);
+		return c;
+	}
 	
 
 }

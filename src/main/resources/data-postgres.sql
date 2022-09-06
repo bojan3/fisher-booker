@@ -172,9 +172,9 @@ insert into availability_period(start_date, end_date) values('2022-07-02', '2022
 
 
 insert into cottage (description, name, address_id, price_per_day, average_mark, availability_period_id, cottage_owner_id, is_deleted) values ('rezervisi bre', 'Najjaca vikendica', 2,20, 0, 1, 1, false);
-insert into cottage (description, name, address_id, price_per_day, average_mark, availability_period_id, cottage_owner_id, is_deleted) values ('Slike govore vise od reci', 'Villa Mirna', 3, 50, 1, 2, 1, false);
-insert into cottage (description, name, address_id, price_per_day, average_mark, availability_period_id, cottage_owner_id, is_deleted) values ('Zlatiborske lepote, veoma lep pogled', 'Villa Anja', 4, 50, 2,5,2, false);
-insert into cottage (description, name, address_id, price_per_day, average_mark, availability_period_id, cottage_owner_id, is_deleted) values ('Visoko u panini, zubori reka u blizini', 'Villa Smilja', 6,70, 3,6,2, false);
+insert into cottage (description, name, address_id, price_per_day, average_mark, availability_period_id, cottage_owner_id, is_deleted) values ('Slike govore vise od reci', 'Vikendica 1', 3, 50, 1, 2, 1, false);
+insert into cottage (description, name, address_id, price_per_day, average_mark, availability_period_id, cottage_owner_id, is_deleted) values ('Zlatiborske lepote, veoma lep pogled', 'Vikendica 2', 4, 50, 2,5,2, false);
+insert into cottage (description, name, address_id, price_per_day, average_mark, availability_period_id, cottage_owner_id, is_deleted) values ('Visoko u panini, zubori reka u blizini', 'Vikendica 3', 6,70, 3,6,2, false);
 --insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('u kotlini, brza voda tece', 'Villa Tamara', 1, 40, 4);
 --insert into cottage (description, name, address_id, availability_period_id, price_per_day, average_mark) values ('Vikendica skrivena u sumi', 'Villa Zagorka', 5, 30, 5);
 
@@ -200,9 +200,9 @@ insert into cottage_option(name, description, price, cottage_id) values('Masaža
 insert into cottage_super_deal(start_date, end_date, discounted_price, capacity, cottage_id) values('2021-12-29', '2022-01-03', 12, 4, 1);
 insert into cottage_super_deal(start_date, end_date, discounted_price, capacity, cottage_id) values('2022-01-05', '2022-01-10', 10, 4, 1);
 
-insert into ship (name, type, length, address_id, description, average_mark, rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate, ship_owner_id, availability_period_id, is_deleted) values ('Jahta Bosanka' , 'jahta', 3, 9, 'Jahta za uzivanje', 5, 100, 10, 170, 150, 30, 0, 1, 6,false);
-insert into ship (name, type, length, address_id, description, average_mark, rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate, ship_owner_id, availability_period_id, is_deleted) values ('Jahta Jovana' , 'ledolomac', 3,11, 'Jahta za uzivanje', 3, 150, 20, 200, 100, 40, 0, 1, 4, false);
-insert into ship (name, type, length, address_id, description, average_mark, rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate, ship_owner_id, availability_period_id, is_deleted) values ('Jahta Katarina' , 'jahta', 3,12 ,'Jahta za uzivanje',7, 100, 30, 300, 150, 10, 0, 1, 2, false);
+insert into ship (name, type, length, address_id, description, average_mark, rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate, ship_owner_id, availability_period_id, is_deleted) values ('Jahta 1' , 'jahta', 3, 9, 'Jahta za uzivanje', 5, 100, 10, 170, 150, 30, 0, 1, 6,false);
+insert into ship (name, type, length, address_id, description, average_mark, rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate, ship_owner_id, availability_period_id, is_deleted) values ('Ledolomac 1' , 'ledolomac', 3,11, 'Jahta za uzivanje', 3, 150, 20, 200, 100, 40, 0, 1, 4, false);
+insert into ship (name, type, length, address_id, description, average_mark, rent_price, engine_number, engine_power, max_speed, capacity, cancel_rate, ship_owner_id, availability_period_id, is_deleted) values ('Jahta 2' , 'jahta', 3,12 ,'Jahta za uzivanje',7, 100, 30, 300, 150, 10, 0, 1, 2, false);
 
 --insert into ship_picture(path, ship_id) values('../../assets/images/gusar1.png', 1);
 

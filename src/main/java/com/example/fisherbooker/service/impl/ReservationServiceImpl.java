@@ -94,6 +94,8 @@ public class ReservationServiceImpl implements ReservationService {
 	public Boolean addByClient(AddReservationDTO reservation) throws OptimisticLockException {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		Client c = this.clientRepository.findByAccountUsername(username);
+		if(c.getPenals() >= 3)
+			return false;
 		return this.addingProcedure(reservation, c);
 	}
 
@@ -101,6 +103,10 @@ public class ReservationServiceImpl implements ReservationService {
 	public Boolean addByClientSuperDeal(CreateSuperDealReservation superDealReservation) {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		Client c = this.clientRepository.findByAccountUsername(username);
+		
+		if(c.getPenals() >= 3)
+			return false;
+		
 		switch (superDealReservation.getType()) {
 		case SHIP:{
 			ShipSuperDeal shipSuperDeal = this.shipSuperDealRepository.getOne(superDealReservation.getSuperDealId());

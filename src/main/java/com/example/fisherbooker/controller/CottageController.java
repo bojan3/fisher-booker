@@ -62,31 +62,27 @@ public class CottageController {
 		List<Cottage> cottages = this.cottageService.getAll();
 		List<CottageDTO> cottagesDTO = new ArrayList<CottageDTO>();
 		for (Cottage cottage : cottages) {
-			if(!cottage.Deleted())
-			{
+			if (!cottage.Deleted()) {
 				CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
 				cottagesDTO.add(cottageDTO);
 			}
-										}
+		}
 		return new ResponseEntity<>(cottagesDTO, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/admin/delete")
-		public ResponseEntity<List<CottageDTO>> deleteCottage(@RequestBody Long cottage_id) {
-			this.cottageService.deleteCottage(cottage_id);
-			List<Cottage> cottages = this.cottageService.getAll();
-			List<CottageDTO> cottageDTOs = new ArrayList<CottageDTO>();
-			for (Cottage cottage : cottages) {
-				if(!cottage.Deleted())
-				{
-					CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
-					cottageDTOs.add(cottageDTO);
-				}
+	public ResponseEntity<List<CottageDTO>> deleteCottage(@RequestBody Long cottage_id) {
+		this.cottageService.deleteCottage(cottage_id);
+		List<Cottage> cottages = this.cottageService.getAll();
+		List<CottageDTO> cottageDTOs = new ArrayList<CottageDTO>();
+		for (Cottage cottage : cottages) {
+			if (!cottage.Deleted()) {
+				CottageDTO cottageDTO = CottageDTO.createCottageDTO(cottage);
+				cottageDTOs.add(cottageDTO);
 			}
-			return new ResponseEntity<>(cottageDTOs, HttpStatus.OK);
 		}
-	
-	
+		return new ResponseEntity<>(cottageDTOs, HttpStatus.OK);
+	}
 
 	@GetMapping("/all/")
 	public ResponseEntity<List<CottageDTO>> getAllSorted(@RequestParam String type, @RequestParam String order) {
@@ -131,6 +127,7 @@ public class CottageController {
 	@DeleteMapping("/delete/owner/{CottageId}")
 	public ResponseEntity<List<CottageDTO>> delete(@PathVariable("CottageId") Long id) {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
 		if (this.cottageService.checkIfOwnerHasCottage(username, id)) {
 
 			if (!this.cottageService.checkIfCottageHasReservation(id)) {
@@ -164,11 +161,10 @@ public class CottageController {
 	public ResponseEntity<Boolean> update(@RequestBody EditCottageDTO cottage) {
 		Boolean response = false;
 		try {
-			response = this.cottageService.updateCottage(cottage);
+			response = this.cottageService.edit(cottage);
 		} catch (OptimisticLockException e) {
 			return new ResponseEntity<>(true, HttpStatus.CONFLICT);
 		}
-
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
@@ -237,7 +233,7 @@ public class CottageController {
 
 	@GetMapping("ownership/{id}")
 	public ResponseEntity<Boolean> checkOwnership(@PathVariable Long id) {
-		return new ResponseEntity<>(true, HttpStatus.OK);
+		return new ResponseEntity<>(this.cottageService.checkOwnership(id), HttpStatus.OK);
 	}
 
 	@GetMapping("options/{id}")
