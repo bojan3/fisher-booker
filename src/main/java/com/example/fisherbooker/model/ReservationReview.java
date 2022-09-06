@@ -59,10 +59,10 @@ public class ReservationReview {
 	}
 	
 	public Boolean getAnswered() {
-		return answered;
+		return this.answered;
 	}
 
-	public void setAnswered(Boolean answred) {
+	public void setAnswered(Boolean answered) {
 		this.answered = answered;
 	}
 

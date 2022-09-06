@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Version;
 
 @Entity
 public class Client {
@@ -49,8 +50,10 @@ public class Client {
 	@OneToMany(mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	public Set<Review> reviews;
 	
-	private int penals;
+	@Version
+	private Long version;
 	
+	private int penals;
 	
 //	@JsonIgnore
 //	@OneToMany(mappedBy = "client", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)

@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.fisherbooker.model.AdventureReservationReview;
+import com.example.fisherbooker.model.CottageReservationReview;
 import com.example.fisherbooker.model.ReservationReview;
+import com.example.fisherbooker.model.ShipReservationReview;
 import com.example.fisherbooker.model.DTO.AnswerReservationReviewDTO;
 import com.example.fisherbooker.model.DTO.ReservationReviewDTO;
 import com.example.fisherbooker.model.EmailContexts.NewPenalEmailContext;
@@ -52,34 +55,34 @@ public class ReservationReviewController {
 	@PostMapping("/penal")
 	public ResponseEntity<Boolean> penal(@RequestBody AnswerReservationReviewDTO review) {	
 		Boolean response = false;
-		if(clientService.penal(review.getClientUsername()))
-		{
-			response = true;
-			ReservationReview rr =  reservationReviewService.findOne(review.getType(), review.getReservationId());
-			rr.setAnswered(true);
-			reservationReviewService.save(rr);
-			
-			try {
+		try {
+			if(clientService.penal(review.getClientUsername()))
+			{
+				response = true;		
+				this.reservationReviewService.save(review);
 				
-				NewPenalEmailContext newpenalOwner = new NewPenalEmailContext();
-				newpenalOwner.init(review);
-				newpenalOwner.setTo(review.getOwnerEmail());
-				emailService.sendMail(newpenalOwner);
-			} catch (MessagingException e) {
-				e.printStackTrace();
+				try {					
+					NewPenalEmailContext newpenalOwner = new NewPenalEmailContext();
+					newpenalOwner.init(review);
+					newpenalOwner.setTo(review.getOwnerEmail());
+					emailService.sendMail(newpenalOwner);
+				} catch (MessagingException e) {
+					e.printStackTrace();
+				}
+				
+				try {	
+					NewPenalEmailContext newpenalClient = new NewPenalEmailContext();
+					newpenalClient.init(review);
+					newpenalClient.setTo(review.getClientEmail());
+					emailService.sendMail(newpenalClient);
+				} catch (MessagingException e) {
+					e.printStackTrace();
+				}
+				
+				
 			}
-			
-			try {	
-				NewPenalEmailContext newpenalClient = new NewPenalEmailContext();
-				newpenalClient.init(review);
-				newpenalClient.setTo(review.getClientEmail());
-				emailService.sendMail(newpenalClient);
-			} catch (MessagingException e) {
-				e.printStackTrace();
-			}
-			
-			
-		}
+		} catch (Exception e) {
+			System.out.println("клијент је већ кажњен");}
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
@@ -88,7 +91,36 @@ public class ReservationReviewController {
 	public ResponseEntity<Boolean> delete(@RequestBody AnswerReservationReviewDTO review) {	
 		Boolean response = false;
 		
-	
+//		try {
+//			switch (review.getType()) {
+//			case "COTTAGE":
+//				CottageReservationReview crr = this.reservationReviewService.findOneCottageReservationReview(review.getReservationId());
+//				System.out.println(crr);
+////				crr.setAnswered(true);
+//			//	this.reservationReviewService.saveA(crr);
+//				response = true;
+///				
+//			case "ADVENTURE":
+///				AdventureReservationReview arr = this.reservationReviewService.findOneAdventureReservationReview(review.getReservationId());
+//				System.out.println(arr);
+///				arr.setAnswered(true);
+//			//	this.reservationReviewService.saveB(arr);
+//				response = true;
+//				
+//			case "SHIP":
+//					ShipReservationReview shrr = this.reservationReviewService.findOneShipReservationReview(review.getReservationId());
+//					System.out.println(shrr);
+//					shrr.setAnswered(true);
+//					//this.reservationReviewService.saveC(shrr);					}
+//					response = true;
+//				}
+//			}	
+//			catch(Exception e) {
+//				e.getMessage();
+//			}	
+		
+		this.reservationReviewService.save(review);
+
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 }

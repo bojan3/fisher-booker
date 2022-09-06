@@ -90,7 +90,7 @@ insert into account_status(account_id,status_id)values(13,13);
 insert into cottage_owner (account_id) values (4);
 insert into cottage_owner (account_id) values (8);
 
-insert into client(account_id, penals) values(2, 2);
+insert into client(account_id, penals, version) values(2, 1, 0);
 
 insert into fishing_instructor(account_id,biography) values(3,'Jednom recju smeker. Poznat po televizijskom serijalu pod nazivom "Sasvim prirodno" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');
 insert into fishing_instructor(account_id,biography) values(6,'Dve reci smeker prejak. Poznat po televizijskom serijalu pod nazivom "Bear Grylls" ali i drugim emisijama. Obisao mnoge zemlje i narode i se sada posetio svojoj zemlji i narodu. Iako radi na drugim projektima, slobodno vreme voli da provodi kao deo Fishing-Booker tima. ');

@@ -6,9 +6,12 @@ import java.util.Optional;
 import java.util.Set;
 
 import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 
 import com.example.fisherbooker.model.Account;
 import com.example.fisherbooker.model.AdventureReservation;
@@ -37,7 +40,7 @@ import com.example.fisherbooker.repository.ShipComplaintRepository;
 import com.example.fisherbooker.repository.ShipRepository;
 
 @Service
-@Transactional
+//@Transactional
 public class ClientService {
 
 	private ClientRepository clientRepository;
@@ -338,12 +341,20 @@ public class ClientService {
 		
 		this.shipComplaintRepository.save(shipComplaint);
 	}
-
-	public boolean penal(String clientUsername) {
+	
+	@Transactional(value = TxType.REQUIRES_NEW)
+	public boolean penal(String clientUsername)throws Exception {
+		Boolean response = false;
+		try {
 		Client client = this.clientRepository.findByAccountUsername(clientUsername);
 		client.setPenals(client.getPenals()+1);
 		this.clientRepository.save(client);
-		return true;
+		response = true;
+			}
+		catch(Exception e) {
+			throw e;
+		}
+		finally {return response;}
 	}
 	
 
