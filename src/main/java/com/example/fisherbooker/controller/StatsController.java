@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.fisherbooker.model.RealEstateType;
 import com.example.fisherbooker.model.Stats;
 import com.example.fisherbooker.model.DTO.DatePeriod;
-import com.example.fisherbooker.service.AdventureReservationService;
-import com.example.fisherbooker.service.ShipReservationService;
+import com.example.fisherbooker.model.DTO.RatingDTO;
 import com.example.fisherbooker.service.impl.StatsServiceImpl;
 
 @RestController
@@ -27,12 +26,6 @@ public class StatsController {
 
 	@Autowired
 	private StatsServiceImpl statsService;
-	
-	@Autowired
-	private AdventureReservationService adventureReservationService;
-	
-	@Autowired
-	private ShipReservationService shipReservationService;
 
 	@GetMapping("/{type}/yearly/{year}")
 	public ResponseEntity<List<Stats>> getYearlyStats(@PathVariable RealEstateType type, @PathVariable int year) {
@@ -40,34 +33,42 @@ public class StatsController {
 		List<Stats> stats = this.statsService.getYearlyStats(username, year, type);
 		return new ResponseEntity<>(stats, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("{type}/monthly/{year}/{month}")
-	public ResponseEntity<List<Stats>> getMonthlyStats(@PathVariable RealEstateType type, @PathVariable int year, @PathVariable int month) {
+	public ResponseEntity<List<Stats>> getMonthlyStats(@PathVariable RealEstateType type, @PathVariable int year,
+			@PathVariable int month) {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		List<Stats> stats = this.statsService.getMonthlyStats(username, year, month, type);
 		return new ResponseEntity<>(stats, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("{type}/arbitrarily")
-	public ResponseEntity<List<Stats>> getArbitrarilyStats(@PathVariable RealEstateType type, @RequestBody DatePeriod period) {
+	public ResponseEntity<List<Stats>> getArbitrarilyStats(@PathVariable RealEstateType type,
+			@RequestBody DatePeriod period) {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		List<Stats> stats = this.statsService.getArbitrarilyStats(username, period, type);
 		System.out.println(stats);
 		return new ResponseEntity<>(stats, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("{type}/years")
 	public ResponseEntity<List<Integer>> getYears(@PathVariable RealEstateType type) {
-		Boolean isCottageOwner = SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("");
-		Boolean isShipOwner = SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("");
-		Boolean isFishingInstructor = SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("");
-		
+
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		
-//		List<Integer> years = this.cottageReservationService.getYears(username);
+
 		List<Integer> years = this.statsService.getYears(username, type);
-		
+
 		return new ResponseEntity<>(years, HttpStatus.OK);
+	}
+	
+	@GetMapping("{type}/ratings")
+	public ResponseEntity<List<RatingDTO>> getRatings(@PathVariable RealEstateType type) {
+
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+		List<RatingDTO> ratings = this.statsService.getRatings(username, type);
+
+		return new ResponseEntity<>(ratings, HttpStatus.OK);
 	}
 
 }

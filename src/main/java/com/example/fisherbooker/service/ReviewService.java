@@ -163,9 +163,26 @@ public class ReviewService {
 //	}
 
 	public void createShipReview(CreateReviewDTO createReviewDTO) {
-		Ship ship = this.shipRepository.getOne(createReviewDTO.getReviewEntityId());
-		Client client = getClient();
+		Ship ship = this.shipRepository.findById(createReviewDTO.getReviewEntityId()).orElse(null);		Client client = getClient();
 		ShipReview shipReview = new ShipReview(createReviewDTO, client, ship);
+		
+		List<ShipReview> oldReviews = shipreviewRepository
+				.findAllShipsByShipId(createReviewDTO.getReviewEntityId());
+		if (!oldReviews.isEmpty()) {
+
+			Iterator<ShipReview> it = oldReviews.iterator();
+			float sum = (float) shipReview.getGrade();
+
+			while (it.hasNext()) {
+				sum += (float) it.next().getGrade();
+			}
+			ship.setAverageMark(sum / (oldReviews.size() + 1));
+			
+		} else {
+			ship.setAverageMark(createReviewDTO.getGrade());
+		}
+		ship.getShipReviews().add(shipReview);
+		
 		this.shipreviewRepository.save(shipReview);
 	}
 
