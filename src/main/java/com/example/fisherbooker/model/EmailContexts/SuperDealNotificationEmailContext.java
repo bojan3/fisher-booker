@@ -8,7 +8,7 @@ public class SuperDealNotificationEmailContext extends EmailContext {
 	@Override
 	public <T> void init(T context) {
 		String email = (String) context;
-		setTemplateLocation("new-super-deal");
+		setTemplateLocation("reservation");
 		setSubject("NOVA PONUDA");
 		setFrom("potuc3@gmail.com");
 		setTo(email);

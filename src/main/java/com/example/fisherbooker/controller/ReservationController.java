@@ -2,6 +2,7 @@ package com.example.fisherbooker.controller;
 
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.persistence.OptimisticLockException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.fisherbooker.model.CottageSuperDeal;
+import com.example.fisherbooker.model.Client;
 import com.example.fisherbooker.model.RealEstateType;
 import com.example.fisherbooker.model.DTO.AddReservationDTO;
 import com.example.fisherbooker.model.DTO.CreateSuperDealReservation;
 import com.example.fisherbooker.model.DTO.DatePeriodDTO;
+import com.example.fisherbooker.model.EmailContexts.ReservationMail;
+import com.example.fisherbooker.service.ClientService;
+import com.example.fisherbooker.service.EmailService;
 import com.example.fisherbooker.service.ReservationService;
 import com.example.fisherbooker.service.impl.SuperDealServiceImpl;
 
@@ -33,6 +37,12 @@ public class ReservationController {
 	
 	@Autowired
 	private SuperDealServiceImpl superDealService;
+	
+	@Autowired
+	private ClientService clientService;
+	
+	@Autowired
+	private EmailService emailService;
 
 	@PreAuthorize("hasRole('CLIENT')")
 	@PostMapping("/createByClient")
@@ -43,6 +53,20 @@ public class ReservationController {
 		} catch (OptimisticLockException e) {
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
+		
+		if (response) {
+			try {
+                ReservationMail mail = new ReservationMail();
+                Client c = this.clientService.getClient();
+                mail.init(c.getAccount().getEmail());
+                mail.setTo(c.getAccount().getEmail());
+                mail.setReservationInfo(c.getAccount().getName());
+                emailService.sendMail(mail);
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
+		}
+		
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
@@ -55,6 +79,21 @@ public class ReservationController {
 		} catch (OptimisticLockException e) {
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
+		
+		if (response) {
+			try {
+                ReservationMail mail = new ReservationMail();
+                Client c = this.clientService.getClient();
+                mail.init(c.getAccount().getEmail());
+                mail.setTo(c.getAccount().getEmail());
+                mail.setReservationInfo(c.getAccount().getName());
+                emailService.sendMail(mail);
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
+		}
+		
+		
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
