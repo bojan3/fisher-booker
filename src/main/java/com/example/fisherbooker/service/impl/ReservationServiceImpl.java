@@ -101,8 +101,6 @@ public class ReservationServiceImpl implements ReservationService {
 	public Boolean addingProcedure(AddReservationDTO reservation, Client c) throws OptimisticLockException {
 		switch (reservation.getType()) {
 		case SHIP: {
-			System.out.println("USAO U SHIOP SEKCIJUs");
-			System.out.println(reservation);
 			ShipReservation newReservation = reservation.toShipModel();
 			for (Long i : reservation.getOptions()) {
 				ShipOption option = this.shipOptionRepository.findById(i).orElse(null);

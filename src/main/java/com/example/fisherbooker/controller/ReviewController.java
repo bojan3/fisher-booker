@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -110,19 +111,22 @@ public class ReviewController {
 	public ResponseEntity<Boolean> deleteReview(@PathVariable("ReviewId") Long ReviewID) {
 		return new ResponseEntity<>(this.reviewservice.deleteReview(ReviewID), HttpStatus.OK);
 	}
-
+	
+	@PreAuthorize("hasRole('CLIENT')")
 	@PostMapping("/cottage/save")
 	public ResponseEntity<Boolean> saveCottageReview(@RequestBody CreateReviewDTO createReviewDTO) {
 		this.reviewservice.createCottageReview(createReviewDTO);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
-
+	
+	@PreAuthorize("hasRole('CLIENT')")
 	@PostMapping("/ship/save")
 	public ResponseEntity<Boolean> saveShipReview(@RequestBody CreateReviewDTO createReviewDTO) {
 		this.reviewservice.createShipReview(createReviewDTO);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
-
+	
+	@PreAuthorize("hasRole('CLIENT')")
 	@PostMapping("/adventure/save")
 	public ResponseEntity<Boolean> save(@RequestBody CreateReviewDTO createReviewDTO) {
 		this.reviewservice.createAdventureReview(createReviewDTO);

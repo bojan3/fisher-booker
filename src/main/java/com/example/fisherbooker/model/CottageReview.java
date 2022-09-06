@@ -10,7 +10,7 @@ import com.example.fisherbooker.model.DTO.CreateReviewDTO;
 
 @Entity
 @DiscriminatorValue("cottage_review")
-public class CottageReview extends Review{
+public class CottageReview extends Review {
 
 	@ManyToOne
 	@JoinColumn(name = "cottage_id")
@@ -18,7 +18,7 @@ public class CottageReview extends Review{
 
 	public CottageReview() {
 	}
-	
+
 	public CottageReview(CreateReviewDTO createReviewDTO, Client client, Cottage cottage) {
 		super(createReviewDTO, client);
 		this.cottage = cottage;
@@ -31,14 +31,14 @@ public class CottageReview extends Review{
 	public void setCottage(Cottage cottage) {
 		this.cottage = cottage;
 	}
-	
-	
-	public Long  getCottageId() {
+
+	public Long getCottageId() {
 		return cottage.getId();
 	}
 
+	@Override
+	public String toString() {
+		return "CottageReview [cottage=" + cottage + "]";
+	}
 
-	
-	
-	
 }

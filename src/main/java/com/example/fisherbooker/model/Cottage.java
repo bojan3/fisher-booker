@@ -38,7 +38,7 @@ public class Cottage {
 	private float averageMark;
 
 	private String imagePath;
-	
+
 	private Boolean isDeleted = false;
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -64,10 +64,9 @@ public class Cottage {
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	public Set<CottageReservation> cottageReservations = new HashSet<CottageReservation>();
 
-	 @JsonIgnore
-	 @OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch =
-	 FetchType.EAGER)
-	 public Set<CottageComplaint> cottageComplaints;
+	@JsonIgnore
+	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	public Set<CottageComplaint> cottageComplaints;
 
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	public Set<CottageOption> cottageOptions = new HashSet<CottageOption>();
@@ -90,12 +89,12 @@ public class Cottage {
 	private Integer version;
 
 	public Cottage() {
-		this.isDeleted=false;
+		this.isDeleted = false;
 	}
 
 	public Cottage(Long id) {
 		this.id = id;
-		this.isDeleted=false;
+		this.isDeleted = false;
 
 	}
 
@@ -253,6 +252,14 @@ public class Cottage {
 			this.cottageReservations.add(newReservation);
 	}
 
+	public Set<CottageReview> getCottageReviews() {
+		return cottageReviews;
+	}
+
+	public void setCottageReviews(Set<CottageReview> cottageReviews) {
+		this.cottageReviews = cottageReviews;
+	}
+
 	public void addSuperDeal(CottageSuperDeal newSuperDeal) {
 		if (newSuperDeal == null)
 			return;
@@ -261,6 +268,7 @@ public class Cottage {
 		if (!this.cottageSuperDeals.contains(newSuperDeal))
 			this.cottageSuperDeals.add(newSuperDeal);
 	}
+
 	@Override
 	public String toString() {
 		return "Cottage [id=" + id + ", name=" + name + ", description=" + description + ", pricePerDay=" + pricePerDay
@@ -273,12 +281,12 @@ public class Cottage {
 	}
 
 	public boolean isOwnerDeleted() {
-			return this.getCottageOwner().getAccount().isDeleted();
+		return this.getCottageOwner().getAccount().isDeleted();
 	}
 
 	public void setIsDeleted(boolean b) {
-			this.isDeleted = b;
-		
+		this.isDeleted = b;
+
 	}
 
 	public void addImage(CottageImage newImage) {
