@@ -1,7 +1,13 @@
 package com.example.fisherbooker.service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
+import javax.persistence.OptimisticLockException;
+import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +28,6 @@ import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.ShipReview;
 import com.example.fisherbooker.model.DTO.ApproveReviewDTO;
 import com.example.fisherbooker.model.DTO.CreateReviewDTO;
-import com.example.fisherbooker.model.EmailContexts.AccountVerificationEmailContext;
 import com.example.fisherbooker.model.EmailContexts.NewReviewEmailContext;
 import com.example.fisherbooker.repository.AdventureRepository;
 import com.example.fisherbooker.repository.ClientRepository;
@@ -34,6 +39,9 @@ import com.example.fisherbooker.security.auth.SecureToken;
 
 @Service
 public class ReviewService {
+
+	@PersistenceContext
+	EntityManager entityManager;
 
 	@Autowired
 	private ReviewRepository<CottageReview> cottagereviewRepository;
@@ -83,11 +91,32 @@ public class ReviewService {
 		this.adventureRepository = adventureRepository;
 	}
 
-	public void createCottageReview(CreateReviewDTO createReviewDTO) {
-		Cottage cottage = cottageRepository.getOne(createReviewDTO.getReviewEntityId());
+	@Transactional
+	public void createCottageReview(CreateReviewDTO createReviewDTO) throws OptimisticLockException {
 		Client client = getClient();
+		Cottage cottage = entityManager.find(Cottage.class, createReviewDTO.getReviewEntityId(),
+				LockModeType.OPTIMISTIC_FORCE_INCREMENT);
 		CottageReview cottageReview = new CottageReview(createReviewDTO, client, cottage);
-		this.cottagereviewRepository.save(cottageReview);
+
+		// calculate new average mark
+		List<CottageReview> oldReviews = cottagereviewRepository
+				.findAllCottagesByCottageId(createReviewDTO.getReviewEntityId());
+		if (!oldReviews.isEmpty()) {
+
+			Iterator<CottageReview> it = oldReviews.iterator();
+			float sum = (float) cottageReview.getGrade();
+
+			while (it.hasNext()) {
+				sum += (float) it.next().getGrade();
+			}
+			cottage.setAverageMark(sum / (oldReviews.size() + 1));
+			
+		} else {
+			cottage.setAverageMark(createReviewDTO.getGrade());
+		}
+		cottage.getCottageReviews().add(cottageReview);
+		
+		entityManager.persist(cottage);
 	}
 
 	private Client getClient() {

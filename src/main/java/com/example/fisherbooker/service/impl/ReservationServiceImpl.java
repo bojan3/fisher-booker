@@ -1,7 +1,8 @@
 package com.example.fisherbooker.service.impl;
 
-import java.sql.Date;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -17,11 +18,14 @@ import com.example.fisherbooker.model.Client;
 import com.example.fisherbooker.model.Cottage;
 import com.example.fisherbooker.model.CottageOption;
 import com.example.fisherbooker.model.CottageReservation;
+import com.example.fisherbooker.model.CottageSuperDeal;
 import com.example.fisherbooker.model.RealEstateType;
 import com.example.fisherbooker.model.Ship;
 import com.example.fisherbooker.model.ShipOption;
 import com.example.fisherbooker.model.ShipReservation;
+import com.example.fisherbooker.model.ShipSuperDeal;
 import com.example.fisherbooker.model.DTO.AddReservationDTO;
+import com.example.fisherbooker.model.DTO.CreateSuperDealReservation;
 import com.example.fisherbooker.model.DTO.DatePeriodDTO;
 import com.example.fisherbooker.repository.ClientRepository;
 import com.example.fisherbooker.repository.CottageOptionRepository;
@@ -43,7 +47,8 @@ public class ReservationServiceImpl implements ReservationService {
 	private CottageOptionRepository cottageOptionRepository;
 	private ShipOptionRepository shipOptionRepository;
 	private ClientRepository clientRepository;
-	
+	private CottageSuperDealRepository cottageSuperDealRepository;
+	private ShipSuperDealRepository shipSuperDealRepository;
 
 	public ReservationServiceImpl(CottageOptionRepository cottageOptionRepository,
 			ShipOptionRepository shipOptionRepository, ClientRepository clientRepository,
@@ -55,14 +60,36 @@ public class ReservationServiceImpl implements ReservationService {
 		this.shipOptionRepository = shipOptionRepository;
 		this.cottageReservationRepository = cottageReservationRepository;
 		this.shipReservationRepository = shipReservationRepository;
+		this.cottageSuperDealRepository = cottageSuperDealRepository;
+		this.shipSuperDealRepository = shipSuperDealRepository;
 	}
 
 	@Transactional
 	public Boolean addByClient(AddReservationDTO reservation) throws OptimisticLockException {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		Client c = this.clientRepository.findByAccountUsername(username);
-		System.out.println("ulazim u proces rezervacije");
 		return this.addingProcedure(reservation, c);
+	}
+
+	@Transactional
+	public Boolean addByClientSuperDeal(CreateSuperDealReservation superDealReservation) {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		Client c = this.clientRepository.findByAccountUsername(username);
+		switch (superDealReservation.getType()) {
+		case SHIP:{
+			ShipSuperDeal shipSuperDeal = this.shipSuperDealRepository.getOne(superDealReservation.getSuperDealId());
+			return this.addingProcedure(new AddReservationDTO(shipSuperDeal), c);
+		}
+		case COTTAGE:{
+			CottageSuperDeal cottageSuperDeal = this.cottageSuperDealRepository.getOne(superDealReservation.getSuperDealId());
+			return this.addingProcedure(new AddReservationDTO(cottageSuperDeal), c);
+		}
+		case ADVENTURE:{
+			
+			break;
+		}
+		}
+		return this.addingProcedure(null, c);
 	}
 
 	@Transactional
@@ -74,8 +101,6 @@ public class ReservationServiceImpl implements ReservationService {
 	public Boolean addingProcedure(AddReservationDTO reservation, Client c) throws OptimisticLockException {
 		switch (reservation.getType()) {
 		case SHIP: {
-			System.out.println("USAO U SHIOP SEKCIJUs");
-			System.out.println(reservation);
 			ShipReservation newReservation = reservation.toShipModel();
 			for (Long i : reservation.getOptions()) {
 				ShipOption option = this.shipOptionRepository.findById(i).orElse(null);
@@ -116,10 +141,10 @@ public class ReservationServiceImpl implements ReservationService {
 			break;
 		}
 		}
-		
+
 		c.getAccount().getStatus().increasePoints();
 		this.clientRepository.save(c);
-		
+
 		return true;
 	}
 

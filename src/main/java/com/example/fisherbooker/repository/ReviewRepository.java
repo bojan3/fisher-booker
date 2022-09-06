@@ -27,5 +27,9 @@ public interface ReviewRepository<T extends Review> extends JpaRepository<T, Lon
 
 	@Query(value = "SELECT * FROM REVIEW r where r.id = :#{#id}", nativeQuery = true)
 	Review findReviewByReviewID(@Param("id") Long id);
+
+	@Query(value = "SELECT * FROM REVIEW r WHERE r.review_type = 'cottage_review' AND COTTAGE_ID = :#{#cottageId}", 
+			  nativeQuery = true)
+	List<CottageReview> findAllCottagesByCottageId(@Param("cottageId") Long cottageId);
 	
 }

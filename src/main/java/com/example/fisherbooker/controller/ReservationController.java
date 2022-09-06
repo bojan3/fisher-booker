@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.fisherbooker.model.CottageSuperDeal;
 import com.example.fisherbooker.model.RealEstateType;
 import com.example.fisherbooker.model.DTO.AddReservationDTO;
+import com.example.fisherbooker.model.DTO.CreateSuperDealReservation;
 import com.example.fisherbooker.model.DTO.DatePeriodDTO;
 import com.example.fisherbooker.service.ReservationService;
+import com.example.fisherbooker.service.impl.SuperDealServiceImpl;
 
 @RestController
 @RequestMapping(value = "/api/reservation", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -27,6 +30,9 @@ public class ReservationController {
 
 	@Autowired
 	private ReservationService reservationSerivce;
+	
+	@Autowired
+	private SuperDealServiceImpl superDealService;
 
 	@PreAuthorize("hasRole('CLIENT')")
 	@PostMapping("/createByClient")
@@ -38,15 +44,19 @@ public class ReservationController {
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
 		return new ResponseEntity<>(response, HttpStatus.OK);
-
-		}
+	}
 	
-//	@PostMapping("/create")
-//	public ResponseEntity<Boolean> create(@RequestBody AddReservationDTO reservation) {
-//		this.reservationSerivce.addByOwner(reservation);
-		
-//		return new ResponseEntity<>(true, HttpStatus.OK);
-	//}
+	@PreAuthorize("hasRole('CLIENT')")
+	@PostMapping("/createByClient/superdeal")
+	public ResponseEntity<Boolean> createByClientSuperDeal(@RequestBody CreateSuperDealReservation superDealReservation){
+	 	Boolean response = false;
+		try {
+			response = this.reservationSerivce.addByClientSuperDeal(superDealReservation);
+		} catch (OptimisticLockException e) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
 
 	@PreAuthorize("hasAnyRole('COTTAGE_OWNER', 'SHIP_OWNER', 'INSTRUCTOR')")
 	@PostMapping("/createByOwner")

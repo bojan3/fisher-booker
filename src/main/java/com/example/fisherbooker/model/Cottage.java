@@ -64,10 +64,9 @@ public class Cottage {
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	public Set<CottageReservation> cottageReservations = new HashSet<CottageReservation>();
 
-	 @JsonIgnore
-	 @OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch =
-	 FetchType.EAGER)
-	 public Set<CottageComplaint> cottageComplaints;
+	@JsonIgnore
+	@OneToMany(mappedBy = "cottage", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	public Set<CottageComplaint> cottageComplaints;
 
 	@OneToMany(mappedBy = "cottage", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	public Set<CottageOption> cottageOptions = new HashSet<CottageOption>();
@@ -251,6 +250,14 @@ public class Cottage {
 			this.cottageReservations = new java.util.HashSet<CottageReservation>();
 		if (!this.cottageReservations.contains(newReservation))
 			this.cottageReservations.add(newReservation);
+	}
+
+	public Set<CottageReview> getCottageReviews() {
+		return cottageReviews;
+	}
+
+	public void setCottageReviews(Set<CottageReview> cottageReviews) {
+		this.cottageReviews = cottageReviews;
 	}
 
 	public void addSuperDeal(CottageSuperDeal newSuperDeal) {

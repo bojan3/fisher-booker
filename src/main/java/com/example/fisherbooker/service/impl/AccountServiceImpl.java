@@ -1,16 +1,13 @@
 package com.example.fisherbooker.service.impl;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
-import javax.mail.MessagingException;
-import org.springframework.transaction.annotation.Transactional;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.apache.commons.lang3.StringUtils;
-import org.aspectj.lang.annotation.After;
-import org.hibernate.StaleStateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.AccessDeniedException;
@@ -19,14 +16,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.fisherbooker.exception.InvalidTokenException;
+import com.example.fisherbooker.exception.ResourceConflictException;
 import com.example.fisherbooker.model.Account;
 import com.example.fisherbooker.model.Admin;
 import com.example.fisherbooker.model.CottageOwner;
-import com.example.fisherbooker.model.FishingInstructor;
-import com.example.fisherbooker.model.Review;
 import com.example.fisherbooker.model.DeleteAccountRequest;
+import com.example.fisherbooker.model.FishingInstructor;
 import com.example.fisherbooker.model.Role;
 import com.example.fisherbooker.model.ShipOwner;
 import com.example.fisherbooker.model.Status;
@@ -35,12 +33,11 @@ import com.example.fisherbooker.model.DTO.AccountRequest;
 import com.example.fisherbooker.model.DTO.DeleteAccountEmailContextDTO;
 import com.example.fisherbooker.model.EmailContexts.AccountVerificationEmailContext;
 import com.example.fisherbooker.model.EmailContexts.DeleteAccountEmailContext;
-import com.example.fisherbooker.model.EmailContexts.NewReviewEmailContext;
 import com.example.fisherbooker.repository.AccountRepository;
 import com.example.fisherbooker.repository.AdministratorRepository;
 import com.example.fisherbooker.repository.CottageOwnerRepository;
-import com.example.fisherbooker.repository.FishingInstructorRepository;
 import com.example.fisherbooker.repository.DeleteAccountRequestRepository;
+import com.example.fisherbooker.repository.FishingInstructorRepository;
 import com.example.fisherbooker.repository.SecureTokenRepository;
 import com.example.fisherbooker.repository.ShipOwnerRepository;
 import com.example.fisherbooker.security.auth.SecureToken;
@@ -53,6 +50,9 @@ import com.example.fisherbooker.service.SecureTokenService;
 //@Transactional
 public class AccountServiceImpl {
 
+	@PersistenceContext
+	EntityManager entityManager;
+	
 	@Autowired
 	private CottageOwnerRepository coRep;
 
@@ -91,8 +91,9 @@ public class AccountServiceImpl {
 	private EmailService emailService;
 
 	// adresa onoga ko se registruje treba da se doda
+	@Transactional
 	public Account save(AccountRequest accountRequest) {
-
+		
 		Account account = new Account();
 		account.setUsername(accountRequest.getUsername());
 		account.setPassword(passwordEncoder.encode(accountRequest.getPassword()));
